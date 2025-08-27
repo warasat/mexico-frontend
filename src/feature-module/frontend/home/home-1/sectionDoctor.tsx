@@ -114,19 +114,15 @@ const SectionDoctor: React.FC = () => {
                                                 <span className="fs-14 fw-medium">30 Min</span>
                                             </div>
                                         </div>
-                                        <div className="d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <p className="mb-1 fs-14">Consultation Fees</p>
-                                                <h3 className="text-orange">$650</h3>
-                                            </div>
-                                            <Link
-                                                to="/booking"
-                                                className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
-                                            >
-                                                {/* <i className="isax isax-calendar-1 me-2" /> */}
-                                                Book Now
-                                            </Link>
-                                        </div>
+                                                                                 <div className="d-flex align-items-center justify-content-center">
+                                             <Link
+                                                 to="/booking"
+                                                 className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                                             >
+                                                 {/* <i className="isax isax-calendar-1 me-2" /> */}
+                                                 Book Now
+                                             </Link>
+                                         </div>
                                     </div>
                                 </div>
                             </div>
@@ -160,27 +156,23 @@ const SectionDoctor: React.FC = () => {
                                             <h3 className="mb-1">
                                                 <Link to="/patient/doctor-profile">Dr. Nicholas Tello</Link>
                                             </h3>
-                                            <div className="d-flex align-items-center">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
-                                                    <i className="isax isax-location me-2" />
-                                                    Ogden, IA
-                                                </p>
-                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                <span className="fs-14 fw-medium">60 Min</span>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <p className="mb-1">Consultation Fees</p>
-                                                <h3 className="text-orange">$400</h3>
-                                            </div>
-                                            <Link
-                                                to="/booking"
-                                                className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
-                                            >
-                                                Book Now
-                                            </Link>
-                                        </div>
+                                                                                         <div className="d-flex align-items-center">
+                                                 <p className="d-flex align-items-center mb-0 fs-14">
+                                                     <i className="isax isax-location me-2" />
+                                                     Ogden, IA
+                                                 </p>
+                                                 <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
+                                                 <span className="fs-14 fw-medium">60 Min</span>
+                                             </div>
+                                         </div>
+                                         <div className="d-flex align-items-center justify-content-center">
+                                             <Link
+                                                 to="/booking"
+                                                 className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                                             >
+                                                 Book Now
+                                             </Link>
+                                         </div>
                                     </div>
                                 </div>
                             </div>
@@ -214,27 +206,23 @@ const SectionDoctor: React.FC = () => {
                                             <h3 className="mb-1">
                                                 <Link to="/patient/doctor-profile">Dr. Harold Bryant</Link>
                                             </h3>
-                                            <div className="d-flex align-items-center">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
-                                                    <i className="isax isax-location me-2" />
-                                                    Winona, MS
-                                                </p>
-                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                <span className="fs-14 fw-medium">30 Min</span>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <p className="mb-1">Consultation Fees</p>
-                                                <h3 className="text-orange">$500</h3>
-                                            </div>
-                                            <Link
-                                                to="/booking"
-                                                className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
-                                            >
-                                                Book Now
-                                            </Link>
-                                        </div>
+                                                                                         <div className="d-flex align-items-center">
+                                                 <p className="d-flex align-items-center mb-0 fs-14">
+                                                     <i className="isax isax-location me-2" />
+                                                     Winona, MS
+                                                 </p>
+                                                 <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
+                                                 <span className="fs-14 fw-medium">30 Min</span>
+                                             </div>
+                                         </div>
+                                         <div className="d-flex align-items-center justify-content-center">
+                                             <Link
+                                                 to="/booking"
+                                                 className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                                             >
+                                                 Book Now
+                                             </Link>
+                                         </div>
                                     </div>
                                 </div>
                             </div>
@@ -268,27 +256,23 @@ const SectionDoctor: React.FC = () => {
                                             <h3 className="mb-1">
                                                 <Link to="/patient/doctor-profile">Dr. Sandra Jones</Link>
                                             </h3>
-                                            <div className="d-flex align-items-center">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
-                                                    <i className="isax isax-location me-2" />
-                                                    Beckley, WV
-                                                </p>
-                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                <span className="fs-14 fw-medium">30 Min</span>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <p className="mb-1">Consultation Fees</p>
-                                                <h3 className="text-orange">$550</h3>
-                                            </div>
-                                            <Link
-                                                to="/booking"
-                                                className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
-                                            >
-                                                Book Now
-                                            </Link>
-                                        </div>
+                                                                                         <div className="d-flex align-items-center">
+                                                 <p className="d-flex align-items-center mb-0 fs-14">
+                                                     <i className="isax isax-location me-2" />
+                                                     Beckley, WV
+                                                 </p>
+                                                 <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
+                                                 <span className="fs-14 fw-medium">30 Min</span>
+                                             </div>
+                                         </div>
+                                         <div className="d-flex align-items-center justify-content-center">
+                                             <Link
+                                                 to="/booking"
+                                                 className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                                             >
+                                                 Book Now
+                                             </Link>
+                                         </div>
                                     </div>
                                 </div>
                             </div>
@@ -322,27 +306,23 @@ const SectionDoctor: React.FC = () => {
                                             <h3 className="mb-1">
                                                 <Link to="/patient/doctor-profile">Dr. Charles Scott</Link>
                                             </h3>
-                                            <div className="d-flex align-items-center">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
-                                                    <i className="isax isax-location me-2" />
-                                                    Hamshire, TX
-                                                </p>
-                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                <span className="fs-14 fw-medium">30 Min</span>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <p className="mb-1 fs-14">Consultation Fees</p>
-                                                <h3 className="text-orange">$600</h3>
-                                            </div>
-                                            <Link
-                                                to="/booking"
-                                                className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
-                                            >
-                                                Book Now
-                                            </Link>
-                                        </div>
+                                                                                         <div className="d-flex align-items-center">
+                                                 <p className="d-flex align-items-center mb-0 fs-14">
+                                                     <i className="isax isax-location me-2" />
+                                                     Hamshire, TX
+                                                 </p>
+                                                 <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
+                                                 <span className="fs-14 fw-medium">30 Min</span>
+                                             </div>
+                                         </div>
+                                         <div className="d-flex align-items-center justify-content-center">
+                                             <Link
+                                                 to="/booking"
+                                                 className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                                             >
+                                                 Book Now
+                                             </Link>
+                                         </div>
                                     </div>
                                 </div>
                             </div>

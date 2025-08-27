@@ -38,10 +38,8 @@ const AdminAppointments = () => {
       Earned: "$5000.00 ",
       Date: "	5 Nov 2019",
       time: "11.00 AM - 11.35 AM",
-      Amount: "$300.00",
       image: doctor_thumb_02,
       images1: patient2,
-      Status: "checkbox",
     },
     {
       id: 2,
@@ -51,10 +49,8 @@ const AdminAppointments = () => {
       Earned: "$3300.00 ",
       Date: "11 Nov 2019",
       time: "12.00 PM - 12.15 PM",
-      Amount: "$150.00",
       image: doctor_thumb_03,
       images1: patient3,
-      Status: "checkbox",
     },
     {
       id: 3,
@@ -64,10 +60,8 @@ const AdminAppointments = () => {
       Earned: "$4100.00",
       Date: "21 Nov 2019",
       time: "12.10 PM - 12.25 PM",
-      Amount: "$300.00",
       image: doctor_thumb_09,
       images1: patient9,
-      Status: "checkbox",
     },
     {
       id: 4,
@@ -77,10 +71,8 @@ const AdminAppointments = () => {
       Earned: "$4000.00 ",
       Date: "16 Nov 2019",
       time: "1.00 PM - 1.15 PM",
-      Amount: "$250.00",
       image: doctor_thumb_06,
       images1: patient6,
-      Status: "checkbox",
     },
     {
       id: 5,
@@ -90,10 +82,8 @@ const AdminAppointments = () => {
       Earned: "$2000.00 ",
       Date: "18 Nov 2019",
       time: "1.10 PM - 1.25 PM",
-      Amount: "$260.00",
       image: doctor_thumb_07,
       images1: patient7,
-      Status: "checkbox",
     },
     {
       id: 6,
@@ -103,10 +93,8 @@ const AdminAppointments = () => {
       Earned: "$3700.00 ",
       Date: "15 Nov 2019",
       time: "1.00 PM - 1.15 PM",
-      Amount: "$200.00",
       image: doctor_thumb_05,
       images1: patient5,
-      Status: "checkbox",
     },
     {
       id: 7,
@@ -116,10 +104,8 @@ const AdminAppointments = () => {
       Earned: "$3500.00 ",
       Date: "23 Nov 2019",
       time: "12.10 PM - 12.25 PM",
-      Amount: "$300.00",
       image: doctor_thumb_10,
       images1: patient10,
-      Status: "checkbox",
     },
     {
       id: 8,
@@ -129,10 +115,8 @@ const AdminAppointments = () => {
       Earned: "$3000.00 ",
       Date: "18 Nov 2019",
       time: "11.10 AM - 11.25 AM",
-      Amount: "$260.00",
       image: doctor_thumb_08,
       images1: patient8,
-      Status: "checkbox",
     },
     {
       id: 9,
@@ -142,10 +126,8 @@ const AdminAppointments = () => {
       Earned: "$3100.00 ",
       Date: "9 Nov 2019",
       time: "11.00 AM - 11.15 AM",
-      Amount: "$200.00",
       image: doctor_thumb_01,
       images1: patient1,
-      Status: "checkbox",
     },
     {
       id: 10,
@@ -155,10 +137,8 @@ const AdminAppointments = () => {
       Earned: "$3500.00 ",
       Date: "7 Nov 2019",
       time: "1.00 PM - 1.20 PM ",
-      Amount: "$150.00",
       image: doctor_thumb_04,
       images1: patient4,
-      Status: "checkbox",
     },
   ];
   const columns = [
@@ -209,33 +189,22 @@ const AdminAppointments = () => {
       sorter: (a: any, b: any) => a.Date.length - b.time.length,
     },
     {
-      title: "Status",
-      dataIndex: "Status",
+      title: "Delete",
       render: (record: any) => {
         return (
-          <div className="status-toggle">
-            <input
-              id={`rating${record?.id}`}
-              className="check"
-              type="checkbox"
-              defaultChecked={false}
-            />
-            <label
-              htmlFor={`rating${record?.id}`}
-              className="checktoggle checkbox-bg"
-            >
-              checkbox
-            </label>
-          </div>
+          <button
+            className="btn btn-danger btn-sm"
+            onClick={() => {
+              // Handle delete functionality here
+              console.log("Delete appointment:", record.id);
+            }}
+          >
+            <i className="fas fa-trash"></i>
+          </button>
         );
       },
-      sorter: (a: any, b: any) => a.Status.length - b.Status.length,
     },
-    {
-      title: "Amount",
-      dataIndex: "Amount",
-      sorter: (a: any, b: any) => a.Amount.length - b.Amount.length,
-    },
+
   ];
   return (
     <>

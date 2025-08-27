@@ -691,7 +691,7 @@ const SearchList = () => {
       <div className="col-md-12">
         <div className="text-center mb-4">
           <Link
-            to="/login"
+            to="/patient/dashboard"
             className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
           >
             <i className="isax isax-d-cube-scan5 me-2" />

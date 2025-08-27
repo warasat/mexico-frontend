@@ -25,10 +25,10 @@ interface AppointmentData {
   Earned: string;
   Date: string;
   time: string;
-  Amount: string;
+
   image: string;
   images1: string;
-  Status: string;
+
 }
 
 const AppointmentList: React.FC = () => {
@@ -41,10 +41,8 @@ const AppointmentList: React.FC = () => {
       Earned: "$5000.00 ",
       Date: "27 Sep 2019",
       time: "11.00 AM - 11.15 AM",
-      Amount: "$200.00",
       image: doctor_thumb_01,
       images1: patient1,
-      Status: "checkbox",
     },
     {
       id: 2,
@@ -54,10 +52,8 @@ const AppointmentList: React.FC = () => {
       Earned: "$3300.00 ",
       Date: "1 Nov 2019",
       time: "11.00 PM - 11.35 PM",
-      Amount: "$300.00",
       image: doctor_thumb_02,
       images1: patient2,
-      Status: "checkbox",
     },
     {
       id: 3,
@@ -67,10 +63,8 @@ const AppointmentList: React.FC = () => {
       Earned: "$4100.00",
       Date: "3 Nov 2019",
       time: "12.00 PM - 12.15 PM",
-      Amount: "$150.00",
       image: doctor_thumb_03,
       images1: patient3,
-      Status: "checkbox",
     },
     {
       id: 4,
@@ -80,10 +74,8 @@ const AppointmentList: React.FC = () => {
       Earned: "$4000.00 ",
       Date: "16 Jun 2019",
       time: "1.00 PM - 1.20 PM",
-      Amount: "$150.00",
       image: doctor_thumb_04,
       images1: patient4,
-      Status: "checkbox",
     },
     {
       id: 5,
@@ -93,10 +85,8 @@ const AppointmentList: React.FC = () => {
       Earned: "$2000.00 ",
       Date: "22 Aug 2019",
       time: "1.00 PM - 1.15 PM",
-      Amount: "$200.00",
       image: doctor_thumb_05,
       images1: patient5,
-      Status: "checkbox",
     },
   ];
   const columns = [
@@ -147,33 +137,22 @@ const AppointmentList: React.FC = () => {
       sorter: (a: AppointmentData, b: AppointmentData) => a.Date.length - b.time.length,
     },
     {
-      title: "Status",
-      dataIndex: "Status",
-      render: (text: any, record: any) => {
+      title: "Delete",
+      render: (record: any) => {
         return (
-          <div className="status-toggle">
-            <input
-              id={`rating${record?.id}`}
-              className="check"
-              type="checkbox"
-              defaultChecked={false}
-            />
-            <label
-              htmlFor={`rating${record?.id}`}
-              className="checktoggle checkbox-bg"
-            >
-              {text}
-            </label>
-          </div>
+          <button
+            className="btn btn-danger btn-sm"
+            onClick={() => {
+              // Handle delete functionality here
+              console.log("Delete appointment:", record.id);
+            }}
+          >
+            <i className="fas fa-trash"></i>
+          </button>
         );
       },
-      sorter: (a: AppointmentData, b: AppointmentData) => a.Status.length - b.Status.length,
     },
-    {
-      title: "Amount",
-      dataIndex: "Amount",
-      sorter: (a: AppointmentData, b: AppointmentData) => a.Amount.length - b.Amount.length,
-    },
+
   ];
   return (
     <>

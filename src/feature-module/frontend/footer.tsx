@@ -17,13 +17,9 @@ const Footer = () => {
   }, []);
 
   const exclusionArray = [
-    "/pages/doctor-grid",
-    "/pages/doctor-list",
     "/pages/video-call",
     "/pages/voice-call",
     "/pages/chat-doctor",
-    "/patient/doctor-list",
-    "/patient/doctor-grid",
   ];
 
   // ❌ Don't use props.location — use location from hook

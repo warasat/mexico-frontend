@@ -1,6 +1,6 @@
 import React from "react";
-import IMG01 from "../../../assets/images/patient.jpg";
-import IMG02 from "../../../assets/images/doctor-thumb-02.jpg";
+import IMG01 from "../../../../assets/img/patients/patient.jpg";
+import IMG02 from "../../../../assets/img/doctors/doctor-thumb-02.jpg";
 
 import { Link } from "react-router-dom";
 

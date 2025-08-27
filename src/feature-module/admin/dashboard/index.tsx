@@ -4,7 +4,6 @@ import Header from "../header";
 import DoctorListDesboard from "./DoctorList";
 import PatientsListDesboard from "./PatientsList";
 import AppointmentList from "./AppointmentList";
-import LineChart from "./LineChart";
 import StatusCharts from "./StatusCharts";
 
 const AdminDashboard: React.FC = () => {
@@ -88,43 +87,11 @@ const AdminDashboard: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-sm-6 col-12">
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="dash-widget-header">
-                        <span className="dash-widget-icon text-warning border-warning">
-                          <i className="feather feather-folder"></i>
-                        </span>
-                        <div className="dash-count">
-                          <h3>$62523</h3>
-                        </div>
-                      </div>
-                      <div className="dash-widget-info">
-                        <h6 className="text-muted">Revenue</h6>
-                        <div className="progress progress-sm">
-                          <div className="progress-bar bg-warning w-50" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
               </>
             </div>
             <div className="row">
-              <div className="col-md-12 col-lg-6">
-                {/* Sales Chart */}
-                <div className="card card-chart">
-                  <div className="card-header">
-                    <h4 className="card-title">Revenue</h4>
-                  </div>
-                  <div className="card-body">
-                    {/* <div id="morrisArea" /> */}
-                    <LineChart />
-                  </div>
-                </div>
-                {/* /Sales Chart */}
-              </div>
-              <div className="col-md-12 col-lg-6">
+              <div className="col-md-12 col-lg-12">
                 {/* Invoice Chart */}
                 <div className="card card-chart">
                   <div className="card-header">

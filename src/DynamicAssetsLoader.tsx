@@ -13,14 +13,7 @@ const DynamicAssetsLoader = () => {
     };
 
 
-    if (path.includes('pharmacyadmin')) {
-      loadStyle('/pharmacyadmin/assets/scss/main.scss');
-    } else if (path.includes('admin')) {
-      loadStyle('/admin/assets/scss/main.scss');
-    } else {
-      loadStyle('/assets/sass/main.scss');
-      loadStyle('/assets/css/customstyleclient.css');
-    }
+    
 
     // Optionally, cleanup dynamically injected scripts or styles here
 

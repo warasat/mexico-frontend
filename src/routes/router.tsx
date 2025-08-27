@@ -1,41 +1,35 @@
-
-import {  Route, Routes } from "react-router";
-import { authRoutes, publicRoutes, adminRoutes, pharmacyAdminRoutes} from "./router.link";
+import { Route, Routes } from "react-router-dom"; // Make sure you import from react-router-dom
+import { publicRoutes, adminRoutes} from "./router.link";
 import Feature from "./feature";
-import AuthFeature from "./authFeature";
 import AdminFeature from "./adminFeature";
-import PharmacyAdminFeature from "./pharmacyadminFeature";
 
-
+import HomePage from "../feature-module/frontend/home/home-1/generalHomeOne"; // Example: Import your home page component for the default route
 
 const ALLRoutes: React.FC = () => {
   return (
-    <>
-      <Routes>
-        <Route element={<Feature />}>
-          {publicRoutes.map((route, idx) => (
-            <Route path={route.path} element={route.element} key={idx} />
-          ))}
-        </Route>
+    <Routes>
+      {/* Default route for the root path ("/") */}
+      <Route path="/" element={<HomePage />} />
 
-        <Route element={<AuthFeature />}>
-          {authRoutes.map((route, idx) => (
-            <Route path={route.path} element={route.element} key={idx} />
-          ))}
-        </Route>
+      {/* Public Routes */}
+      <Route element={<Feature />}>
+        {publicRoutes.map((route, idx) => (
+          <Route path={route.path} element={route.element} key={idx} />
+        ))}
+      </Route>
 
-        <Route element={<AdminFeature />}>
-          {adminRoutes.map((route, idx) => (
-            <Route path={route.path} element={route.element} key={idx} />
-          ))}
-        </Route>
-        <Route element={<PharmacyAdminFeature />}>
-          {pharmacyAdminRoutes.map((route, idx) => (
-            <Route path={route.path} element={route.element} key={idx} />
-          ))}
-        </Route>
-      </Routes>
-    </>
+
+
+      {/* Admin Routes */}
+      <Route element={<AdminFeature />}>
+        {adminRoutes.map((route, idx) => (
+          <Route path={route.path} element={route.element} key={idx} />
+        ))}
+      </Route>
+
+    
+      
+    </Routes>
   );
 };
 

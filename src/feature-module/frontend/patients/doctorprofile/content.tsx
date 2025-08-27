@@ -1,5 +1,5 @@
-import { IMG01, IMG02, IMG03, IMG04, IMG07, IMG08 } from "./img";
-import { patient, patient1, patient2 } from "../../pharmacy/image";
+import { IMG01, IMG02, IMG03, IMG04, IMG07, IMG08, IMG09 } from "./img";
+
 import { Link } from "react-router-dom";
 const Content = () => {
   return (
@@ -438,7 +438,7 @@ const Content = () => {
                       <img
                         className="avatar avatar-sm rounded-circle"
                         alt="User Image"
-                        src={patient}
+                        src={IMG07}
                       />
                       <div className="comment-body">
                         <div className="meta-data">
@@ -488,7 +488,7 @@ const Content = () => {
                           <img
                             className="avatar avatar-sm rounded-circle"
                             alt="User Image"
-                            src={patient1}
+                            src={IMG08}
                           />
                           <div className="comment-body">
                             <div className="meta-data">
@@ -539,7 +539,7 @@ const Content = () => {
                       <img
                         className="avatar avatar-sm rounded-circle"
                         alt="User Image"
-                        src={patient2}
+                        src={IMG09}
                       />
                       <div className="comment-body">
                         <div className="meta-data">

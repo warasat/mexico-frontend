@@ -3,12 +3,13 @@ import ImageWithBasePath from '../../../../components/imageWithBasePath'
 import { Link } from "react-router-dom";
 import Select from "react-select";
 import { Calendar, theme } from 'antd';
+import InsuranceSelector from './components/InsuranceSelector';
 const OnPanelChange = (value: any, mode: any) => {
   console.log(value.format('YYYY-MM-DD'), mode);
 };
 const BookingWizard = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectType, setSelectType] = useState(1);
+  const [selectType, setSelectType] = useState(2); // Default to Video Call
   const [selectedService, setSelectedService] = useState(true);
   const [selectedService1, setSelectedService1] = useState(false);
   const [selectedService2, setSelectedService2] = useState(false);
@@ -18,6 +19,8 @@ const BookingWizard = () => {
   const [selectedService6, setSelectedService6] = useState(false);
   const [selectedService7, setSelectedService7] = useState(false);
   const [selectedService8, setSelectedService8] = useState(false);
+  const [selectedInsurance, setSelectedInsurance] = useState<string | null>(null);
+  const [bookingId] = useState(() => `BK${Date.now().toString().slice(-6)}`);
   const { token } = theme.useToken();
   const wrapperStyle = {
     width: '100%',
@@ -137,7 +140,7 @@ const BookingWizard = () => {
                     <div className="profile-step">
                       <span className="multi-steps">5</span>
                       <div className="step-section">
-                        <h6>Payment</h6>
+                        <h6>Insurance</h6>
                       </div>
                     </div>
                   </li>
@@ -404,35 +407,14 @@ const BookingWizard = () => {
                           <div className="card-body pb-1">
                             <h6 className="mb-3">Select Appointment Type</h6>
                             <div className="row">
-                              <div className="col-xl col-md-3 col-sm-4">
-                                <div className="radio-select text-center">
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service2"
-                                    type="radio"
-                                    id="service7"
-                                    checked={selectType === 1?true:false}
-                                    onChange={()=>setSelectType(1)}
-                                    
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="service7"
-                                  >
-                                    <i className="isax isax-hospital5" />
-                                    <span className="service-title d-block">
-                                      Clinic
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-xl col-md-3 col-sm-4">
+                              <div className="col-xl-6 col-md-6 col-sm-6">
                                 <div className="radio-select text-center">
                                   <input
                                     className="form-check-input ms-0 mt-0"
                                     name="service2"
                                     type="radio"
                                     id="service8"
+                                    checked={selectType === 2}
                                     onChange={()=>setSelectType(2)}
                                   />
                                   <label
@@ -446,53 +428,14 @@ const BookingWizard = () => {
                                   </label>
                                 </div>
                               </div>
-                              <div className="col-xl col-md-3 col-sm-4">
-                                <div className="radio-select text-center">
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service2"
-                                    type="radio"
-                                    id="service9"
-                                    onChange={()=>setSelectType(3)}
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="service9"
-                                  >
-                                    <i className="isax isax-call5" />
-                                    <span className="service-title d-block">
-                                      Audio Call
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-xl col-md-3 col-sm-4">
-                                <div className="radio-select text-center">
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service2"
-                                    type="radio"
-                                    id="service10"
-                                    onChange={()=>setSelectType(4)}
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="service10"
-                                  >
-                                    <i className="isax isax-messages-15" />
-                                    <span className="service-title d-block">
-                                      Chat
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-xl col-md-3 col-sm-4">
+                              <div className="col-xl-6 col-md-6 col-sm-6">
                                 <div className="radio-select text-center">
                                   <input
                                     className="form-check-input ms-0 mt-0"
                                     name="service2"
                                     type="radio"
                                     id="service11"
+                                    checked={selectType === 5}
                                     onChange={()=>setSelectType(5)}
                                   />
                                   <label
@@ -507,114 +450,7 @@ const BookingWizard = () => {
                                 </div>
                               </div>
                             </div>
-                            {selectType === 1 && 
-                            <div>
-                            <h6 className="mb-3">Select Clinics</h6>
-                            <div>
-                              <div className={`service-item ${selectedService6 ? 'active' : ''}`}>
-                                <input
-                                  className="form-check-input ms-0 mt-0"
-                                  name="service2"
-                                  type="checkbox"
-                                  id="service12"
-                                  onChange={() => setSelectedService6(!selectedService6)}
-                                  checked={selectedService6 ? true : false}
-                                />
-                                <label
-                                  className="form-check-label ms-2"
-                                  htmlFor="service12"
-                                >
-                                  <span className="d-flex align-items-center flex-wrap rpw-gap-2">
-                                    <span className="d-inline-block me-2">
-                                      <ImageWithBasePath
-                                        src="assets/img/icons/clinic-icon-01.svg"
-                                        className="rounded-circle"
-                                        alt=""
-                                      />
-                                    </span>
-                                    <span>
-                                      <span className="service-title d-block mb-1">
-                                        AllCare Family Medicine
-                                      </span>
-                                      <span className="fs-14">
-                                        3343 Private Lane, Valdosta
-                                      </span>
-                                      <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                      <span className="fs-14">500 Meters</span>
-                                    </span>
-                                  </span>
-                                </label>
-                              </div>
-                              <div className={`service-item ${selectedService7 ? 'active' : ''}`}>
-                                <input
-                                  className="form-check-input ms-0 mt-0"
-                                  name="service2"
-                                  type="checkbox"
-                                  id="service13"
-                                  onChange={() => setSelectedService7(!selectedService7)}
-                                  checked={selectedService7 ? true : false}
-                                />
-                                <label
-                                  className="form-check-label ms-2"
-                                  htmlFor="service13"
-                                >
-                                  <span className="d-flex align-items-center flex-wrap rpw-gap-2">
-                                    <span className="d-inline-block me-2">
-                                      <ImageWithBasePath
-                                        src="assets/img/icons/clinic-icon-02.svg"
-                                        className="rounded-circle"
-                                        alt=""
-                                      />
-                                    </span>
-                                    <span>
-                                      <span className="service-title d-block mb-1">
-                                        Vitalplus Clinic
-                                      </span>
-                                      <span className="fs-14">
-                                        4223 Pleasant Hill Road, Miami, FL 33169
-                                      </span>
-                                      <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                      <span className="fs-14">12 KM </span>
-                                    </span>
-                                  </span>
-                                </label>
-                              </div>
-                              <div className={`service-item ${selectedService8 ? 'active' : ''}`}>
-                                <input
-                                  className="form-check-input ms-0 mt-0"
-                                  name="service2"
-                                  type="checkbox"
-                                  id="service13"
-                                  onChange={() => setSelectedService8(!selectedService8)}
-                                  checked={selectedService8 ? true : false}
-                                />
-                                <label
-                                  className="form-check-label ms-2"
-                                  htmlFor="service13"
-                                >
-                                  <span className="d-flex align-items-center flex-wrap rpw-gap-2">
-                                    <span className="d-inline-block me-2">
-                                      <ImageWithBasePath
-                                        src="assets/img/icons/clinic-icon-03.svg"
-                                        className="rounded-circle"
-                                        alt=""
-                                      />
-                                    </span>
-                                    <span>
-                                      <span className="service-title d-block mb-1">
-                                        Wellness Path Chiropractic
-                                      </span>
-                                      <span className="fs-14">
-                                        418 Patton Lane, Garner, NC 27529, FL 33169
-                                      </span>
-                                      <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                      <span className="fs-14">16 KM </span>
-                                    </span>
-                                  </span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>}
+
                             
 
                           </div>
@@ -1252,215 +1088,20 @@ const BookingWizard = () => {
                       </div>
                       <div className="card-body booking-body">
                         <div className="row">
-                          <div className="col-lg-6 d-flex">
+                          <div className="col-lg-8 d-flex">
                             <div className="card flex-fill mb-3 mb-lg-0">
                               <div className="card-body">
-                                <h6 className="mb-3">Payment Gateway</h6>
-                                <div className="payment-tabs">
-                                  <ul
-                                    className="nav nav-pills mb-3 row"
-                                    id="pills-tab"
-                                    role="tablist"
-                                  >
-                                    <li
-                                      className="nav-item col-sm-4"
-                                      role="presentation"
-                                    >
-                                      <button
-                                        className="nav-link active"
-                                        id="pills-home-tab"
-                                        data-bs-toggle="pill"
-                                        data-bs-target="#pills-home"
-                                        type="button"
-                                        role="tab"
-                                        aria-selected="true"
-                                      >
-                                        <ImageWithBasePath
-                                          src="assets/img/icons/payment-icon-05.svg"
-                                          className="me-2"
-                                          alt=""
-                                        />
-                                        Credit Card
-                                      </button>
-                                    </li>
-                                    <li
-                                      className="nav-item col-sm-4"
-                                      role="presentation"
-                                    >
-                                      <button
-                                        className="nav-link"
-                                        id="pills-profile-tab"
-                                        data-bs-toggle="pill"
-                                        data-bs-target="#pills-profile"
-                                        type="button"
-                                        role="tab"
-                                        aria-selected="false"
-                                        tabIndex={-1}
-                                      >
-                                        <ImageWithBasePath
-                                          src="assets/img/icons/payment-icon-06.svg"
-                                          className="me-2"
-                                          alt=""
-                                        />
-                                        Paypal
-                                      </button>
-                                    </li>
-                                    <li
-                                      className="nav-item col-sm-4"
-                                      role="presentation"
-                                    >
-                                      <button
-                                        className="nav-link"
-                                        id="pills-contact-tab"
-                                        data-bs-toggle="pill"
-                                        data-bs-target="#pills-contact"
-                                        type="button"
-                                        role="tab"
-                                        aria-selected="false"
-                                        tabIndex={-1}
-                                      >
-                                        <ImageWithBasePath
-                                          src="assets/img/icons/payment-icon-07.svg"
-                                          className="me-2"
-                                          alt=""
-                                        />
-                                        Stripe
-                                      </button>
-                                    </li>
-                                  </ul>
-                                  <div className="tab-content" id="pills-tabContent">
-                                    <div
-                                      className="tab-pane fade show active"
-                                      id="pills-home"
-                                      role="tabpanel"
-                                      aria-labelledby="pills-home-tab"
-                                    >
-                                      <div className="mb-3">
-                                        <label className="form-label">
-                                          Card Holder Name
-                                        </label>
-                                        <div className="position-relative input-icon">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                          />
-                                          <span>
-                                            <i className="isax isax-user" />
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <div className="mb-3">
-                                        <label className="form-label">
-                                          Card Number
-                                        </label>
-                                        <div className="position-relative input-icon">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                          />
-                                          <span>
-                                            <i className="isax isax-card-tick" />
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <div className="mb-3">
-                                        <label className="form-label">
-                                          Expire Date
-                                        </label>
-                                        <div className="position-relative input-icon">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                          />
-                                          <span>
-                                            <i className="isax isax-calendar-2" />
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <div className="mb-0">
-                                        <label className="form-label">CVV</label>
-                                        <div className="position-relative input-icon">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                          />
-                                          <span>
-                                            <i className="isax isax-check" />
-                                          </span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div
-                                      className="tab-pane fade"
-                                      id="pills-profile"
-                                      role="tabpanel"
-                                      aria-labelledby="pills-profile-tab"
-                                    >
-                                      <div className="mb-3">
-                                        <label className="form-label">
-                                          Email Address
-                                        </label>
-                                        <div className="position-relative input-icon">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                          />
-                                          <span>
-                                            <i className="isax isax-sms" />
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <div>
-                                        <label className="form-label">Password</label>
-                                        <div className="pass-group">
-                                          <input
-                                            type="password"
-                                            className="form-control pass-input"
-                                          />
-                                          <span className="feather-eye-off toggle-password" />
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div
-                                      className="tab-pane fade"
-                                      id="pills-contact"
-                                      role="tabpanel"
-                                      aria-labelledby="pills-contact-tab"
-                                    >
-                                      <div className="mb-3">
-                                        <label className="form-label">
-                                          Email Address
-                                        </label>
-                                        <div className="position-relative input-icon">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                          />
-                                          <span>
-                                            <i className="isax isax-sms" />
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <div>
-                                        <label className="form-label">Password</label>
-                                        <div className="pass-group">
-                                          <input
-                                            type="password"
-                                            className="form-control pass-input-sub"
-                                          />
-                                          <span className="feather-eye-off toggle-password-sub" />
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                <InsuranceSelector
+                                  selectedInsurance={selectedInsurance}
+                                  onInsuranceChange={setSelectedInsurance}
+                                />
                               </div>
                             </div>
                           </div>
-                          <div className="col-lg-6 d-flex">
+                          <div className="col-lg-4 d-flex">
                             <div className="card flex-fill mb-0">
                               <div className="card-body">
-                                <h6 className="mb-3">Booking Info</h6>
+                                <h6 className="mb-3">Booking Summary</h6>
                                 <div className="mb-3">
                                   <label className="form-label">
                                     Date &amp; Time
@@ -1471,36 +1112,34 @@ const BookingWizard = () => {
                                 </div>
                                 <div className="mb-3">
                                   <label className="form-label">
-                                    Appointment type
+                                    Appointment Type
                                   </label>
                                   <div className="form-plain-text">
-                                    Clinic (Wellness Path){" "}
+                                    {selectType === 2 ? 'Video Call' : 'Home Visit'}
+                                  </div>
+                                </div>
+                                <div className="mb-3">
+                                  <label className="form-label">
+                                    Insurance
+                                  </label>
+                                  <div className="form-plain-text">
+                                    {selectedInsurance || 'Not Selected'}
                                   </div>
                                 </div>
                                 <div className="pt-3 border-top booking-more-info">
-                                  <h6 className="mb-3">Payment Info</h6>
+                                  <h6 className="mb-3">Service Info</h6>
                                   <div className="d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between mb-2">
-                                    <p className="mb-0">Echocardiograms</p>
+                                    <p className="mb-0">Consultation</p>
                                     <span className="fw-medium d-block">$200</span>
                                   </div>
                                   <div className="d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between mb-2">
                                     <p className="mb-0">Booking Fees</p>
                                     <span className="fw-medium d-block">$20</span>
                                   </div>
-                                  <div className="d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between mb-2">
-                                    <p className="mb-0">Tax</p>
-                                    <span className="fw-medium d-block">$18</span>
-                                  </div>
-                                  <div className="d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between mb-2">
-                                    <p className="mb-0">Discount</p>
-                                    <span className="fw-medium text-danger d-block">
-                                      -$15
-                                    </span>
-                                  </div>
                                 </div>
                                 <div className="bg-primary d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between p-3 rounded">
                                   <h6 className="text-white">Total</h6>
-                                  <h6 className="text-white">$320</h6>
+                                  <h6 className="text-white">$220</h6>
                                 </div>
                               </div>
                             </div>
@@ -1522,7 +1161,7 @@ const BookingWizard = () => {
                             className="btn btn-md btn-primary-gradient next_btns inline-flex align-items-center rounded-pill"
                             onClick={HandleNext}
                           >
-                            Confirm &amp; Pay
+                            Confirm Appointment
                             <i className="isax isax-arrow-right-3 ms-1" />
                           </Link>
                         </div>
@@ -1541,7 +1180,7 @@ const BookingWizard = () => {
                                 <div className="card-header">
                                   <h5 className="d-flex align-items-center flex-wrap rpw-gap-2">
                                     <i className="isax isax-tick-circle5 text-success me-2" />
-                                    Booking Confirmed
+                                    ✅ Appointment Confirmed
                                   </h5>
                                 </div>
                                 <div className="card-header d-flex align-items-center flex-wrap rpw-gap-2">
@@ -1552,18 +1191,16 @@ const BookingWizard = () => {
                                     />
                                   </span>
                                   <p className="mb-0">
-                                    Your Booking has been Confirmed with{" "}
+                                    Your appointment has been successfully confirmed with{" "}
                                     <span className="text-dark">
                                       Dr. Michael Brown{" "}
                                     </span>{" "}
-                                    be on time before{" "}
-                                    <span className="text-dark">15 Mins </span> From
-                                    the appointment Time
+                                    Please be ready 15 minutes before your scheduled time.
                                   </p>
                                 </div>
                                 <div className="card-body pb-1">
                                   <div className="d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between mb-3">
-                                    <h6>Booking Info</h6>
+                                    <h6>Appointment Details</h6>
                                     <Link
                                       to="#"
                                       className="btn btn-light rounded-pill"
@@ -1575,19 +1212,19 @@ const BookingWizard = () => {
                                   <div className="row">
                                     <div className="col-md-6">
                                       <div className="mb-3">
-                                        <label className="form-label">Service</label>
+                                        <label className="form-label">Doctor</label>
                                         <div className="form-plain-text">
-                                          Cardiology (30 Mins)
+                                          Dr. Michael Brown
                                         </div>
                                       </div>
                                     </div>
                                     <div className="col-md-6">
                                       <div className="mb-3">
                                         <label className="form-label">
-                                          Additional Service
+                                          Specialty
                                         </label>
                                         <div className="form-plain-text">
-                                          Echocardiograms
+                                          Psychologist
                                         </div>
                                       </div>
                                     </div>
@@ -1604,24 +1241,30 @@ const BookingWizard = () => {
                                     <div className="col-md-6">
                                       <div className="mb-3">
                                         <label className="form-label">
-                                          Appointment type
+                                          Appointment Type
                                         </label>
-                                        <div className="form-plain-text">Clinic </div>
+                                        <div className="form-plain-text">
+                                          {selectType === 2 ? 'Video Call' : 'Home Visit'}
+                                        </div>
                                       </div>
                                     </div>
                                     <div className="col-md-6">
                                       <div className="mb-3">
                                         <label className="form-label">
-                                          Clinic Name &amp; Location
+                                          Insurance
                                         </label>
                                         <div className="form-plain-text">
-                                          Wellness Path{" "}
-                                          <Link
-                                            to="#"
-                                            className="text-primary"
-                                          >
-                                            View Location
-                                          </Link>
+                                          {selectedInsurance || 'No Insurance'}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                      <div className="mb-3">
+                                        <label className="form-label">
+                                          Location
+                                        </label>
+                                        <div className="form-plain-text">
+                                          5th Street - 1011 W 5th St, Suite 120, Austin, TX 78703
                                         </div>
                                       </div>
                                     </div>
@@ -1652,9 +1295,9 @@ const BookingWizard = () => {
                             <div className="card flex-fill">
                               <div className="card-body d-flex flex-column justify-content-between">
                                 <div className="text-center">
-                                  <h6 className="fs-14 mb-2">Booking Number</h6>
+                                  <h6 className="fs-14 mb-2">Booking ID</h6>
                                   <span className="booking-id-badge mb-3">
-                                    DCRA12565
+                                    {bookingId}
                                   </span>
                                   <span className="d-block mb-3">
                                     <ImageWithBasePath

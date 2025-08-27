@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { DashboardSidebar } from "./sidebar/sidebar.jsx";
+import { DashboardSidebar } from "./sidebar/sidebar.tsx";
 
-import Header from "../../header.jsx";
-import DoctorFooter from "../../common/doctorFooter/index.jsx";
+import Header from "../../header.tsx";
+import DoctorFooter from "../../common/doctorFooter/index.tsx";
 import {
   doctor_14,
   doctor_15,
@@ -15,12 +15,12 @@ import {
   doctorthumb11,
   patient20,
   patient21,
-} from "../../imagepath.jsx";
+} from "../../imagepath.tsx";
 import Chart from "react-apexcharts";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
-import PatientModal from "./modal/patientModal.jsx";
+import PatientModal from "./modal/patientModal.tsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -325,8 +325,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   return (
     <>
       <Header {...props} />
-      <>
-        {/* Breadcrumb */}
+      {/* Breadcrumb */}
         <div className="breadcrumb-bar">
           <div className="container">
             <div className="row align-items-center inner-banner">
@@ -372,7 +371,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
           </div>
         </div>
         {/* /Breadcrumb */}
-      </>
 
       {/* Page Content */}
       <div className="content">
@@ -551,109 +549,14 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                             <span className="health-percentage">
                               Your health is 95% Normal
                             </span>
-                            <Link
-                              to="/patient/medicaldetails"
-                              className="btn btn-dark w-100 rounded-pill"
-                            >
-                              View Details
-                              <i className="fa-solid fa-chevron-right ms-2" />
-                            </Link>
+
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-4 d-flex">
-                  <div className="favourites-dashboard w-100">
-                    <div className="book-appointment-head">
-                      <h3>
-                        <span>Book a new</span>Appointment
-                      </h3>
-                      <span className="add-icon">
-                        <Link to="#">
-                          <i className="fa-solid fa-circle-plus" />
-                        </Link>
-                      </span>
-                    </div>
-                    <div className="dashboard-card w-100">
-                      <div className="dashboard-card-head">
-                        <div className="header-title">
-                          <h5>Favourites</h5>
-                        </div>
-                        <div className="card-view-link">
-                          <Link to="/patient/favourites">View All</Link>
-                        </div>
-                      </div>
-                      <div className="dashboard-card-body">
-                        <div className="doctor-fav-list">
-                          <div className="doctor-info-profile">
-                            <Link to="#" className="table-avatar">
-                              <img src={doctorprofileimg} alt="Img" />
-                            </Link>
-                            <div className="doctor-name-info">
-                              <h5>
-                                <Link to="#">Dr. Edalin</Link>
-                              </h5>
-                              <span>Endodontists</span>
-                            </div>
-                          </div>
-                          <Link to="#" className="cal-plus-icon">
-                            <i className="isax isax-calendar5"></i>
-                          </Link>
-                        </div>
-                        <div className="doctor-fav-list">
-                          <div className="doctor-info-profile">
-                            <Link to="#" className="table-avatar">
-                              <img src={doctorthumb11} alt="Img" />
-                            </Link>
-                            <div className="doctor-name-info">
-                              <h5>
-                                <Link to="#">Dr. Maloney</Link>
-                              </h5>
-                              <span>Cardiologist</span>
-                            </div>
-                          </div>
-                          <Link to="#" className="cal-plus-icon">
-                            <i className="isax isax-calendar5"></i>
-                          </Link>
-                        </div>
-                        <div className="doctor-fav-list">
-                          <div className="doctor-info-profile">
-                            <Link to="#" className="table-avatar">
-                              <img src={doctor_14} alt="Img" />
-                            </Link>
-                            <div className="doctor-name-info">
-                              <h5>
-                                <Link to="#">Dr. Wayne&nbsp;</Link>
-                              </h5>
-                              <span>Dental Specialist</span>
-                            </div>
-                          </div>
-                          <Link to="#" className="cal-plus-icon">
-                            <i className="isax isax-calendar5"></i>
-                          </Link>
-                        </div>
-                        <div className="doctor-fav-list">
-                          <div className="doctor-info-profile">
-                            <Link to="#" className="table-avatar">
-                              <img src={doctor_15} alt="Img" />
-                            </Link>
-                            <div className="doctor-name-info">
-                              <h5>
-                                <Link to="#">Dr. Marla</Link>
-                              </h5>
-                              <span>Endodontists</span>
-                            </div>
-                          </div>
-                          <Link to="#" className="cal-plus-icon">
-                            <i className="isax isax-calendar5"></i>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
                 <div className="col-xl-5 d-flex">
                   <div className="dashboard-main-col w-100">
                     <div className="dashboard-card dashboard-slider w-100">
@@ -811,9 +714,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                     </div>
                     <div className="dashboard-card w-100">
                       <div className="dashboard-card-head">
-                        <div className="header-title">
-                          <h5>Notifications</h5>
-                        </div>
+
                         <div className="card-view-link">
                           <Link to="#">View All</Link>
                         </div>
@@ -1296,15 +1197,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                                 Prescriptions
                               </Link>
                             </li>
-                            <li className="nav-item">
-                              <Link
-                                className="nav-link"
-                                to="#invoice-tab"
-                                data-bs-toggle="tab"
-                              >
-                                Invoices
-                              </Link>
-                            </li>
                           </ul>
                         </nav>
                         {/* /Tab Menu */}
@@ -1487,7 +1379,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                                           <Link to="/patient/doctor-profile">
                                             Dr. John Hammer
                                           </Link>
-                                          // ... existing code ...
                                         </h2>
                                       </td>
                                       <td>10 May 2025, 06:00 PM</td>
@@ -2098,279 +1989,8 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                             </div>
                           </div>
                           {/* Prescriptions Tab */}
-                          {/*Invoices Tab */}
-                          <div className="tab-pane fade" id="invoice-tab">
-                            <div className="custom-table">
-                              <div className="table-responsive">
-                                <table className="table table-center mb-0">
-                                  <thead>
-                                    <tr>
-                                      <th>ID</th>
-                                      <th>Doctor</th>
-                                      <th>Appointment Date</th>
-                                      <th>Booked on</th>
-                                      <th>Amount</th>
-                                      <th>Action</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td>
-                                        <Link
-                                          to="#"
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#invoice_view"
-                                          className="link-primary"
-                                        >
-                                          #INV1236
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        <h2 className="table-avatar">
-                                          <Link
-                                            to="/patient/doctor-profile"
-                                            className="avatar avatar-sm me-2"
-                                          >
-                                            <ImageWithBasePath
-                                              className="avatar-img rounded-3"
-                                              src="assets/img/doctors/doctor-thumb-21.jpg"
-                                              alt="User Image"
-                                            />
-                                          </Link>
-                                          <Link to="/patient/doctor-profile">
-                                            Edalin Hendry
-                                          </Link>
-                                        </h2>
-                                      </td>
-                                      <td>24 Mar 2025</td>
-                                      <td>21 Mar 2025</td>
-                                      <td>$300</td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#invoice_view"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>
-                                        <Link
-                                          to="#"
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#invoice_view"
-                                          className="link-primary"
-                                        >
-                                          #NV3656
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        <h2 className="table-avatar">
-                                          <Link
-                                            to="/patient/doctor-profile"
-                                            className="avatar avatar-sm me-2"
-                                          >
-                                            <ImageWithBasePath
-                                              className="avatar-img rounded-3"
-                                              src="assets/img/doctors/doctor-thumb-13.jpg"
-                                              alt="User Image"
-                                            />
-                                          </Link>
-                                          <Link to="/patient/doctor-profile">
-                                            John Homes
-                                          </Link>
-                                        </h2>
-                                      </td>
-                                      <td>17 Mar 2025</td>
-                                      <td>14 Mar 2025</td>
-                                      <td>$450</td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#invoice_view"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>
-                                        <Link
-                                          to="#"
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#invoice_view"
-                                          className="link-primary"
-                                        >
-                                          #INV1246
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        <h2 className="table-avatar">
-                                          <Link
-                                            to="/patient/doctor-profile"
-                                            className="avatar avatar-sm me-2"
-                                          >
-                                            <ImageWithBasePath
-                                              className="avatar-img rounded-3"
-                                              src="assets/img/doctors/doctor-thumb-03.jpg"
-                                              alt="User Image"
-                                            />
-                                          </Link>
-                                          <Link to="/patient/doctor-profile">
-                                            Shanta Neill
-                                          </Link>
-                                        </h2>
-                                      </td>
-                                      <td>11 Mar 2025</td>
-                                      <td>07 Mar 2025</td>
-                                      <td>$250</td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#invoice_view"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>
-                                        <Link
-                                          to="#"
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#invoice_view"
-                                          className="link-primary"
-                                        >
-                                          #INV6985
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        <h2 className="table-avatar">
-                                          <Link
-                                            to="/patient/doctor-profile"
-                                            className="avatar avatar-sm me-2"
-                                          >
-                                            <ImageWithBasePath
-                                              className="avatar-img rounded-3"
-                                              src="assets/img/doctors/doctor-thumb-08.jpg"
-                                              alt="User Image"
-                                            />
-                                          </Link>
-                                          <Link to="/patient/doctor-profile">
-                                            Anthony Tran
-                                          </Link>
-                                        </h2>
-                                      </td>
-                                      <td>26 Feb 2025</td>
-                                      <td>23 Feb 2025</td>
-                                      <td>$320</td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#invoice_view"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>
-                                        <Link
-                                          to="#"
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#invoice_view"
-                                          className="link-primary"
-                                        >
-                                          #INV3659
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        <h2 className="table-avatar">
-                                          <Link
-                                            to="/patient/doctor-profile"
-                                            className="avatar avatar-sm me-2"
-                                          >
-                                            <ImageWithBasePath
-                                              className="avatar-img rounded-3"
-                                              src="assets/img/doctors/doctor-thumb-01.jpg"
-                                              alt="User Image"
-                                            />
-                                          </Link>
-                                          <Link to="/patient/doctor-profile">
-                                            Susan Lingo
-                                          </Link>
-                                        </h2>
-                                      </td>
-                                      <td>18 Feb 2025</td>
-                                      <td>15 Feb 2025</td>
-                                      <td>$480</td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#invoice_view"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
-                          {/* Invoices Tab */}
-                        </div>
+
+
                         {/* Tab Content */}
                       </div>
                     </div>
@@ -2382,6 +2002,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         </div>
       </div>
       {/* /Page Content */}
+    </div>
       <DoctorFooter {...props} />
       <PatientModal />
     </>

@@ -96,9 +96,9 @@ const Chart = () => {
                       <div className="clinic-booking pt-3">
                         <Link
                           className="apt-btn"
-                          to="/Pharmacy/product-checkout"
+                          to="/patient/booking-success"
                         >
-                          Checkout
+                          Book Appointment
                         </Link>
                       </div>
                     </li>

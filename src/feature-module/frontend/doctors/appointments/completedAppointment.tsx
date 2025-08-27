@@ -291,15 +291,13 @@ const CompletedAppointment: React.FC = (props) => {
                             </div>
                             <div className="view-prescribe-details">
                                 <div className="hospital-addr">
-                                    <div className="invoice-logo">
-                                        <img src={logo} alt="logo" />
-                                    </div>
+                                    
                                     <h5>
                                         16, Wardlow, Buxton, Derbyshire, SK17 8RW. Phone : 01298 872268{" "}
                                     </h5>
                                     <p>Monday to Sunday - 09:30am to 12:00pm</p>
                                 </div>
-                                {/* Invoice Item */}
+
                                 <div className="invoice-item">
                                     <div className="row">
                                         <div className="col-md-6">
@@ -334,7 +332,7 @@ const CompletedAppointment: React.FC = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                {/* /Invoice Item */}
+
                                 <div className="appointment-notes">
                                     <h3>Appointment Note</h3>
                                 </div>
@@ -409,75 +407,7 @@ const CompletedAppointment: React.FC = (props) => {
                                         complications.
                                     </p>
                                 </div>
-                                {/* Invoice Item */}
-                                <div className="invoice-item invoice-table-wrap">
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="table-responsive inv-table">
-                                                <table className="invoice-table table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>SNO</th>
-                                                            <th>Medecine Name</th>
-                                                            <th>Dosage</th>
-                                                            <th>Frequency</th>
-                                                            <th>Duration</th>
-                                                            <th>Timings</th>
-                                                            <th>Instruction</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>Ecosprin 75MG [Asprin 75 MG Oral Tab]</td>
-                                                            <td>
-                                                                75 mg <span>Oral Tab</span>
-                                                            </td>
-                                                            <td>1-0-0-1</td>
-                                                            <td>1 month</td>
-                                                            <td>Before Meal</td>
-                                                            <td>Take in alternate das, with hot water</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>Alexer 90MG Tab</td>
-                                                            <td>
-                                                                90 mg <span>Oral Tab</span>
-                                                            </td>
-                                                            <td>1-0-0-1</td>
-                                                            <td>1 month</td>
-                                                            <td>Before Meal</td>
-                                                            <td>Take in alternate das, with hot water</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>Ramistar XL2.5</td>
-                                                            <td>
-                                                                60 mg <span>Oral Tab</span>
-                                                            </td>
-                                                            <td>1-0-0-0</td>
-                                                            <td>1 month</td>
-                                                            <td>After Meal</td>
-                                                            <td>Take in alternate das, with hot water</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>4</td>
-                                                            <td>Metscore</td>
-                                                            <td>
-                                                                90 mg <span>Oral Tab</span>
-                                                            </td>
-                                                            <td>1-0-0-1</td>
-                                                            <td>1 month</td>
-                                                            <td>After Meal</td>
-                                                            <td>Take in alternate das, with hot water</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* /Invoice Item */}
+
                                 <div className="row align-items-center">
                                     <div className="col-md-6">
                                         <div className="scan-wrap">

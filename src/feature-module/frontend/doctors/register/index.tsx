@@ -107,7 +107,7 @@ const DoctorRegister = (props: any) => {
                         </div>
                         <div className="account-signup">
                           <p>
-                            Already have account? <Link to="/login">Sign In</Link>
+                            Already have account? <Link to="/">Sign In</Link>
                           </p>
                         </div>
                       </form>

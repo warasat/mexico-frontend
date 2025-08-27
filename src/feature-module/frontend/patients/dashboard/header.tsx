@@ -715,18 +715,7 @@ const Header = (props: any) => {
                               Booking
                             </Link>
                           </li>
-                          <li
-                            className={
-                              pathnames.includes("checkout") ? "active" : ""
-                            }
-                          >
-                            <Link
-                              to="/patient/checkout"
-                              onClick={() => OnhandleCloseMenu()}
-                            >
-                              Checkout
-                            </Link>
-                          </li>
+
                           <li
                             className={
                               pathnames.includes("booking-success")
@@ -753,30 +742,7 @@ const Header = (props: any) => {
                               Patient Dashboard
                             </Link>
                           </li>
-                          <li
-                            className={
-                              pathnames.includes("favourites") ? "active" : ""
-                            }
-                          >
-                            <Link
-                              to="/patient/favourites"
-                              onClick={() => OnhandleCloseMenu()}
-                            >
-                              Favourites
-                            </Link>
-                          </li>
-                          <li
-                            className={
-                              pathnames.includes("patient-chat") ? "active" : ""
-                            }
-                          >
-                            <Link
-                              to="/patient/patient-chat"
-                              onClick={() => OnhandleCloseMenu()}
-                            >
-                              Chat
-                            </Link>
-                          </li>
+
                           <li
                             className={
                               pathnames.includes("profile") &&
@@ -1113,42 +1079,7 @@ const Header = (props: any) => {
                             </Link>
                           </li>
 
-                          <li
-                            className={
-                              pathnames.includes("login") ? "active" : ""
-                            }
-                          >
-                            <Link
-                              to="/login"
-                              onClick={() => OnhandleCloseMenu()}
-                            >
-                              Login
-                            </Link>
-                          </li>
-                          <li
-                            className={
-                              pathnames.includes("/register") ? "active" : ""
-                            }
-                          >
-                            <Link
-                              to="/register"
-                              onClick={() => OnhandleCloseMenu()}
-                            >
-                              Register
-                            </Link>
-                          </li>
-                          <li
-                            className={`${
-                              pathnames === "/forgot-password" ? "active" : ""
-                            }`}
-                          >
-                            <Link
-                              to="/forgot-password"
-                              onClick={() => OnhandleCloseMenu()}
-                            >
-                              Forgot Password
-                            </Link>
-                          </li>
+
                         </ul>
                       ) : (
                         ""
@@ -1238,12 +1169,7 @@ const Header = (props: any) => {
                         ""
                       )}
                     </li>
-                    <li
-                      className="login-link"
-                      onClick={() => OnhandleCloseMenu()}
-                    >
-                      <Link to="/home-1">Login / Signup</Link>
-                    </li>
+
                   </ul>
                 </div>
                 <ul className="nav header-navbar-rht">
@@ -1330,7 +1256,7 @@ const Header = (props: any) => {
                           <Link className="dropdown-item" to="/patient/profile">
                             Profile Settings
                           </Link>
-                          <Link className="dropdown-item" to="/login">
+                          <Link className="dropdown-item" to="/">
                             Logout
                           </Link>
                         </div>

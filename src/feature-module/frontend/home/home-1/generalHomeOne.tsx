@@ -3,7 +3,7 @@ import Header from './header'
 import HomeBanner from './homeBanner'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import SectionList from './sectionList';
+// import SectionList from './sectionList';
 import SectionSpeciality from './sectionSpeciality';
 import SectionDoctor from './sectionDoctor';
 import SectionService from './sectionService';
@@ -12,7 +12,7 @@ import SectionBook from './sectionBook';
 import SectionTestimonial from './sectionTestimonial';
 import SectionApp from './sectionApp';
 import SectionFaq from './sectionFaq';
-import SectionArtical from './sectionArtical';
+
 import Footer from './footer';
 
 
@@ -29,7 +29,7 @@ const GeneralHomeOne: React.FC = () => {
     <div className='main-wrapper'>
       <Header />
       <HomeBanner />
-      <SectionList />
+      {/* <SectionList /> */}
       <SectionSpeciality />
       <SectionDoctor />
       <SectionService />
@@ -38,7 +38,7 @@ const GeneralHomeOne: React.FC = () => {
       <SectionTestimonial />
       <SectionFaq />
       <SectionApp />
-      <SectionArtical />
+      
       <Footer />
     </div>
   )

@@ -1,9 +1,64 @@
 import React, { useState } from 'react'
-import { Calendar } from 'primereact/calendar';
 import ImageWithBasePath from '../../../../components/imageWithBasePath';
+import { useTranslation } from 'react-i18next';
+
+// Insurance providers for hero section
+const insuranceProviders = [
+  "Aetna",
+  "Anthem Blue Cross Blue Shield",
+  "Blue Cross Blue Shield",
+  "Cigna",
+  "Humana",
+  "UnitedHealth",
+  "Kaiser Permanente",
+  "AARP",
+  "Medicare",
+  "Medicaid",
+  "Tricare",
+  "VA Health Care",
+  "BCBS Federal Employee Program",
+  "Aetna Better Health",
+  "AmeriHealth",
+  "CareFirst BlueCross BlueShield",
+  "Highmark Blue Cross Blue Shield",
+  "Independence Blue Cross",
+  "Premera Blue Cross",
+  "Regence Blue Cross Blue Shield",
+  "SelectHealth",
+  "WellCare",
+  "Molina Healthcare",
+  "Centene",
+  "Bright Health",
+  "Oscar Health",
+  "Ambetter",
+  "Health Net",
+  "Anthem",
+  "Empire Blue Cross",
+  "Blue Cross of California",
+  "Blue Cross of Texas",
+  "Blue Cross of Illinois",
+  "Blue Cross of Michigan",
+  "Blue Cross of Massachusetts",
+  "Blue Cross of New York",
+  "Blue Cross of Florida",
+  "Blue Cross of Georgia",
+  "Blue Cross of North Carolina",
+  "Blue Cross of Pennsylvania",
+  "Blue Cross of Ohio",
+  "Blue Cross of Indiana",
+  "Blue Cross of Wisconsin",
+  "Blue Cross of Minnesota",
+  "Blue Cross of Colorado",
+  "Blue Cross of Arizona",
+  "Blue Cross of Nevada",
+  "Blue Cross of Oregon",
+  "Blue Cross of Washington",
+  "Blue Cross of Maryland"
+];
 
 const HomeBanner: React.FC = () => {
-    const [date1, setDate1] = useState<Date | null>(null);
+    const [selectedInsurance, setSelectedInsurance] = useState<string>('');
+    const { t } = useTranslation();
 
 
     
@@ -37,7 +92,7 @@ const HomeBanner: React.FC = () => {
                                         </span>
                                     </div>
                                     <div className="me-2">
-                                        <h6 className="mb-1">5K+ Appointments</h6>
+                                        <h6 className="mb-1">{t('home.appointments')}</h6>
                                         <div className="d-flex align-items-center">
                                             <div className="d-flex align-items-center">
                                                 <i className="fa-solid fa-star text-orange me-1" />
@@ -46,16 +101,16 @@ const HomeBanner: React.FC = () => {
                                                 <i className="fa-solid fa-star text-orange me-1" />
                                                 <i className="fa-solid fa-star text-orange me-1" />
                                             </div>
-                                            <p>5.0 Ratings</p>
+                                            <p>{t('home.ratings')}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <h1 className="display-5">
-                                    Discover Health: Find Your Trusted{" "}
+                                    {t('home.bannerTitle')}{" "}
                                     <span className="banner-icon">
                                         <ImageWithBasePath src="assets/img/icons/video.svg" alt="img" />
                                     </span>{" "}
-                                    <span className="text-gradient">Doctors</span> Today
+                                    <span className="text-gradient">{t('home.doctors')}</span> {t('home.today')}
                                 </h1>
                                 <div className="search-box-one aos" data-aos="fade-up">
                                     <form>
@@ -65,7 +120,7 @@ const HomeBanner: React.FC = () => {
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    placeholder="Search doctors, clinics, hospitals, etc"
+                                                    placeholder={t('search.searchDoctors')}
                                                 />
                                             </div>
                                         </div>
@@ -75,26 +130,33 @@ const HomeBanner: React.FC = () => {
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    placeholder="Location"
+                                                    placeholder={t('maps.location')}
                                                 />
                                             </div>
                                         </div>
                                         <div className="search-input search-calendar-line">
-                                            <i className="isax isax-calendar-tick5" style={{zIndex:99}}/>
+                                            <i className="isax isax-shield-tick5 bficon" />
                                             <div className=" mb-0">
-                                                
-                                                <Calendar
-                                                    value={date1}
-                                                    onChange={(e) => setDate1(e.value ?? null)}
-                                                    placeholder="Date"
-                                                    className="custom-date-picker"
-                                                />
+                                                <select
+                                                    value={selectedInsurance}
+                                                    onChange={(e) => setSelectedInsurance(e.target.value)}
+                                                    className="form-control"
+                                                    style={{ paddingLeft: '45px' }}
+                                                >
+                                                    <option value="">Insurance</option>
+                                                    {insuranceProviders.map((insurance, index) => (
+                                                        <option key={index} value={insurance}>
+                                                            {insurance}
+                                                        </option>
+                                                    ))}
+                                                </select>
                                             </div>
                                         </div>
+
                                         <div className="form-search-btn">
                                             <button className="btn btn-primary" type="submit">
                                                 <i className="isax isax-search-normal5 me-2" />
-                                                Search
+                                                {t('common.search')}
                                             </button>
                                         </div>
                                     </form>

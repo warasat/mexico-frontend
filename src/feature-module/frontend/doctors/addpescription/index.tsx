@@ -56,10 +56,7 @@ const AddPescription: React.FC = (props) => {
                       </div>
                     </div>
                     <div className="col-sm-6 text-sm-end">
-                      <div className="billing-info">
-                        <h4 className="d-block">1 November 2019</h4>
-                        <span className="d-block text-muted">#INV0001</span>
-                      </div>
+
                     </div>
                   </div>
 

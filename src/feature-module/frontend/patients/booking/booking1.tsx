@@ -299,10 +299,10 @@ const Booking = (props: any) => {
               <div></div>
               <div className="submit-section proceed-btn text-end">
                 <Link
-                  to="/patient/checkout"
+                  to="/patient/booking-success"
                   className="btn btn-primary submit-btn"
                 >
-                  Proceed to Pay
+                  Proceed to Book
                 </Link>
               </div>
             </div>

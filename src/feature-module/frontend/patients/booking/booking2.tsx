@@ -332,9 +332,7 @@ const Booking2: React.FC = (props) => {
                           Call us +1 888-888-8888 (or) chat with our customer
                           support team.
                         </p>
-                        <Link to="/patient/patient-chat" className="btn">
-                          Chat With Us
-                        </Link>
+
                       </div>
                     </div>
                   </div>

@@ -1,19 +1,67 @@
-import SearchList from "./searchList";
+import { useEffect, useState } from "react";
 import Header from "../../header";
+import StickyBox from "react-sticky-box";
+import Doctors from "./doctors";
 import Footer from "../../footer";
-import { Link } from "react-router-dom";
-import "react-datepicker/src/stylesheets/datepicker.scss";
+import { Link, useSearchParams } from "react-router-dom";
 import { DatePicker } from "antd";
+import Searchfilter from "./searchfilter";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { all_routes } from "../../../../routes/all_routes";
 
-const SearchDoctor  = (props: any) => {
+const SearchDoctor = (props: any) => {
+  const [searchParams] = useSearchParams();
   
+  // Specialty mapping from URL parameters to display names
+  const specialtyMapping: { [key: string]: string } = {
+    "primary-care": "Primary Care Physicians",
+    "dentists": "Dentists",
+    "obgyn": "OBGYNs",
+    "psychologists": "Psychologists",
+    "psychiatrists": "Psychiatrists",
+    "therapists": "Therapist-Counselors",
+    "urgent-care": "Urgent Care",
+    "chiropractors": "Chiropractors",
+    "optometrists": "Optometrists",
+    "ophthalmologists": "Ophthalmologists",
+    "podiatrists": "Podiatrists",
+    "pediatricians": "Pediatricians",
+    "dermatologists": "Dermatologists",
+    "orthopedic-surgeons": "Orthopedic Surgeons"
+  };
+  const [_minValue, setMinValue] = useState(10);
+  const [_maxValue, setMaxValue] = useState(5000);
+
+  useEffect(() => {
+    if (document.getElementById("price-range")) {
+      setMinValue(10);
+      setMaxValue(10000);
+
+      const slider = document.getElementById("price-range");
+      if (slider) {
+        slider.addEventListener("input", HandleSliderChange);
+
+        return () => {
+          slider.removeEventListener("input", HandleSliderChange);
+        };
+      }
+      return undefined;
+    }
+  }, []);
+
+  const HandleSliderChange = (event: any) => {
+    const min = parseInt(event.target.value.split(",")[0]);
+    const max = parseInt(event.target.value.split(",")[1]);
+
+    setMinValue(min);
+    setMaxValue(max);
+  };
   return (
-    <div>
+    <div className="main-wrapper">
       <Header {...props} />
-        {/* Breadcrumb */}
-        <div className="breadcrumb-bar overflow-visible">
+
+      {/* Breadcrumb */}
+      <div className="breadcrumb-bar overflow-visible">
         <div className="container">
           <div className="row align-items-center inner-banner">
             <div className="col-md-12 col-12 text-center">
@@ -27,7 +75,12 @@ const SearchDoctor  = (props: any) => {
                   <li className="breadcrumb-item">Doctor</li>
                   <li className="breadcrumb-item active">Doctor Grid</li>
                 </ol>
-                <h2 className="breadcrumb-title">Doctor Grid</h2>
+                <h2 className="breadcrumb-title">
+                  {searchParams.get("specialty") ? 
+                    `${specialtyMapping[searchParams.get("specialty") || ""] || "Specialty"} Doctors` : 
+                    "Doctor Grid"
+                  }
+                </h2>
               </nav>
             </div>
           </div>
@@ -100,13 +153,27 @@ const SearchDoctor  = (props: any) => {
         </div>
       </div>
       {/* /Breadcrumb */}
-      <div className="content">
+
+      <div className="doctor-content content">
         <div className="container">
           <div className="row">
-              <SearchList />
+            <div className="col-xl-12 col-lg-12 map-view">
+              <div className="row">
+                <div className="col-lg-3  theiaStickySidebar">
+                  <StickyBox offsetTop={20} offsetBottom={20}>
+                   <Searchfilter/>
+                  </StickyBox>
+                </div>
+
+                <div className="col-lg-9">
+                  <Doctors />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
       <Footer {...props} />
     </div>
   );

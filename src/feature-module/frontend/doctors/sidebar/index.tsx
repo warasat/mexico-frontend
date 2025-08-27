@@ -60,13 +60,7 @@ const DoctorSidebar = () => {
                   <span>Dashboard</span>
                 </Link>
               </li>
-              <li className={pathnames.includes("/doctor/doctor-request") ? "active" : ""}>
-                <Link to="/doctor/doctor-request">
-                <i className="isax isax-clipboard-tick me-2"></i>
-                  <span>Requests</span>
-                  <small className="unread-msg">2</small>
-                </Link>
-              </li>
+
               <li
                 className={
                   pathnames.includes("/doctor/doctor-appointments-grid") || pathnames.includes('/doctor/appointments') || pathnames.includes('/doctor/doctor-appointment-start') || pathnames.includes('/doctor/doctor-upcoming-appointment') || pathnames.includes("/doctor/doctor-cancelled-appointment-2") || pathnames.includes('/doctor/doctor-cancelled-appointment') ? "active" : ""
@@ -90,64 +84,22 @@ const DoctorSidebar = () => {
                   <span>My Patients</span>
                 </Link>
               </li>
-              <li className={pathnames.includes('/doctor/doctor-specialities') ? 'active' : ''}>
-                <Link to="/doctor/doctor-specialities">
-                <i className="isax isax-clock me-2"></i>
-                  <span>Specialties &amp; Services</span>
-                </Link>
-              </li>
-              <li className={pathnames.includes('/doctor/review') ? 'active' : ''}>
-                <Link to="/doctor/review">
-                <i className="isax isax-star-1 me-2"></i>
-                  <span>Reviews</span>
-                </Link>
-              </li>
-              <li className={pathnames.includes('/doctor/account') ? 'active' : ''}>
 
-                <Link to="/doctor/account">
-                <i className="isax isax-profile-tick me-2"></i>
-                  <span>Accounts</span>
+              <li className={pathnames.includes('/doctor/add-prescription') ? 'active' : ''}>
+                <Link to="/doctor/add-prescription">
+                <i className="fa-solid fa-prescription-bottle-medical me-2"></i>
+                  <span>Add Prescription</span>
                 </Link>
               </li>
-              <li className={pathnames.includes('/doctor/invoices') ? 'active' : ''}>
-                <Link to="/doctor/invoices">
-                <i className="isax isax-document-text me-2"></i>
-                  <span>Invoices</span>
-                </Link>
-              </li>
-              <li className={pathnames.includes('/doctor/doctor-payment') ? 'active' : ''}>
-                <Link to="/doctor/doctor-payment">
-                <i className="fa-solid fa-money-bill-1 me-2"></i>
-                  <span>Payout Settings</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/doctor/chat-doctor">
-                <i className="isax isax-messages-1 me-2"></i>
-                  <span>Message</span>
-                  <small className="unread-msg">7</small>
-                </Link>
-              </li>
+
               <li className={pathnames.includes('/doctor/profile-setting') || pathnames.includes('/doctor/doctor-experience') || pathnames.includes('/doctor/education') || pathnames.includes('/doctor/doctor-awards-settings') || pathnames.includes('/doctor/doctor-insurance-settings') || pathnames.includes('/doctor/doctor-clinics-settings') || pathnames.includes('doctor/doctor-business-settings') ? 'active' : ''}>
                 <Link to="/doctor/profile-setting">
                 <i className="isax isax-setting-2 me-2"></i>
                   <span>Profile Settings</span>
                 </Link>
               </li>
-              <li className={pathnames.includes('/doctor/social-media') ? 'active' : ''}>
-                <Link to="/doctor/social-media">
-                <i className="fa-solid fa-shield-halved me-2"></i>
-                  <span>Social Media</span>
-                </Link>
-              </li>
-              <li className={pathnames.includes('/doctor/doctor-change-password') ? 'active' : ''}>
-                <Link to="/doctor/doctor-change-password">
-                <i className="isax isax-key me-2"></i>
-                  <span>Change Password</span>
-                </Link>
-              </li>
-              <li className={pathnames.includes("/login") ? 'active' : ''}>
-                <Link to="/login">
+              <li>
+                <Link to="/">
                 <i className="isax isax-logout me-2"></i>
                   <span>Logout</span>
                 </Link>

@@ -1,8 +1,128 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
-
+import { useEffect, useState } from "react";
 
 const Doctors = () => {
+  const [searchParams] = useSearchParams();
+  const [filteredDoctors, setFilteredDoctors] = useState<any[]>([]);
+  const [specialty, setSpecialty] = useState<string>("");
+
+  // Doctor data matching the sectionDoctor.tsx structure
+  const allDoctors = [
+    {
+      id: 1,
+      name: "Dr. Michael Brown",
+      specialty: "Psychologist",
+      specialtyClass: "text-indigo",
+      image: "assets/img/doctor-grid/doctor-grid-01.jpg",
+      rating: "5.0",
+      location: "Minneapolis, MN",
+      duration: "30 Min",
+      available: true,
+      consultationFee: "$650"
+    },
+    {
+      id: 2,
+      name: "Dr. Nicholas Tello",
+      specialty: "Pediatrician",
+      specialtyClass: "text-pink",
+      image: "assets/img/doctor-grid/doctor-grid-02.jpg",
+      rating: "4.6",
+      location: "Ogden, IA",
+      duration: "60 Min",
+      available: true,
+      consultationFee: "$400"
+    },
+    {
+      id: 3,
+      name: "Dr. Harold Bryant",
+      specialty: "Neurologist",
+      specialtyClass: "text-teal",
+      image: "assets/img/doctor-grid/doctor-grid-03.jpg",
+      rating: "4.8",
+      location: "Winona, MS",
+      duration: "30 Min",
+      available: true,
+      consultationFee: "$500"
+    },
+    {
+      id: 4,
+      name: "Dr. Sandra Jones",
+      specialty: "Cardiologist",
+      specialtyClass: "text-info",
+      image: "assets/img/doctor-grid/doctor-grid-04.jpg",
+      rating: "4.8",
+      location: "Beckley, WV",
+      duration: "30 Min",
+      available: true,
+      consultationFee: "$550"
+    },
+    {
+      id: 5,
+      name: "Dr. Charles Scott",
+      specialty: "Neurologist",
+      specialtyClass: "text-teal",
+      image: "assets/img/doctor-grid/doctor-grid-05.jpg",
+      rating: "4.2",
+      location: "Hamshire, TX",
+      duration: "30 Min",
+      available: true,
+      consultationFee: "$600"
+    }
+  ];
+
+  // Specialty mapping from URL parameters to display names
+  const specialtyMapping: { [key: string]: string } = {
+    "primary-care": "Primary Care Physicians",
+    "dentists": "Dentists",
+    "obgyn": "OBGYNs",
+    "psychologists": "Psychologists",
+    "psychiatrists": "Psychiatrists",
+    "therapists": "Therapist-Counselors",
+    "urgent-care": "Urgent Care",
+    "chiropractors": "Chiropractors",
+    "optometrists": "Optometrists",
+    "ophthalmologists": "Ophthalmologists",
+    "podiatrists": "Podiatrists",
+    "pediatricians": "Pediatricians",
+    "dermatologists": "Dermatologists",
+    "orthopedic-surgeons": "Orthopedic Surgeons"
+  };
+
+  useEffect(() => {
+    const specialtyParam = searchParams.get("specialty");
+    setSpecialty(specialtyParam || "");
+    
+    if (specialtyParam) {
+      // Filter doctors based on specialty
+      const filtered = allDoctors.filter(doctor => {
+        const doctorSpecialty = doctor.specialty.toLowerCase();
+        const paramSpecialty = specialtyParam.toLowerCase();
+        
+        // Map URL parameters to actual specialties
+        switch (paramSpecialty) {
+          case "psychologists":
+            return doctorSpecialty === "psychologist";
+          case "pediatricians":
+            return doctorSpecialty === "pediatrician";
+          case "dermatologists":
+            return doctorSpecialty === "dermatologist";
+          case "orthopedic-surgeons":
+            return doctorSpecialty === "orthopedic surgeon";
+          case "cardiologists":
+            return doctorSpecialty === "cardiologist";
+          case "neurologists":
+            return doctorSpecialty === "neurologist";
+          default:
+            return doctorSpecialty.includes(paramSpecialty) || paramSpecialty.includes(doctorSpecialty);
+        }
+      });
+      
+      setFilteredDoctors(filtered);
+    } else {
+      setFilteredDoctors(allDoctors);
+    }
+  }, [searchParams]);
 
   return (
     <>
@@ -10,7 +130,15 @@ const Doctors = () => {
       <div className="col-md-6">
         <div className="mb-4">
           <h3>
-            Showing <span className="text-secondary">450</span> Doctors For You
+            {specialty ? (
+              <>
+                Showing <span className="text-secondary">{filteredDoctors.length}</span> {specialtyMapping[specialty] || specialty} For You
+              </>
+            ) : (
+              <>
+                Showing <span className="text-secondary">{filteredDoctors.length}</span> Doctors For You
+              </>
+            )}
           </h3>
         </div>
       </div>
@@ -56,17 +184,19 @@ const Doctors = () => {
       </div>
     </div>
     <div className="row">
-      <div className="col-lg-12">
+      {filteredDoctors.length > 0 ? (
+        filteredDoctors.map((doctor) => (
+          <div key={doctor.id} className="col-lg-12">
         <div className="card doctor-list-card">
           <div className="d-md-flex align-items-center">
             <div className="card-img card-img-hover">
               <Link to="/patient/doctor-profile">
-                <ImageWithBasePath src="assets/img/doctor-grid/doctor-list-01.jpg" alt="" />
+                    <ImageWithBasePath src={doctor.image} alt="" />
               </Link>
               <div className="grid-overlay-item d-flex align-items-center justify-content-between">
                 <span className="badge bg-orange">
                   <i className="fa-solid fa-star me-1" />
-                  4.8
+                      {doctor.rating}
                 </span>
                 <Link to="javascript:void(0)" className="fav-icon">
                   <i className="fa fa-heart" />
@@ -75,12 +205,12 @@ const Doctors = () => {
             </div>
             <div className="card-body p-0">
               <div className="d-flex align-items-center justify-content-between border-bottom p-3">
-                <Link to="#" className="text-teal fw-medium fs-14">
-                  Neurologist
+                    <Link to="#" className={`${doctor.specialtyClass} fw-medium fs-14`}>
+                      {doctor.specialty}
                 </Link>
-                <span className="badge bg-success-light d-inline-flex align-items-center">
+                    <span className={`badge ${doctor.available ? 'bg-success-light' : 'bg-danger-light'} d-inline-flex align-items-center`}>
                   <i className="fa-solid fa-circle fs-5 me-1" />
-                  Available
+                      {doctor.available ? 'Available' : 'Unavailable'}
                 </span>
               </div>
               <div className="p-3">
@@ -89,13 +219,13 @@ const Doctors = () => {
                     <div className="col-sm-6">
                       <div>
                         <h6 className="d-flex align-items-center mb-1">
-                          <Link to="/patient/doctor-profile">Dr. Charles Scott</Link>
+                              <Link to="/patient/doctor-profile">{doctor.name}</Link>
                           <i className="isax isax-tick-circle5 text-success ms-2" />
                         </h6>
-                        <p className="mb-2">MBBS, DNB - Neurology</p>
+                            <p className="mb-2">MBBS, MD - {doctor.specialty}</p>
                         <p className="d-flex align-items-center mb-0 fs-14">
                           <i className="isax isax-location me-2" />
-                          Hamshire, TX
+                              {doctor.location}
                           <Link
                             to="#"
                             className="text-primary text-decoration-underline ms-2"
@@ -127,7 +257,7 @@ const Doctors = () => {
                   <div className="d-flex align-items-center flex-wrap row-gap-3">
                     <div className="me-3">
                       <p className="mb-1">Consultation Fees</p>
-                      <h3 className="text-orange">$600</h3>
+                          <h3 className="text-orange">{doctor.consultationFee}</h3>
                     </div>
                     <p className="mb-0">
                       Next available at <br />
@@ -147,552 +277,17 @@ const Doctors = () => {
           </div>
         </div>
       </div>
+        ))
+      ) : (
       <div className="col-lg-12">
-        <div className="card doctor-list-card">
-          <div className="d-md-flex align-items-center">
-            <div className="card-img card-img-hover">
-              <Link to="/patient/doctor-profile">
-                <ImageWithBasePath src="assets/img/doctor-grid/doctor-list-02.jpg" alt="" />
-              </Link>
-              <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-                <span className="badge bg-orange">
-                  <i className="fa-solid fa-star me-1" />
-                  4.3
-                </span>
-                <Link to="javascript:void(0)" className="fav-icon">
-                  <i className="fa fa-heart" />
-                </Link>
-              </div>
-            </div>
-            <div className="card-body p-0">
-              <div className="d-flex align-items-center justify-content-between border-bottom p-3">
-                <Link to="#" className="text-info fw-medium fs-14">
-                  Cardiologist
-                </Link>
-                <span className="badge bg-danger-light d-inline-flex align-items-center">
-                  <i className="fa-solid fa-circle fs-5 me-1" />
-                  Unavailable
-                </span>
-              </div>
-              <div className="p-3">
-                <div className="doctor-info-detail pb-3">
-                  <div className="row align-items-center gy-3">
-                    <div className="col-sm-6">
-                      <div>
-                        <h6 className="d-flex align-items-center mb-1">
-                          <Link to="/patient/doctor-profile">Dr. Robert Thomas</Link>
-                          <i className="isax isax-tick-circle5 text-success ms-2" />
-                        </h6>
-                        <p className="mb-2">MBBS, MD - Cardialogy</p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-location me-2" />
-                          Oakland, CA
-                          <Link
-                            to="#"
-                            className="text-primary text-decoration-underline ms-2"
-                          >
-                            Get Direction
-                          </Link>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="col-sm-6">
-                      <div>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-language-circle text-dark me-2" />
-                          English, Spanish
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-like-1 text-dark me-2" />
-                          92% (270 / 300 Votes)
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-archive-14 text-dark me-2" />
-                          30 Years of Experience
-                        </p>
+          <div className="card">
+            <div className="card-body text-center py-5">
+              <h4 className="text-muted">No doctors found for this specialty</h4>
+              <p className="text-muted">Try searching for a different specialty or check back later.</p>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-3 mt-3">
-                  <div className="d-flex align-items-center flex-wrap row-gap-3">
-                    <div className="me-3">
-                      <p className="mb-1">Consultation Fees</p>
-                      <h3 className="text-orange">$450</h3>
-                    </div>
-                    <p className="mb-0">
-                      Next available at <br />
-                      11.00 AM - 19 Oct, Sat
-                    </p>
-                  </div>
-                  <Link
-                    to="/booking"
-                    className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
-                  >
-                    <i className="isax isax-calendar-1 me-2" />
-                    Book Appointment
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-lg-12">
-        <div className="card doctor-list-card">
-          <div className="d-md-flex align-items-center">
-            <div className="card-img card-img-hover">
-              <Link to="/patient/doctor-profile">
-                <ImageWithBasePath src="assets/img/doctor-grid/doctor-list-03.jpg" alt="" />
-              </Link>
-              <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-                <span className="badge bg-orange">
-                  <i className="fa-solid fa-star me-1" />
-                  4.7
-                </span>
-                <Link to="javascript:void(0)" className="fav-icon">
-                  <i className="fa fa-heart" />
-                </Link>
-              </div>
-            </div>
-            <div className="card-body p-0">
-              <div className="d-flex align-items-center justify-content-between border-bottom p-3">
-                <Link to="#" className="text-indigo fw-medium fs-14">
-                  Psychologist
-                </Link>
-                <span className="badge bg-success-light d-inline-flex align-items-center">
-                  <i className="fa-solid fa-circle fs-5 me-1" />
-                  Available
-                </span>
-              </div>
-              <div className="p-3">
-                <div className="doctor-info-detail pb-3">
-                  <div className="row align-items-center gy-3">
-                    <div className="col-sm-6">
-                      <div>
-                        <h6 className="d-flex align-items-center mb-1">
-                          <Link to="/patient/doctor-profile">Dr. Margaret Koller</Link>
-                          <i className="isax isax-tick-circle5 text-success ms-2" />
-                        </h6>
-                        <p className="mb-2"> B.S, M.S - Psychology</p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-location me-2" />
-                          Killeen, TX
-                          <Link
-                            to="#"
-                            className="text-primary text-decoration-underline ms-2"
-                          >
-                            Get Direction
-                          </Link>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="col-sm-6">
-                      <div>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-language-circle text-dark me-2" />
-                          English, Portuguese
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-like-1 text-dark me-2" />
-                          94% (268 / 312 Votes)
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-archive-14 text-dark me-2" />
-                          15 Years of Experience
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-3 mt-3">
-                  <div className="d-flex align-items-center flex-wrap row-gap-3">
-                    <div className="me-3">
-                      <p className="mb-1">Consultation Fees</p>
-                      <h3 className="text-orange">$700</h3>
-                    </div>
-                    <p className="mb-0">
-                      Next available at <br />
-                      10.30 AM - 29 Oct, Tue
-                    </p>
-                  </div>
-                  <Link
-                    to="/booking"
-                    className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
-                  >
-                    <i className="isax isax-calendar-1 me-2" />
-                    Book Appointment
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-lg-12">
-        <div className="card doctor-list-card">
-          <div className="d-md-flex align-items-center">
-            <div className="card-img card-img-hover">
-              <Link to="/patient/doctor-profile">
-                <ImageWithBasePath src="assets/img/doctor-grid/doctor-list-04.jpg" alt="" />
-              </Link>
-              <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-                <span className="badge bg-orange">
-                  <i className="fa-solid fa-star me-1" />
-                  4.5
-                </span>
-                <Link to="javascript:void(0)" className="fav-icon">
-                  <i className="fa fa-heart" />
-                </Link>
-              </div>
-            </div>
-            <div className="card-body p-0">
-              <div className="d-flex align-items-center justify-content-between border-bottom p-3">
-                <Link to="#" className="text-pink fw-medium fs-14">
-                  Pediatrician
-                </Link>
-                <span className="badge bg-danger-light d-inline-flex align-items-center">
-                  <i className="fa-solid fa-circle fs-5 me-1" />
-                  Unavailable
-                </span>
-              </div>
-              <div className="p-3">
-                <div className="doctor-info-detail pb-3">
-                  <div className="row align-items-center gy-3">
-                    <div className="col-sm-6">
-                      <div>
-                        <h6 className="d-flex align-items-center mb-1">
-                          <Link to="/patient/doctor-profile">Dr. Cath Busick</Link>
-                          <i className="isax isax-tick-circle5 text-success ms-2" />
-                        </h6>
-                        <p className="mb-2">MBBS, MD - Pediatrics</p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-location me-2" />
-                          Schenectady, NY
-                          <Link
-                            to="#"
-                            className="text-primary text-decoration-underline ms-2"
-                          >
-                            Get Direction
-                          </Link>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="col-sm-6">
-                      <div>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-language-circle text-dark me-2" />
-                          English, Arabic
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-like-1 text-dark me-2" />
-                          87% (237 / 250 Votes)
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-archive-14 text-dark me-2" />
-                          12 Years of Experience
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-3 mt-3">
-                  <div className="d-flex align-items-center flex-wrap row-gap-3">
-                    <div className="me-3">
-                      <p className="mb-1">Consultation Fees</p>
-                      <h3 className="text-orange">$750</h3>
-                    </div>
-                    <p className="mb-0">
-                      Next available at <br />
-                      02:00 PM - 04 Nov, Mon
-                    </p>
-                  </div>
-                  <Link
-                    to="/booking"
-                    className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
-                  >
-                    <i className="isax isax-calendar-1 me-2" />
-                    Book Appointment
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-lg-12">
-        <div className="card doctor-list-card">
-          <div className="d-md-flex align-items-center">
-            <div className="card-img card-img-hover">
-              <Link to="/patient/doctor-profile">
-                <ImageWithBasePath src="assets/img/doctor-grid/doctor-list-05.jpg" alt="" />
-              </Link>
-              <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-                <span className="badge bg-orange">
-                  <i className="fa-solid fa-star me-1" />
-                  5.0
-                </span>
-                <Link to="javascript:void(0)" className="fav-icon">
-                  <i className="fa fa-heart" />
-                </Link>
-              </div>
-            </div>
-            <div className="card-body p-0">
-              <div className="d-flex align-items-center justify-content-between border-bottom p-3">
-                <Link to="#" className="text-indigo fw-medium fs-14">
-                  Psychologist
-                </Link>
-                <span className="badge bg-success-light d-inline-flex align-items-center">
-                  <i className="fa-solid fa-circle fs-5 me-1" />
-                  Available
-                </span>
-              </div>
-              <div className="p-3">
-                <div className="doctor-info-detail pb-3">
-                  <div className="row align-items-center gy-3">
-                    <div className="col-sm-6">
-                      <div>
-                        <h6 className="d-flex align-items-center mb-1">
-                          <Link to="/patient/doctor-profile">Dr. Michael Brown</Link>
-                          <i className="isax isax-tick-circle5 text-success ms-2" />
-                        </h6>
-                        <p className="mb-2"> B.S, M.S - Psychology</p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-location me-2" />
-                          Minneapolis, MN
-                          <Link
-                            to="#"
-                            className="text-primary text-decoration-underline ms-2"
-                          >
-                            Get Direction
-                          </Link>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="col-sm-6">
-                      <div>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-language-circle text-dark me-2" />
-                          English, German
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-like-1 text-dark me-2" />
-                          90% (228 / 240 Votes)
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-archive-14 text-dark me-2" />
-                          18 Years of Experience
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-3 mt-3">
-                  <div className="d-flex align-items-center flex-wrap row-gap-3">
-                    <div className="me-3">
-                      <p className="mb-1">Consultation Fees</p>
-                      <h3 className="text-orange">$400</h3>
-                    </div>
-                    <p className="mb-0">
-                      Next available at <br />
-                      04:00 PM - 20 Nov, Wed
-                    </p>
-                  </div>
-                  <Link
-                    to="/booking"
-                    className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
-                  >
-                    <i className="isax isax-calendar-1 me-2" />
-                    Book Appointment
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-lg-12">
-        <div className="card doctor-list-card">
-          <div className="d-md-flex align-items-center">
-            <div className="card-img card-img-hover">
-              <Link to="/patient/doctor-profile">
-                <ImageWithBasePath src="assets/img/doctor-grid/doctor-list-06.jpg" alt="" />
-              </Link>
-              <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-                <span className="badge bg-orange">
-                  <i className="fa-solid fa-star me-1" />
-                  4.6
-                </span>
-                <Link to="javascript:void(0)" className="fav-icon">
-                  <i className="fa fa-heart" />
-                </Link>
-              </div>
-            </div>
-            <div className="card-body p-0">
-              <div className="d-flex align-items-center justify-content-between border-bottom p-3">
-                <Link to="#" className="text-pink fw-medium fs-14">
-                  Pediatrician
-                </Link>
-                <span className="badge bg-success-light d-inline-flex align-items-center">
-                  <i className="fa-solid fa-circle fs-5 me-1" />
-                  Available
-                </span>
-              </div>
-              <div className="p-3">
-                <div className="doctor-info-detail pb-3">
-                  <div className="row align-items-center gy-3">
-                    <div className="col-sm-6">
-                      <div>
-                        <h6 className="d-flex align-items-center mb-1">
-                          <Link to="/patient/doctor-profile">Dr. Nicholas Tello</Link>
-                          <i className="isax isax-tick-circle5 text-success ms-2" />
-                        </h6>
-                        <p className="mb-2">MBBS, MD - Pediatrics</p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-location me-2" />
-                          Ogden, IA
-                          <Link
-                            to="#"
-                            className="text-primary text-decoration-underline ms-2"
-                          >
-                            Get Direction
-                          </Link>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="col-sm-6">
-                      <div>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-language-circle text-dark me-2" />
-                          English, Korean
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-like-1 text-dark me-2" />
-                          95% (200 / 220 Votes)
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-archive-14 text-dark me-2" />
-                          15 Years of Experience
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-3 mt-3">
-                  <div className="d-flex align-items-center flex-wrap row-gap-3">
-                    <div className="me-3">
-                      <p className="mb-1">Consultation Fees</p>
-                      <h3 className="text-orange">$400</h3>
-                    </div>
-                    <p className="mb-0">
-                      Next available at <br />
-                      11:00 AM - 14 Nov, Thu
-                    </p>
-                  </div>
-                  <Link
-                    to="/booking"
-                    className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
-                  >
-                    <i className="isax isax-calendar-1 me-2" />
-                    Book Appointment
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-lg-12">
-        <div className="card doctor-list-card">
-          <div className="d-md-flex align-items-center">
-            <div className="card-img card-img-hover">
-              <Link to="/patient/doctor-profile">
-                <ImageWithBasePath src="assets/img/doctor-grid/doctor-list-07.jpg" alt="" />
-              </Link>
-              <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-                <span className="badge bg-orange">
-                  <i className="fa-solid fa-star me-1" />
-                  4.4
-                </span>
-                <Link to="javascript:void(0)" className="fav-icon">
-                  <i className="fa fa-heart" />
-                </Link>
-              </div>
-            </div>
-            <div className="card-body p-0">
-              <div className="d-flex align-items-center justify-content-between border-bottom p-3">
-                <Link to="#" className="text-info fw-medium fs-14">
-                  Cardiologist
-                </Link>
-                <span className="badge bg-success-light d-inline-flex align-items-center">
-                  <i className="fa-solid fa-circle fs-5 me-1" />
-                  Available
-                </span>
-              </div>
-              <div className="p-3">
-                <div className="doctor-info-detail pb-3">
-                  <div className="row align-items-center gy-3">
-                    <div className="col-sm-6">
-                      <div>
-                        <h6 className="d-flex align-items-center mb-1">
-                          <Link to="/patient/doctor-profile">Dr. Tyrone Patrick</Link>
-                          <i className="isax isax-tick-circle5 text-success ms-2" />
-                        </h6>
-                        <p className="mb-2">MBBS, MD - Cardialogy</p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-location me-2" />
-                          Clark Fork, ID
-                          <Link
-                            to="#"
-                            className="text-primary text-decoration-underline ms-2"
-                          >
-                            Get Direction
-                          </Link>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="col-sm-6">
-                      <div>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-language-circle text-dark me-2" />
-                          English, Russian
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-like-1 text-dark me-2" />
-                          97% (232 / 248 Votes)
-                        </p>
-                        <p className="d-flex align-items-center mb-0 fs-14">
-                          <i className="isax isax-archive-14 text-dark me-2" />
-                          22 Years of Experience
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-3 mt-3">
-                  <div className="d-flex align-items-center flex-wrap row-gap-3">
-                    <div className="me-3">
-                      <p className="mb-1">Consultation Fees</p>
-                      <h3 className="text-orange">$400</h3>
-                    </div>
-                    <p className="mb-0">
-                      Next available at <br />
-                      06:00 PM - 29 Nov, Fri
-                    </p>
-                  </div>
-                  <Link
-                    to="/booking"
-                    className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
-                  >
-                    <i className="isax isax-calendar-1 me-2" />
-                    Book Appointment
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                           )}
       <div className="col-md-12">
         <div className="pagination dashboard-pagination mt-md-3 mt-0 mb-4">
           <ul>

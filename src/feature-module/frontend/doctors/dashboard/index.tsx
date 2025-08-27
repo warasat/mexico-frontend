@@ -3,7 +3,7 @@
  
 import DoctorSidebar from "../sidebar";
 import Header from "../../header";
-import { doctordashboardclient01, doctordashboardclient02, doctordashboardprofile01, doctordashboardprofile02, doctordashboardprofile04, doctordashboardprofile05, doctordashboardprofile3 } from "../../imagepath";
+import { doctordashboardprofile01, doctordashboardprofile02, doctordashboardprofile04, doctordashboardprofile05, doctordashboardprofile3 } from "../../imagepath";
 import ApexCharts from 'react-apexcharts';
 import DoctorFooter from "../../common/doctorFooter";
 import { Link } from "react-router-dom";
@@ -14,84 +14,132 @@ const DoctorDashboard = (props: any) => {
   // revenue chart options
   const revenueChartOptions = {
     chart: {
-      height: 220,
+      height: 300,
       type: 'bar' as const,
-      stacked: true,
+      stacked: false,
       toolbar: {
         show: false,
-      }
+      },
+      background: 'transparent'
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '50%',
+        columnWidth: '60%',
         endingShape: 'rounded',
-        borderRadius: 5,
+        borderRadius: 8,
+        distributed: false,
       }
     },
     dataLabels: {
       enabled: false
     },
     stroke: {
-      show: true,
-      width: 1
+      show: false,
+      width: 0
     },
+    colors: ['#0E82FD', '#00D4AA', '#FF6B6B'],
     series: [{
-      name: 'High',
-      color: '#0E82FD',
+      name: 'Revenue',
       data: [50, 40, 15, 45, 35, 48, 65]
     }],
     xaxis: {
-      categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+      categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      labels: {
+        style: {
+          colors: '#666',
+          fontSize: '12px'
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        formatter: function (val: any) {
+          return "$" + val + "k"
+        },
+        style: {
+          colors: '#666',
+          fontSize: '12px'
+        }
+      }
     },
     tooltip: {
       y: {
         formatter: function (val: any) {
-          return "$ " + val + "k"
+          return "$" + val + "k"
         }
-      }
+      },
+      theme: 'dark'
+    },
+    grid: {
+      borderColor: '#f1f1f1',
+      strokeDashArray: 3
     }
   };
 
   // appointment chart options
   const appointmentChartOptions = {
     chart: {
-      height: 220,
+      height: 300,
       type: 'bar' as const,
-      stacked: true,
+      stacked: false,
       toolbar: {
         show: false,
-      }
+      },
+      background: 'transparent'
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '50%',
+        columnWidth: '60%',
         endingShape: 'rounded',
-        borderRadius: 5,
+        borderRadius: 8,
+        distributed: false,
       },
     },
     dataLabels: {
       enabled: false
     },
     stroke: {
-      show: true,
-      width: 1,
+      show: false,
+      width: 0,
     },
+    colors: ['#00D4AA', '#FF6B6B', '#FFA500'],
     series: [{
-      name: 'High',
-      color: '#0E82FD',
+      name: 'Appointments',
       data: [40, 20, 30, 60, 90, 40, 110]
     }],
     xaxis: {
-      categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+      categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      labels: {
+        style: {
+          colors: '#666',
+          fontSize: '12px'
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        formatter: function (val: any) {
+          return val + " appointments"
+        },
+        style: {
+          colors: '#666',
+          fontSize: '12px'
+        }
+      }
     },
     tooltip: {
       y: {
         formatter: function (val: any) {
-          return "$ " + val + "k"
+          return val + " appointments"
         }
-      }
+      },
+      theme: 'dark'
+    },
+    grid: {
+      borderColor: '#f1f1f1',
+      strokeDashArray: 3
     }
   };
 
@@ -443,7 +491,7 @@ const DoctorDashboard = (props: any) => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-5 d-flex">
+                <div className="col-xl-12 d-flex">
                   <div className="dashboard-chart-col w-100">
                     <div className="dashboard-card w-100">
                       <div className="dashboard-card-head border-0">
@@ -504,7 +552,7 @@ const DoctorDashboard = (props: any) => {
                                 options={revenueChartOptions}
                                 series={revenueChartOptions.series}
                                 type="bar"
-                                height={220}
+                                height={300}
                               />
                             </div>
                             <div
@@ -517,14 +565,14 @@ const DoctorDashboard = (props: any) => {
                                 options={appointmentChartOptions}
                                 series={appointmentChartOptions.series}
                                 type="bar"
-                                height={220}
+                                height={300}
                               />
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="dashboard-card w-100">
+                    <div className="dashboard-card w-100 mt-4">
                       <div className="dashboard-card-head">
                         <div className="header-title">
                           <h5>Recent Patients</h5>
@@ -534,35 +582,73 @@ const DoctorDashboard = (props: any) => {
                         </div>
                       </div>
                       <div className="dashboard-card-body">
-                        <div className="d-flex recent-patient-grid-boxes">
-                          <div className="recent-patient-grid">
-                            <Link to="pages/patient-details" className="patient-img">
-                              <img
-                                src={doctordashboardprofile01}
-                                alt="Img"
-                              />
-                            </Link>
-                            <h5>
-                              <Link to="pages/patient-details">Adrian Marshall</Link>
-                            </h5>
-                            <span>Patient ID :&nbsp;P0001</span>
-                            <div className="date-info">
-                              <p>Last Appointment 15 Mar 2025</p>
+                        <div className="row">
+                          <div className="col-lg-3 col-md-6">
+                            <div className="recent-patient-grid">
+                              <Link to="pages/patient-details" className="patient-img">
+                                <img
+                                  src={doctordashboardprofile01}
+                                  alt="Img"
+                                />
+                              </Link>
+                              <h5>
+                                <Link to="pages/patient-details">Adrian Marshall</Link>
+                              </h5>
+                              <span>Patient ID :&nbsp;P0001</span>
+                              <div className="date-info">
+                                <p>Last Appointment 15 Mar 2025</p>
+                              </div>
                             </div>
                           </div>
-                          <div className="recent-patient-grid">
-                            <Link to="pages/patient-details" className="patient-img">
-                              <img
-                                src={doctordashboardprofile02}
-                                alt="Img"
-                              />
-                            </Link>
-                            <h5>
-                              <Link to="pages/patient-details">Kelly Stevens</Link>
-                            </h5>
-                            <span>Patient ID :&nbsp;P0002</span>
-                            <div className="date-info">
-                              <p>Last Appointment 13 Mar 2025</p>
+                          <div className="col-lg-3 col-md-6">
+                            <div className="recent-patient-grid">
+                              <Link to="pages/patient-details" className="patient-img">
+                                <img
+                                  src={doctordashboardprofile02}
+                                  alt="Img"
+                                />
+                              </Link>
+                              <h5>
+                                <Link to="pages/patient-details">Kelly Stevens</Link>
+                              </h5>
+                              <span>Patient ID :&nbsp;P0002</span>
+                              <div className="date-info">
+                                <p>Last Appointment 13 Mar 2025</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-3 col-md-6">
+                            <div className="recent-patient-grid">
+                              <Link to="pages/patient-details" className="patient-img">
+                                <img
+                                  src={doctordashboardprofile3}
+                                  alt="Img"
+                                />
+                              </Link>
+                              <h5>
+                                <Link to="pages/patient-details">Samuel Anderson</Link>
+                              </h5>
+                              <span>Patient ID :&nbsp;P0003</span>
+                              <div className="date-info">
+                                <p>Last Appointment 10 Mar 2025</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-3 col-md-6">
+                            <div className="recent-patient-grid">
+                              <Link to="pages/patient-details" className="patient-img">
+                                <img
+                                  src={doctordashboardprofile04}
+                                  alt="Img"
+                                />
+                              </Link>
+                              <h5>
+                                <Link to="pages/patient-details">Catherine Griffin</Link>
+                              </h5>
+                              <span>Patient ID :&nbsp;P0004</span>
+                              <div className="date-info">
+                                <p>Last Appointment 08 Mar 2025</p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -570,436 +656,9 @@ const DoctorDashboard = (props: any) => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-7 d-flex">
-                  <div className="dashboard-main-col w-100">
-                    <div className="upcoming-appointment-card">
-                      <div className="title-card">
-                        <h5>Upcoming Appointment</h5>
-                      </div>
-                      <div className="upcoming-patient-info">
-                        <div className="info-details">
-                          <span className="img-avatar">
-                            <img
-                              src={doctordashboardprofile01}
-                              alt="Img"
-                            />
-                          </span>
-                          <div className="name-info">
-                            <span>#Apt0001</span>
-                            <h6>Adrian Marshall</h6>
-                          </div>
-                        </div>
-                        <div className="date-details">
-                          <span>General visit</span>
-                          <h6>Today, 10:45 AM</h6>
-                        </div>
-                      </div>
-                      <div className="appointment-card-footer">
-                        <h5>
-                          <i className="fa-solid fa-video" />
-                          Video Appointment
-                        </h5>
-                        <div className="btn-appointments">
-                          <Link to="/doctor/chat-doctor" className="btn">
-                            Chat Now
-                          </Link>
-                          <Link to="/doctor/doctor-appointment-start" className="btn">
-                            Start Appointment
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="dashboard-card w-100">
-                      <div className="dashboard-card-head">
-                        <div className="header-title">
-                          <h5>Recent Invoices</h5>
-                        </div>
-                        <div className="card-view-link">
-                          <Link to="/doctor/invoices">View All</Link>
-                        </div>
-                      </div>
-                      <div className="dashboard-card-body">
-                        <div className="table-responsive">
-                          <table className="table dashboard-table">
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <div className="patient-info-profile">
-                                    <Link
-                                      to="/doctor/invoices"
-                                      className="table-avatar"
-                                    >
-                                      <img
-                                        src={doctordashboardprofile01}
-                                        alt="Img"
-                                      />
-                                    </Link>
-                                    <div className="patient-name-info">
-                                      <h5>
-                                        <Link to="/doctor/invoices">Adrian</Link>
-                                      </h5>
-                                      <span>#Apt0001</span>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="appointment-date-created">
-                                    <span className="paid-text">Amount</span>
-                                    <h6>$450</h6>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="appointment-date-created">
-                                    <span className="paid-text">Paid On</span>
-                                    <h6>11 Nov 2025</h6>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="apponiment-view d-flex align-items-center">
-                                    <Link to="/pages/invoice-view">
-                                      <i className="fa-solid fa-eye" />
-                                    </Link>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="patient-info-profile">
-                                    <Link to="#" className="table-avatar">
-                                      <img
-                                        src={doctordashboardprofile02}
-                                        alt="Img"
-                                      />
-                                    </Link>
-                                    <div className="patient-name-info">
-                                      <h5>
-                                        <Link to="#">Kelly</Link>
-                                      </h5>
-                                      <span>#Apt0002</span>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="appointment-date-created">
-                                    <span className="paid-text">Paid On</span>
-                                    <h6>10 Nov 2025</h6>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="appointment-date-created">
-                                    <span className="paid-text">Amount</span>
-                                    <h6>$500</h6>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="apponiment-view d-flex align-items-center">
-                                    <Link to="#">
-                                      <i className="fa-solid fa-eye" />
-                                    </Link>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="patient-info-profile">
-                                    <Link to="#" className="table-avatar">
-                                      <img
-                                        src={doctordashboardprofile3}
-                                        alt="Img"
-                                      />
-                                    </Link>
-                                    <div className="patient-name-info">
-                                      <h5>
-                                        <Link to="#">Samuel</Link>
-                                      </h5>
-                                      <span>#Apt0003</span>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="appointment-date-created">
-                                    <span className="paid-text">Paid On</span>
-                                    <h6>03 Nov 2025</h6>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="appointment-date-created">
-                                    <span className="paid-text">Amount</span>
-                                    <h6>$320</h6>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="apponiment-view d-flex align-items-center">
-                                    <Link to="#">
-                                      <i className="fa-solid fa-eye" />
-                                    </Link>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="patient-info-profile">
-                                    <Link to="#" className="table-avatar">
-                                      <img
-                                        src={doctordashboardprofile04}
-                                        alt="Img"
-                                      />
-                                    </Link>
-                                    <div className="patient-name-info">
-                                      <h5>
-                                        <Link to="#">Catherine</Link>
-                                      </h5>
-                                      <span>#Apt0004</span>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="appointment-date-created">
-                                    <span className="paid-text">Paid On</span>
-                                    <h6>01 Nov 2025</h6>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="appointment-date-created">
-                                    <span className="paid-text">Amount</span>
-                                    <h6>$240</h6>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="apponiment-view d-flex align-items-center">
-                                    <Link to="#">
-                                      <i className="fa-solid fa-eye" />
-                                    </Link>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="patient-info-profile">
-                                    <Link to="#" className="table-avatar">
-                                      <img
-                                        src={doctordashboardprofile05}
-                                        alt="Img"
-                                      />
-                                    </Link>
-                                    <div className="patient-name-info">
-                                      <h5>
-                                        <Link to="#">Robert</Link>
-                                      </h5>
-                                      <span>#Apt0005</span>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="appointment-date-created">
-                                    <span className="paid-text">Paid On</span>
-                                    <h6>28 Oct 2025</h6>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="appointment-date-created">
-                                    <span className="paid-text">Amount</span>
-                                    <h6>$380</h6>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="apponiment-view d-flex align-items-center">
-                                    <Link to="#">
-                                      <i className="fa-solid fa-eye" />
-                                    </Link>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xl-7 d-flex">
-                  <div className="dashboard-card w-100">
-                    <div className="dashboard-card-head">
-                      <div className="header-title">
-                        <h5>Notifications</h5>
-                      </div>
-                      <div className="card-view-link">
-                        <Link to="#">View All</Link>
-                      </div>
-                    </div>
-                    <div className="dashboard-card-body">
-                      <div className="table-responsive">
-                        <table className="table dashboard-table">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <div className="table-noti-info">
-                                  <div className="table-noti-icon color-violet">
-                                    <i className="fa-solid fa-bell" />
-                                  </div>
-                                  <div className="table-noti-message">
-                                    <h6>
-                                      <Link to="#">
-                                        Booking Confirmed on{" "}
-                                        <span> 21 Mar 2025 </span> 10:30 AM
-                                      </Link>
-                                    </h6>
-                                    <span className="message-time">Just Now</span>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="table-noti-info">
-                                  <div className="table-noti-icon color-blue">
-                                    <i className="fa-solid fa-star" />
-                                  </div>
-                                  <div className="table-noti-message">
-                                    <h6>
-                                      <Link to="#">
-                                        You have a <span> New </span> Review for
-                                        your Appointment{" "}
-                                      </Link>
-                                    </h6>
-                                    <span className="message-time">5 Days ago</span>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="table-noti-info">
-                                  <div className="table-noti-icon color-red">
-                                    <i className="fa-solid fa-calendar-check" />
-                                  </div>
-                                  <div className="table-noti-message">
-                                    <h6>
-                                      <Link to="#">
-                                        You have Appointment with{" "}
-                                        <span> Ahmed </span> by 01:20 PM{" "}
-                                      </Link>
-                                    </h6>
-                                    <span className="message-time">12:55 PM</span>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="table-noti-info">
-                                  <div className="table-noti-icon color-yellow">
-                                    <i className="fa-solid fa-money-bill-1-wave" />
-                                  </div>
-                                  <div className="table-noti-message">
-                                    <h6>
-                                      <Link to="#">
-                                        Sent an amount of <span> $200 </span> for an
-                                        Appointment by 01:20 PM{" "}
-                                      </Link>
-                                    </h6>
-                                    <span className="message-time">2 Days ago</span>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="table-noti-info">
-                                  <div className="table-noti-icon color-blue">
-                                    <i className="fa-solid fa-star" />
-                                  </div>
-                                  <div className="table-noti-message">
-                                    <h6>
-                                      <Link to="#">
-                                        You have a <span> New </span> Review for
-                                        your Appointment{" "}
-                                      </Link>
-                                    </h6>
-                                    <span className="message-time">5 Days ago</span>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xl-5 d-flex">
-                  <div className="dashboard-card w-100">
-                    <div className="dashboard-card-head">
-                      <div className="header-title">
-                        <h5>Clinics &amp; Availability</h5>
-                      </div>
-                    </div>
-                    <div className="dashboard-card-body">
-                      <div className="clinic-available">
-                        <div className="clinic-head">
-                          <div className="clinic-info">
-                            <span className="clinic-img">
-                              <img
-                                src={doctordashboardclient02}
-                                alt="Img"
-                              />
-                            </span>
-                            <h6>Sofi's Clinic</h6>
-                          </div>
-                          <div className="clinic-charge">
-                            <span>$900</span>
-                          </div>
-                        </div>
-                        <div className="available-time">
-                          <ul>
-                            <li>
-                              <span>Tue :</span>
-                              07:00 AM - 09:00 PM
-                            </li>
-                            <li>
-                              <span>Wed : </span>
-                              07:00 AM - 09:00 PM
-                            </li>
-                          </ul>
-                          <div className="change-time">
-                            <Link to="#">Change </Link>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="clinic-available mb-0">
-                        <div className="clinic-head">
-                          <div className="clinic-info">
-                            <span className="clinic-img">
-                              <img
-                                src={doctordashboardclient01}
-                                alt="Img"
-                              />
-                            </span>
-                            <h6>The Family Dentistry Clinic</h6>
-                          </div>
-                          <div className="clinic-charge">
-                            <span>$600</span>
-                          </div>
-                        </div>
-                        <div className="available-time">
-                          <ul>
-                            <li>
-                              <span>Sat :</span>
-                              07:00 AM - 09:00 PM
-                            </li>
-                            <li>
-                              <span>Tue : </span>
-                              07:00 AM - 09:00 PM
-                            </li>
-                          </ul>
-                          <div className="change-time">
-                            <Link to="#">Change </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
+
+
               </div>
             </div>
           </div>

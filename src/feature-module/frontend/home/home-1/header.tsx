@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { useNavigate } from "react-router-dom";
 import NavLinks from "../../common/nav";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { all_routes } from "../../../../routes/all_routes";
 import DarkModeToggle from "../../dark-mode";
 
 const Header: React.FC = () => {
-  const navigate = useNavigate();
-  const [searchField, setSearchField] = useState(false);
-  const toggleSearch = () => {
-    setSearchField(!searchField);
-  };
   const [headerClass, setHeaderClass] = useState(
     "header header-custom header-fixed inner-header relative"
   );
-  const directionPath = () => {
-    navigate("/patient/search-doctor1");
-  };
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -123,34 +114,9 @@ const Header: React.FC = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="dropdown dropdown-amt">
-                    <Link
-                      to="#"
-                      className="dropdown-toggle"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      USD
-                    </Link>
-                    <ul className="dropdown-menu p-2 mt-2">
-                      <li>
-                        <Link className="dropdown-item rounded" to="#">
-                          USD
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item rounded" to="#">
-                          YEN
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item rounded" to="#">
-                          EURO
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
+                  {/* Currency dropdown removed */}
                 </li>
+                {/* Social media icons commented out
                 <li className="social-header">
                   <div className="social-icon">
                     <Link to="#">
@@ -170,6 +136,7 @@ const Header: React.FC = () => {
                     </Link>
                   </div>
                 </li>
+                */}
               </ul>
             </div>
           </div>
@@ -220,51 +187,7 @@ const Header: React.FC = () => {
                     <NavLinks />
                   </ul>
                 </div>
-                <ul className="nav header-navbar-rht">
-                  <li className="searchbar">
-                    <Link to="#" onClick={toggleSearch}>
-                      <i className="feather-search" />
-                    </Link>
-                    <div
-                      className={
-                        searchField
-                          ? "togglesearch d-block"
-                          : "togglesearch d-none"
-                      }
-                    >
-                      <form action="/patient/search-doctor1">
-                        <div className="input-group">
-                          <input type="text" className="form-control" />
-                          <button
-                            type="submit"
-                            className="btn"
-                            onClick={directionPath}
-                          >
-                            Search
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </li>
-                  <li>
-                    <Link
-                      to="/login"
-                      className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
-                    >
-                      <i className="isax isax-lock-1 me-1" />
-                      Sign Up
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/register"
-                      className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                    >
-                      <i className="isax isax-user-tick me-1" />
-                      Register
-                    </Link>
-                  </li>
-                </ul>
+                {/* Search functionality removed */}
               </div>
             </nav>
           </div>

@@ -176,18 +176,7 @@ const PatientProfile: React.FC = (props) => {
                               <span>Accounts</span>
                             </Link>
                           </li>
-                          <li>
-                            <Link to="/doctor/invoices">
-                              <i className="isax isax-document-text" />
-                              <span>Invoices</span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/doctor/doctor-payment">
-                              <i className="fa-solid fa-money-bill-1" />
-                              <span>Payout Settings</span>
-                            </Link>
-                          </li>
+
                           <li>
                             <Link to="/doctor/chat-doctor">
                               <i className="isax isax-messages-1" />
@@ -214,7 +203,7 @@ const PatientProfile: React.FC = (props) => {
                             </Link>
                           </li>
                           <li>
-                            <Link to="/login">
+                            <Link to="/">
                               <i className="isax isax-logout" />
                               <span>Logout</span>
                             </Link>
@@ -285,11 +274,7 @@ const PatientProfile: React.FC = (props) => {
                             Medical Records
                           </Link>
                         </li>
-                        <li className="nav-item">
-                          <Link className="nav-link" to="#billing" data-bs-toggle="tab">
-                            Billing
-                          </Link>
-                        </li>
+
                       </ul>
                     </div>
                     {/* /Appoitment Tabs */}
