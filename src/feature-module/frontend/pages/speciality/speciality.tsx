@@ -56,30 +56,11 @@ const Speciality = (props: any) => {
                 {/* Specialties */}
                 <div className="content doctor-content">
                     <div className="container">
-                        {/* Hospital Tabs */}
-                        <nav className="settings-tab hospital-tab">
-                            <ul
-                                className="nav nav-tabs-bottom justify-content-center "
-                                role="tablist"
-                            >
-                                <li className="nav-item" role="presentation">
-                                    <Link className="nav-link " to="/pages/hospitals">
-                                        Hospitals
-                                    </Link>
-                                </li>
-                                <li className="nav-item" role="presentation">
-                                    <Link className="nav-link active" to="/pages/speciality">
-                                        Specialities
-                                    </Link>
-                                </li>
-                                <li className="nav-item" role="presentation">
-                                    <Link className="nav-link" to="/pages/clinic">
-                                        Clinics
-                                    </Link>
-                                </li>
-                            </ul>
-                        </nav>
-                        {/* /Hospital Tabs */}
+                        {/* Speciality Header */}
+                        <div className="speciality-header text-center mb-4">
+                            <h3>Medical Specialities</h3>
+                            <p>Find doctors by their medical specialities</p>
+                        </div>
                         {/* Show Result */}
                         <div className="card">
                             <div className="card-body">
@@ -407,13 +388,7 @@ const Speciality = (props: any) => {
                             </div>
                         </div>
                         <div className="loader-item text-center">
-                            <Link
-                                to="#"
-                                className="btn btn-primary d-inline-flex align-items-center"
-                            >
-                                <i className="isax isax-d-cube-scan me-2" />
-                                Load More 15 Specialities
-                            </Link>
+                            
                         </div>
                     </div>
                 </div>

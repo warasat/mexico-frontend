@@ -14,6 +14,7 @@ import DoctorProfile from "../feature-module/frontend/patients/doctorprofile";
 import BookingWizard from "../feature-module/frontend/patients/booking/bookingWizard";
 import PatientAppointments from "../feature-module/frontend/patients/appointments";
 import Profile from "../feature-module/frontend/patients/dashboard/profile";
+import PatientSignup from "../feature-module/frontend/pages/patient-signup";
 
 // Doctor Module
 import DoctorRegister from "../feature-module/frontend/doctors/register";
@@ -104,6 +105,12 @@ export const publicRoutes = [
     path: route.patientProfile,
     element: <Profile />,
     route: Route,
+  },
+  {
+    path: route.patientSignup,
+    element: <PatientSignup />,
+    route: Route,
+    meta_title: "Patient Signup",
   },
 
   // Doctor Module Routes

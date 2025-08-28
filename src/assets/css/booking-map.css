@@ -1,0 +1,64 @@
+/* Booking Map Container Styles */
+.booking-map-container {
+  position: sticky;
+  top: 20px;
+}
+
+.booking-map-container .card {
+  border: 1px solid #e6e6e6;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.booking-map-container .card-body {
+  padding: 20px;
+}
+
+.booking-map-container .card-title {
+  color: #333;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.booking-map-container .contact-map {
+  margin-bottom: 20px;
+}
+
+.booking-map-container .contact-map iframe {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.booking-map-container h6 {
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.booking-map-container p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.booking-map-container .d-flex.align-items-center {
+  color: #666;
+  font-size: 14px;
+}
+
+.booking-map-container .d-flex.align-items-center i {
+  color: #09dca4;
+  font-size: 16px;
+}
+
+/* Mobile responsive booking map */
+@media (max-width: 991.98px) {
+  .booking-map-container {
+    position: static;
+    margin-top: 30px;
+  }
+  
+  .booking-map-container .contact-map iframe {
+    height: 300px !important;
+  }
+}

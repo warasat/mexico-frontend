@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { Calendar, theme } from 'antd';
 import InsuranceSelector from './components/InsuranceSelector';
+import '../../../../assets/css/booking-map.css';
 const OnPanelChange = (value: any, mode: any) => {
   console.log(value.format('YYYY-MM-DD'), mode);
 };
@@ -68,7 +69,7 @@ const BookingWizard = () => {
       <div className="doctor-content">
         <div className="container">
           <div className="row">
-            <div className="col-lg-9 mx-auto">
+            <div className="col-lg-8">
               <div className="booking-wizard">
                 <ul
                   className="form-wizard-steps d-sm-flex align-items-center justify-content-center"
@@ -1343,6 +1344,36 @@ const BookingWizard = () => {
                 <p className="mb-0">
                   Copyright © 2025. All Rights Reserved, Doccure
                 </p>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="booking-map-container">
+                <div className="card">
+                  <div className="card-body">
+                    <h5 className="card-title mb-3">Location</h5>
+                    <div className="contact-map">
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.7301009561315!2d-76.13077892422932!3d36.82498697224007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89bae976cfe9f8af%3A0xa61eac05156fbdb9!2sBeachStreet%20USA!5e0!3m2!1sen!2sin!4v1669777904208!5m2!1sen!2sin"
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        style={{ width: '100%', height: '400px', border: 'none', borderRadius: '10px' }}
+                      />
+                    </div>
+                    <div className="mt-3">
+                      <h6>Clinic Address</h6>
+                      <p className="mb-2">5th Street - 1011 W 5th St, Suite 120, Austin, TX 78703</p>
+                      <div className="d-flex align-items-center mb-2">
+                        <i className="isax isax-call5 me-2" />
+                        <span>+1 315 369 5943</span>
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <i className="isax isax-sms5 me-2" />
+                        <span>doccure@example.com</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

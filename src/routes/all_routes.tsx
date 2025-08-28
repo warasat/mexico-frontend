@@ -30,11 +30,6 @@ export const all_routes = {
   specialtyDoctors: "/specialty-doctors",
   patientAppointments: "/patient/patient-appointments",
   patientProfile: "/patient/profile",
-  patientRegisterStep1: "/patient/patientregisterstep-1",
-  patientRegisterStep2: "/patient/patientregisterstep-2",
-  patientRegisterStep3: "/patient/patientregisterstep-3",
-  patientRegisterStep4: "/patient/patientregisterstep-4",
-  patientRegisterStep5: "/patient/patientregisterstep-5",
 
   // Doctor Module Routes
   doctorDashboard: "/doctor/doctor-dashboard",
