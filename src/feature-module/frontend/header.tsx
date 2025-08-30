@@ -1,10 +1,11 @@
  
 /* eslint-disable no-constant-condition */
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/img/logo.png";
 import logosvg from "../../assets/img/logo.svg";
 import { useEffect } from "react";
+import { useAuth } from "../../core/context/AuthContext";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -29,8 +30,17 @@ import LanguageSwitcher from "../../components/LanguageSwitcher";
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchField, setSearchField] = useState(false);
+  const { authState, logout } = useAuth();
+  const { isAuthenticated, userType, user } = authState;
+  const navigate = useNavigate();
+  
   const ToggleSearch = () => {
     setSearchField(!searchField);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
   useEffect(() => {
     AOS.init({
@@ -234,38 +244,73 @@ const Header: React.FC = () => {
               
               {/* Right side navigation - simplified for landing page */}
               <ul className="nav header-navbar-rht">
-                {/* Search bar */}
-                <li className="searchbar">
-                  <Link to="#" onClick={ToggleSearch}>
-                    <Search size={20} />
-                  </Link>
-                  <div className={
-                    searchField
-                      ? "togglesearch d-block"
-                      : "togglesearch d-none"
-                  } >
-                    <form>
-                      <div className="input-group">
-                        <input type="text" className="form-control" placeholder="Search..." />
-                        <button type="submit" className="btn">
-                          Search
-                        </button>
+                {/* Only show these elements if NOT on contact or about pages */}
+                {!pathnames.includes("contactus") && !pathnames.includes("aboutus") && (
+                  <>
+                    {/* Search bar */}
+                    <li className="searchbar">
+                      <Link to="#" onClick={ToggleSearch}>
+                        <Search size={20} />
+                      </Link>
+                      <div className={
+                        searchField
+                          ? "togglesearch d-block"
+                          : "togglesearch d-none"
+                      } >
+                        <form>
+                          <div className="input-group">
+                            <input type="text" className="form-control" placeholder="Search..." />
+                            <button type="submit" className="btn">
+                              Search
+                            </button>
+                          </div>
+                        </form>
                       </div>
-                    </form>
-                  </div>
-                </li>
+                    </li>
 
-                {/* Dark mode toggle */}
-                <li className="header-theme noti-nav">
-                  <DarkModeToggle />
-                </li>
+                    {/* Dark mode toggle */}
+                    <li className="header-theme noti-nav">
+                      <DarkModeToggle />
+                    </li>
 
-                {/* Language switcher */}
-                <li className="header-language noti-nav">
-                  <LanguageSwitcher />
-                </li>
+                    {/* Language switcher */}
+                    <li className="header-language noti-nav">
+                      <LanguageSwitcher />
+                    </li>
 
-
+                    {/* Authentication buttons */}
+                    {!isAuthenticated ? (
+                      <>
+                        <li className="nav-item">
+                          <Link to="/patient/login" className="btn btn-primary btn-sm">
+                            Patient Login
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link to="/doctor/login" className="btn btn-outline-primary btn-sm">
+                            Doctor Login
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link to="/admin/login" className="btn btn-outline-secondary btn-sm">
+                            Admin Login
+                          </Link>
+                        </li>
+                      </>
+                    ) : (
+                      <li className="nav-item dropdown">
+                        <button className="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                          {user?.name || userType}
+                        </button>
+                        <ul className="dropdown-menu">
+                          <li><small className="dropdown-item-text">Logged in as: {userType}</small></li>
+                          <li><hr className="dropdown-divider" /></li>
+                          <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
+                        </ul>
+                      </li>
+                    )}
+                  </>
+                )}
               </ul>
             </nav>
           </div>

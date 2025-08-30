@@ -35,7 +35,7 @@ const Aboutus = (props: any) => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === "/pages/aboutus") {
+    if (location.pathname === "/aboutus") {
       import("../../../../assets/css/feather.css");
     }
   }, [location.pathname]);

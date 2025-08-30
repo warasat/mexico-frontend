@@ -15,9 +15,11 @@ import BookingWizard from "../feature-module/frontend/patients/booking/bookingWi
 import PatientAppointments from "../feature-module/frontend/patients/appointments";
 import Profile from "../feature-module/frontend/patients/dashboard/profile";
 import PatientSignup from "../feature-module/frontend/pages/patient-signup";
+import PatientLogin from "../feature-module/frontend/patients/login";
 
 // Doctor Module
 import DoctorRegister from "../feature-module/frontend/doctors/register";
+import DoctorLogin from "../feature-module/frontend/doctors/login";
 import DoctorDashboard from "../feature-module/frontend/doctors/dashboard";
 import ProfileSetting from "../feature-module/frontend/doctors/profilesetting";
 import Appointments from "../feature-module/frontend/doctors/appointments";
@@ -111,6 +113,12 @@ export const publicRoutes = [
     route: Route,
     meta_title: "Patient Signup",
   },
+  {
+    path: route.patientLogin,
+    element: <PatientLogin />,
+    route: Route,
+    meta_title: "Patient Login",
+  },
 
   // Doctor Module Routes
   {
@@ -128,6 +136,12 @@ export const publicRoutes = [
     element: <DoctorRegister />,
     route: Route,
     meta_title: "Doctor Register",
+  },
+  {
+    path: route.doctorLogin,
+    element: <DoctorLogin />,
+    route: Route,
+    meta_title: "Doctor Login",
   },
   {
     path: route.profileSetting,

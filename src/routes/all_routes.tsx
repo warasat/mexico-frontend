@@ -12,13 +12,15 @@ export const all_routes = {
   signup: "/signup",   
   register: "/register",   
   emailOtp: "/email-otp",   
+  patientLogin: "/patient/login",
+  doctorLogin: "/doctor/login",
 
   // Home Page
   generalHomeOne: "/index",
 
   // General Pages
-  aboutUs: "/pages/aboutus",
-  contactUs: "/pages/contactus",
+  aboutUs: "/aboutus",
+  contactUs: "/contactus",
   error404: "/pages/error-404",
   error500: "/pages/error-500",
 

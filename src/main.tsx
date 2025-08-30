@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import ALLRoutes from './routes/router'
 import store from './core/redux/store'
 import { base_path } from './environment'
+import { AuthProvider } from './core/context/AuthContext'
 
 // Initialize i18n
 import './core/i18n'
@@ -36,9 +37,11 @@ if (window.location.pathname.includes("admin")) {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter basename={base_path}>
-        <ALLRoutes />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter basename={base_path}>
+          <ALLRoutes />
+        </BrowserRouter>
+      </AuthProvider>
     </Provider>
   </StrictMode>
 )

@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../../core/context/AuthContext';
+import { useAuth } from '../../../../core/context/AuthContext';
 
-const AdminLogin: React.FC = () => {
+const DoctorLogin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -15,10 +14,10 @@ const AdminLogin: React.FC = () => {
 
   // Demo credentials
   const demoCredentials = {
-    email: 'admin@example.com',
-    password: 'admin123',
-    name: 'Admin User',
-    id: 'admin-001'
+    email: 'doctor@example.com',
+    password: 'doctor123',
+    name: 'Dr. John Smith',
+    id: 'doctor-001'
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -31,14 +30,14 @@ const AdminLogin: React.FC = () => {
 
     // Check against demo credentials
     if (email === demoCredentials.email && password === demoCredentials.password) {
-      login('admin', {
+      login('doctor', {
         id: demoCredentials.id,
         name: demoCredentials.name,
         email: demoCredentials.email
       });
       
-      // Redirect to admin dashboard or the page they were trying to access
-      const from = location.state?.from?.pathname || '/admin';
+      // Redirect to doctor dashboard or the page they were trying to access
+      const from = location.state?.from?.pathname || '/doctor/doctor-dashboard';
       navigate(from, { replace: true });
     } else {
       setError('Invalid credentials. Please use the demo credentials provided.');
@@ -55,7 +54,7 @@ const AdminLogin: React.FC = () => {
             <div className="col-md-6 offset-md-3">
               <div className="card">
                 <div className="card-header">
-                  <h4 className="card-title">Admin Login</h4>
+                  <h4 className="card-title">Doctor Login</h4>
                 </div>
                 <div className="card-body">
                   {error && (
@@ -111,4 +110,4 @@ const AdminLogin: React.FC = () => {
   );
 };
 
-export default AdminLogin;
+export default DoctorLogin;
