@@ -38,7 +38,6 @@ export const all_routes = {
   profileSetting: "/doctor/profile-setting",
   myPateint: "/doctor/my-patients",
   availableTimings: "/doctor/available-timings",
-  addPrescription: "/doctor/add-prescription",
 
   // Admin Module Routes
   adminDashboard: "/admin",

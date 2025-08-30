@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import Header from "../../header";
-import StickyBox from "react-sticky-box";
 import Doctors from "./doctors";
 import Footer from "../../footer";
 import { Link, useSearchParams } from "react-router-dom";
 import { DatePicker } from "antd";
-import Searchfilter from "./searchfilter";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { all_routes } from "../../../../routes/all_routes";
 
@@ -157,18 +155,8 @@ const SearchDoctor = (props: any) => {
       <div className="doctor-content content">
         <div className="container">
           <div className="row">
-            <div className="col-xl-12 col-lg-12 map-view">
-              <div className="row">
-                <div className="col-lg-3  theiaStickySidebar">
-                  <StickyBox offsetTop={20} offsetBottom={20}>
-                   <Searchfilter/>
-                  </StickyBox>
-                </div>
-
-                <div className="col-lg-9">
-                  <Doctors />
-                </div>
-              </div>
+            <div className="col-xl-12 col-lg-12">
+              <Doctors />
             </div>
           </div>
         </div>

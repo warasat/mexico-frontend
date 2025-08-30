@@ -17,9 +17,6 @@ const BookingWizard = () => {
   const [selectedService3, setSelectedService3] = useState(false);
   const [selectedService4, setSelectedService4] = useState(false);
   const [selectedService5, setSelectedService5] = useState(false);
-  const [selectedService6, setSelectedService6] = useState(false);
-  const [selectedService7, setSelectedService7] = useState(false);
-  const [selectedService8, setSelectedService8] = useState(false);
   const [selectedInsurance, setSelectedInsurance] = useState<string | null>(null);
   const [bookingId] = useState(() => `BK${Date.now().toString().slice(-6)}`);
   const { token } = theme.useToken();
@@ -1340,11 +1337,7 @@ const BookingWizard = () => {
                   </fieldset>
                 )}
               </div>
-              <div className="text-center">
-                <p className="mb-0">
-                  Copyright © 2025. All Rights Reserved, Doccure
-                </p>
-              </div>
+
             </div>
             <div className="col-lg-4">
               <div className="booking-map-container">

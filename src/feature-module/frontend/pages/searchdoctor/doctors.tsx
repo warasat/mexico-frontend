@@ -18,8 +18,7 @@ const Doctors = () => {
       rating: "5.0",
       location: "Minneapolis, MN",
       duration: "30 Min",
-      available: true,
-      consultationFee: "$650"
+      available: true
     },
     {
       id: 2,
@@ -30,8 +29,7 @@ const Doctors = () => {
       rating: "4.6",
       location: "Ogden, IA",
       duration: "60 Min",
-      available: true,
-      consultationFee: "$400"
+      available: true
     },
     {
       id: 3,
@@ -42,8 +40,7 @@ const Doctors = () => {
       rating: "4.8",
       location: "Winona, MS",
       duration: "30 Min",
-      available: true,
-      consultationFee: "$500"
+      available: true
     },
     {
       id: 4,
@@ -54,8 +51,7 @@ const Doctors = () => {
       rating: "4.8",
       location: "Beckley, WV",
       duration: "30 Min",
-      available: true,
-      consultationFee: "$550"
+      available: true
     },
     {
       id: 5,
@@ -66,8 +62,7 @@ const Doctors = () => {
       rating: "4.2",
       location: "Hamshire, TX",
       duration: "30 Min",
-      available: true,
-      consultationFee: "$600"
+      available: true
     }
   ];
 
@@ -255,10 +250,6 @@ const Doctors = () => {
                 </div>
                 <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-3 mt-3">
                   <div className="d-flex align-items-center flex-wrap row-gap-3">
-                    <div className="me-3">
-                      <p className="mb-1">Consultation Fees</p>
-                          <h3 className="text-orange">{doctor.consultationFee}</h3>
-                    </div>
                     <p className="mb-0">
                       Next available at <br />
                       10:00 AM - 15 Oct, Tue

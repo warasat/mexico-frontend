@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../../header'
 import DoctorSidebar from '../sidebar'
 import DoctorFooter from '../../common/doctorFooter'
-import { doctordashboardprofile01, doctordashboardprofile02, doctordashboardprofile3, logo, scan } from '../../imagepath'
+import { doctordashboardprofile01, doctordashboardprofile02, doctordashboardprofile3, scan } from '../../imagepath'
 import { Link } from 'react-router-dom'
 
 const CompletedAppointment: React.FC = (props) => {

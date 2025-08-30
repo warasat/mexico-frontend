@@ -62,10 +62,249 @@
   background: #09dca4;
 }
 
+/* Enhanced UI Styles after removing social login buttons */
+.account-content {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  margin-top: 20px;
+}
+
+.login-header h3 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  padding: 12px 15px;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  border-color: #09dca4;
+  box-shadow: 0 0 0 0.2rem rgba(9, 220, 164, 0.25);
+}
+
+.btn-primary-gradient {
+  background: linear-gradient(135deg, #09dca4 0%, #00b894 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(9, 220, 164, 0.3);
+}
+
+.btn-primary-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(9, 220, 164, 0.4);
+  background: linear-gradient(135deg, #00b894 0%, #09dca4 100%);
+}
+
+.account-signup {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.account-signup p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.account-signup a {
+  color: #09dca4;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.account-signup a:hover {
+  color: #00b894;
+  text-decoration: underline;
+}
+
+.forgot-link {
+  color: #09dca4;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.forgot-link:hover {
+  color: #00b894;
+  text-decoration: underline;
+}
+
+.form-check-input:checked {
+  background-color: #09dca4;
+  border-color: #09dca4;
+}
+
+.form-check-input:focus {
+  border-color: #09dca4;
+  box-shadow: 0 0 0 0.2rem rgba(9, 220, 164, 0.25);
+}
+
+/* Enhanced spacing for better visual hierarchy */
+.mb-3 {
+  margin-bottom: 20px !important;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Admin-specific styles */
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .login-header h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .account-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  padding: 12px 15px;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  background: #fff;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .form-control:focus {
+  border-color: #09dca4;
+  box-shadow: 0 0 0 0.2rem rgba(9, 220, 164, 0.25);
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .btn-primary-gradient {
+  background: linear-gradient(135deg, #09dca4 0%, #00b894 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(9, 220, 164, 0.3);
+  color: #fff;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .btn-primary-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(9, 220, 164, 0.4);
+  background: linear-gradient(135deg, #00b894 0%, #09dca4 100%);
+  color: #fff;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .account-signup {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .account-signup p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .account-signup a {
+  color: #09dca4;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .account-signup a:hover {
+  color: #00b894;
+  text-decoration: underline;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .forgot-link {
+  color: #09dca4;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .forgot-link:hover {
+  color: #00b894;
+  text-decoration: underline;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .form-check-input:checked {
+  background-color: #09dca4;
+  border-color: #09dca4;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .form-check-input:focus {
+  border-color: #09dca4;
+  box-shadow: 0 0 0 0.2rem rgba(9, 220, 164, 0.25);
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .form-label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.login-body .login-wrapper .loginbox .login-right .login-right-wrap .mb-3 {
+  margin-bottom: 20px !important;
+}
+
 /* Mobile responsive tab styles */
 @media (max-width: 768px) {
   .nav-tabs-custom .nav-tabs .nav-link {
     padding: 12px 20px;
     font-size: 14px;
+  }
+  
+  .account-content {
+    padding: 25px 20px;
+    margin-top: 10px;
+  }
+  
+  .login-header h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .login-body .login-wrapper .loginbox .login-right .login-right-wrap {
+    padding: 25px 20px;
+  }
+  
+  .login-body .login-wrapper .loginbox .login-right .login-right-wrap .login-header h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
   }
 }

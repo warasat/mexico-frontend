@@ -5,17 +5,14 @@ import { DashboardSidebar } from "./sidebar/sidebar.tsx";
 import Header from "../../header.tsx";
 import DoctorFooter from "../../common/doctorFooter/index.tsx";
 import {
-  doctor_14,
-  doctor_15,
   doctor_17,
   doctordashboardprofile06,
   doctordashboardprofile07,
   doctordashboardprofile08,
   doctorprofileimg,
-  doctorthumb11,
   patient20,
   patient21,
-} from "../../imagepath.tsx";
+} from "../../imagepath";
 import Chart from "react-apexcharts";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";

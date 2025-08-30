@@ -23,7 +23,6 @@ import ProfileSetting from "../feature-module/frontend/doctors/profilesetting";
 import Appointments from "../feature-module/frontend/doctors/appointments";
 import MyPatient from "../feature-module/frontend/doctors/mypatient";
 import AvailableTimings from "../feature-module/frontend/doctors/availableTimings";
-import AddPrescription from "../feature-module/frontend/doctors/addpescription";
 
 // Admin Module
 import AdminDashboard from "../feature-module/admin/dashboard/index";
@@ -147,12 +146,6 @@ export const publicRoutes = [
     element: <AvailableTimings />,
     route: Route,
     meta_title: "Available Timings",
-  },
-  {
-    path: route.addPrescription,
-    element: <AddPrescription />,
-    route: Route,
-    meta_title: "Add Prescription",
   },
 ];
 

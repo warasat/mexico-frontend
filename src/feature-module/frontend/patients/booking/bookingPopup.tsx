@@ -1697,11 +1697,7 @@ const BookingPopup = () => {
                   </fieldset>
                 )}
               </div>
-              <div className="text-center">
-                <p className="mb-0">
-                  Copyright © 2025. All Rights Reserved, Doccure
-                </p>
-              </div>
+
             </div>
           </div>
         </div>

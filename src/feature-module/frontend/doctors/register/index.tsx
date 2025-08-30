@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../header";
 import Footer from "../../footer";
-import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import CommonPhoneInput from "../../common/common-phoneInput/commonPhoneInput";
 import { Link } from "react-router-dom";
 import "../../../../assets/css/patient-signup-tabs.css";
@@ -130,26 +129,6 @@ const DoctorRegister = (props: any) => {
                              Sign In
                            </button>
                          </div>
-                         <div className="login-or">
-                           <span className="or-line" />
-                           <span className="span-or">or</span>
-                         </div>
-                         <div className="social-login-btn">
-                           <Link to="javascript:void(0);" className="btn w-100">
-                             <ImageWithBasePath
-                               src="assets/img/icons/google-icon.svg"
-                               alt="google-icon"
-                             />
-                             Sign in With Google
-                           </Link>
-                           <Link to="javascript:void(0);" className="btn w-100">
-                             <ImageWithBasePath
-                               src="assets/img/icons/facebook-icon.svg"
-                               alt="fb-icon"
-                             />
-                             Sign in With Facebook
-                           </Link>
-                         </div>
                          <div className="account-signup">
                            <p>
                              Don't have an account?{" "}
@@ -241,26 +220,6 @@ const DoctorRegister = (props: any) => {
                              >
                                Sign Up
                              </button>
-                           </div>
-                           <div className="login-or">
-                             <span className="or-line" />
-                             <span className="span-or">or</span>
-                           </div>
-                           <div className="social-login-btn">
-                             <Link to="javascript:void(0);" className="btn w-100">
-                               <ImageWithBasePath
-                                 src="assets/img/icons/google-icon.svg"
-                                 alt="google-icon"
-                               />
-                               Sign up With Google
-                             </Link>
-                             <Link to="javascript:void(0);" className="btn w-100">
-                               <ImageWithBasePath
-                                 src="assets/img/icons/facebook-icon.svg"
-                                 alt="fb-icon"
-                               />
-                               Sign up With Facebook
-                             </Link>
                            </div>
                            <div className="account-signup">
                              <p>

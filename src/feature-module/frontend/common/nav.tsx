@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 const NavLinks: React.FC = () => {
-  const [isSideMenu, setSideMenu] = useState("");
   const [isSideDoctor, setSideDoctor] = useState("");
   const [isSidePatient, setSidePatient] = useState("");
   const [isSideAdmin, setSideAdmin] = useState("");
@@ -15,10 +14,6 @@ const NavLinks: React.FC = () => {
   const onhandleCloseMenu = () => {
     const root = document.getElementsByTagName("html")[0];
     root.classList.remove("menu-opened");
-  };
-
-  const toggleSidebar = (value: string) => {
-    setSideMenu(value);
   };
 
   const toggleSidebarDoctor = (value: string) => {
@@ -51,11 +46,7 @@ const NavLinks: React.FC = () => {
         </Link>
         {isSideHome === "home" && (
           <ul className="submenu d-block">
-            <li>
-              <Link to="/home-2" onClick={() => onhandleCloseMenu()}>
-                General Home
-              </Link>
-            </li>
+
             <li>
               <Link to="/specialty-doctors?specialty=primary-care" onClick={() => onhandleCloseMenu()}>
                 Primary Care Physicians

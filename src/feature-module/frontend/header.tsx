@@ -151,7 +151,7 @@ const Header: React.FC = () => {
                     <span></span>
                   </span>
                 </Link>
-                <Link to="/home-2" className="navbar-brand logo">
+                <Link to="/index" className="navbar-brand logo">
                   {pathnames.includes("/index-5") ? (
                     <img src={logo_white} className="img-fluid" alt="Logo" />
                   ) : pathnames.includes(
@@ -208,7 +208,7 @@ const Header: React.FC = () => {
               </div>
               <div className="main-menu-wrapper">
                 <div className="menu-header">
-                  <Link to="/home-2" className="menu-logo">
+                                      <Link to="/index" className="menu-logo">
                     <img src={logo} className="img-fluid" alt="Logo" />
                   </Link>
                   <Link

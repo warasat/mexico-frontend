@@ -10,7 +10,6 @@ import SectionService from './sectionService';
 import SectionReason from './sectionReason';
 import SectionBook from './sectionBook';
 import SectionTestimonial from './sectionTestimonial';
-import SectionApp from './sectionApp';
 import SectionFaq from './sectionFaq';
 
 import Footer from './footer';
@@ -37,7 +36,6 @@ const GeneralHomeOne: React.FC = () => {
       <SectionBook />
       <SectionTestimonial />
       <SectionFaq />
-      <SectionApp />
       
       <Footer />
     </div>

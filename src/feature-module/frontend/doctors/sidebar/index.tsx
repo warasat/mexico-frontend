@@ -85,13 +85,6 @@ const DoctorSidebar = () => {
                 </Link>
               </li>
 
-              <li className={pathnames.includes('/doctor/add-prescription') ? 'active' : ''}>
-                <Link to="/doctor/add-prescription">
-                <i className="fa-solid fa-prescription-bottle-medical me-2"></i>
-                  <span>Add Prescription</span>
-                </Link>
-              </li>
-
               <li className={pathnames.includes('/doctor/profile-setting') || pathnames.includes('/doctor/doctor-experience') || pathnames.includes('/doctor/education') || pathnames.includes('/doctor/doctor-awards-settings') || pathnames.includes('/doctor/doctor-insurance-settings') || pathnames.includes('/doctor/doctor-clinics-settings') || pathnames.includes('doctor/doctor-business-settings') ? 'active' : ''}>
                 <Link to="/doctor/profile-setting">
                 <i className="isax isax-setting-2 me-2"></i>
