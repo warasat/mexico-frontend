@@ -81,7 +81,6 @@ const Header = () => {
                   <Link className="dropdown-item" to="/patient/profile">My Profile</Link>
                   <Link className="dropdown-item" to="/patient/patient-appointments">Appointments</Link>
                   <Link className="dropdown-item" to="/patient/search-doctor1">Find Doctor</Link>
-                  <Link className="dropdown-item" to="/">Logout</Link>
                 </div>
               </li>
             </ul>

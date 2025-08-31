@@ -1,18 +1,17 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { Link } from "react-router-dom";
-import { AlignLeft, Bell, Search, Menu } from "react-feather";
+import { Link, useNavigate } from "react-router-dom";
+import { AlignLeft, Search, Menu } from "react-feather";
+import { useAuth } from "../../../core/context/AuthContext";
 import {
   avatar01,
-  doctor_thumb_01,
   logo,
   logoSmall,
-  patient1,
-  patient2,
-  patient3,
 } from "../imagepath";
 
 const Header: React.FC = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   
   const handleSidebar = () => {
     document.body.classList.toggle("mini-sidebar");
@@ -20,6 +19,11 @@ const Header: React.FC = () => {
   
   const handleSidebarMobileMenu = () => {
     document.body.classList.toggle("slide-nav");
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/index');
   };
 
   return (
@@ -62,137 +66,9 @@ const Header: React.FC = () => {
           <Menu size={20} />
         </Link>
         {/* /Mobile Menu Toggle */}
-        {/* Header Right Menu */}
-        <ul className="nav user-menu">
-          {/* Notifications */}
-          <li className="nav-item dropdown noti-dropdown">
-            <Link
-              to="#"
-              className="dropdown-toggle nav-link"
-              data-bs-toggle="dropdown"
-            >
-              <Bell size={20} />
-              <span className="badge rounded-pill">3</span>
-            </Link>
-            <div className="dropdown-menu notifications">
-              <div className="topnav-dropdown-header">
-                <span className="notification-title">Notifications</span>
-                <Link to="#" className="clear-noti">
-                  {" "}
-                  Clear All{" "}
-                </Link>
-              </div>
-              <div className="noti-content">
-                <ul className="notification-list">
-                  <li className="notification-message">
-                    <Link to="#">
-                      <div className="media d-flex">
-                        <span className="avatar avatar-sm flex-shrink-0">
-                          <img
-                            className="avatar-img rounded-circle"
-                            alt="User Image"
-                            src={doctor_thumb_01}
-                          />
-                        </span>
-                        <div className="media-body flex-grow-1">
-                          <p className="noti-details">
-                            <span className="noti-title">Dr. Ruby Perrin</span>{" "}
-                            Schedule{" "}
-                            <span className="noti-title">her appointment</span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              4 mins ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                  <li className="notification-message">
-                    <Link to="#">
-                      <div className="media d-flex">
-                        <span className="avatar avatar-sm flex-shrink-0">
-                          <img
-                            className="avatar-img rounded-circle"
-                            alt="User Image"
-                            src={patient1}
-                          />
-                        </span>
-                        <div className="media-body flex-grow-1">
-                          <p className="noti-details">
-                            <span className="noti-title">Charlene Reed</span>{" "}
-                            has booked her appointment to{" "}
-                            <span className="noti-title">Dr. Ruby Perrin</span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              6 mins ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                  <li className="notification-message">
-                    <Link to="#">
-                      <div className="media d-flex">
-                        <span className="avatar avatar-sm flex-shrink-0">
-                          <img
-                            className="avatar-img rounded-circle"
-                            alt="User Image"
-                            src={patient2}
-                          />
-                        </span>
-                        <div className="media-body flex-grow-1">
-                          <p className="noti-details">
-                            <span className="noti-title">Travis Trimble</span>{" "}
-                            sent a amount of $210 for his{" "}
-                            <span className="noti-title">appointment</span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              8 mins ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                  <li className="notification-message">
-                    <Link to="#">
-                      <div className="media d-flex">
-                        <span className="avatar avatar-sm flex-shrink-0">
-                          <img
-                            className="avatar-img rounded-circle"
-                            alt="User Image"
-                            src={patient3}
-                          />
-                        </span>
-                        <div className="media-body flex-grow-1">
-                          <p className="noti-details">
-                            <span className="noti-title">Carl Kelly</span> send
-                            a message{" "}
-                            <span className="noti-title"> to his doctor</span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              12 mins ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="topnav-dropdown-footer">
-                <Link to="#">View all Notifications</Link>
-              </div>
-            </div>
-          </li>
-          {/* /Notifications */}
-          {/* User Menu */}
+                 {/* Header Right Menu */}
+         <ul className="nav user-menu">
+           {/* User Menu */}
           <li className="nav-item dropdown has-arrow">
             <Link
               to="#"
@@ -228,9 +104,9 @@ const Header: React.FC = () => {
               <Link className="dropdown-item" to="/admin/settings">
                 Settings
               </Link>
-              <Link className="dropdown-item" to="/admin/login">
+              <button className="dropdown-item" onClick={handleLogout}>
                 Logout
-              </Link>
+              </button>
             </div>
           </li>
           {/* /User Menu */}

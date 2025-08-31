@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../../core/context/AuthContext";
@@ -13,6 +13,21 @@ const NavLinks: React.FC = () => {
   const pathnames = Location.pathname;
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
+
+  // Reset dropdown states when authentication changes
+  useEffect(() => {
+    // Immediately close all dropdowns when authentication changes
+    setSideDoctor("");
+    setSidePatient("");
+    setSideAdmin("");
+    setSideHome("");
+    
+    // Also close the mobile menu if it's open
+    const root = document.getElementsByTagName("html")[0];
+    if (root.classList.contains("menu-opened")) {
+      root.classList.remove("menu-opened");
+    }
+  }, [isAuthenticated, userType]);
 
   const onhandleCloseMenu = () => {
     const root = document.getElementsByTagName("html")[0];
@@ -33,6 +48,17 @@ const NavLinks: React.FC = () => {
 
   const toggleSidebarHome = (value: string) => {
     setSideHome(value);
+  };
+
+  // Helper function to determine if a module should be visible
+  const shouldShowModule = (moduleType: 'doctor' | 'patient' | 'admin') => {
+    // If not authenticated, show all modules
+    if (!isAuthenticated) {
+      return true;
+    }
+    
+    // If authenticated, only show the user's own module
+    return userType === moduleType;
   };
 
   return (
@@ -124,8 +150,9 @@ const NavLinks: React.FC = () => {
         )}
       </li>
 
-      {/* Doctors Dropdown */}
-      <li className={`has-submenu ${pathnames.includes("/doctor") ? "active" : ""}`}>
+      {/* Doctors Dropdown - Only show if not authenticated or if user is doctor */}
+      {shouldShowModule('doctor') && (
+        <li className={`has-submenu ${pathnames.includes("/doctor") ? "active" : ""}`}>
         <Link
           to="#"
           className={isSideDoctor === "doctors" ? "subdrop" : ""}
@@ -183,8 +210,10 @@ const NavLinks: React.FC = () => {
           </ul>
         )}
       </li>
+      )}
 
-      {/* Patients Dropdown */}
+      {/* Patients Dropdown - Only show if not authenticated or if user is patient */}
+      {shouldShowModule('patient') && (
       <li className={`has-submenu ${pathnames.includes("/patient") ? "active" : ""}`}>
         <Link
           to="#"
@@ -248,8 +277,10 @@ const NavLinks: React.FC = () => {
           </ul>
         )}
       </li>
+      )}
 
-      {/* Admin Dropdown */}
+      {/* Admin Dropdown - Only show if not authenticated or if user is admin */}
+      {shouldShowModule('admin') && (
       <li className={`has-submenu ${pathnames.includes("/admin") ? "active" : ""}`}>
         <Link
           to="#"
@@ -303,6 +334,7 @@ const NavLinks: React.FC = () => {
           </ul>
         )}
       </li>
+      )}
 
       {/* About */}
       <li className={pathnames.includes("aboutus") ? "active" : ""}>

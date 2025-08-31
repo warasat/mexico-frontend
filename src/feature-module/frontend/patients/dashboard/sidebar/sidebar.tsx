@@ -53,12 +53,6 @@ export const DashboardSidebar: React.FC = () => {
                   <span>Settings</span>
                 </Link>
               </li>
-              <li>
-                <Link to="/">
-                  <i className="isax isax-logout"></i>
-                  <span>Logout</span>
-                </Link>
-              </li>
             </ul>
           </nav>
         </div>

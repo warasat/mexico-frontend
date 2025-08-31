@@ -55,12 +55,6 @@ const PatientSidebar: React.FC = () => {
                                     <span>Change Password</span>
                                 </Link>
                             </li>
-                            <li>
-                                <Link to="/">
-                                    <i className="fa-solid fa-sign-out-alt" />
-                                    <span>Logout</span>
-                                </Link>
-                            </li>
                         </ul>
                     </nav>
                 </div>

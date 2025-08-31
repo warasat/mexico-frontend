@@ -91,12 +91,6 @@ const DoctorSidebar = () => {
                   <span>Profile Settings</span>
                 </Link>
               </li>
-              <li>
-                <Link to="/">
-                <i className="isax isax-logout me-2"></i>
-                  <span>Logout</span>
-                </Link>
-              </li>
             </ul>
           </nav>
         </div>
