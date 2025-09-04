@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/react/template/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

@@ -1,13 +1,14 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-   base: '/', // 👈 This ensures correct asset loading path
-   resolve: {
+  base: "/react/template/",
+  resolve: {
     alias: {
-      moment: 'moment/moment.js'
+      "@": "/src",
+      moment: "moment/moment.js",
     },
   },
-})
+});

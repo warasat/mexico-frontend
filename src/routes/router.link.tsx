@@ -40,7 +40,7 @@ import AdminLogin from "../feature-module/admin/login";
 const route = all_routes
 export const publicRoutes = [
   {
-    path: "/",
+    path: "/react/template/",
     name: "Root",
     element: <Navigate to={route.generalHomeOne} />,
     route: Route,

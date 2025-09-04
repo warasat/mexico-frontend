@@ -165,7 +165,7 @@ const Header: React.FC = () => {
                   {pathnames.includes("/index-5") ? (
                     <img src={logo_white} className="img-fluid" alt="Logo" />
                   ) : pathnames.includes(
-                      "/Pharmacy/Pharmacy-index"
+                      "/react/template/Pharmacy/Pharmacy-index"
                     ) ? (
                     <div className="browse-categorie">
                       <div className="dropdown categorie-dropdown">
@@ -195,18 +195,18 @@ const Header: React.FC = () => {
                   ) : (
                     <img
                       src={
-                        pathnames === "/index-6" ||
-                        pathnames === "/index-4"
+                        pathnames === "/react/template/index-6" ||
+                        pathnames === "/react/template/index-4"
                           ? logosvg
-                          : pathnames === "/index-11"
+                          : pathnames === "/react/template/index-11"
                           ? logo_15
-                          : pathnames === "/index-10"
+                          : pathnames === "/react/template/index-10"
                           ? logo_15
-                          : pathnames === "/index-9"
+                          : pathnames === "/react/template/index-9"
                           ? logo_03
-                          : pathnames === "/index-7"
+                          : pathnames === "/react/template/index-7"
                           ? logo_svg
-                          : pathnames == "/index-13"
+                          : pathnames == "/react/template/index-13"
                           ? logo_white
                           : logosvg
                       }
