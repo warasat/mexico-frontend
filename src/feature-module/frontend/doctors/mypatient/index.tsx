@@ -7,8 +7,24 @@ import { doctordashboardprofile01, doctordashboardprofile02, doctordashboardprof
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import PredefinedDatePicker from "../../common/common-dateRangePicker/PredefinedDatePicker";
 import { Filter } from "../../common/filter";
+import { useAuth } from "../../../../core/context/AuthContext";
 
 const MyPatient: React.FC = (props) => {
+  const { authState } = useAuth();
+  const { isAuthenticated, userType } = authState;
+
+  // Function to get the appropriate home redirect URL based on user type
+  const getHomeRedirectUrl = () => {
+    if (isAuthenticated && userType === 'doctor') {
+      return '/doctor/doctor-dashboard';
+    } else if (isAuthenticated && userType === 'patient') {
+      return '/patient/dashboard';
+    } else if (isAuthenticated && userType === 'admin') {
+      return '/admin/dashboard';
+    }
+    return '/index'; // Default to landing page for unauthenticated users
+  };
+
   return (
     <div>
       <Header {...props} />
@@ -21,7 +37,7 @@ const MyPatient: React.FC = (props) => {
                 <nav aria-label="breadcrumb" className="page-breadcrumb">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/index">
+                      <Link to={getHomeRedirectUrl()}>
                         <i className="isax isax-home-15" />
                       </Link>
                     </li>

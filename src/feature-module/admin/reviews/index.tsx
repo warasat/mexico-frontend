@@ -30,6 +30,7 @@ import { Link } from "react-router-dom";
 import Header from "../header";
 import { Star, Trash2 } from "react-feather";
 const AdminReviews: React.FC = () => {
+
   const data = [
     {
       id: 1,

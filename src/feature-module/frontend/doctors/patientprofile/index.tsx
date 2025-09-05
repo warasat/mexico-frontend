@@ -6,8 +6,24 @@ import DoctorFooter from "../../common/doctorFooter";
 import Select from "react-select";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { doctordashboardprofile01, logo } from "../../imagepath";
+import { useAuth } from "../../../../core/context/AuthContext";
 
 const PatientProfile: React.FC = (props) => {
+  const { authState } = useAuth();
+  const { isAuthenticated, userType } = authState;
+
+  // Function to get the appropriate home redirect URL based on user type
+  const getHomeRedirectUrl = () => {
+    if (isAuthenticated && userType === 'doctor') {
+      return '/doctor/doctor-dashboard';
+    } else if (isAuthenticated && userType === 'patient') {
+      return '/patient/dashboard';
+    } else if (isAuthenticated && userType === 'admin') {
+      return '/admin/dashboard';
+    }
+    return '/index'; // Default to landing page for unauthenticated users
+  };
+
   const options = [
     { value: "", label: "Select Patient" },
     { value: "adrian_marshall", label: "Adrian Marshall" },
@@ -44,7 +60,7 @@ const PatientProfile: React.FC = (props) => {
                   <nav aria-label="breadcrumb" className="page-breadcrumb">
                     <ol className="breadcrumb">
                       <li className="breadcrumb-item">
-                        <Link to="/index">
+                        <Link to={getHomeRedirectUrl()}>
                           <i className="isax isax-home-15" />
                         </Link>
                       </li>

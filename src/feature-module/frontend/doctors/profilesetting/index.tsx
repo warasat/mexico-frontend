@@ -7,8 +7,24 @@ import ImageWithBasePath from "../../../../components/imageWithBasePath/index.js
 import CommonTagInputs from "../../common/common-tagInput/commonTagInputs.js";
 import DoctorSidebar from "../sidebar/index.js";
 import SettingsHeader from "./settingsHeader.js";
+import { useAuth } from "../../../../core/context/AuthContext";
 
 const ProfileSetting = (props: any) => {
+  const { authState } = useAuth();
+  const { isAuthenticated, userType } = authState;
+
+  // Function to get the appropriate home redirect URL based on user type
+  const getHomeRedirectUrl = () => {
+    if (isAuthenticated && userType === 'doctor') {
+      return '/doctor/doctor-dashboard';
+    } else if (isAuthenticated && userType === 'patient') {
+      return '/patient/dashboard';
+    } else if (isAuthenticated && userType === 'admin') {
+      return '/admin/dashboard';
+    }
+    return '/index'; // Default to landing page for unauthenticated users
+  };
+
   const [membershipInfos, setMembershipInfos] = useState([{ title: '', about: '' }]);
 
   const addMembershipInfo = () => {
@@ -47,7 +63,7 @@ const ProfileSetting = (props: any) => {
                 <nav aria-label="breadcrumb" className="page-breadcrumb">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/index">
+                      <Link to={getHomeRedirectUrl()}>
                         <i className="isax isax-home-15" />
                       </Link>
                     </li>

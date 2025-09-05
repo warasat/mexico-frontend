@@ -1,9 +1,32 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Slider from "react-slick";
 import ImageWithBasePath from '../../../../components/imageWithBasePath';
+import { useAuth } from '../../../../core/context/AuthContext';
 
 const SectionDoctor: React.FC = () => {
+    const { authState } = useAuth();
+    const { isAuthenticated, userType } = authState;
+    const navigate = useNavigate();
+
+    // Function to handle Book Now button click
+    const handleBookNow = (e: React.MouseEvent) => {
+        e.preventDefault();
+        
+        if (!isAuthenticated || userType !== 'patient') {
+            // Redirect to patient login with warning message and return path
+            navigate('/patient/login', { 
+                state: { 
+                    from: { pathname: '/' },
+                    message: 'Please login first to book an appointment with our doctors.'
+                }
+            });
+        } else {
+            // User is authenticated as patient, proceed to booking
+            navigate('/booking');
+        }
+    };
+
     interface ArrowProps {
         onClick?: React.MouseEventHandler<HTMLButtonElement>;
     }
@@ -115,13 +138,13 @@ const SectionDoctor: React.FC = () => {
                                             </div>
                                         </div>
                                                                                  <div className="d-flex align-items-center justify-content-center">
-                                             <Link
-                                                 to="/booking"
+                                             <button
+                                                 onClick={handleBookNow}
                                                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
                                              >
                                                  {/* <i className="isax isax-calendar-1 me-2" /> */}
                                                  Book Now
-                                             </Link>
+                                             </button>
                                          </div>
                                     </div>
                                 </div>
@@ -166,12 +189,12 @@ const SectionDoctor: React.FC = () => {
                                              </div>
                                          </div>
                                          <div className="d-flex align-items-center justify-content-center">
-                                             <Link
-                                                 to="/booking"
+                                             <button
+                                                 onClick={handleBookNow}
                                                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
                                              >
                                                  Book Now
-                                             </Link>
+                                             </button>
                                          </div>
                                     </div>
                                 </div>
@@ -216,12 +239,12 @@ const SectionDoctor: React.FC = () => {
                                              </div>
                                          </div>
                                          <div className="d-flex align-items-center justify-content-center">
-                                             <Link
-                                                 to="/booking"
+                                             <button
+                                                 onClick={handleBookNow}
                                                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
                                              >
                                                  Book Now
-                                             </Link>
+                                             </button>
                                          </div>
                                     </div>
                                 </div>
@@ -266,12 +289,12 @@ const SectionDoctor: React.FC = () => {
                                              </div>
                                          </div>
                                          <div className="d-flex align-items-center justify-content-center">
-                                             <Link
-                                                 to="/booking"
+                                             <button
+                                                 onClick={handleBookNow}
                                                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
                                              >
                                                  Book Now
-                                             </Link>
+                                             </button>
                                          </div>
                                     </div>
                                 </div>
@@ -316,12 +339,12 @@ const SectionDoctor: React.FC = () => {
                                              </div>
                                          </div>
                                          <div className="d-flex align-items-center justify-content-center">
-                                             <Link
-                                                 to="/booking"
+                                             <button
+                                                 onClick={handleBookNow}
                                                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
                                              >
                                                  Book Now
-                                             </Link>
+                                             </button>
                                          </div>
                                     </div>
                                 </div>

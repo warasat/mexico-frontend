@@ -10,8 +10,21 @@ import {
 } from "../imagepath";
 
 const Header: React.FC = () => {
-  const { logout } = useAuth();
+  const { authState, logout } = useAuth();
+  const { isAuthenticated, userType } = authState;
   const navigate = useNavigate();
+
+  // Function to get the appropriate logo redirect URL based on user type
+  const getLogoRedirectUrl = () => {
+    if (isAuthenticated && userType === 'doctor') {
+      return '/doctor/doctor-dashboard';
+    } else if (isAuthenticated && userType === 'patient') {
+      return '/patient/dashboard';
+    } else if (isAuthenticated && userType === 'admin') {
+      return '/admin';
+    }
+    return '/index'; // Default to landing page for unauthenticated users
+  };
   
   const handleSidebar = () => {
     document.body.classList.toggle("mini-sidebar");
@@ -23,7 +36,7 @@ const Header: React.FC = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/index');
+    navigate('/');
   };
 
   return (
@@ -32,10 +45,10 @@ const Header: React.FC = () => {
       <div className="header">
         {/* Logo */}
         <div className="header-left">
-          <Link to="/admin" className="logo">
+          <Link to={getLogoRedirectUrl()} className="logo">
             <img src={logo} alt="Logo" />
           </Link>
-          <Link to="/admin" className="logo logo-small">
+          <Link to={getLogoRedirectUrl()} className="logo logo-small">
             <img src={logoSmall} alt="Logo" width="30" height="30" />
           </Link>
         </div>

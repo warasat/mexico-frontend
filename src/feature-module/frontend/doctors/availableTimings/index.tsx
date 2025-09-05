@@ -5,8 +5,24 @@ import Select from "react-select";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import CommonDatePicker from "../../common/common-datePicker/commonDatePicker";
+import { useAuth } from "../../../../core/context/AuthContext";
 
 const AvailableTimings = (props: any) => {
+  const { authState } = useAuth();
+  const { isAuthenticated, userType } = authState;
+
+  // Function to get the appropriate home redirect URL based on user type
+  const getHomeRedirectUrl = () => {
+    if (isAuthenticated && userType === 'doctor') {
+      return '/doctor/doctor-dashboard';
+    } else if (isAuthenticated && userType === 'patient') {
+      return '/patient/dashboard';
+    } else if (isAuthenticated && userType === 'admin') {
+      return '/admin/dashboard';
+    }
+    return '/index'; // Default to landing page for unauthenticated users
+  };
+
   const interval = [
     { label: "10 Minutes", value: "10 Minutes" },
     { label: "20 Minutes", value: "20 Minutes" },
@@ -37,9 +53,9 @@ const AvailableTimings = (props: any) => {
                   <nav aria-label="breadcrumb" className="page-breadcrumb">
                     <ol className="breadcrumb">
                       <li className="breadcrumb-item">
-                        <Link to="/index">
-                          <i className="isax isax-home-15" />
-                        </Link>
+                                              <Link to={getHomeRedirectUrl()}>
+                        <i className="isax isax-home-15" />
+                      </Link>
                       </li>
                       <li className="breadcrumb-item" aria-current="page">
                         Doctor

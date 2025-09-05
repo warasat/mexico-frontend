@@ -11,6 +11,9 @@ const PatientLogin: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  
+  // Get warning message from navigation state
+  const warningMessage = location.state?.message;
 
   // Demo credentials
   const demoCredentials = {
@@ -60,6 +63,13 @@ const PatientLogin: React.FC = () => {
                   {error && (
                     <div className="alert alert-danger" role="alert">
                       {error}
+                    </div>
+                  )}
+                  
+                  {warningMessage && (
+                    <div className="alert alert-warning" role="alert">
+                      <i className="fa-solid fa-exclamation-triangle me-2"></i>
+                      {warningMessage}
                     </div>
                   )}
                   

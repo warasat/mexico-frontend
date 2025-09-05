@@ -5,8 +5,12 @@ import DoctorListDesboard from "./DoctorList";
 import PatientsListDesboard from "./PatientsList";
 import AppointmentList from "./AppointmentList";
 import StatusCharts from "./StatusCharts";
+import { useBackButtonHandler } from "../../../core/hooks/useBackButtonHandler";
 
 const AdminDashboard: React.FC = () => {
+  // Handle browser back button behavior
+  useBackButtonHandler();
+
   return (
     <>
       <div className="main-wrapper">

@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import Header from "../header";
 
 const AdminDoctors = () => {
+
   const data = [
     {
       id: 1,

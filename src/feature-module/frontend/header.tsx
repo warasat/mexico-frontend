@@ -10,7 +10,6 @@ import { useAuth } from "../../core/context/AuthContext";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { 
-  Search, 
   X, 
 } from "react-feather";
 import {
@@ -29,14 +28,9 @@ import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [searchField, setSearchField] = useState(false);
   const { authState, logout } = useAuth();
   const { isAuthenticated, userType, user } = authState;
   const navigate = useNavigate();
-  
-  const ToggleSearch = () => {
-    setSearchField(!searchField);
-  };
 
   const handleLogout = () => {
     logout();
@@ -50,6 +44,18 @@ const Header: React.FC = () => {
   }, []);
 
   const pathnames = window.location.pathname;
+
+  // Function to get the appropriate logo redirect URL based on user type
+  const getLogoRedirectUrl = () => {
+    if (isAuthenticated && userType === 'doctor') {
+      return '/doctor/doctor-dashboard';
+    } else if (isAuthenticated && userType === 'patient') {
+      return '/patient/dashboard';
+    } else if (isAuthenticated && userType === 'admin') {
+      return '/admin/dashboard';
+    }
+    return '/index'; // Default to landing page for unauthenticated users
+  };
 
   const OnHandleMobileMenu = () => {
     const root = document.getElementsByTagName("html")[0];
@@ -161,7 +167,7 @@ const Header: React.FC = () => {
                     <span></span>
                   </span>
                 </Link>
-                <Link to="/index" className="navbar-brand logo">
+                <Link to={getLogoRedirectUrl()} className="navbar-brand logo">
                   {pathnames.includes("/index-5") ? (
                     <img src={logo_white} className="img-fluid" alt="Logo" />
                   ) : pathnames.includes(
@@ -218,7 +224,7 @@ const Header: React.FC = () => {
               </div>
               <div className="main-menu-wrapper">
                 <div className="menu-header">
-                                      <Link to="/index" className="menu-logo">
+                                      <Link to={getLogoRedirectUrl()} className="menu-logo">
                     <img src={logo} className="img-fluid" alt="Logo" />
                   </Link>
                   <Link
@@ -242,32 +248,11 @@ const Header: React.FC = () => {
                 </ul>
               </div>
               
-              {/* Right side navigation - simplified for landing page */}
+              {/* Right side navigation - simplified */}
               <ul className="nav header-navbar-rht">
                 {/* Only show these elements if NOT on contact or about pages */}
                 {!pathnames.includes("contactus") && !pathnames.includes("aboutus") && (
                   <>
-                    {/* Search bar */}
-                    <li className="searchbar">
-                      <Link to="#" onClick={ToggleSearch}>
-                        <Search size={20} />
-                      </Link>
-                      <div className={
-                        searchField
-                          ? "togglesearch d-block"
-                          : "togglesearch d-none"
-                      } >
-                        <form>
-                          <div className="input-group">
-                            <input type="text" className="form-control" placeholder="Search..." />
-                            <button type="submit" className="btn">
-                              Search
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </li>
-
                     {/* Dark mode toggle */}
                     <li className="header-theme noti-nav">
                       <DarkModeToggle />
@@ -278,26 +263,8 @@ const Header: React.FC = () => {
                       <LanguageSwitcher />
                     </li>
 
-                    {/* Authentication buttons */}
-                    {!isAuthenticated ? (
-                      <>
-                        <li className="nav-item">
-                          <Link to="/patient/login" className="btn btn-primary btn-sm">
-                            Patient Login
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link to="/doctor/login" className="btn btn-outline-primary btn-sm">
-                            Doctor Login
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link to="/admin/login" className="btn btn-outline-secondary btn-sm">
-                            Admin Login
-                          </Link>
-                        </li>
-                      </>
-                    ) : (
+                    {/* User dropdown for authenticated users */}
+                    {isAuthenticated && (
                       <li className="nav-item dropdown">
                         <button className="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
                           {user?.name || userType}
