@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import ALLRoutes from './routes/router'
 import store from './core/redux/store'
-import { base_path } from './environment'
+// import { base_path } from './environment'
 import { AuthProvider } from './core/context/AuthContext'
 
 // Initialize i18n
@@ -38,7 +38,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <AuthProvider>
-        <BrowserRouter basename={base_path}>
+        <BrowserRouter>
           <ALLRoutes />
         </BrowserRouter>
       </AuthProvider>

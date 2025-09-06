@@ -229,7 +229,6 @@ const BookingPopup = () => {
                                     <span className="service-title d-block mb-1">
                                       Echocardiograms
                                     </span>
-                                    <span className="fs-14 d-block">$310</span>
                                   </label>
                                 </div>
                               </div>
@@ -250,7 +249,6 @@ const BookingPopup = () => {
                                     <span className="service-title d-block mb-1">
                                       Stress tests
                                     </span>
-                                    <span className="fs-14 d-block">$754</span>
                                   </label>
                                 </div>
                               </div>
@@ -271,7 +269,6 @@ const BookingPopup = () => {
                                     <span className="service-title d-block mb-1">
                                       Stress tests
                                     </span>
-                                    <span className="fs-14 d-block">$754</span>
                                   </label>
                                 </div>
                               </div>
@@ -292,7 +289,6 @@ const BookingPopup = () => {
                                     <span className="service-title d-block mb-1">
                                       Heart Catheterization
                                     </span>
-                                    <span className="fs-14 d-block">$150</span>
                                   </label>
                                 </div>
                               </div>
@@ -313,7 +309,6 @@ const BookingPopup = () => {
                                     <span className="service-title d-block mb-1">
                                       Echocardiograms
                                     </span>
-                                    <span className="fs-14 d-block">$200</span>
                                   </label>
                                 </div>
                               </div>
@@ -334,7 +329,6 @@ const BookingPopup = () => {
                                     <span className="service-title d-block mb-1">
                                       Echocardiograms
                                     </span>
-                                    <span className="fs-14 d-block">$200</span>
                                   </label>
                                 </div>
                               </div>

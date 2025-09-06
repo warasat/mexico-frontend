@@ -1040,7 +1040,7 @@ const BookingWizard = () => {
                             className="btn btn-md btn-primary-gradient next_btns inline-flex align-items-center rounded-pill"
                             onClick={HandleNext}
                           >
-                            Select Payment
+                            Select Insurance
                             <i className="isax isax-arrow-right-3 ms-1" />
                           </Link>
                         </div>
@@ -1123,21 +1123,6 @@ const BookingWizard = () => {
                                   <div className="form-plain-text">
                                     {selectedInsurance || 'Not Selected'}
                                   </div>
-                                </div>
-                                <div className="pt-3 border-top booking-more-info">
-                                  <h6 className="mb-3">Service Info</h6>
-                                  <div className="d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between mb-2">
-                                    <p className="mb-0">Consultation</p>
-                                    <span className="fw-medium d-block">$200</span>
-                                  </div>
-                                  <div className="d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between mb-2">
-                                    <p className="mb-0">Booking Fees</p>
-                                    <span className="fw-medium d-block">$20</span>
-                                  </div>
-                                </div>
-                                <div className="bg-primary d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between p-3 rounded">
-                                  <h6 className="text-white">Total</h6>
-                                  <h6 className="text-white">$220</h6>
                                 </div>
                               </div>
                             </div>
@@ -1297,16 +1282,6 @@ const BookingWizard = () => {
                                   <span className="booking-id-badge mb-3">
                                     {bookingId}
                                   </span>
-                                  <span className="d-block mb-3">
-                                    <ImageWithBasePath
-                                      src="assets/img/icons/payment-qr.svg"
-                                      alt=""
-                                    />
-                                  </span>
-                                  <p>
-                                    Scan this QR Code to Download the details of
-                                    Appointment
-                                  </p>
                                 </div>
                                 <div>
                                   <Link

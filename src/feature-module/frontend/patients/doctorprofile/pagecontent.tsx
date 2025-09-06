@@ -63,9 +63,6 @@ const Pagecontent = () => {
                     <li>
                       <i className="fas fa-map-marker-alt" /> Newyork, USA
                     </li>
-                    <li>
-                      <i className="far fa-money-bill-alt" /> $100 per hour{" "}
-                    </li>
                   </ul>
                 </div>
                 <div className="doctor-action">
