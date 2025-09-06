@@ -91,7 +91,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=orthopedics" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-01.svg"
                                                         alt="img"
@@ -99,12 +99,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">Orthopedics</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=orthopedics">Orthopedics</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">151 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=orthopedics" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>
@@ -116,7 +115,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=neurology" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-02.svg"
                                                         alt="img"
@@ -124,12 +123,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">Neurology</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=neurology">Neurology</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">25 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=neurology" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>
@@ -141,7 +139,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=psychiatry" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-03.svg"
                                                         alt="img"
@@ -149,12 +147,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">Psychiatry</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=psychiatry">Psychiatry</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">121 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=psychiatry" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>
@@ -166,7 +163,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=endocrinology" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-04.svg"
                                                         alt="img"
@@ -174,12 +171,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">Endocrinology</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=endocrinology">Endocrinology</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">104 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=endocrinology" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>
@@ -191,7 +187,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=pulmonology" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-05.svg"
                                                         alt="img"
@@ -199,12 +195,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">Pulmonology</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=pulmonology">Pulmonology</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">41 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=pulmonology" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>
@@ -216,7 +211,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=urology" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-06.svg"
                                                         alt="img"
@@ -224,12 +219,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">Urology</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=urology">Urology</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">39 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=urology" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>
@@ -241,7 +235,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=cardiology" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-07.svg"
                                                         alt="img"
@@ -249,12 +243,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">Cardiology</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=cardiology">Cardiology</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">254 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=cardiology" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>
@@ -266,7 +259,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=adult-endocrinology" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-08.svg"
                                                         alt="img"
@@ -274,12 +267,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">Adult Endocrinology</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=adult-endocrinology">Adult Endocrinology</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">99 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=adult-endocrinology" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>
@@ -291,7 +283,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=general-medicine" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-09.svg"
                                                         alt="img"
@@ -299,12 +291,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">General Medicine</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=general-medicine">General Medicine</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">41 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=general-medicine" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>
@@ -316,7 +307,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=ent" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-10.svg"
                                                         alt="img"
@@ -324,12 +315,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">ENT</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=ent">ENT</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">37 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=ent" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>
@@ -341,7 +331,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=fertility" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-11.svg"
                                                         alt="img"
@@ -349,12 +339,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">Fertility</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=fertility">Fertility</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">547 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=fertility" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>
@@ -366,7 +355,7 @@ const Speciality = (props: any) => {
                                     <div className="card-body p-3">
                                         <div className="d-flex align-items-center justify-content-between">
                                             <div className="d-flex align-items-center">
-                                                <Link to="/patient/doctor-grid" className="speciality-icon">
+                                                <Link to="/patient/doctor-grid?specialty=family-medicine" className="speciality-icon">
                                                     <ImageWithBasePath
                                                         src="assets/img/specialities/speciality-12.svg"
                                                         alt="img"
@@ -374,12 +363,11 @@ const Speciality = (props: any) => {
                                                 </Link>
                                                 <div className="ms-3">
                                                     <h6 className="mb-1">
-                                                        <Link to="/patient/doctor-grid">Family Medicine</Link>
+                                                        <Link to="/patient/doctor-grid?specialty=family-medicine">Family Medicine</Link>
                                                     </h6>
-                                                    <p className="fs-14 mb-0">121 Doctors</p>
                                                 </div>
                                             </div>
-                                            <Link to="/patient/doctor-grid" className="link-icon">
+                                            <Link to="/patient/doctor-grid?specialty=family-medicine" className="link-icon">
                                                 <i className="isax isax-arrow-right-3" />
                                             </Link>
                                         </div>

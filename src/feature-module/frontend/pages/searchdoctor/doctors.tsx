@@ -14,9 +14,9 @@ const Doctors = () => {
       name: "Dr. Michael Brown",
       specialty: "Psychologist",
       specialtyClass: "text-indigo",
-      image: "assets/img/doctor-grid/doctor-grid-01.jpg",
+      image: "assets/img/doctor-grid/doc1.png",
       rating: "5.0",
-      location: "Minneapolis, MN",
+      location: "Guadalajara, Mexico",
       duration: "30 Min",
       available: true
     },
@@ -25,9 +25,9 @@ const Doctors = () => {
       name: "Dr. Nicholas Tello",
       specialty: "Pediatrician",
       specialtyClass: "text-pink",
-      image: "assets/img/doctor-grid/doctor-grid-02.jpg",
+      image: "assets/img/doctor-grid/doc2.png",
       rating: "4.6",
-      location: "Ogden, IA",
+      location: "Monterrey, Mexico",
       duration: "60 Min",
       available: true
     },
@@ -36,9 +36,9 @@ const Doctors = () => {
       name: "Dr. Harold Bryant",
       specialty: "Neurologist",
       specialtyClass: "text-teal",
-      image: "assets/img/doctor-grid/doctor-grid-03.jpg",
+      image: "assets/img/doctor-grid/doc3.png",
       rating: "4.8",
-      location: "Winona, MS",
+      location: "Puebla, Mexico",
       duration: "30 Min",
       available: true
     },
@@ -47,9 +47,9 @@ const Doctors = () => {
       name: "Dr. Sandra Jones",
       specialty: "Cardiologist",
       specialtyClass: "text-info",
-      image: "assets/img/doctor-grid/doctor-grid-04.jpg",
+      image: "assets/img/doctor-grid/doc4.png",
       rating: "4.8",
-      location: "Beckley, WV",
+      location: "Tijuana, Mexico",
       duration: "30 Min",
       available: true
     },
@@ -58,9 +58,9 @@ const Doctors = () => {
       name: "Dr. Charles Scott",
       specialty: "Neurologist",
       specialtyClass: "text-teal",
-      image: "assets/img/doctor-grid/doctor-grid-05.jpg",
+      image: "assets/img/doctor-grid/doc5.png",
       rating: "4.2",
-      location: "Hamshire, TX",
+      location: "León, Mexico",
       duration: "30 Min",
       available: true
     }
@@ -257,6 +257,7 @@ const Doctors = () => {
                   </div>
                   <Link
                     to="/booking"
+                    state={{ selectedDoctor: doctor }}
                     className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
                   >
                     <i className="isax isax-calendar-1 me-2" />

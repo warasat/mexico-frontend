@@ -4,8 +4,6 @@ import Footer from "../../footer";
 import StickyBox from "react-sticky-box";
 import { Link } from "react-router-dom";
 import { doctor_thumb_13, doctor_thumb_14, doctor_thumb_15, doctor_thumb_16, doctor_thumb_17, doctor_thumb_18, doctor_thumb_19, doctor_thumb_21 } from "../../imagepath";
-import { Filter, initialSettings } from "../../common/filter";
-import DateRangePicker from "react-bootstrap-daterangepicker";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 
 
@@ -88,20 +86,6 @@ const PatientAppointments = (props: any) => {
                       </span>
                     </div>
                   </li>
-                  <li>
-                    <div className="view-icons">
-                      <Link to="/patient/patient-appointments" className="active">
-                        <i className="fa-solid fa-list" />
-                      </Link>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="view-icons">
-                      <Link to='/patient/appoinment-grid'>
-                        <i className="fa-solid fa-th" />
-                      </Link>
-                    </div>
-                  </li>
                 </ul>
               </div>
               <div className="appointment-tab-head">
@@ -155,20 +139,6 @@ const PatientAppointments = (props: any) => {
                     </li>
                   </ul>
                 </div>
-                <div className="filter-head">
-                  <div className="position-relative daterange-wraper me-2">
-                    <div className="input-groupicon calender-input">
-                      <DateRangePicker initialSettings={initialSettings}>
-                        <input
-                          className="form-control  date-range bookingrange"
-                          type="text"
-                        />
-                      </DateRangePicker>
-                    </div>
-                    <i className="fa-solid fa-calendar-days" />
-                  </div>
-                  <Filter />
-                </div>
               </div>
               <div className="tab-content appointment-tab-content">
                 <div
@@ -217,25 +187,6 @@ const PatientAppointments = (props: any) => {
                           <li>
                             <i className="fa-solid fa-phone" />
                             +1 504 368 6874
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/patient/upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-comments" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-xmark" />
-                            </Link>
                           </li>
                         </ul>
                       </li>
@@ -292,25 +243,6 @@ const PatientAppointments = (props: any) => {
                           </li>
                         </ul>
                       </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/patient/upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-comments" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-xmark" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
                       <li className="appointment-detail-btn">
                         <Link to="#" className="start-link">
                           <i className="fa-solid fa-calendar-check me-1" />
@@ -360,25 +292,6 @@ const PatientAppointments = (props: any) => {
                           <li>
                             <i className="fa-solid fa-phone" />
                             +1 749 104 6291
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/patient/upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-comments" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-xmark" />
-                            </Link>
                           </li>
                         </ul>
                       </li>
@@ -434,25 +347,6 @@ const PatientAppointments = (props: any) => {
                           </li>
                         </ul>
                       </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/patient/upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-comments" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-xmark" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
                       <li className="appointment-detail-btn">
                         <Link to="#" className="start-link">
                           <i className="fa-solid fa-calendar-check me-1" />
@@ -502,25 +396,6 @@ const PatientAppointments = (props: any) => {
                           <li>
                             <i className="fa-solid fa-phone" />
                             +1 059 327 6729
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/patient/upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-comments" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-xmark" />
-                            </Link>
                           </li>
                         </ul>
                       </li>
@@ -576,25 +451,6 @@ const PatientAppointments = (props: any) => {
                           </li>
                         </ul>
                       </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/patient/upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-comments" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-xmark" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
                       <li className="appointment-detail-btn">
                         <Link to="#" className="start-link">
                           <i className="fa-solid fa-calendar-check me-1" />
@@ -647,25 +503,6 @@ const PatientAppointments = (props: any) => {
                           </li>
                         </ul>
                       </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/patient/upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-comments" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-xmark" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
                       <li className="appointment-detail-btn">
                         <Link to="#" className="start-link">
                           <i className="fa-solid fa-calendar-check me-1" />
@@ -715,25 +552,6 @@ const PatientAppointments = (props: any) => {
                           <li>
                             <i className="fa-solid fa-phone" />
                             +1 261 039 1873
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/patient/upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-comments" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="fa-solid fa-xmark" />
-                            </Link>
                           </li>
                         </ul>
                       </li>

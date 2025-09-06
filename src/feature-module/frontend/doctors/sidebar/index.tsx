@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { doctorprofileimg } from "../../imagepath";
 import Select from 'react-select'
+import ImageWithBasePath from "../../../../components/imageWithBasePath";
 const DoctorSidebar = () => {
   const pathnames = window.location.pathname;
 
@@ -16,8 +17,8 @@ const DoctorSidebar = () => {
         <div className="widget-profile pro-widget-content">
           <div className="profile-info-widget">
             <Link to="/patient/doctor-profile" className="booking-doc-img">
-              <img
-                src={doctorprofileimg}
+              <ImageWithBasePath
+                src="assets/img/doctor-grid/doc1.png"
                 alt="User Image"
               />
             </Link>

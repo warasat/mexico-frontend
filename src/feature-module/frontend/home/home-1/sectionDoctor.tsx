@@ -55,6 +55,9 @@ const SectionDoctor: React.FC = () => {
         prevArrow: <CustomPrevArrow />,
         infinite: true,
         focusOnSelect: true,
+        autoplay: true,
+        autoplaySpeed: 1000,
+        pauseOnHover: true,
         responsive: [
             {
                 breakpoint: 992,
@@ -101,7 +104,7 @@ const SectionDoctor: React.FC = () => {
                             <div className="card">
                                 <div className="card-img card-img-hover">
                                     <Link to="/patient/doctor-profile">
-                                        <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-01.jpg" alt="" />
+                                        <ImageWithBasePath src="assets/img/doctor-grid/doc1.png" alt="" />
                                     </Link>
                                     <div className="grid-overlay-item d-flex align-items-center justify-content-between">
                                         <span className="badge bg-orange">
@@ -131,7 +134,7 @@ const SectionDoctor: React.FC = () => {
                                             <div className="d-flex align-items-center">
                                                 <p className="d-flex align-items-center mb-0 fs-14">
                                                     <i className="isax isax-location me-2" />
-                                                    Minneapolis, MN
+                                                    Guadalajara, Mexico
                                                 </p>
                                                 <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                                                 <span className="fs-14 fw-medium">30 Min</span>
@@ -152,7 +155,7 @@ const SectionDoctor: React.FC = () => {
                             <div className="card">
                                 <div className="card-img card-img-hover">
                                     <Link to="/patient/doctor-profile">
-                                        <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-02.jpg" alt="" />
+                                        <ImageWithBasePath src="assets/img/doctor-grid/doc2.png" alt="" />
                                     </Link>
                                     <div className="grid-overlay-item d-flex align-items-center justify-content-between">
                                         <span className="badge bg-orange">
@@ -182,7 +185,7 @@ const SectionDoctor: React.FC = () => {
                                                                                          <div className="d-flex align-items-center">
                                                  <p className="d-flex align-items-center mb-0 fs-14">
                                                      <i className="isax isax-location me-2" />
-                                                     Ogden, IA
+                                                     Monterrey, Mexico
                                                  </p>
                                                  <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                                                  <span className="fs-14 fw-medium">60 Min</span>
@@ -202,7 +205,7 @@ const SectionDoctor: React.FC = () => {
                             <div className="card">
                                 <div className="card-img card-img-hover">
                                     <Link to="/patient/doctor-profile">
-                                        <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-03.jpg" alt="" />
+                                        <ImageWithBasePath src="assets/img/doctor-grid/doc3.png" alt="" />
                                     </Link>
                                     <div className="grid-overlay-item d-flex align-items-center justify-content-between">
                                         <span className="badge bg-orange">
@@ -232,7 +235,7 @@ const SectionDoctor: React.FC = () => {
                                                                                          <div className="d-flex align-items-center">
                                                  <p className="d-flex align-items-center mb-0 fs-14">
                                                      <i className="isax isax-location me-2" />
-                                                     Winona, MS
+                                                     Puebla, Mexico
                                                  </p>
                                                  <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                                                  <span className="fs-14 fw-medium">30 Min</span>
@@ -252,7 +255,7 @@ const SectionDoctor: React.FC = () => {
                             <div className="card">
                                 <div className="card-img card-img-hover">
                                     <Link to="/patient/doctor-profile">
-                                        <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-04.jpg" alt="" />
+                                        <ImageWithBasePath src="assets/img/doctor-grid/doc4.png" alt="" />
                                     </Link>
                                     <div className="grid-overlay-item d-flex align-items-center justify-content-between">
                                         <span className="badge bg-orange">
@@ -282,7 +285,7 @@ const SectionDoctor: React.FC = () => {
                                                                                          <div className="d-flex align-items-center">
                                                  <p className="d-flex align-items-center mb-0 fs-14">
                                                      <i className="isax isax-location me-2" />
-                                                     Beckley, WV
+                                                     Tijuana, Mexico
                                                  </p>
                                                  <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                                                  <span className="fs-14 fw-medium">30 Min</span>
@@ -302,7 +305,7 @@ const SectionDoctor: React.FC = () => {
                             <div className="card">
                                 <div className="card-img card-img-hover">
                                     <Link to="/patient/doctor-profile">
-                                        <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-05.jpg" alt="" />
+                                        <ImageWithBasePath src="assets/img/doctor-grid/doc5.png" alt="" />
                                     </Link>
                                     <div className="grid-overlay-item d-flex align-items-center justify-content-between">
                                         <span className="badge bg-orange">
@@ -332,7 +335,7 @@ const SectionDoctor: React.FC = () => {
                                                                                          <div className="d-flex align-items-center">
                                                  <p className="d-flex align-items-center mb-0 fs-14">
                                                      <i className="isax isax-location me-2" />
-                                                     Hamshire, TX
+                                                     León, Mexico
                                                  </p>
                                                  <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                                                  <span className="fs-14 fw-medium">30 Min</span>

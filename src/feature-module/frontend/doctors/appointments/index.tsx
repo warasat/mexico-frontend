@@ -2,8 +2,6 @@ import Header from "../../header";
 import DoctorSidebar from "../sidebar";
 import DoctorFooter from "../../common/doctorFooter";
 import { doctordashboardprofile01, doctordashboardprofile02, doctordashboardprofile04, doctordashboardprofile05, doctordashboardprofile06, doctordashboardprofile07, doctordashboardprofile08, doctordashboardprofile3 } from "../../imagepath";
-import { Filter, initialSettings } from "../../common/filter";
-import DateRangePicker from "react-bootstrap-daterangepicker";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { useAuth } from "../../../../core/context/AuthContext";
@@ -101,27 +99,6 @@ const Appointments = (props: any) => {
                       </span>
                     </div>
                   </li>
-                  <li>
-                    <div className="view-icons">
-                      <Link to="/doctor/appointments" className="active">
-                      <i className="isax isax-grid-7"></i>
-                      </Link>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="view-icons">
-                      <Link to="/doctor/doctor-appointments-grid">
-                        <i className="fa-solid fa-th" />
-                      </Link>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="view-icons">
-                      <Link to="#">
-                      <i className="isax isax-calendar-tick"></i>
-                      </Link>
-                    </div>
-                  </li>
                 </ul>
               </div>
               <div className="appointment-tab-head">
@@ -175,20 +152,6 @@ const Appointments = (props: any) => {
                     </li>
                   </ul>
                 </div>
-                <div className="filter-head">
-                  <div className="position-relative daterange-wraper me-2">
-                    <div className="input-groupicon calender-input">
-                      <DateRangePicker initialSettings={initialSettings}>
-                        <input
-                          className="form-control  date-range bookingrange"
-                          type="text"
-                        />
-                      </DateRangePicker>
-                    </div>
-                    <i className="fa-solid fa-calendar-days" />
-                  </div>
-                  <Filter />
-                </div>
               </div>
               <div className="tab-content appointment-tab-content">
                 <div
@@ -235,25 +198,6 @@ const Appointments = (props: any) => {
                           <li>
                             <i className="fa-solid fa-phone" />
                             +1 504 368 6874
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/doctor/doctor-upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-messages-25" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-close-circle5" />
-                            </Link>
                           </li>
                         </ul>
                       </li>
@@ -310,25 +254,6 @@ const Appointments = (props: any) => {
                           </li>
                         </ul>
                       </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/doctor/doctor-upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-messages-25" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-close-circle5" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
                       <li className="appointment-start">
                         <Link
                           to="/doctor/doctor-appointment-start"
@@ -378,25 +303,6 @@ const Appointments = (props: any) => {
                           <li>
                             <i className="fa-solid fa-phone" />
                             &nbsp;&nbsp;+1 749 104 6291
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/doctor/doctor-upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-messages-25" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-close-circle5" />
-                            </Link>
                           </li>
                         </ul>
                       </li>
@@ -454,25 +360,6 @@ const Appointments = (props: any) => {
                           </li>
                         </ul>
                       </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/doctor/doctor-upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-messages-25" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-close-circle5" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
                       <li className="appointment-start">
                         <Link
                           to="/doctor/doctor-appointment-start"
@@ -522,25 +409,6 @@ const Appointments = (props: any) => {
                           <li>
                             <i className="fa-solid fa-phone" />
                             &nbsp;+1 059 327 6729
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/doctor/doctor-upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-messages-25" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-close-circle5" />
-                            </Link>
                           </li>
                         </ul>
                       </li>
@@ -596,25 +464,6 @@ const Appointments = (props: any) => {
                           </li>
                         </ul>
                       </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/doctor/doctor-upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-messages-25" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-close-circle5" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
                       <li className="appointment-start">
                         <Link
                           to="/doctor/doctor-appointment-start"
@@ -667,25 +516,6 @@ const Appointments = (props: any) => {
                           </li>
                         </ul>
                       </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/doctor/doctor-upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-messages-25" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-close-circle5" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
                       <li className="appointment-start">
                         <Link
                           to="/doctor/doctor-appointment-start"
@@ -735,25 +565,6 @@ const Appointments = (props: any) => {
                           <li>
                             <i className="fa-solid fa-phone" />
                             &nbsp;&nbsp;+1 261 039 1873
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-action">
-                        <ul>
-                          <li>
-                            <Link to="/doctor/doctor-upcoming-appointment">
-                              <i className="fa-solid fa-eye" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-messages-25" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#">
-                              <i className="isax isax-close-circle5" />
-                            </Link>
                           </li>
                         </ul>
                       </li>

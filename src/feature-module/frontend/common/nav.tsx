@@ -239,7 +239,7 @@ const NavLinks: React.FC = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/patient/login" onClick={() => onhandleCloseMenu()}>
+                  <Link to="/booking" onClick={() => onhandleCloseMenu()}>
                     Book Appointment
                   </Link>
                 </li>
@@ -257,9 +257,9 @@ const NavLinks: React.FC = () => {
                     Search Doctors
                   </Link>
                 </li>
-                <li className={pathnames.includes("doctor-profile") ? "active" : ""}>
-                  <Link to="/patient/doctor-profile" onClick={() => onhandleCloseMenu()}>
-                    View Doctor Profile & Ratings
+                <li className={pathnames.includes("doctor-ratings") ? "active" : ""}>
+                  <Link to="/patient/doctor-ratings" onClick={() => onhandleCloseMenu()}>
+                    View Doctor Ratings
                   </Link>
                 </li>
                 <li className={pathnames.includes("booking") ? "active" : ""}>

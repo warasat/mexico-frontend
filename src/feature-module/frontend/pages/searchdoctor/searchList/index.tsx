@@ -2,13 +2,124 @@ import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../../../../components/imageWithBasePath";
 
 const SearchList = () => {
+  // Doctor data for the search list
+  const doctors = [
+    {
+      id: 1,
+      name: "Dr. Michael Brown",
+      specialty: "Psychologist",
+      rating: "5.0",
+      location: "Guadalajara, Mexico",
+      experience: "10+ years",
+      image: "assets/img/doctor-grid/doc1.png"
+    },
+    {
+      id: 2,
+      name: "Dr. Nicholas Tello",
+      specialty: "Pediatrician", 
+      rating: "4.6",
+      location: "Monterrey, Mexico",
+      experience: "8+ years",
+      image: "assets/img/doctor-grid/doc2.png"
+    },
+    {
+      id: 3,
+      name: "Dr. Harold Bryant",
+      specialty: "Neurologist",
+      rating: "4.8", 
+      location: "Puebla, Mexico",
+      experience: "12+ years",
+      image: "assets/img/doctor-grid/doc3.png"
+    },
+    {
+      id: 4,
+      name: "Dr. Sandra Jones",
+      specialty: "Cardiologist",
+      rating: "4.8",
+      location: "Tijuana, Mexico", 
+      experience: "15+ years",
+      image: "assets/img/doctor-grid/doc4.png"
+    },
+    {
+      id: 5,
+      name: "Dr. Charles Scott",
+      specialty: "Neurologist",
+      rating: "4.2",
+      location: "León, Mexico",
+      experience: "6+ years", 
+      image: "assets/img/doctor-grid/doc5.png"
+    },
+    {
+      id: 6,
+      name: "Dr. Lisa Anderson",
+      specialty: "Orthopedist",
+      rating: "4.7",
+      location: "Cancún, Mexico",
+      experience: "11+ years",
+      image: "assets/img/doctor-grid/doc6.png"
+    },
+    {
+      id: 7,
+      name: "Dr. Robert Wilson",
+      specialty: "Dermatologist", 
+      rating: "4.7",
+      location: "Mérida, Mexico",
+      experience: "9+ years",
+      image: "assets/img/doctor-grid/doc7.png"
+    },
+    {
+      id: 8,
+      name: "Dr. Jennifer Davis",
+      specialty: "Pediatrician",
+      rating: "4.7", 
+      location: "Toluca, Mexico",
+      experience: "7+ years",
+      image: "assets/img/doctor-grid/doc8.png"
+    },
+    {
+      id: 9,
+      name: "Dr. Mark Thompson",
+      specialty: "Cardiologist",
+      rating: "4.9",
+      location: "Querétaro, Mexico",
+      experience: "13+ years", 
+      image: "assets/img/doctor-grid/doc9.png"
+    },
+    {
+      id: 10,
+      name: "Dr. Sarah Johnson",
+      specialty: "Psychiatrist",
+      rating: "5.0",
+      location: "San Luis Potosí, Mexico",
+      experience: "14+ years",
+      image: "assets/img/doctor-grid/doc10.png"
+    },
+    {
+      id: 11,
+      name: "Dr. David Miller",
+      specialty: "Urologist",
+      rating: "4.4",
+      location: "Chihuahua, Mexico", 
+      experience: "8+ years",
+      image: "assets/img/doctor-grid/doc11.png"
+    },
+    {
+      id: 12,
+      name: "Dr. Emily Garcia",
+      specialty: "Gynecologist",
+      rating: "4.2",
+      location: "Guadalajara, Mexico",
+      experience: "5+ years",
+      image: "assets/img/doctor-grid/doc12.png"
+    }
+  ];
   return (
     <div className="row">
       <div className="col-xxl-3 col-lg-4 col-md-6">
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-01.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc1.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -47,6 +158,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -61,7 +173,7 @@ const SearchList = () => {
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-02.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc2.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -100,6 +212,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -114,7 +227,7 @@ const SearchList = () => {
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-03.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc3.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -153,6 +266,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -167,7 +281,7 @@ const SearchList = () => {
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-04.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc4.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -206,6 +320,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -220,7 +335,7 @@ const SearchList = () => {
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-05.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc5.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -259,6 +374,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -273,7 +389,7 @@ const SearchList = () => {
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-06.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc6.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -312,6 +428,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -326,7 +443,7 @@ const SearchList = () => {
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-07.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc7.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -365,6 +482,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -379,7 +497,7 @@ const SearchList = () => {
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-08.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc8.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -418,6 +536,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -432,7 +551,7 @@ const SearchList = () => {
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-09.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc9.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -471,6 +590,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -485,7 +605,7 @@ const SearchList = () => {
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-10.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc10.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -524,6 +644,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -538,7 +659,7 @@ const SearchList = () => {
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-11.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc11.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -577,6 +698,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -591,7 +713,7 @@ const SearchList = () => {
         <div className="card">
           <div className="card-img card-img-hover">
             <Link to="/patient/doctor-profile">
-              <ImageWithBasePath src="assets/img/doctor-grid/doctor-grid-12.jpg" alt="" />
+              <ImageWithBasePath src="assets/img/doctor-grid/doc12.png" alt="" />
             </Link>
             <div className="grid-overlay-item d-flex align-items-center justify-content-between">
               <span className="badge bg-orange">
@@ -630,6 +752,7 @@ const SearchList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Link
                   to="/booking"
+                  state={{ selectedDoctor: doctors[0] }}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />

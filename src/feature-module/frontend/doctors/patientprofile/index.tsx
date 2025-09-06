@@ -109,7 +109,7 @@ const PatientProfile: React.FC = (props) => {
                       <div className="profile-info-widget">
                         <Link to="/patient/doctor-profile" className="booking-doc-img">
                           <ImageWithBasePath
-                            src="assets/img/doctors-dashboard/doctor-profile-img.jpg"
+                            src="assets/img/doctor-grid/doc2.png"
                             alt="User Image"
                           />
                         </Link>

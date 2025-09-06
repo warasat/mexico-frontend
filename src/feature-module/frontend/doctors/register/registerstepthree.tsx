@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 // import loginBanner from '../../../assets/images/login-banner.png';
-import Logo from "../../../assets/images/logo.png";
+import Logo from "../../../assets/img/logo.png";
 // import camera from '../../../assets/images/icons/camera.svg';
 // import male from '../../../assets/images/icons/male.png'
 // import female from '../../../assets/images/icons/female.png'

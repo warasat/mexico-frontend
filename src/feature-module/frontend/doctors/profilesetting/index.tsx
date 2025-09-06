@@ -25,23 +25,6 @@ const ProfileSetting = (props: any) => {
     return '/index'; // Default to landing page for unauthenticated users
   };
 
-  const [membershipInfos, setMembershipInfos] = useState([{ title: '', about: '' }]);
-
-  const addMembershipInfo = () => {
-    setMembershipInfos([...membershipInfos, { title: '', about: '' }]);
-  };
-
-  const deleteMembershipInfo = (index: number) => {
-    const updatedMembershipInfos = membershipInfos.filter((_, i) => i !== index);
-    setMembershipInfos(updatedMembershipInfos);
-  };
-
-  const updateMembershipInfo = (index: number, field: 'title' | 'about', value: string) => {
-    const updatedMembershipInfos = membershipInfos.map((info, i) => 
-      i === index ? { ...info, [field]: value } : info
-    );
-    setMembershipInfos(updatedMembershipInfos);
-  };
 
   const [tags, setTags] = useState<string[]>(["English", "German", "Portugese"]);
   const handleTagsChange = (newTags: string[]) => {
@@ -203,6 +186,69 @@ const ProfileSetting = (props: any) => {
                 <div className="col-lg-12">
                   <div className="form-wrap">
                     <label className="form-label">
+                      Address <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="Enter your full address"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-4 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      City <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., Guadalajara"
+                      defaultValue="Guadalajara"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-4 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      State <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., Jalisco"
+                      defaultValue="Jalisco"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-4 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Country <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., Mexico"
+                      defaultValue="Mexico"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-4 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Pincode <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., 44100"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="form-wrap">
+                    <label className="form-label">
                       Known Languages <span className="text-danger">*</span>
                     </label>
                     <div className="input-block input-block-new mb-0">
@@ -215,57 +261,6 @@ const ProfileSetting = (props: any) => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="setting-title">
-              <h5>Memberships</h5>
-            </div>
-                        <div className="setting-card">
-              <div className="add-info membership-infos">
-                {membershipInfos.map((info, index) => (
-                  <div key={index} className="row membership-content">
-                    <div className="col-lg-3 col-md-6">
-                      <div className="form-wrap">
-                        <label className="form-label">
-                          Title <span className="text-danger">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Add Title"
-                          value={info.title}
-                          onChange={(e) => updateMembershipInfo(index, 'title', e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-lg-9 col-md-6">
-                      <div className="d-flex align-items-center">
-                        <div className="form-wrap w-100">
-                          <label className="form-label">About Membership</label>
-                          <input 
-                            type="text" 
-                            className="form-control"
-                            value={info.about}
-                            onChange={(e) => updateMembershipInfo(index, 'about', e.target.value)}
-                          />
-                        </div>
-                        <div className="form-wrap ms-2">
-                          <label className="col-form-label d-block">&nbsp;</label>
-                          <Link
-                              to="#"
-                              className="trash-icon trash"
-                              onClick={() => deleteMembershipInfo(index)}
-                            >
-                            Delete
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="text-end">
-                <Link to="#" className="add-membership-info more-item" onClick={addMembershipInfo}>Add New</Link>
               </div>
             </div>
             <div className="modal-btn text-end">

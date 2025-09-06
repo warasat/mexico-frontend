@@ -32,6 +32,9 @@ const SectionSpeciality: React.FC = () => {
         prevArrow: <CustomPrevArrow />,
         infinite: true,
         focusOnSelect: true,
+        autoplay: true,
+        autoplaySpeed: 1000,
+        pauseOnHover: true,
         responsive: [
             {
                 breakpoint: 992,

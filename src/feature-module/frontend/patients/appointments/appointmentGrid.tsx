@@ -3,8 +3,6 @@ import StickyBox from "react-sticky-box";
 import DashboardSidebar from "../dashboard/sidebar/sidebar";
 import Footer from "../../footer";
 import { Link } from "react-router-dom";
-import { initialSettings } from "../../common/filter";
-import DateRangePicker from "react-bootstrap-daterangepicker";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 
 const AppointmentGrid = (props: any) => {
@@ -81,20 +79,6 @@ const AppointmentGrid = (props: any) => {
                       </span>
                     </div>
                   </li>
-                  <li>
-                    <div className="view-icons">
-                      <Link to="/patient/patient-appointments">
-                        <i className="isax isax-grid-7" />
-                      </Link>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="view-icons">
-                      <Link to="/patient/appoinment-grid" className="active">
-                        <i className="fa-solid fa-th" />
-                      </Link>
-                    </div>
-                  </li>
                 </ul>
               </div>
               <div className="appointment-tab-head">
@@ -144,7 +128,6 @@ const AppointmentGrid = (props: any) => {
                     </li>
                   </ul>
                 </div>
-                <div className="filter-head">
                   <div className="position-relative daterange-wraper me-2">
                     <div className="input-groupicon calender-input">
                       <DateRangePicker initialSettings={initialSettings}>

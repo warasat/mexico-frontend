@@ -4,19 +4,32 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { Calendar, theme } from 'antd';
 import InsuranceSelector from './components/InsuranceSelector';
+import Header from '../../header';
 import '../../../../assets/css/booking-map.css';
 const OnPanelChange = (value: any, mode: any) => {
   console.log(value.format('YYYY-MM-DD'), mode);
 };
-const BookingWizard = () => {
+interface BookingWizardProps {
+  selectedDoctor?: any;
+  onBack?: () => void;
+}
+
+const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack }) => {
   const [currentStep, setCurrentStep] = useState(1);
+  
+  // Default doctor data if none selected
+  const defaultDoctor = {
+    id: 1,
+    name: "Dr. Michael Brown",
+    specialty: "Psychologist",
+    rating: 5.0,
+    experience: "10+ years",
+    image: "assets/img/clients/client-15.jpg",
+    location: "5th Street - 1011 W 5th St, Suite 120, Austin, TX 78703"
+  };
+  
+  const doctor = selectedDoctor || defaultDoctor;
   const [selectType, setSelectType] = useState(2); // Default to Video Call
-  const [selectedService, setSelectedService] = useState(true);
-  const [selectedService1, setSelectedService1] = useState(false);
-  const [selectedService2, setSelectedService2] = useState(false);
-  const [selectedService3, setSelectedService3] = useState(false);
-  const [selectedService4, setSelectedService4] = useState(false);
-  const [selectedService5, setSelectedService5] = useState(false);
   const [selectedInsurance, setSelectedInsurance] = useState<string | null>(null);
   const [bookingId] = useState(() => `BK${Date.now().toString().slice(-6)}`);
   const { token } = theme.useToken();
@@ -32,37 +45,9 @@ const BookingWizard = () => {
   const HandlePrev = () => {
     setCurrentStep(currentStep - 1);
   };
-  const Patient = [
-    { value: "", label: "Select" },
-    { value: "1", label: "Andrew Fletcher" },
-    { value: "Newyork", label: "Newyork" },
-  ];
-  const Speciality = [
-    { value: "", label: "Select" },
-    { value: "1", label: "Cardiology" },
-    { value: "2", label: "Neurology" },
-    { value: "2", label: "Urology" },
-  ];
   return (
     <div className="main-wrapper">
-      <header className="header header-custom header-fixed inner-header relative">
-        <div className="container">
-          <nav className="navbar navbar-expand-lg header-nav">
-            <div className="navbar-header">
-              <Link id="mobile_btn" to="#">
-                <span className="bar-icon">
-                  <span />
-                  <span />
-                  <span />
-                </span>
-              </Link>
-              <Link to="/index" className="navbar-brand logo">
-                <ImageWithBasePath src="assets/img/logo.svg" className="img-fluid" alt="Logo" />
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </header>
+      <Header />
       <div className="doctor-content">
         <div className="container">
           <div className="row">
@@ -169,25 +154,24 @@ const BookingWizard = () => {
                               <div className="d-flex align-items-center flex-wrap rpw-gap-2 flex-wrap row-gap-2">
                                 <span className="avatar avatar-xxxl avatar-rounded me-2 flex-shrink-0">
                                   <ImageWithBasePath
-                                    src="assets/img/clients/client-15.jpg"
-                                    alt=""
+                                    src={doctor.image}
+                                    alt={doctor.name}
                                   />
                                 </span>
                                 <div>
                                   <h4 className="mb-1">
-                                    Dr. Michael Brown{" "}
+                                    {doctor.name}{" "}
                                     <span className="badge bg-orange fs-12">
                                       <i className="fa-solid fa-star me-1" />
-                                      5.0
+                                      {doctor.rating}
                                     </span>
                                   </h4>
                                   <p className="text-indigo mb-3 fw-medium">
-                                    Psychologist
+                                    {doctor.specialty}
                                   </p>
                                   <p className="mb-0">
                                     <i className="isax isax-location me-2" />
-                                    5th Street - 1011 W 5th St, Suite 120, Austin, TX
-                                    78703
+                                    {doctor.location}
                                   </p>
                                 </div>
                               </div>
@@ -198,159 +182,28 @@ const BookingWizard = () => {
                       <div className="card-body booking-body">
                         <div className="card mb-0">
                           <div className="card-body pb-1">
-                            <div className="mb-4 pb-4 border-bottom">
-                              <label className="form-label">Select Speciality</label>
-
-                              <Select
-                                className="select"
-                                options={Speciality}
-                                placeholder="Select"
-                                isClearable={true}
-                                isSearchable={true}
-                              />
-
-                            </div>
-                            <h6 className="mb-3">Services</h6>
-                            <div className="row">
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service1"
-                                    onChange={() => setSelectedService(!selectedService)}
-                                    checked={selectedService ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service1"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Echocardiograms
-                                    </span>
-                                    <span className="fs-14 d-block">$310</span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService1 ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service2"
-                                    onChange={() => setSelectedService1(!selectedService1)}
-                                    checked={selectedService1 ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service2"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Stress tests
-                                    </span>
-                                    <span className="fs-14 d-block">$754</span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService2 ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service3"
-                                    onChange={() => setSelectedService2(!selectedService2)}
-                                    checked={selectedService2 ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service3"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Stress tests
-                                    </span>
-                                    <span className="fs-14 d-block">$754</span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService3 ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service4"
-                                    onChange={() => setSelectedService3(!selectedService3)}
-                                    checked={selectedService3 ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service4"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Heart Catheterization
-                                    </span>
-                                    <span className="fs-14 d-block">$150</span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService4 ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service5"
-                                    onChange={() => setSelectedService4(!selectedService4)}
-                                    checked={selectedService4 ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service5"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Echocardiograms
-                                    </span>
-                                    <span className="fs-14 d-block">$200</span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService5 ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service6"
-                                    onChange={() => setSelectedService5(!selectedService5)}
-                                    checked={selectedService5 ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service6"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Echocardiograms
-                                    </span>
-                                    <span className="fs-14 d-block">$200</span>
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </div>
                       <div className="card-footer">
                         <div className="d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between">
-                          <Link
-                            to="#"
-                            className="btn btn-md btn-dark inline-flex align-items-center rounded-pill"
-                          >
-                            <i className="isax isax-arrow-left-2 me-1" />
-                            Back
-                          </Link>
+                          {onBack ? (
+                            <button
+                              onClick={onBack}
+                              className="btn btn-md btn-dark inline-flex align-items-center rounded-pill"
+                            >
+                              <i className="isax isax-arrow-left-2 me-1" />
+                              Back to Doctors
+                            </button>
+                          ) : (
+                            <Link
+                              to="#"
+                              className="btn btn-md btn-dark inline-flex align-items-center rounded-pill"
+                            >
+                              <i className="isax isax-arrow-left-2 me-1" />
+                              Back
+                            </Link>
+                          )}
                           <Link
                             to="#"
                             className="btn btn-md btn-primary-gradient next_btns inline-flex align-items-center rounded-pill"
@@ -374,25 +227,24 @@ const BookingWizard = () => {
                               <div className="d-flex align-items-center flex-wrap rpw-gap-2 flex-wrap row-gap-2">
                                 <span className="avatar avatar-xxxl avatar-rounded me-2 flex-shrink-0">
                                   <ImageWithBasePath
-                                    src="assets/img/clients/client-15.jpg"
-                                    alt=""
+                                    src={doctor.image}
+                                    alt={doctor.name}
                                   />
                                 </span>
                                 <div>
                                   <h4 className="mb-1">
-                                    Dr. Michael Brown{" "}
+                                    {doctor.name}{" "}
                                     <span className="badge bg-orange fs-12">
                                       <i className="fa-solid fa-star me-1" />
-                                      5.0
+                                      {doctor.rating}
                                     </span>
                                   </h4>
                                   <p className="text-indigo mb-3 fw-medium">
-                                    Psychologist
+                                    {doctor.specialty}
                                   </p>
                                   <p className="mb-0">
                                     <i className="isax isax-location me-2" />
-                                    5th Street - 1011 W 5th St, Suite 120, Austin, TX
-                                    78703
+                                    {doctor.location}
                                   </p>
                                 </div>
                               </div>
@@ -487,25 +339,24 @@ const BookingWizard = () => {
                               <div className="d-flex align-items-center flex-wrap rpw-gap-2 mb-4 flex-wrap row-gap-2">
                                 <span className="avatar avatar-xxxl avatar-rounded me-2 flex-shrink-0">
                                   <ImageWithBasePath
-                                    src="assets/img/clients/client-15.jpg"
-                                    alt=""
+                                    src={doctor.image}
+                                    alt={doctor.name}
                                   />
                                 </span>
                                 <div>
                                   <h4 className="mb-1">
-                                    Dr. Michael Brown{" "}
+                                    {doctor.name}{" "}
                                     <span className="badge bg-orange fs-12">
                                       <i className="fa-solid fa-star me-1" />
-                                      5.0
+                                      {doctor.rating}
                                     </span>
                                   </h4>
                                   <p className="text-indigo mb-3 fw-medium">
-                                    Psychologist
+                                    {doctor.specialty}
                                   </p>
                                   <p className="mb-0">
                                     <i className="isax isax-location me-2" />
-                                    5th Street - 1011 W 5th St, Suite 120, Austin, TX
-                                    78703
+                                    {doctor.location}
                                   </p>
                                 </div>
                               </div>
@@ -898,25 +749,24 @@ const BookingWizard = () => {
                               <div className="d-flex align-items-center flex-wrap rpw-gap-2 mb-4 flex-wrap row-gap-2">
                                 <span className="avatar avatar-xxxl avatar-rounded me-2 flex-shrink-0">
                                   <ImageWithBasePath
-                                    src="assets/img/clients/client-15.jpg"
-                                    alt=""
+                                    src={doctor.image}
+                                    alt={doctor.name}
                                   />
                                 </span>
                                 <div>
                                   <h4 className="mb-1">
-                                    Dr. Michael Brown{" "}
+                                    {doctor.name}{" "}
                                     <span className="badge bg-orange fs-12">
                                       <i className="fa-solid fa-star me-1" />
-                                      5.0
+                                      {doctor.rating}
                                     </span>
                                   </h4>
                                   <p className="text-indigo mb-3 fw-medium">
-                                    Psychologist
+                                    {doctor.specialty}
                                   </p>
                                   <p className="mb-0">
                                     <i className="isax isax-location me-2" />
-                                    5th Street - 1011 W 5th St, Suite 120, Austin, TX
-                                    78703
+                                    {doctor.location}
                                   </p>
                                 </div>
                               </div>
@@ -985,20 +835,6 @@ const BookingWizard = () => {
                               </div>
                               <div className="col-lg-4 col-md-6">
                                 <div className="mb-3">
-                                  <label className="form-label">Select Patient</label>
-
-                                  <Select
-                                    className="select"
-                                    options={Patient}
-                                    placeholder="Select"
-                                    isClearable={true}
-                                    isSearchable={true}
-                                  />
-
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className="mb-3">
                                   <label className="form-label">Symptoms</label>
                                   <input type="text" className="form-control" />
                                 </div>
@@ -1058,25 +894,24 @@ const BookingWizard = () => {
                               <div className="d-flex align-items-center flex-wrap rpw-gap-2 flex-wrap row-gap-2">
                                 <span className="avatar avatar-xxxl avatar-rounded me-2 flex-shrink-0">
                                   <ImageWithBasePath
-                                    src="assets/img/clients/client-15.jpg"
-                                    alt=""
+                                    src={doctor.image}
+                                    alt={doctor.name}
                                   />
                                 </span>
                                 <div>
                                   <h4 className="mb-1">
-                                    Dr. Michael Brown{" "}
+                                    {doctor.name}{" "}
                                     <span className="badge bg-orange fs-12">
                                       <i className="fa-solid fa-star me-1" />
-                                      5.0
+                                      {doctor.rating}
                                     </span>
                                   </h4>
                                   <p className="text-indigo mb-3 fw-medium">
-                                    Psychologist
+                                    {doctor.specialty}
                                   </p>
                                   <p className="mb-0">
                                     <i className="isax isax-location me-2" />
-                                    5th Street - 1011 W 5th St, Suite 120, Austin, TX
-                                    78703
+                                    {doctor.location}
                                   </p>
                                 </div>
                               </div>
@@ -1169,14 +1004,14 @@ const BookingWizard = () => {
                                 <div className="card-header d-flex align-items-center flex-wrap rpw-gap-2">
                                   <span className="avatar avatar-lg avatar-rounded me-2 flex-shrink-0">
                                     <ImageWithBasePath
-                                      src="assets/img/clients/client-16.jpg"
-                                      alt=""
+                                      src="assets/img/patients/patient1.jpg"
+                                      alt={doctor.name}
                                     />
                                   </span>
                                   <p className="mb-0">
                                     Your appointment has been successfully confirmed with{" "}
                                     <span className="text-dark">
-                                      Dr. Michael Brown{" "}
+                                      {doctor.name}{" "}
                                     </span>{" "}
                                     Please be ready 15 minutes before your scheduled time.
                                   </p>
@@ -1197,7 +1032,7 @@ const BookingWizard = () => {
                                       <div className="mb-3">
                                         <label className="form-label">Doctor</label>
                                         <div className="form-plain-text">
-                                          Dr. Michael Brown
+                                          {doctor.name}
                                         </div>
                                       </div>
                                     </div>
@@ -1207,7 +1042,7 @@ const BookingWizard = () => {
                                           Specialty
                                         </label>
                                         <div className="form-plain-text">
-                                          Psychologist
+                                          {doctor.specialty}
                                         </div>
                                       </div>
                                     </div>

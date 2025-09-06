@@ -5,8 +5,6 @@ import DoctorFooter from "../../common/doctorFooter";
 import DoctorSidebar from "../sidebar";
 import { doctordashboardprofile01, doctordashboardprofile02, doctordashboardprofile04, doctordashboardprofile05, doctordashboardprofile06, doctordashboardprofile07, doctordashboardprofile08, doctordashboardprofile3 } from "../../imagepath";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
-import PredefinedDatePicker from "../../common/common-dateRangePicker/PredefinedDatePicker";
-import { Filter } from "../../common/filter";
 import { useAuth } from "../../../../core/context/AuthContext";
 
 const MyPatient: React.FC = (props) => {
@@ -140,13 +138,6 @@ const MyPatient: React.FC = (props) => {
                       </button>
                     </li>
                   </ul>
-                </div>
-                <div className="filter-head">
-                  <div className="position-relative daterange-wraper me-2">
-                      <PredefinedDatePicker/>
-                    <i className="fa-solid fa-calendar-days" />
-                  </div>
-                  <Filter />
                 </div>
               </div>
               <div className="tab-content appointment-tab-content grid-patient">

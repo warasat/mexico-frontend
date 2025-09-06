@@ -195,33 +195,14 @@ const DoctorAppointmentsGrid = (props: any) => {
                                                             <li>General Visit</li>
                                                         </ul>
                                                     </li>
-                                                    <li className="appointment-action">
-                                                        <ul>
-                                                            <li>
-                                                                <Link to="/doctor/doctor-upcoming-appointment">
-                                                                    <i className="fa-solid fa-eye" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-messages-25" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-close-circle5" />
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                        <div className="appointment-start">
-                                                            <Link
-                                                                to="/doctor/doctor-appointment-start"
-                                                                className="start-link"
-                                                            >
-                                                                Start Now
-                                                            </Link>
-                                                        </div>
-                                                    </li>
+                                                    <div className="appointment-start">
+                                                        <Link
+                                                            to="/doctor/doctor-appointment-start"
+                                                            className="start-link"
+                                                        >
+                                                            Start Now
+                                                        </Link>
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>
@@ -267,33 +248,14 @@ const DoctorAppointmentsGrid = (props: any) => {
                                                             <li>General Visit</li>
                                                         </ul>
                                                     </li>
-                                                    <li className="appointment-action">
-                                                        <ul>
-                                                            <li>
-                                                                <Link to="/doctor/doctor-upcoming-appointment">
-                                                                    <i className="fa-solid fa-eye" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-messages-25" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-close-circle5" />
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                        <div className="appointment-start">
-                                                            <Link
-                                                                to="/doctor/doctor-appointment-start"
-                                                                className="start-link"
-                                                            >
-                                                                Start Now
-                                                            </Link>
-                                                        </div>
-                                                    </li>
+                                                    <div className="appointment-start">
+                                                        <Link
+                                                            to="/doctor/doctor-appointment-start"
+                                                            className="start-link"
+                                                        >
+                                                            Start Now
+                                                        </Link>
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>
@@ -338,33 +300,14 @@ const DoctorAppointmentsGrid = (props: any) => {
                                                             <li>General Visit</li>
                                                         </ul>
                                                     </li>
-                                                    <li className="appointment-action">
-                                                        <ul>
-                                                            <li>
-                                                                <Link to="/doctor/doctor-upcoming-appointment">
-                                                                    <i className="fa-solid fa-eye" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-messages-25" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-close-circle5" />
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                        <div className="appointment-start">
-                                                            <Link
-                                                                to="/doctor/doctor-appointment-start"
-                                                                className="start-link"
-                                                            >
-                                                                Start Now
-                                                            </Link>
-                                                        </div>
-                                                    </li>
+                                                    <div className="appointment-start">
+                                                        <Link
+                                                            to="/doctor/doctor-appointment-start"
+                                                            className="start-link"
+                                                        >
+                                                            Start Now
+                                                        </Link>
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>
@@ -409,33 +352,14 @@ const DoctorAppointmentsGrid = (props: any) => {
                                                             <li>General Visit</li>
                                                         </ul>
                                                     </li>
-                                                    <li className="appointment-action">
-                                                        <ul>
-                                                            <li>
-                                                                <Link to="/doctor/doctor-upcoming-appointment">
-                                                                    <i className="fa-solid fa-eye" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-messages-25" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-close-circle5" />
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                        <div className="appointment-start">
-                                                            <Link
-                                                                to="/doctor/doctor-appointment-start"
-                                                                className="start-link"
-                                                            >
-                                                                Start Now
-                                                            </Link>
-                                                        </div>
-                                                    </li>
+                                                    <div className="appointment-start">
+                                                        <Link
+                                                            to="/doctor/doctor-appointment-start"
+                                                            className="start-link"
+                                                        >
+                                                            Start Now
+                                                        </Link>
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>
@@ -480,33 +404,14 @@ const DoctorAppointmentsGrid = (props: any) => {
                                                             <li>General Visit</li>
                                                         </ul>
                                                     </li>
-                                                    <li className="appointment-action">
-                                                        <ul>
-                                                            <li>
-                                                                <Link to="/doctor/doctor-upcoming-appointment">
-                                                                    <i className="fa-solid fa-eye" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-messages-25" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-close-circle5" />
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                        <div className="appointment-start">
-                                                            <Link
-                                                                to="/doctor/doctor-appointment-start"
-                                                                className="start-link"
-                                                            >
-                                                                Start Now
-                                                            </Link>
-                                                        </div>
-                                                    </li>
+                                                    <div className="appointment-start">
+                                                        <Link
+                                                            to="/doctor/doctor-appointment-start"
+                                                            className="start-link"
+                                                        >
+                                                            Start Now
+                                                        </Link>
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>
@@ -551,33 +456,14 @@ const DoctorAppointmentsGrid = (props: any) => {
                                                             <li>General Visit</li>
                                                         </ul>
                                                     </li>
-                                                    <li className="appointment-action">
-                                                        <ul>
-                                                            <li>
-                                                                <Link to="/doctor/doctor-upcoming-appointment">
-                                                                    <i className="fa-solid fa-eye" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-messages-25" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-close-circle5" />
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                        <div className="appointment-start">
-                                                            <Link
-                                                                to="/doctor/doctor-appointment-start"
-                                                                className="start-link"
-                                                            >
-                                                                Start Now
-                                                            </Link>
-                                                        </div>
-                                                    </li>
+                                                    <div className="appointment-start">
+                                                        <Link
+                                                            to="/doctor/doctor-appointment-start"
+                                                            className="start-link"
+                                                        >
+                                                            Start Now
+                                                        </Link>
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>
@@ -622,33 +508,14 @@ const DoctorAppointmentsGrid = (props: any) => {
                                                             <li>General Visit</li>
                                                         </ul>
                                                     </li>
-                                                    <li className="appointment-action">
-                                                        <ul>
-                                                            <li>
-                                                                <Link to="/doctor/doctor-upcoming-appointment">
-                                                                    <i className="fa-solid fa-eye" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-messages-25" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-close-circle5" />
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                        <div className="appointment-start">
-                                                            <Link
-                                                                to="/doctor/doctor-appointment-start"
-                                                                className="start-link"
-                                                            >
-                                                                Start Now
-                                                            </Link>
-                                                        </div>
-                                                    </li>
+                                                    <div className="appointment-start">
+                                                        <Link
+                                                            to="/doctor/doctor-appointment-start"
+                                                            className="start-link"
+                                                        >
+                                                            Start Now
+                                                        </Link>
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>
@@ -693,33 +560,14 @@ const DoctorAppointmentsGrid = (props: any) => {
                                                             <li>General Visit</li>
                                                         </ul>
                                                     </li>
-                                                    <li className="appointment-action">
-                                                        <ul>
-                                                            <li>
-                                                                <Link to="/doctor/doctor-upcoming-appointment">
-                                                                    <i className="fa-solid fa-eye" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-messages-25" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-close-circle5" />
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                        <div className="appointment-start">
-                                                            <Link
-                                                                to="/doctor/doctor-appointment-start"
-                                                                className="start-link"
-                                                            >
-                                                                Start Now
-                                                            </Link>
-                                                        </div>
-                                                    </li>
+                                                    <div className="appointment-start">
+                                                        <Link
+                                                            to="/doctor/doctor-appointment-start"
+                                                            className="start-link"
+                                                        >
+                                                            Start Now
+                                                        </Link>
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>
@@ -764,33 +612,14 @@ const DoctorAppointmentsGrid = (props: any) => {
                                                             <li>General Visit</li>
                                                         </ul>
                                                     </li>
-                                                    <li className="appointment-action">
-                                                        <ul>
-                                                            <li>
-                                                                <Link to="/doctor/doctor-upcoming-appointment">
-                                                                    <i className="fa-solid fa-eye" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-messages-25" />
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link to="#">
-                                                                    <i className="isax isax-close-circle5" />
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                        <div className="appointment-start">
-                                                            <Link
-                                                                to="/doctor/doctor-appointment-start"
-                                                                className="start-link"
-                                                            >
-                                                                Start Now
-                                                            </Link>
-                                                        </div>
-                                                    </li>
+                                                    <div className="appointment-start">
+                                                        <Link
+                                                            to="/doctor/doctor-appointment-start"
+                                                            className="start-link"
+                                                        >
+                                                            Start Now
+                                                        </Link>
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>

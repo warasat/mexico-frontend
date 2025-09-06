@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 // import loginBanner from '../../../assets/images/login-banner.png';
-import Logo from "../../../assets/images/logo.png";
-import camera from "../../../assets/images/icons/camera.svg";
+import Logo from "../../../assets/img/logo.png";
+import camera from "../../../assets/img/icons/camera.svg";
 import { Link } from "react-router-dom";
 
 const Registerstepone: React.FC = () => {

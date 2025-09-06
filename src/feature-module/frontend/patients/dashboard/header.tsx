@@ -29,13 +29,13 @@ const Header = () => {
                 </span>
               </Link>
               <Link to="/index" className="navbar-brand logo">
-                <img src="/assets/img/logo.png" className="img-fluid" alt="Logo" />
+                <img src="assets/img/logo.png" className="img-fluid" alt="Logo" />
               </Link>
             </div>
             <div className="main-menu-wrapper">
               <div className="menu-header">
                                       <Link to="/index" className="menu-logo">
-                  <img src="/assets/img/logo.png" className="img-fluid" alt="Logo" />
+                  <img src="assets/img/logo.png" className="img-fluid" alt="Logo" />
                 </Link>
                 <Link
                   to="#"
@@ -65,13 +65,13 @@ const Header = () => {
               <li className="nav-item dropdown has-arrow logged-item">
                 <Link to="#" className="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                   <span className="user-img">
-                    <img className="rounded-circle" src="/assets/img/patients/patient.jpg" width="31" alt="Ryan Taylor" />
+                    <img className="rounded-circle" src="assets/img/patients/patient.jpg" width="31" alt="Ryan Taylor" />
                   </span>
                 </Link>
                 <div className="dropdown-menu dropdown-menu-end">
                   <div className="user-header">
                     <div className="avatar avatar-sm">
-                      <img src="/assets/img/patients/patient.jpg" alt="User Image" className="avatar-img rounded-circle" />
+                      <img src="assets/img/patients/patient.jpg" alt="User Image" className="avatar-img rounded-circle" />
                     </div>
                     <div className="user-text">
                       <h6>Patient Name</h6>

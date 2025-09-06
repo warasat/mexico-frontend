@@ -11,7 +11,8 @@ import SpecialtyDoctors from "../feature-module/frontend/pages/speciality/specia
 import Dashboard from "../feature-module/frontend/patients/dashboard";
 import SearchDoctor from "../feature-module/frontend/pages/searchdoctor/search-doctor1";
 import DoctorProfile from "../feature-module/frontend/patients/doctorprofile";
-import BookingWizard from "../feature-module/frontend/patients/booking/bookingWizard";
+import DoctorRatings from "../feature-module/frontend/patients/doctorprofile/doctorRatings";
+import BookingPage from "../feature-module/frontend/patients/booking/bookingPage";
 import PatientAppointments from "../feature-module/frontend/patients/appointments";
 import Profile from "../feature-module/frontend/patients/dashboard/profile";
 import PatientSignup from "../feature-module/frontend/pages/patient-signup";
@@ -93,8 +94,13 @@ export const publicRoutes = [
     route: Route,
   },
   {
+    path: route.doctorRatings,
+    element: <DoctorRatings />,
+    route: Route,
+  },
+  {
     path: route.booking,
-    element: <BookingWizard />,
+    element: <BookingPage />,
     route: Route,
   },
   {

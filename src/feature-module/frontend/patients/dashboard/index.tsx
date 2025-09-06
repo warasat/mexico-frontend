@@ -386,48 +386,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
               <div className="dashboard-header">
                 <h3>Dashboard</h3>
                 <ul className="header-list-btns">
-                  <li>
-                    <div className="dropdown header-dropdown">
-                      <Link
-                        className="dropdown-toggle"
-                        data-bs-toggle="dropdown"
-                        to="#"
-                      >
-                        <img
-                          src={doctordashboardprofile06}
-                          className="avatar dropdown-avatar"
-                          alt="Img"
-                        />
-                        Hendrita
-                      </Link>
-                      <div className="dropdown-menu dropdown-menu-end">
-                        <Link to="#" className="dropdown-item">
-                          <img
-                            src={doctordashboardprofile06}
-                            className="avatar dropdown-avatar"
-                            alt="Img"
-                          />
-                          Hendrita
-                        </Link>
-                        <Link to="#" className="dropdown-item">
-                          <img
-                            src={doctordashboardprofile08}
-                            className="avatar dropdown-avatar"
-                            alt="Img"
-                          />
-                          Laura
-                        </Link>
-                        <Link to="#" className="dropdown-item">
-                          <img
-                            src={doctordashboardprofile07}
-                            className="avatar dropdown-avatar"
-                            alt="Img"
-                          />
-                          Mathew
-                        </Link>
-                      </div>
-                    </div>
-                  </li>
                 </ul>
               </div>
               <div className="row">
@@ -651,13 +609,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                             </div>
                             <div className="card-btns">
                               <Link
-                                to="/patient/patient-chat"
-                                className="btn btn-gray"
-                              >
-                                <i className="fa-solid fa-comment-dots" />
-                                Chat Now
-                              </Link>
-                              <Link
                                 to="/patient/patient-appointments"
                                 className="btn btn-outline-primary"
                               >
@@ -690,13 +641,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                               </p>
                             </div>
                             <div className="card-btns">
-                              <Link
-                                to="/patient/patient-chat"
-                                className="btn btn-gray"
-                              >
-                                <i className="fa-solid fa-comment-dots" />
-                                Chat Now
-                              </Link>
                               <Link
                                 to="/patient/patient-appointments"
                                 className="btn btn-outline-primary"
@@ -1044,75 +988,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                       </div>
                     </div>
 
-                    <div className="dashboard-card w-100">
-                      <div className="dashboard-card-head">
-                        <div className="header-title">
-                          <h5>Dependant</h5>
-                        </div>
-                        <div className="card-view-link">
-                          <Link
-                            to="#"
-                            className="add-new"
-                            data-bs-toggle="modal"
-                            data-bs-target="#add_dependent"
-                          >
-                            <i className="fa-solid fa-circle-plus me-2" />
-                            Add New
-                          </Link>
-                          <Link to="/patient/dependent">View All</Link>
-                        </div>
-                      </div>
-                      <div className="dashboard-card-body">
-                        <div className="doctor-fav-list">
-                          <div className="doctor-info-profile">
-                            <Link to="#" className="table-avatar">
-                              <img src={patient20} alt="Img" />
-                            </Link>
-                            <div className="doctor-name-info">
-                              <h5>
-                                <Link to="#">Laura</Link>
-                              </h5>
-                              <span>Mother - 58 years 20 days</span>
-                            </div>
-                          </div>
-                          <div className="d-flex align-items-center">
-                            <Link to="#" className="cal-plus-icon me-2">
-                              <i className="isax isax-calendar5"></i>
-                            </Link>
-                            <Link
-                              to="/patient/dependent"
-                              className="cal-plus-icon"
-                            >
-                              <i className="isax isax-eye4"></i>
-                            </Link>
-                          </div>
-                        </div>
-                        <div className="doctor-fav-list">
-                          <div className="doctor-info-profile">
-                            <Link to="#" className="table-avatar">
-                              <img src={patient21} alt="Img" />
-                            </Link>
-                            <div className="doctor-name-info">
-                              <h5>
-                                <Link to="#">Mathew</Link>
-                              </h5>
-                              <span>Father - 59 years 15 days</span>
-                            </div>
-                          </div>
-                          <div className="d-flex align-items-center">
-                            <Link to="#" className="cal-plus-icon me-2">
-                              <i className="isax isax-calendar5"></i>
-                            </Link>
-                            <Link
-                              to="/patient/dependent"
-                              className="cal-plus-icon"
-                            >
-                              <i className="isax isax-eye4"></i>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
                 <div className="col-xl-12 d-flex">
@@ -1120,46 +995,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                     <div className="dashboard-card-head">
                       <div className="header-title">
                         <h5>Reports</h5>
-                      </div>
-                      <div className="dropdown header-dropdown">
-                        <Link
-                          className="dropdown-toggle"
-                          data-bs-toggle="dropdown"
-                          to="#"
-                        >
-                          <img
-                            src={doctordashboardprofile06}
-                            className="avatar dropdown-avatar"
-                            alt="Img"
-                          />
-                          Hendrita
-                        </Link>
-                        <div className="dropdown-menu dropdown-menu-end">
-                          <Link to="#" className="dropdown-item">
-                            <img
-                              src={doctordashboardprofile06}
-                              className="avatar dropdown-avatar"
-                              alt="Img"
-                            />
-                            Hendrita
-                          </Link>
-                          <Link to="#" className="dropdown-item">
-                            <img
-                              src={doctordashboardprofile08}
-                              className="avatar dropdown-avatar"
-                              alt="Img"
-                            />
-                            Laura
-                          </Link>
-                          <Link to="#" className="dropdown-item">
-                            <img
-                              src={doctordashboardprofile07}
-                              className="avatar dropdown-avatar"
-                              alt="Img"
-                            />
-                            Mathew
-                          </Link>
-                        </div>
                       </div>
                     </div>
                     <div className="dashboard-card-body">
@@ -1183,15 +1018,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                                 data-bs-toggle="tab"
                               >
                                 Medical Records
-                              </Link>
-                            </li>
-                            <li className="nav-item">
-                              <Link
-                                className="nav-link"
-                                to="#prsc-tab"
-                                data-bs-toggle="tab"
-                              >
-                                Prescriptions
                               </Link>
                             </li>
                           </ul>
@@ -1405,7 +1231,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                                       <th>Date</th>
                                       <th>Record For</th>
                                       <th>Comments</th>
-                                      <th>Action</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -1439,27 +1264,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                                         </h2>
                                       </td>
                                       <td>Take Good Rest</td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#view_report"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link to="#">
-                                            <i className="isax isax-import" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
                                     </tr>
                                     <tr>
                                       <td>
@@ -1491,27 +1295,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                                         </h2>
                                       </td>
                                       <td>Stable, no change</td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#view_report"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link to="#">
-                                            <i className="isax isax-import" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
                                     </tr>
                                     <tr>
                                       <td>
@@ -1543,27 +1326,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                                         </h2>
                                       </td>
                                       <td>All Clear</td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#view_report"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link to="#">
-                                            <i className="isax isax-import" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
                                     </tr>
                                     <tr>
                                       <td>
@@ -1595,27 +1357,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                                         </h2>
                                       </td>
                                       <td>Stable, no change</td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#view_report"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link to="#">
-                                            <i className="isax isax-import" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
                                     </tr>
                                     <tr>
                                       <td>
@@ -1647,27 +1388,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                                         </h2>
                                       </td>
                                       <td>Take Good Rest</td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#view_report"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link to="#">
-                                            <i className="isax isax-import" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -1675,317 +1395,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                             </div>
                           </div>
                           {/* /Medical Records Tab */}
-                          {/* Prescriptions Tab */}
-                          <div className="tab-pane fade" id="prsc-tab">
-                            <div className="custom-table">
-                              <div className="table-responsive">
-                                <table className="table table-center mb-0">
-                                  <thead>
-                                    <tr>
-                                      <th>ID</th>
-                                      <th>Name</th>
-                                      <th>Date</th>
-                                      <th>Prescriped By</th>
-                                      <th>Action</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td className="link-primary">
-                                        <Link
-                                          to="#"
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#view_prescription"
-                                        >
-                                          #P1236
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        <Link
-                                          to="#"
-                                          className="lab-icon prescription"
-                                        >
-                                          Prescription
-                                        </Link>
-                                      </td>
-                                      <td>21 Mar 2025, 10:30 AM</td>
-                                      <td>
-                                        <h2 className="table-avatar">
-                                          <Link
-                                            to="/patient/doctor-profile"
-                                            className="avatar avatar-sm me-2"
-                                          >
-                                            <ImageWithBasePath
-                                              className="avatar-img rounded-3"
-                                              src="assets/img/doctors/doctor-thumb-02.jpg"
-                                              alt="User Image"
-                                            />
-                                          </Link>
-                                          <Link to="/patient/doctor-profile">
-                                            Edalin Hendry
-                                          </Link>
-                                        </h2>
-                                      </td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#view_prescription"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link to="#">
-                                            <i className="isax isax-import" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td className="link-primary">
-                                        <Link
-                                          to="#"
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#view_prescription"
-                                        >
-                                          #P3656
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        <Link
-                                          to="#"
-                                          className="lab-icon prescription"
-                                        >
-                                          Prescription
-                                        </Link>
-                                      </td>
-                                      <td>28 Mar 2025, 11:40 AM</td>
-                                      <td>
-                                        <h2 className="table-avatar">
-                                          <Link
-                                            to="/patient/doctor-profile"
-                                            className="avatar avatar-sm me-2"
-                                          >
-                                            <ImageWithBasePath
-                                              className="avatar-img rounded-3"
-                                              src="assets/img/doctors/doctor-thumb-05.jpg"
-                                              alt="User Image"
-                                            />
-                                          </Link>
-                                          <Link to="/patient/doctor-profile">
-                                            John Homes
-                                          </Link>
-                                        </h2>
-                                      </td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#view_prescription"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link to="#">
-                                            <i className="isax isax-import" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td className="link-primary">
-                                        <Link
-                                          to="#"
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#view_prescription"
-                                        >
-                                          #P1246
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        <Link
-                                          to="#"
-                                          className="lab-icon prescription"
-                                        >
-                                          Prescription
-                                        </Link>
-                                      </td>
-                                      <td>11 Apr 2025, 09:00 AM</td>
-                                      <td>
-                                        <h2 className="table-avatar">
-                                          <Link
-                                            to="/patient/doctor-profile"
-                                            className="avatar avatar-sm me-2"
-                                          >
-                                            <ImageWithBasePath
-                                              className="avatar-img rounded-3"
-                                              src="assets/img/doctors/doctor-thumb-03.jpg"
-                                              alt="User Image"
-                                            />
-                                          </Link>
-                                          <Link to="/patient/doctor-profile">
-                                            Shanta Neill
-                                          </Link>
-                                        </h2>
-                                      </td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#view_prescription"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link to="#">
-                                            <i className="isax isax-import" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td className="link-primary">
-                                        <Link
-                                          to="#"
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#view_prescription"
-                                        >
-                                          #P6985
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        <Link
-                                          to="#"
-                                          className="lab-icon prescription"
-                                        >
-                                          Prescription
-                                        </Link>
-                                      </td>
-                                      <td>15 Apr 2025, 02:30 PM</td>
-                                      <td>
-                                        <h2 className="table-avatar">
-                                          <Link
-                                            to="/patient/doctor-profile"
-                                            className="avatar avatar-sm me-2"
-                                          >
-                                            <ImageWithBasePath
-                                              className="avatar-img rounded-3"
-                                              src="assets/img/doctors/doctor-thumb-08.jpg"
-                                              alt="User Image"
-                                            />
-                                          </Link>
-                                          <Link to="/patient/doctor-profile">
-                                            Anthony Tran
-                                          </Link>
-                                        </h2>
-                                      </td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#view_prescription"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link to="#">
-                                            <i className="isax isax-import" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td className="link-primary">
-                                        <Link
-                                          to="#"
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#view_prescription"
-                                        >
-                                          #P3659
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        <Link
-                                          to="#"
-                                          className="lab-icon prescription"
-                                        >
-                                          Prescription
-                                        </Link>
-                                      </td>
-                                      <td>23 Apr 2025, 06:40 PM</td>
-                                      <td>
-                                        <h2 className="table-avatar">
-                                          <Link
-                                            to="/patient/doctor-profile"
-                                            className="avatar avatar-sm me-2"
-                                          >
-                                            <ImageWithBasePath
-                                              className="avatar-img rounded-3"
-                                              src="assets/img/doctors/doctor-thumb-01.jpg"
-                                              alt="User Image"
-                                            />
-                                          </Link>
-                                          <Link to="/patient/doctor-profile">
-                                            Susan Lingo
-                                          </Link>
-                                        </h2>
-                                      </td>
-                                      <td>
-                                        <div className="action-item">
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#view_prescription"
-                                          >
-                                            <i className="isax isax-link-2" />
-                                          </Link>
-                                          <Link to="#">
-                                            <i className="isax isax-import" />
-                                          </Link>
-                                          <Link
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete_modal"
-                                          >
-                                            <i className="isax isax-trash" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
-                          {/* Prescriptions Tab */}
 
 
                         {/* Tab Content */}

@@ -3,6 +3,7 @@ import ImageWithBasePath from '../../../../components/imageWithBasePath'
 import { Link } from "react-router-dom";
 import Select from "react-select";
 import { Calendar, theme } from 'antd';
+import Header from '../../header';
 const OnPanelChange = (value: any, mode: any) => {
   console.log(value.format('YYYY-MM-DD'), mode);
 };
@@ -10,15 +11,6 @@ const OnPanelChange = (value: any, mode: any) => {
 const BookingPopup = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectType, setSelectType] = useState(1);
-  const [selectedService, setSelectedService] = useState(true);
-  const [selectedService1, setSelectedService1] = useState(false);
-  const [selectedService2, setSelectedService2] = useState(false);
-  const [selectedService3, setSelectedService3] = useState(false);
-  const [selectedService4, setSelectedService4] = useState(false);
-  const [selectedService5, setSelectedService5] = useState(false);
-  const [selectedService6, setSelectedService6] = useState(false);
-  const [selectedService7, setSelectedService7] = useState(false);
-  const [selectedService8, setSelectedService8] = useState(false);
   const { token } = theme.useToken();
   const wrapperStyle = {
     width: '100%',
@@ -32,37 +24,9 @@ const BookingPopup = () => {
   const HandlePrev = () => {
     setCurrentStep(currentStep - 1);
   };
-  const Patient = [
-    { value: "", label: "Select" },
-    { value: "1", label: "Andrew Fletcher" },
-    { value: "Newyork", label: "Newyork" },
-  ];
-  const Speciality = [
-    { value: "", label: "Select" },
-    { value: "1", label: "Cardiology" },
-    { value: "2", label: "Neurology" },
-    { value: "2", label: "Urology" },
-  ];
   return (
     <div className="main-wrapper">
-      <header className="header header-custom header-fixed inner-header relative">
-        <div className="container">
-          <nav className="navbar navbar-expand-lg header-nav">
-            <div className="navbar-header">
-              <Link id="mobile_btn" to="#">
-                <span className="bar-icon">
-                  <span />
-                  <span />
-                  <span />
-                </span>
-              </Link>
-              <Link to="/index" className="navbar-brand logo">
-                <ImageWithBasePath src="assets/img/logo.svg" className="img-fluid" alt="Logo" />
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </header>
+      <Header />
       <div className="doctor-content">
         <div className="container">
           <div className="row">
@@ -198,141 +162,6 @@ const BookingPopup = () => {
                       <div className="card-body booking-body">
                         <div className="card mb-0">
                           <div className="card-body pb-1">
-                            <div className="mb-4 pb-4 border-bottom">
-                              <label className="form-label">Select Speciality</label>
-
-                              <Select
-                                className="select"
-                                options={Speciality}
-                                placeholder="Select"
-                                isClearable={true}
-                                isSearchable={true}
-                              />
-
-                            </div>
-                            <h6 className="mb-3">Services</h6>
-                            <div className="row">
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service1"
-                                    onChange={() => setSelectedService(!selectedService)}
-                                    checked={selectedService ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service1"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Echocardiograms
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService1 ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service2"
-                                    onChange={() => setSelectedService1(!selectedService1)}
-                                    checked={selectedService1 ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service2"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Stress tests
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService2 ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service3"
-                                    onChange={() => setSelectedService2(!selectedService2)}
-                                    checked={selectedService2 ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service3"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Stress tests
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService3 ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service4"
-                                    onChange={() => setSelectedService3(!selectedService3)}
-                                    checked={selectedService3 ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service4"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Heart Catheterization
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService4 ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service5"
-                                    onChange={() => setSelectedService4(!selectedService4)}
-                                    checked={selectedService4 ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service5"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Echocardiograms
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className={`service-item ${selectedService5 ? 'active' : ''}`}>
-                                  <input
-                                    className="form-check-input ms-0 mt-0"
-                                    name="service1"
-                                    type="checkbox"
-                                    id="service6"
-                                    onChange={() => setSelectedService5(!selectedService5)}
-                                    checked={selectedService5 ? true : false}
-                                  />
-                                  <label
-                                    className="form-check-label ms-2"
-                                    htmlFor="service6"
-                                  >
-                                    <span className="service-title d-block mb-1">
-                                      Echocardiograms
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -1142,20 +971,6 @@ const BookingPopup = () => {
                                 <div className="mb-3">
                                   <label className="form-label">Email Address</label>
                                   <input type="text" className="form-control" />
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-6">
-                                <div className="mb-3">
-                                  <label className="form-label">Select Patient</label>
-
-                                  <Select
-                                    className="select"
-                                    options={Patient}
-                                    placeholder="Select"
-                                    isClearable={true}
-                                    isSearchable={true}
-                                  />
-
                                 </div>
                               </div>
                               <div className="col-lg-4 col-md-6">
