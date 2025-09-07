@@ -6,12 +6,7 @@ import Header from "../../header.tsx";
 import DoctorFooter from "../../common/doctorFooter/index.tsx";
 import {
   doctor_17,
-  doctordashboardprofile06,
-  doctordashboardprofile07,
-  doctordashboardprofile08,
   doctorprofileimg,
-  patient20,
-  patient21,
 } from "../../imagepath";
 import Chart from "react-apexcharts";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";

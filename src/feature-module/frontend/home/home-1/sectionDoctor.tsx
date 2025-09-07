@@ -352,6 +352,156 @@ const SectionDoctor: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div className="card">
+                                <div className="card-img card-img-hover">
+                                    <Link to="/patient/doctor-profile">
+                                        <ImageWithBasePath src="assets/img/doctor-grid/doc6.png" alt="" />
+                                    </Link>
+                                    <div className="grid-overlay-item d-flex align-items-center justify-content-between">
+                                        <span className="badge bg-orange">
+                                            <i className="fa-solid fa-star me-1" />
+                                            4.7
+                                        </span>
+                                        <Link to="#" className="fav-icon">
+                                            <i className="fa fa-heart" />
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="card-body p-0">
+                                    <div className="d-flex active-bar active-bar-purple align-items-center justify-content-between p-3">
+                                        <Link to="#" className="text-purple fw-medium fs-14">
+                                            Dentist
+                                        </Link>
+                                        <span className="badge bg-success-light d-inline-flex align-items-center">
+                                            <i className="fa-solid fa-circle fs-5 me-1" />
+                                            Available
+                                        </span>
+                                    </div>
+                                    <div className="p-3 pt-0">
+                                        <div className="doctor-info-detail mb-3 pb-3">
+                                            <h3 className="mb-1">
+                                                <Link to="/patient/doctor-profile">Dr. Maria Rodriguez</Link>
+                                            </h3>
+                                            <div className="d-flex align-items-center">
+                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                    <i className="isax isax-location me-2" />
+                                                    Mexico City, Mexico
+                                                </p>
+                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
+                                                <span className="fs-14 fw-medium">45 Min</span>
+                                            </div>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <button
+                                                onClick={handleBookNow}
+                                                className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                                            >
+                                                Book Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card">
+                                <div className="card-img card-img-hover">
+                                    <Link to="/patient/doctor-profile">
+                                        <ImageWithBasePath src="assets/img/doctor-grid/doc7.png" alt="" />
+                                    </Link>
+                                    <div className="grid-overlay-item d-flex align-items-center justify-content-between">
+                                        <span className="badge bg-orange">
+                                            <i className="fa-solid fa-star me-1" />
+                                            4.9
+                                        </span>
+                                        <Link to="#" className="fav-icon">
+                                            <i className="fa fa-heart" />
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="card-body p-0">
+                                    <div className="d-flex active-bar active-bar-green align-items-center justify-content-between p-3">
+                                        <Link to="#" className="text-green fw-medium fs-14">
+                                            OBGYN
+                                        </Link>
+                                        <span className="badge bg-success-light d-inline-flex align-items-center">
+                                            <i className="fa-solid fa-circle fs-5 me-1" />
+                                            Available
+                                        </span>
+                                    </div>
+                                    <div className="p-3 pt-0">
+                                        <div className="doctor-info-detail mb-3 pb-3">
+                                            <h3 className="mb-1">
+                                                <Link to="/patient/doctor-profile">Dr. Ana Martinez</Link>
+                                            </h3>
+                                            <div className="d-flex align-items-center">
+                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                    <i className="isax isax-location me-2" />
+                                                    Cancún, Mexico
+                                                </p>
+                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
+                                                <span className="fs-14 fw-medium">60 Min</span>
+                                            </div>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <button
+                                                onClick={handleBookNow}
+                                                className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                                            >
+                                                Book Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card">
+                                <div className="card-img card-img-hover">
+                                    <Link to="/patient/doctor-profile">
+                                        <ImageWithBasePath src="assets/img/doctor-grid/doc8.png" alt="" />
+                                    </Link>
+                                    <div className="grid-overlay-item d-flex align-items-center justify-content-between">
+                                        <span className="badge bg-orange">
+                                            <i className="fa-solid fa-star me-1" />
+                                            4.5
+                                        </span>
+                                        <Link to="#" className="fav-icon">
+                                            <i className="fa fa-heart" />
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="card-body p-0">
+                                    <div className="d-flex active-bar active-bar-orange align-items-center justify-content-between p-3">
+                                        <Link to="#" className="text-orange fw-medium fs-14">
+                                            Psychiatrist
+                                        </Link>
+                                        <span className="badge bg-success-light d-inline-flex align-items-center">
+                                            <i className="fa-solid fa-circle fs-5 me-1" />
+                                            Available
+                                        </span>
+                                    </div>
+                                    <div className="p-3 pt-0">
+                                        <div className="doctor-info-detail mb-3 pb-3">
+                                            <h3 className="mb-1">
+                                                <Link to="/patient/doctor-profile">Dr. Carlos Lopez</Link>
+                                            </h3>
+                                            <div className="d-flex align-items-center">
+                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                    <i className="isax isax-location me-2" />
+                                                    Querétaro, Mexico
+                                                </p>
+                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
+                                                <span className="fs-14 fw-medium">45 Min</span>
+                                            </div>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <button
+                                                onClick={handleBookNow}
+                                                className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                                            >
+                                                Book Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </Slider>
                     </div>
                     <div className="doctor-nav nav-bottom owl-nav" />

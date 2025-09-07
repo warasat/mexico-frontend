@@ -1,7 +1,17 @@
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../../../../components/imageWithBasePath";
+import DoctorProfileService from "../../../common/services/doctorProfileService";
 
 const SearchList = () => {
+  // Get doctor profile service instance
+  const doctorProfileService = DoctorProfileService.getInstance();
+  
+  // Function to get insurance data for a doctor
+  const getDoctorInsurances = (doctorId: number): string[] => {
+    const profile = doctorProfileService.getDoctorProfile(doctorId.toString());
+    return profile?.selectedInsurances || [];
+  };
+
   // Doctor data for the search list
   const doctors = [
     {
@@ -11,7 +21,8 @@ const SearchList = () => {
       rating: "5.0",
       location: "Guadalajara, Mexico",
       experience: "10+ years",
-      image: "assets/img/doctor-grid/doc1.png"
+      image: "assets/img/doctor-grid/doc1.png",
+      insurance: getDoctorInsurances(1)
     },
     {
       id: 2,
@@ -20,7 +31,8 @@ const SearchList = () => {
       rating: "4.6",
       location: "Monterrey, Mexico",
       experience: "8+ years",
-      image: "assets/img/doctor-grid/doc2.png"
+      image: "assets/img/doctor-grid/doc2.png",
+      insurance: getDoctorInsurances(2)
     },
     {
       id: 3,
@@ -29,7 +41,8 @@ const SearchList = () => {
       rating: "4.8", 
       location: "Puebla, Mexico",
       experience: "12+ years",
-      image: "assets/img/doctor-grid/doc3.png"
+      image: "assets/img/doctor-grid/doc3.png",
+      insurance: getDoctorInsurances(3)
     },
     {
       id: 4,
@@ -38,7 +51,8 @@ const SearchList = () => {
       rating: "4.8",
       location: "Tijuana, Mexico", 
       experience: "15+ years",
-      image: "assets/img/doctor-grid/doc4.png"
+      image: "assets/img/doctor-grid/doc4.png",
+      insurance: getDoctorInsurances(4)
     },
     {
       id: 5,
@@ -47,7 +61,8 @@ const SearchList = () => {
       rating: "4.2",
       location: "León, Mexico",
       experience: "6+ years", 
-      image: "assets/img/doctor-grid/doc5.png"
+      image: "assets/img/doctor-grid/doc5.png",
+      insurance: getDoctorInsurances(5)
     },
     {
       id: 6,
@@ -56,7 +71,8 @@ const SearchList = () => {
       rating: "4.7",
       location: "Cancún, Mexico",
       experience: "11+ years",
-      image: "assets/img/doctor-grid/doc6.png"
+      image: "assets/img/doctor-grid/doc6.png",
+      insurance: getDoctorInsurances(6)
     },
     {
       id: 7,
@@ -65,7 +81,8 @@ const SearchList = () => {
       rating: "4.7",
       location: "Mérida, Mexico",
       experience: "9+ years",
-      image: "assets/img/doctor-grid/doc7.png"
+      image: "assets/img/doctor-grid/doc7.png",
+      insurance: getDoctorInsurances(7)
     },
     {
       id: 8,
@@ -74,7 +91,8 @@ const SearchList = () => {
       rating: "4.7", 
       location: "Toluca, Mexico",
       experience: "7+ years",
-      image: "assets/img/doctor-grid/doc8.png"
+      image: "assets/img/doctor-grid/doc8.png",
+      insurance: getDoctorInsurances(8)
     },
     {
       id: 9,
@@ -83,7 +101,8 @@ const SearchList = () => {
       rating: "4.9",
       location: "Querétaro, Mexico",
       experience: "13+ years", 
-      image: "assets/img/doctor-grid/doc9.png"
+      image: "assets/img/doctor-grid/doc9.png",
+      insurance: getDoctorInsurances(9)
     },
     {
       id: 10,
@@ -92,7 +111,8 @@ const SearchList = () => {
       rating: "5.0",
       location: "San Luis Potosí, Mexico",
       experience: "14+ years",
-      image: "assets/img/doctor-grid/doc10.png"
+      image: "assets/img/doctor-grid/doc10.png",
+      insurance: getDoctorInsurances(10)
     },
     {
       id: 11,
@@ -208,6 +228,12 @@ const SearchList = () => {
                   <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                   <span className="fs-14 fw-medium">60 Min</span>
                 </div>
+                <div className="d-flex align-items-center mt-2">
+                  <p className="d-flex align-items-center mb-0 fs-14">
+                    <i className="isax isax-shield-tick me-2" />
+                    {Array.isArray(doctors[0].insurance) ? doctors[0].insurance.join(", ") : doctors[0].insurance}
+                  </p>
+                </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
                 <Link
@@ -261,6 +287,12 @@ const SearchList = () => {
                   </p>
                   <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                   <span className="fs-14 fw-medium">30 Min</span>
+                </div>
+                <div className="d-flex align-items-center mt-2">
+                  <p className="d-flex align-items-center mb-0 fs-14">
+                    <i className="isax isax-shield-tick me-2" />
+                    {Array.isArray(doctors[1].insurance) ? doctors[1].insurance.join(", ") : doctors[1].insurance}
+                  </p>
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">

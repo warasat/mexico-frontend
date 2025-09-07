@@ -3,6 +3,40 @@ import ImageWithBasePath from '../../../../components/imageWithBasePath';
 import { useTranslation } from 'react-i18next';
 import Slider from "react-slick";
 
+// Mexican cities for location dropdown
+const mexicanCities = [
+  "Mexico City",
+  "Guadalajara",
+  "Monterrey",
+  "Puebla",
+  "Tijuana",
+  "León",
+  "Cancún",
+  "Mérida",
+  "Toluca",
+  "Querétaro",
+  "San Luis Potosí",
+  "Chihuahua"
+];
+
+// Medical specialities for search doctors dropdown
+const medicalSpecialities = [
+  { value: "primary-care", label: "Primary Care Physicians" },
+  { value: "dentists", label: "Dentists" },
+  { value: "obgyn", label: "OBGYNs" },
+  { value: "psychologists", label: "Psychologists" },
+  { value: "psychiatrists", label: "Psychiatrists" },
+  { value: "therapists", label: "Therapist-Counselors" },
+  { value: "urgent-care", label: "Urgent Care" },
+  { value: "chiropractors", label: "Chiropractors" },
+  { value: "optometrists", label: "Optometrists" },
+  { value: "ophthalmologists", label: "Ophthalmologists" },
+  { value: "podiatrists", label: "Podiatrists" },
+  { value: "pediatricians", label: "Pediatricians" },
+  { value: "dermatologists", label: "Dermatologists" },
+  { value: "orthopedic-surgeons", label: "Orthopedic Surgeons" }
+];
+
 // Insurance providers for hero section
 const insuranceProviders = [
   "Aetna",
@@ -59,6 +93,8 @@ const insuranceProviders = [
 
 const HomeBanner: React.FC = () => {
     const [selectedInsurance, setSelectedInsurance] = useState<string>('');
+    const [selectedLocation, setSelectedLocation] = useState<string>('');
+    const [selectedSpeciality, setSelectedSpeciality] = useState<string>('');
     const { t } = useTranslation();
 
     // Hero banner slider configuration
@@ -158,21 +194,37 @@ const HomeBanner: React.FC = () => {
                                                     <div className="search-input search-line">
                                                         <i className="isax isax-hospital5 bficon" />
                                                         <div className=" mb-0">
-                                                            <input
-                                                                type="text"
+                                                            <select
+                                                                value={selectedSpeciality}
+                                                                onChange={(e) => setSelectedSpeciality(e.target.value)}
                                                                 className="form-control"
-                                                                placeholder={t('search.searchDoctors')}
-                                                            />
+                                                                style={{ paddingLeft: '45px' }}
+                                                            >
+                                                                <option value="">{t('search.searchDoctors')}</option>
+                                                                {medicalSpecialities.map((speciality, idx) => (
+                                                                    <option key={idx} value={speciality.value}>
+                                                                        {speciality.label}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div className="search-input search-map-line">
                                                         <i className="isax isax-location5" />
                                                         <div className=" mb-0">
-                                                            <input
-                                                                type="text"
+                                                            <select
+                                                                value={selectedLocation}
+                                                                onChange={(e) => setSelectedLocation(e.target.value)}
                                                                 className="form-control"
-                                                                placeholder={t('maps.location')}
-                                                            />
+                                                                style={{ paddingLeft: '45px' }}
+                                                            >
+                                                                <option value="">{t('maps.location')}</option>
+                                                                {mexicanCities.map((city, idx) => (
+                                                                    <option key={idx} value={city}>
+                                                                        {city}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div className="search-input search-calendar-line">

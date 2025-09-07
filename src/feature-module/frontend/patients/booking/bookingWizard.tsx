@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import ImageWithBasePath from '../../../../components/imageWithBasePath'
 import { Link } from "react-router-dom";
-import Select from "react-select";
 import { Calendar, theme } from 'antd';
 import InsuranceSelector from './components/InsuranceSelector';
 import Header from '../../header';

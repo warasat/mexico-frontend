@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import Header from '../../header'
 import Footer from '../../footer'
 import ImageWithBasePath from '../../../../components/imageWithBasePath'
-import { IMG01, IMG02, IMG07, IMG08, IMG09 } from './img'
 
 const DoctorRatings: React.FC = () => {
   // Sample doctors data with ratings
@@ -203,7 +202,7 @@ const DoctorRatings: React.FC = () => {
                     <div key={doctor.id} className="mb-5">
                       {/* Doctor Header */}
                       <div className="d-flex align-items-center mb-4">
-                        <ImageWithBasePath src={doctor.image} className="avatar avatar-sm rounded-circle me-3" width="60" height="60" alt={doctor.name} />
+                        <ImageWithBasePath src={doctor.image} className="avatar avatar-sm rounded-circle me-3" width={60} height={60} alt={doctor.name} />
                         <div>
                           <h5 className="mb-1">{doctor.name}</h5>
                           <p className="text-muted mb-1">{doctor.specialty}</p>

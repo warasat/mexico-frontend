@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
 import Header from "../../header";
 import Doctors from "./doctors";
 import Footer from "../../footer";
-import { Link, useSearchParams } from "react-router-dom";
-import { DatePicker } from "antd";
+import { useSearchParams } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
-import { all_routes } from "../../../../routes/all_routes";
 
 const SearchDoctor = (props: any) => {
   const [searchParams] = useSearchParams();
@@ -27,33 +24,6 @@ const SearchDoctor = (props: any) => {
     "dermatologists": "Dermatologists",
     "orthopedic-surgeons": "Orthopedic Surgeons"
   };
-  const [_minValue, setMinValue] = useState(10);
-  const [_maxValue, setMaxValue] = useState(5000);
-
-  useEffect(() => {
-    if (document.getElementById("price-range")) {
-      setMinValue(10);
-      setMaxValue(10000);
-
-      const slider = document.getElementById("price-range");
-      if (slider) {
-        slider.addEventListener("input", HandleSliderChange);
-
-        return () => {
-          slider.removeEventListener("input", HandleSliderChange);
-        };
-      }
-      return undefined;
-    }
-  }, []);
-
-  const HandleSliderChange = (event: any) => {
-    const min = parseInt(event.target.value.split(",")[0]);
-    const max = parseInt(event.target.value.split(",")[1]);
-
-    setMinValue(min);
-    setMaxValue(max);
-  };
   return (
     <div className="main-wrapper">
       <Header {...props} />
@@ -63,67 +33,12 @@ const SearchDoctor = (props: any) => {
         <div className="container">
           <div className="row align-items-center inner-banner">
             <div className="col-md-12 col-12 text-center">
-              <nav aria-label="breadcrumb" className="page-breadcrumb">
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to={all_routes.generalHomeOne}>
-                      <i className="isax isax-home-15" />
-                    </Link>
-                  </li>
-                  <li className="breadcrumb-item">Doctor</li>
-                  <li className="breadcrumb-item active">Doctor Grid</li>
-                </ol>
-                <h2 className="breadcrumb-title">
-                  {searchParams.get("specialty") ? 
-                    `${specialtyMapping[searchParams.get("specialty") || ""] || "Specialty"} Doctors` : 
-                    "Doctor Grid"
-                  }
-                </h2>
-              </nav>
-            </div>
-          </div>
-          <div className="bg-primary-gradient rounded-pill doctors-search-box">
-            <div className="search-box-one rounded-pill">
-              <form>
-                <div className="search-input search-line">
-                  <i className="isax isax-hospital5 bficon" />
-                  <div className=" mb-0">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Search for Doctors, Hospitals, Clinics"
-                    />
-                  </div>
-                </div>
-                <div className="search-input search-map-line">
-                  <i className="isax isax-location5" />
-                  <div className=" mb-0">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Location"
-                    />
-                  </div>
-                </div>
-                <div className="search-input search-calendar-line">
-                  <i className="isax isax-calendar-tick5" />
-                  <div className=" mb-0">
-                    <DatePicker
-                      className="form-control datetimepicker"
-                      placeholder="dd/mm/yyyy"
-                    />
-                  </div>
-                </div>
-                <div className="form-search-btn">
-                  <button
-                    className="btn btn-primary d-inline-flex align-items-center rounded-pill"
-                    type="submit"
-                  >
-                    <i className="isax isax-search-normal-15 me-2" />
-                    Search
-                  </button>
-                </div>
-              </form>
+              <h2 className="breadcrumb-title">
+                {searchParams.get("specialty") ? 
+                  `${specialtyMapping[searchParams.get("specialty") || ""] || "Specialty"} Doctors` : 
+                  "Doctor Grid"
+                }
+              </h2>
             </div>
           </div>
         </div>

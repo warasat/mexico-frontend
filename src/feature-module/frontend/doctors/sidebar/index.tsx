@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { doctorprofileimg } from "../../imagepath";
 import Select from 'react-select'
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 const DoctorSidebar = () => {

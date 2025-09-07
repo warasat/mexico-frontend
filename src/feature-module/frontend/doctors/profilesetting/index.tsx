@@ -5,9 +5,10 @@ import DoctorFooter from "../../common/doctorFooter/index.jsx";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath/index.js";
 import CommonTagInputs from "../../common/common-tagInput/commonTagInputs.js";
+import InsuranceTagInputs from "../../common/common-tagInput/insuranceTagInputs";
 import DoctorSidebar from "../sidebar/index.js";
-import SettingsHeader from "./settingsHeader.js";
 import { useAuth } from "../../../../core/context/AuthContext";
+import DoctorProfileService from "../../common/services/doctorProfileService";
 
 const ProfileSetting = (props: any) => {
   const { authState } = useAuth();
@@ -29,6 +30,90 @@ const ProfileSetting = (props: any) => {
   const [tags, setTags] = useState<string[]>(["English", "German", "Portugese"]);
   const handleTagsChange = (newTags: string[]) => {
     setTags(newTags);
+  };
+
+  // Insurance providers list (same as landing page)
+  const insuranceProviders = [
+    "Aetna",
+    "Anthem Blue Cross Blue Shield",
+    "Blue Cross Blue Shield",
+    "Cigna",
+    "Humana",
+    "UnitedHealth",
+    "Kaiser Permanente",
+    "AARP",
+    "Medicare",
+    "Medicaid",
+    "Tricare",
+    "VA Health Care",
+    "BCBS Federal Employee Program",
+    "Aetna Better Health",
+    "AmeriHealth",
+    "CareFirst BlueCross BlueShield",
+    "Highmark Blue Cross Blue Shield",
+    "Independence Blue Cross",
+    "Premera Blue Cross",
+    "Regence Blue Cross Blue Shield",
+    "SelectHealth",
+    "WellCare",
+    "Molina Healthcare",
+    "Centene",
+    "Bright Health",
+    "Oscar Health",
+    "Ambetter",
+    "Health Net",
+    "Anthem",
+    "Empire Blue Cross",
+    "Blue Cross of California",
+    "Blue Cross of Texas",
+    "Blue Cross of Illinois",
+    "Blue Cross of Michigan",
+    "Blue Cross of Massachusetts",
+    "Blue Cross of New York",
+    "Blue Cross of Florida",
+    "Blue Cross of Georgia",
+    "Blue Cross of North Carolina",
+    "Blue Cross of Pennsylvania",
+    "Blue Cross of Ohio",
+    "Blue Cross of Indiana",
+    "Blue Cross of Wisconsin",
+    "Blue Cross of Minnesota",
+    "Blue Cross of Colorado",
+    "Blue Cross of Arizona",
+    "Blue Cross of Nevada",
+    "Blue Cross of Oregon",
+    "Blue Cross of Washington",
+    "Blue Cross of Maryland"
+  ];
+
+  const [selectedInsurances, setSelectedInsurances] = useState<string[]>([]);
+  const [experience, setExperience] = useState<string>('');
+  const [education, setEducation] = useState<string>('');
+
+  const handleInsurancesChange = (newInsurances: string[]) => {
+    setSelectedInsurances(newInsurances);
+  };
+
+  const handleSaveProfile = () => {
+    // Save the doctor profile data
+    const doctorProfileService = DoctorProfileService.getInstance();
+    const currentDoctorId = "1"; // This should be the actual logged-in doctor's ID
+    
+    doctorProfileService.updateDoctorProfile(currentDoctorId, {
+      id: currentDoctorId,
+      name: "Dr. Current User", // This should be the actual doctor's name
+      selectedInsurances: selectedInsurances,
+      experience: experience,
+      education: education,
+      languages: tags
+    });
+    
+    console.log("Profile saved:", {
+      insurances: selectedInsurances,
+      experience: experience,
+      education: education,
+      languages: tags
+    });
   };
 
 
@@ -102,7 +187,6 @@ const ProfileSetting = (props: any) => {
             <h3>Profile Settings</h3>
           </div>
           {/* Settings List */}
-            <SettingsHeader />
           {/* /Settings List */}
           <div className="setting-title">
             <h5>Profile</h5>
@@ -129,9 +213,6 @@ const ProfileSetting = (props: any) => {
                   </p>
                 </div>
               </div>
-            </div>
-            <div className="setting-title">
-              <h5>Information</h5>
             </div>
             <div className="setting-card">
               <div className="row">
@@ -246,6 +327,51 @@ const ProfileSetting = (props: any) => {
                     />
                   </div>
                 </div>
+                <div className="col-lg-4 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Experience <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., 10+ years"
+                      value={experience}
+                      onChange={(e) => setExperience(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Insurance <span className="text-danger">*</span>
+                    </label>
+                    <div className="input-block input-block-new mb-0">
+                      <InsuranceTagInputs
+                        initialTags={selectedInsurances}
+                        onTagsChange={handleInsurancesChange}
+                        insuranceOptions={insuranceProviders}
+                      />
+                      <Link to="#" className="input-text save-btn">
+                        Save
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-4 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Education <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., MD, PhD, BDS"
+                      value={education}
+                      onChange={(e) => setEducation(e.target.value)}
+                    />
+                  </div>
+                </div>
                 <div className="col-lg-12">
                   <div className="form-wrap">
                     <label className="form-label">
@@ -267,7 +393,7 @@ const ProfileSetting = (props: any) => {
               <Link to="#" className="btn btn-gray">
                 Cancel
               </Link>
-              <button type="submit" className="btn btn-primary prime-btn">
+              <button type="button" className="btn btn-primary prime-btn" onClick={handleSaveProfile}>
                 Save Changes
               </button>
             </div>

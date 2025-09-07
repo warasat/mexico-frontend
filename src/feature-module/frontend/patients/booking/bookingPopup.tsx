@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import ImageWithBasePath from '../../../../components/imageWithBasePath'
 import { Link } from "react-router-dom";
-import Select from "react-select";
 import { Calendar, theme } from 'antd';
 import Header from '../../header';
 const OnPanelChange = (value: any, mode: any) => {
@@ -11,6 +10,9 @@ const OnPanelChange = (value: any, mode: any) => {
 const BookingPopup = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectType, setSelectType] = useState(1);
+  const [selectedService6, setSelectedService6] = useState(false);
+  const [selectedService7, setSelectedService7] = useState(false);
+  const [selectedService8, setSelectedService8] = useState(false);
   const { token } = theme.useToken();
   const wrapperStyle = {
     width: '100%',

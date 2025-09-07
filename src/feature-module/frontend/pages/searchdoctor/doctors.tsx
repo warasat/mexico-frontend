@@ -1,11 +1,21 @@
 import { Link, useSearchParams } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { useEffect, useState } from "react";
+import DoctorProfileService from "../../common/services/doctorProfileService";
 
 const Doctors = () => {
   const [searchParams] = useSearchParams();
   const [filteredDoctors, setFilteredDoctors] = useState<any[]>([]);
   const [specialty, setSpecialty] = useState<string>("");
+  
+  // Get doctor profile service instance
+  const doctorProfileService = DoctorProfileService.getInstance();
+
+  // Function to get insurance data for a doctor
+  const getDoctorInsurances = (doctorId: number): string[] => {
+    const profile = doctorProfileService.getDoctorProfile(doctorId.toString());
+    return profile?.selectedInsurances || [];
+  };
 
   // Doctor data matching the sectionDoctor.tsx structure
   const allDoctors = [
@@ -18,7 +28,8 @@ const Doctors = () => {
       rating: "5.0",
       location: "Guadalajara, Mexico",
       duration: "30 Min",
-      available: true
+      available: true,
+      insurance: getDoctorInsurances(1)
     },
     {
       id: 2,
@@ -29,7 +40,8 @@ const Doctors = () => {
       rating: "4.6",
       location: "Monterrey, Mexico",
       duration: "60 Min",
-      available: true
+      available: true,
+      insurance: getDoctorInsurances(2)
     },
     {
       id: 3,
@@ -40,7 +52,8 @@ const Doctors = () => {
       rating: "4.8",
       location: "Puebla, Mexico",
       duration: "30 Min",
-      available: true
+      available: true,
+      insurance: getDoctorInsurances(3)
     },
     {
       id: 4,
@@ -51,7 +64,8 @@ const Doctors = () => {
       rating: "4.8",
       location: "Tijuana, Mexico",
       duration: "30 Min",
-      available: true
+      available: true,
+      insurance: getDoctorInsurances(4)
     },
     {
       id: 5,
@@ -62,7 +76,152 @@ const Doctors = () => {
       rating: "4.2",
       location: "León, Mexico",
       duration: "30 Min",
-      available: true
+      available: true,
+      insurance: getDoctorInsurances(5)
+    },
+    {
+      id: 6,
+      name: "Dr. Maria Rodriguez",
+      specialty: "Dentist",
+      specialtyClass: "text-purple",
+      image: "assets/img/doctor-grid/doc6.png",
+      rating: "4.7",
+      location: "Mexico City, Mexico",
+      duration: "45 Min",
+      available: true,
+      insurance: getDoctorInsurances(6)
+    },
+    {
+      id: 7,
+      name: "Dr. Ana Martinez",
+      specialty: "OBGYN",
+      specialtyClass: "text-green",
+      image: "assets/img/doctor-grid/doc7.png",
+      rating: "4.9",
+      location: "Cancún, Mexico",
+      duration: "60 Min",
+      available: true,
+      insurance: getDoctorInsurances(7)
+    },
+    {
+      id: 8,
+      name: "Dr. Carlos Lopez",
+      specialty: "Psychiatrist",
+      specialtyClass: "text-orange",
+      image: "assets/img/doctor-grid/doc8.png",
+      rating: "4.5",
+      location: "Querétaro, Mexico",
+      duration: "45 Min",
+      available: true,
+      insurance: getDoctorInsurances(8)
+    },
+    {
+      id: 9,
+      name: "Dr. Elena Garcia",
+      specialty: "Therapist",
+      specialtyClass: "text-blue",
+      image: "assets/img/doctor-grid/doc1.png",
+      rating: "4.6",
+      location: "Mérida, Mexico",
+      duration: "50 Min",
+      available: true,
+      insurance: getDoctorInsurances(9)
+    },
+    {
+      id: 10,
+      name: "Dr. Roberto Silva",
+      specialty: "Urgent Care",
+      specialtyClass: "text-red",
+      image: "assets/img/doctor-grid/doc2.png",
+      rating: "4.4",
+      location: "Toluca, Mexico",
+      duration: "20 Min",
+      available: true,
+      insurance: getDoctorInsurances(10)
+    },
+    {
+      id: 11,
+      name: "Dr. Carmen Vega",
+      specialty: "Chiropractor",
+      specialtyClass: "text-yellow",
+      image: "assets/img/doctor-grid/doc3.png",
+      rating: "4.8",
+      location: "San Luis Potosí, Mexico",
+      duration: "40 Min",
+      available: true,
+      insurance: getDoctorInsurances(11)
+    },
+    {
+      id: 12,
+      name: "Dr. Fernando Ruiz",
+      specialty: "Optometrist",
+      specialtyClass: "text-cyan",
+      image: "assets/img/doctor-grid/doc4.png",
+      rating: "4.7",
+      location: "Chihuahua, Mexico",
+      duration: "35 Min",
+      available: true,
+      insurance: getDoctorInsurances(12)
+    },
+    {
+      id: 13,
+      name: "Dr. Patricia Morales",
+      specialty: "Ophthalmologist",
+      specialtyClass: "text-indigo",
+      image: "assets/img/doctor-grid/doc5.png",
+      rating: "4.9",
+      location: "Guadalajara, Mexico",
+      duration: "45 Min",
+      available: true,
+      insurance: getDoctorInsurances(13)
+    },
+    {
+      id: 14,
+      name: "Dr. Alejandro Torres",
+      specialty: "Podiatrist",
+      specialtyClass: "text-brown",
+      image: "assets/img/doctor-grid/doc6.png",
+      rating: "4.5",
+      location: "Puebla, Mexico",
+      duration: "30 Min",
+      available: true,
+      insurance: getDoctorInsurances(14)
+    },
+    {
+      id: 15,
+      name: "Dr. Sofia Herrera",
+      specialty: "Dermatologist",
+      specialtyClass: "text-pink",
+      image: "assets/img/doctor-grid/doc7.png",
+      rating: "4.8",
+      location: "Monterrey, Mexico",
+      duration: "40 Min",
+      available: true,
+      insurance: getDoctorInsurances(15)
+    },
+    {
+      id: 16,
+      name: "Dr. Miguel Castro",
+      specialty: "Orthopedic Surgeon",
+      specialtyClass: "text-dark",
+      image: "assets/img/doctor-grid/doc8.png",
+      rating: "4.9",
+      location: "Tijuana, Mexico",
+      duration: "60 Min",
+      available: true,
+      insurance: getDoctorInsurances(16)
+    },
+    {
+      id: 17,
+      name: "Dr. Laura Jimenez",
+      specialty: "Primary Care",
+      specialtyClass: "text-primary",
+      image: "assets/img/doctor-grid/doc1.png",
+      rating: "4.6",
+      location: "León, Mexico",
+      duration: "30 Min",
+      available: true,
+      insurance: getDoctorInsurances(17)
     }
   ];
 
@@ -108,6 +267,26 @@ const Doctors = () => {
             return doctorSpecialty === "cardiologist";
           case "neurologists":
             return doctorSpecialty === "neurologist";
+          case "dentists":
+            return doctorSpecialty === "dentist";
+          case "obgyn":
+            return doctorSpecialty === "obgyn";
+          case "psychiatrists":
+            return doctorSpecialty === "psychiatrist";
+          case "therapists":
+            return doctorSpecialty === "therapist";
+          case "urgent-care":
+            return doctorSpecialty === "urgent care";
+          case "chiropractors":
+            return doctorSpecialty === "chiropractor";
+          case "optometrists":
+            return doctorSpecialty === "optometrist";
+          case "ophthalmologists":
+            return doctorSpecialty === "ophthalmologist";
+          case "podiatrists":
+            return doctorSpecialty === "podiatrist";
+          case "primary-care":
+            return doctorSpecialty === "primary care";
           default:
             return doctorSpecialty.includes(paramSpecialty) || paramSpecialty.includes(doctorSpecialty);
         }
@@ -122,7 +301,7 @@ const Doctors = () => {
   return (
     <>
     <div className="row align-items-center">
-      <div className="col-md-6">
+      <div className="col-md-12">
         <div className="mb-4">
           <h3>
             {specialty ? (
@@ -135,46 +314,6 @@ const Doctors = () => {
               </>
             )}
           </h3>
-        </div>
-      </div>
-      <div className="col-md-6">
-        <div className="d-flex align-items-center justify-content-end mb-4">
-          <div className="doctor-filter-availability me-2">
-            <p>Availability</p>
-            <div className="status-toggle status-tog">
-              <input type="checkbox" id="status_6" className="check" />
-              <label htmlFor="status_6" className="checktoggle">
-                checkbox
-              </label>
-            </div>
-          </div>
-          <div className="dropdown header-dropdown me-2">
-            <Link
-              className="dropdown-toggle sort-dropdown"
-              data-bs-toggle="dropdown"
-              to="#"
-              aria-expanded="false"
-            >
-              <span>Sort By</span>Price (Low to High)
-            </Link>
-            <div className="dropdown-menu dropdown-menu-end">
-              <Link to="#" className="dropdown-item">
-                Price (Low to High)
-              </Link>
-              <Link to="#" className="dropdown-item">
-                Price (High to Low)
-              </Link>
-            </div>
-          </div>
-          <Link to="/patient/doctor-grid" className="btn btn-sm head-icon me-2">
-            <i className="isax isax-grid-7" />
-          </Link>
-          <Link to="/patient/search-doctor2" className="btn btn-sm head-icon active me-2">
-            <i className="isax isax-row-vertical" />
-          </Link>
-          <Link to="/patient/doctor-list" className="btn btn-sm head-icon">
-            <i className="isax isax-location" />
-          </Link>
         </div>
       </div>
     </div>
@@ -237,8 +376,8 @@ const Doctors = () => {
                           English, French
                         </p>
                         <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                          <i className="isax isax-like-1 text-dark me-2" />
-                          98% (252 / 287 Votes)
+                          <i className="isax isax-shield-tick text-dark me-2" />
+                          {Array.isArray(doctor.insurance) ? doctor.insurance.join(", ") : doctor.insurance}
                         </p>
                         <p className="d-flex align-items-center mb-0 fs-14">
                           <i className="isax isax-archive-14 text-dark me-2" />
@@ -280,42 +419,6 @@ const Doctors = () => {
                     </div>
                   </div>
                            )}
-      <div className="col-md-12">
-        <div className="pagination dashboard-pagination mt-md-3 mt-0 mb-4">
-          <ul>
-            <li>
-              <Link to="#" className="page-link prev">
-                Prev
-              </Link>
-            </li>
-            <li>
-              <Link to="#" className="page-link">
-                1
-              </Link>
-            </li>
-            <li>
-              <Link to="#" className="page-link active">
-                2
-              </Link>
-            </li>
-            <li>
-              <Link to="#" className="page-link">
-                3
-              </Link>
-            </li>
-            <li>
-              <Link to="#" className="page-link">
-                4
-              </Link>
-            </li>
-            <li>
-              <Link to="#" className="page-link next">
-                Next
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
     </div>
   </>
   

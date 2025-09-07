@@ -32,13 +32,6 @@ const AvailableTimings = (props: any) => {
     { label: "30 Minutes", value: "30 Minutes" },
     { label: "1 hour", value: "1 hour" },
   ];
-  const clinicList = [
-    {
-      label: "The Family Dentistry Clinic",
-      value: "The Family Dentistry Clinic",
-    },
-    { label: "Dentistry Clinic", value: "Dentistry Clinic" },
-  ];
 
   return (
     <>

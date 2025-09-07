@@ -3,11 +3,21 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import ImageWithBasePath from '../../../../components/imageWithBasePath'
 import Header from '../../header'
 import BookingWizard from './bookingWizard'
+import DoctorProfileService from '../../common/services/doctorProfileService'
 import { useAuth } from '../../../../core/context/AuthContext'
 
 const BookingPage: React.FC = () => {
   const [selectedDoctor, setSelectedDoctor] = useState<any>(null)
   const [showBookingWizard, setShowBookingWizard] = useState(false)
+  
+  // Get doctor profile service instance
+  const doctorProfileService = DoctorProfileService.getInstance();
+  
+  // Function to get insurance data for a doctor
+  const getDoctorInsurances = (doctorId: number): string[] => {
+    const profile = doctorProfileService.getDoctorProfile(doctorId.toString());
+    return profile?.selectedInsurances || [];
+  };
   const { authState } = useAuth()
   const { isAuthenticated, userType } = authState
   const navigate = useNavigate()
@@ -30,7 +40,8 @@ const BookingPage: React.FC = () => {
       rating: 5.0,
       experience: "10+ years",
       image: "assets/img/doctor-grid/doc1.png",
-      location: "Guadalajara, Mexico"
+      location: "Guadalajara, Mexico",
+      insurance: getDoctorInsurances(1)
     },
     {
       id: 2,
@@ -39,7 +50,8 @@ const BookingPage: React.FC = () => {
       rating: 4.8,
       experience: "8+ years",
       image: "assets/img/doctor-grid/doc2.png",
-      location: "Monterrey, Mexico"
+      location: "Monterrey, Mexico",
+      insurance: getDoctorInsurances(2)
     },
     {
       id: 3,
@@ -48,7 +60,8 @@ const BookingPage: React.FC = () => {
       rating: 4.9,
       experience: "12+ years",
       image: "assets/img/doctor-grid/doc3.png",
-      location: "Puebla, Mexico"
+      location: "Puebla, Mexico",
+      insurance: getDoctorInsurances(3)
     },
     {
       id: 4,
@@ -57,7 +70,8 @@ const BookingPage: React.FC = () => {
       rating: 4.7,
       experience: "6+ years",
       image: "assets/img/doctor-grid/doc4.png",
-      location: "Tijuana, Mexico"
+      location: "Tijuana, Mexico",
+      insurance: getDoctorInsurances(4)
     },
     {
       id: 5,
@@ -66,7 +80,8 @@ const BookingPage: React.FC = () => {
       rating: 4.9,
       experience: "15+ years",
       image: "assets/img/doctor-grid/doc5.png",
-      location: "León, Mexico"
+      location: "León, Mexico",
+      insurance: getDoctorInsurances(5)
     },
     {
       id: 6,
@@ -74,8 +89,9 @@ const BookingPage: React.FC = () => {
       specialty: "Orthopedist",
       rating: 4.8,
       experience: "11+ years",
-      image: "assets/img/doctor-grid/doctor-grid-06.jpg",
-      location: "Cancún, Mexico"
+      image: "assets/img/doctor-grid/doc6.png",
+      location: "Cancún, Mexico",
+      insurance: getDoctorInsurances(6)
     }
   ]
 
@@ -182,6 +198,12 @@ const BookingPage: React.FC = () => {
                               </p>
                               <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                               <span className="fs-14 fw-medium">30 Min</span>
+                            </div>
+                            <div className="d-flex align-items-center mt-2">
+                              <p className="d-flex align-items-center mb-0 fs-14">
+                                <i className="isax isax-shield-tick me-2" />
+                                {Array.isArray(doctor.insurance) ? doctor.insurance.join(", ") : doctor.insurance}
+                              </p>
                             </div>
                           </div>
                           <div className="d-flex align-items-center justify-content-center">

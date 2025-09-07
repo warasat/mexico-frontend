@@ -23,6 +23,7 @@ const DoctorListDashboard: React.FC = () => {
       time: "03.40 PM",
       image: doctor_thumb_01,
       Rating: 4,
+      insurance: ["Aetna", "Blue Cross Blue Shield", "Cigna"],
     },
     {
       id: 2,
@@ -32,6 +33,7 @@ const DoctorListDashboard: React.FC = () => {
       time: "02.59 PM",
       image: doctor_thumb_02,
       Rating: 4,
+      insurance: ["Blue Cross Blue Shield", "Humana", "UnitedHealth"],
     },
     {
       id: 3,
@@ -41,6 +43,7 @@ const DoctorListDashboard: React.FC = () => {
       time: "09.59 PM",
       image: doctor_thumb_03,
       Rating: 4,
+      insurance: ["Cigna", "Kaiser Permanente", "AARP"],
     },
     {
       id: 4,
@@ -50,6 +53,7 @@ const DoctorListDashboard: React.FC = () => {
       time: "04.50 PM",
       image: doctor_thumb_04,
       Rating: 4,
+      insurance: ["Humana", "Medicare", "Medicaid"],
     },
     {
       id: 5,
@@ -59,6 +63,7 @@ const DoctorListDashboard: React.FC = () => {
       time: "01.50 PM",
       image: doctor_thumb_05,
       Rating: 4,
+      insurance: ["UnitedHealth", "Tricare", "VA Health Care"],
     },
   ];
 
