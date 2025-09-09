@@ -79,7 +79,6 @@ const insuranceProviders = [
 ];
 
 
-type Specialty = (typeof specialtiesData)[number];
 
 const HomeBanner: React.FC = () => {
     const navigate = useNavigate();
@@ -89,7 +88,6 @@ const HomeBanner: React.FC = () => {
     const [selectedLocation, setSelectedLocation] = useState<string>('');
     const [selectedSpeciality, setSelectedSpeciality] = useState<string>('');
     const [selectedDisease, setSelectedDisease] = useState<string>('');
-    const selectedSpec: Specialty | null = specialtiesData.find((s) => s.specialty === selectedSpeciality) || null;
     const { t } = useTranslation();
 
     // Hero banner slider configuration
@@ -228,19 +226,22 @@ const HomeBanner: React.FC = () => {
                                                                     <option key={s.specialty} value={s.specialty}>{s.specialty}</option>
                                                                 ))}
                                                             </select>
-                                                            {selectedSpec && (
-                                                                <select
-                                                                    value={selectedDisease}
-                                                                    onChange={(e) => setSelectedDisease(e.target.value)}
-                                                                    className="form-control"
-                                                                    style={{ paddingLeft: '45px', marginTop: 8 }}
-                                                                >
-                                                                    <option value="">Select Condition</option>
-                                                                    {selectedSpec.diseases.map((d) => (
-                                                                        <option key={d} value={d}>{d}</option>
-                                                                    ))}
-                                                                </select>
-                                                            )}
+                                                            {selectedSpeciality && (() => {
+                                                                const selectedSpecialty = specialtiesData.find((s) => s.specialty === selectedSpeciality);
+                                                                return selectedSpecialty ? (
+                                                                    <select
+                                                                        value={selectedDisease}
+                                                                        onChange={(e) => setSelectedDisease(e.target.value)}
+                                                                        className="form-control"
+                                                                        style={{ paddingLeft: '45px', marginTop: 8 }}
+                                                                    >
+                                                                        <option value="">Select Condition</option>
+                                                                        {selectedSpecialty.diseases.map((d) => (
+                                                                            <option key={d} value={d}>{d}</option>
+                                                                        ))}
+                                                                    </select>
+                                                                ) : null;
+                                                            })()}
                                                         </div>
                                                     </div>
                                                     <div className="search-input search-map-line">
@@ -359,38 +360,6 @@ const HomeBanner: React.FC = () => {
                 </div>
             </section>
             {/* /Home Banner */}
-            {selectedSpec && (
-                <section className="py-4">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-12">
-                                <div className="card">
-                                    <div className="card-body">
-                                        <h5 className="mb-3">Relevant Conditions{selectedSpec?.specialty ? ` · ${selectedSpec.specialty}` : ''}</h5>
-                                        <div className="row">
-                                            {selectedSpec.diseases.map((d) => (
-                                                <div key={d} className="col-6 col-md-4 col-lg-3 mb-2">
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-outline-primary btn-sm rounded-pill w-100 d-flex align-items-center justify-content-between"
-                                                        onClick={() => navigate(`/patient/search-doctor1?specialty=${encodeURIComponent(selectedSpec.specialty)}&disease=${encodeURIComponent(d)}`)}
-                                                        style={{ whiteSpace: 'normal' }}
-                                                    >
-                                                        <span className="d-inline-flex align-items-center text-start">
-                                                            <i className="isax isax-archive-14 me-2" /> {d}
-                                                        </span>
-                                                        <i className="fa-solid fa-chevron-right" />
-                                                    </button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            )}
         </>
 
 
