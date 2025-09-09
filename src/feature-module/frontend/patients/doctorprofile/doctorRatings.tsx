@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Header from '../../header'
 import Footer from '../../footer'
 import ImageWithBasePath from '../../../../components/imageWithBasePath'
+import { getDiseasesForSpecialty } from '../../common/data/specialties'
 
 const DoctorRatings: React.FC = () => {
   // Sample doctors data with ratings
@@ -137,8 +138,8 @@ const DoctorRatings: React.FC = () => {
               </div>
               <div className="row">
                 {doctors.map((doctor, index) => (
-                  <div key={doctor.id} className="col-lg-4 col-md-6 mb-4">
-                    <div className="card">
+                  <div key={doctor.id} className="col-lg-4 col-md-6 mb-4 d-flex">
+                    <div className="card w-100 d-flex flex-column">
                       <div className="card-img card-img-hover">
                         <Link to="/patient/doctor-profile">
                           <ImageWithBasePath src={doctor.image} alt={doctor.name} />
@@ -153,7 +154,7 @@ const DoctorRatings: React.FC = () => {
                           </Link>
                         </div>
                       </div>
-                      <div className="card-body p-0">
+                      <div className="card-body p-0 d-flex flex-column flex-grow-1">
                         <div className={`d-flex active-bar ${index % 2 === 0 ? 'active-bar-pink' : ''} align-items-center justify-content-between p-3`}>
                           <Link to="#" className={`${index % 2 === 0 ? 'text-pink' : 'text-indigo'} fw-medium fs-14`}>
                             {doctor.specialty}
@@ -163,8 +164,8 @@ const DoctorRatings: React.FC = () => {
                             Available
                           </span>
                         </div>
-                        <div className="p-3 pt-0">
-                          <div className="doctor-info-detail mb-3 pb-3">
+                        <div className="p-3 pt-0 d-flex flex-column flex-grow-1">
+                          <div className="doctor-info-detail mb-3 pb-3 flex-grow-1">
                             <h3 className="mb-1">
                               <Link to="/patient/doctor-profile">{doctor.name}</Link>
                             </h3>
@@ -176,16 +177,20 @@ const DoctorRatings: React.FC = () => {
                               <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                               <span className="fs-14 fw-medium">30 Min</span>
                             </div>
-                            {doctor.specialty === 'Cardiologist' && (
-                              <div className="d-flex align-items-center mt-2">
-                                <p className="d-flex align-items-center mb-0 fs-14">
-                                  <i className="isax isax-archive-14 me-2" />
-                                  Chest Pain, Hypertension, Arrhythmia, High Cholesterol, Heart Disease Follow-Up
-                                </p>
-                              </div>
-                            )}
+                            {(() => {
+                              const diseases = getDiseasesForSpecialty(doctor.specialty);
+                              if (diseases.length === 0) return null;
+                              return (
+                                <div className="d-flex align-items-center mt-2">
+                                  <p className="d-flex align-items-center mb-0 fs-14">
+                                    <i className="isax isax-archive-14 me-2" />
+                                    {diseases.join(", ")}
+                                  </p>
+                                </div>
+                              );
+                            })()}
                           </div>
-                          <div className="d-flex align-items-center justify-content-center">
+                          <div className="d-flex align-items-center justify-content-center mt-auto">
                             <Link to="/patient/doctor-profile" className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate">
                               View Profile
                             </Link>

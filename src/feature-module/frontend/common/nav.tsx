@@ -163,12 +163,12 @@ const NavLinks: React.FC = () => {
         </Link>
         {isSideDoctor === "doctors" && (
           <ul className="submenu d-block">
-            {/* Show Register if not authenticated as doctor */}
+            {/* Show Register/Login if not authenticated as doctor */}
             {!isAuthenticated || userType !== 'doctor' ? (
               <>
                 <li className={pathnames.includes("doctor-register") ? "active" : ""}>
                   <Link to="/doctor/doctor-register" onClick={() => onhandleCloseMenu()}>
-                    Register
+                    Register/Login
                   </Link>
                 </li>
               </>
@@ -220,12 +220,12 @@ const NavLinks: React.FC = () => {
         </Link>
         {isSidePatient === "patients" && (
           <ul className="submenu d-block">
-            {/* Show Register if not authenticated as patient */}
+            {/* Show Register/Login if not authenticated as patient */}
             {!isAuthenticated || userType !== 'patient' ? (
               <>
                 <li className={pathnames.includes("patient-signup") ? "active" : ""}>
                   <Link to="/pages/patient-signup" onClick={() => onhandleCloseMenu()}>
-                    Register
+                    Register/Login
                   </Link>
                 </li>
                 <li>

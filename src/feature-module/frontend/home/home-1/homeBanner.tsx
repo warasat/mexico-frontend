@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Slider from "react-slick";
 import { specialtiesData } from '../../common/data/specialties';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../core/context/AuthContext';
 
 // Mexican cities for location dropdown
 const mexicanCities = [
@@ -82,6 +83,8 @@ type Specialty = (typeof specialtiesData)[number];
 
 const HomeBanner: React.FC = () => {
     const navigate = useNavigate();
+    const { authState } = useAuth();
+    const { isAuthenticated, userType } = authState;
     const [selectedInsurance, setSelectedInsurance] = useState<string>('');
     const [selectedLocation, setSelectedLocation] = useState<string>('');
     const [selectedSpeciality, setSelectedSpeciality] = useState<string>('');
@@ -188,6 +191,20 @@ const HomeBanner: React.FC = () => {
                                                     const spec = selectedSpeciality.trim();
                                                     const disease = selectedDisease.trim();
                                                     if (!spec) return;
+                                                    
+                                                    // Check if user is authenticated as patient
+                                                    if (!isAuthenticated || userType !== 'patient') {
+                                                        // Redirect to patient login with warning message and return path
+                                                        navigate('/pages/patient-signup', { 
+                                                            state: { 
+                                                                from: { pathname: '/' },
+                                                                message: 'Please login first to search for doctors and book appointments.'
+                                                            }
+                                                        });
+                                                        return;
+                                                    }
+                                                    
+                                                    // User is authenticated as patient, proceed to search
                                                     const url = disease
                                                       ? `/patient/search-doctor1?specialty=${encodeURIComponent(spec)}&disease=${encodeURIComponent(disease)}`
                                                       : `/patient/search-doctor1?specialty=${encodeURIComponent(spec)}`;

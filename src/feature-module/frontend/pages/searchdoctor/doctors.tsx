@@ -122,7 +122,7 @@ const Doctors = () => {
     {
       id: 7,
       name: "Dr. Ana Martinez",
-      specialty: "OBGYN",
+      specialty: "OB-GYN (Obstetrician-Gynecologist)",
       specialtyClass: "text-green",
       image: "assets/img/doctor-grid/doc7.png",
       rating: "4.9",
@@ -148,7 +148,7 @@ const Doctors = () => {
     {
       id: 9,
       name: "Dr. Elena Garcia",
-      specialty: "Therapist",
+      specialty: "Psychologist",
       specialtyClass: "text-blue",
       image: "assets/img/doctor-grid/doc1.png",
       rating: "4.6",
@@ -161,7 +161,7 @@ const Doctors = () => {
     {
       id: 10,
       name: "Dr. Roberto Silva",
-      specialty: "Urgent Care",
+      specialty: "Urgent Care Specialist",
       specialtyClass: "text-red",
       image: "assets/img/doctor-grid/doc2.png",
       rating: "4.4",
@@ -239,7 +239,7 @@ const Doctors = () => {
     {
       id: 16,
       name: "Dr. Miguel Castro",
-      specialty: "Orthopedic Surgeon",
+      specialty: "Orthopedic Surgeon (Orthopedist)",
       specialtyClass: "text-dark",
       image: "assets/img/doctor-grid/doc8.png",
       rating: "4.9",
@@ -252,7 +252,7 @@ const Doctors = () => {
     {
       id: 17,
       name: "Dr. Laura Jimenez",
-      specialty: "Primary Care",
+      specialty: "Primary Care Physician (PCP)",
       specialtyClass: "text-primary",
       image: "assets/img/doctor-grid/doc1.png",
       rating: "4.6",
@@ -302,7 +302,7 @@ const Doctors = () => {
           case "dermatologists":
             return doctorSpecialty === "dermatologist";
           case "orthopedic-surgeons":
-            return doctorSpecialty === "orthopedic surgeon";
+            return doctorSpecialty === "orthopedic surgeon (orthopedist)";
           case "cardiologists":
             return doctorSpecialty === "cardiologist";
           case "neurologists":
@@ -310,13 +310,13 @@ const Doctors = () => {
           case "dentists":
             return doctorSpecialty === "dentist";
           case "obgyn":
-            return doctorSpecialty === "obgyn";
+            return doctorSpecialty === "ob-gyn (obstetrician-gynecologist)";
           case "psychiatrists":
             return doctorSpecialty === "psychiatrist";
           case "therapists":
-            return doctorSpecialty === "therapist";
+            return doctorSpecialty === "psychologist";
           case "urgent-care":
-            return doctorSpecialty === "urgent care";
+            return doctorSpecialty === "urgent care specialist";
           case "chiropractors":
             return doctorSpecialty === "chiropractor";
           case "optometrists":
@@ -326,7 +326,7 @@ const Doctors = () => {
           case "podiatrists":
             return doctorSpecialty === "podiatrist";
           case "primary-care":
-            return doctorSpecialty === "primary care";
+            return doctorSpecialty === "primary care physician (pcp)";
           default:
             return doctorSpecialty.includes(paramSpecialty) || paramSpecialty.includes(doctorSpecialty);
         }

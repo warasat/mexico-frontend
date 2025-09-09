@@ -290,12 +290,6 @@ const SectionDoctor: React.FC = () => {
                                                 <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                                                 <span className="fs-14 fw-medium">30 Min</span>
                                             </div>
-                                            <div className="d-flex align-items-center mt-2">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
-                                                    <i className="isax isax-archive-14 me-2" />
-                                                    Chest Pain, Hypertension, Arrhythmia, High Cholesterol, Heart Disease Follow-Up
-                                                </p>
-                                            </div>
                                         </div>
                                         <div className="d-flex align-items-center justify-content-center">
                                             <button
