@@ -2,11 +2,29 @@ import { Link, useSearchParams } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { useEffect, useState } from "react";
 import DoctorProfileService from "../../common/services/doctorProfileService";
+import { getDiseasesForSpecialty } from "../../common/data/specialties";
+import { useAuth } from "../../../../core/context/AuthContext";
+
+type DoctorCard = {
+  id: number;
+  name: string;
+  specialty: string;
+  specialtyClass: string;
+  image: string;
+  rating: string;
+  location: string;
+  duration: string;
+  available: boolean;
+  insurance: string[];
+  specialtyRank?: number;
+};
 
 const Doctors = () => {
   const [searchParams] = useSearchParams();
-  const [filteredDoctors, setFilteredDoctors] = useState<any[]>([]);
+  const [filteredDoctors, setFilteredDoctors] = useState<DoctorCard[]>([]);
   const [specialty, setSpecialty] = useState<string>("");
+  const { authState } = useAuth();
+  const { isAuthenticated, userType } = authState;
   
   // Get doctor profile service instance
   const doctorProfileService = DoctorProfileService.getInstance();
@@ -15,6 +33,10 @@ const Doctors = () => {
   const getDoctorInsurances = (doctorId: number): string[] => {
     const profile = doctorProfileService.getDoctorProfile(doctorId.toString());
     return profile?.selectedInsurances || [];
+  };
+  // Function to get specialty rank for a doctor
+  const getDoctorSpecialtyRank = (doctorId: number): number => {
+    return doctorProfileService.getDoctorSpecialtyRank(doctorId.toString());
   };
 
   // Doctor data matching the sectionDoctor.tsx structure
@@ -29,7 +51,8 @@ const Doctors = () => {
       location: "Guadalajara, Mexico",
       duration: "30 Min",
       available: true,
-      insurance: getDoctorInsurances(1)
+      insurance: getDoctorInsurances(1),
+      specialtyRank: getDoctorSpecialtyRank(1)
     },
     {
       id: 2,
@@ -41,7 +64,8 @@ const Doctors = () => {
       location: "Monterrey, Mexico",
       duration: "60 Min",
       available: true,
-      insurance: getDoctorInsurances(2)
+      insurance: getDoctorInsurances(2),
+      specialtyRank: getDoctorSpecialtyRank(2)
     },
     {
       id: 3,
@@ -53,7 +77,8 @@ const Doctors = () => {
       location: "Puebla, Mexico",
       duration: "30 Min",
       available: true,
-      insurance: getDoctorInsurances(3)
+      insurance: getDoctorInsurances(3),
+      specialtyRank: getDoctorSpecialtyRank(3)
     },
     {
       id: 4,
@@ -65,7 +90,8 @@ const Doctors = () => {
       location: "Tijuana, Mexico",
       duration: "30 Min",
       available: true,
-      insurance: getDoctorInsurances(4)
+      insurance: getDoctorInsurances(4),
+      specialtyRank: getDoctorSpecialtyRank(4)
     },
     {
       id: 5,
@@ -77,7 +103,8 @@ const Doctors = () => {
       location: "León, Mexico",
       duration: "30 Min",
       available: true,
-      insurance: getDoctorInsurances(5)
+      insurance: getDoctorInsurances(5),
+      specialtyRank: getDoctorSpecialtyRank(5)
     },
     {
       id: 6,
@@ -89,7 +116,8 @@ const Doctors = () => {
       location: "Mexico City, Mexico",
       duration: "45 Min",
       available: true,
-      insurance: getDoctorInsurances(6)
+      insurance: getDoctorInsurances(6),
+      specialtyRank: getDoctorSpecialtyRank(6)
     },
     {
       id: 7,
@@ -101,7 +129,8 @@ const Doctors = () => {
       location: "Cancún, Mexico",
       duration: "60 Min",
       available: true,
-      insurance: getDoctorInsurances(7)
+      insurance: getDoctorInsurances(7),
+      specialtyRank: getDoctorSpecialtyRank(7)
     },
     {
       id: 8,
@@ -113,7 +142,8 @@ const Doctors = () => {
       location: "Querétaro, Mexico",
       duration: "45 Min",
       available: true,
-      insurance: getDoctorInsurances(8)
+      insurance: getDoctorInsurances(8),
+      specialtyRank: getDoctorSpecialtyRank(8)
     },
     {
       id: 9,
@@ -125,7 +155,8 @@ const Doctors = () => {
       location: "Mérida, Mexico",
       duration: "50 Min",
       available: true,
-      insurance: getDoctorInsurances(9)
+      insurance: getDoctorInsurances(9),
+      specialtyRank: getDoctorSpecialtyRank(9)
     },
     {
       id: 10,
@@ -137,7 +168,8 @@ const Doctors = () => {
       location: "Toluca, Mexico",
       duration: "20 Min",
       available: true,
-      insurance: getDoctorInsurances(10)
+      insurance: getDoctorInsurances(10),
+      specialtyRank: getDoctorSpecialtyRank(10)
     },
     {
       id: 11,
@@ -149,7 +181,8 @@ const Doctors = () => {
       location: "San Luis Potosí, Mexico",
       duration: "40 Min",
       available: true,
-      insurance: getDoctorInsurances(11)
+      insurance: getDoctorInsurances(11),
+      specialtyRank: getDoctorSpecialtyRank(11)
     },
     {
       id: 12,
@@ -161,7 +194,8 @@ const Doctors = () => {
       location: "Chihuahua, Mexico",
       duration: "35 Min",
       available: true,
-      insurance: getDoctorInsurances(12)
+      insurance: getDoctorInsurances(12),
+      specialtyRank: getDoctorSpecialtyRank(12)
     },
     {
       id: 13,
@@ -173,7 +207,8 @@ const Doctors = () => {
       location: "Guadalajara, Mexico",
       duration: "45 Min",
       available: true,
-      insurance: getDoctorInsurances(13)
+      insurance: getDoctorInsurances(13),
+      specialtyRank: getDoctorSpecialtyRank(13)
     },
     {
       id: 14,
@@ -185,7 +220,8 @@ const Doctors = () => {
       location: "Puebla, Mexico",
       duration: "30 Min",
       available: true,
-      insurance: getDoctorInsurances(14)
+      insurance: getDoctorInsurances(14),
+      specialtyRank: getDoctorSpecialtyRank(14)
     },
     {
       id: 15,
@@ -197,7 +233,8 @@ const Doctors = () => {
       location: "Monterrey, Mexico",
       duration: "40 Min",
       available: true,
-      insurance: getDoctorInsurances(15)
+      insurance: getDoctorInsurances(15),
+      specialtyRank: getDoctorSpecialtyRank(15)
     },
     {
       id: 16,
@@ -209,7 +246,8 @@ const Doctors = () => {
       location: "Tijuana, Mexico",
       duration: "60 Min",
       available: true,
-      insurance: getDoctorInsurances(16)
+      insurance: getDoctorInsurances(16),
+      specialtyRank: getDoctorSpecialtyRank(16)
     },
     {
       id: 17,
@@ -221,7 +259,8 @@ const Doctors = () => {
       location: "León, Mexico",
       duration: "30 Min",
       available: true,
-      insurance: getDoctorInsurances(17)
+      insurance: getDoctorInsurances(17),
+      specialtyRank: getDoctorSpecialtyRank(17)
     }
   ];
 
@@ -247,6 +286,7 @@ const Doctors = () => {
     const specialtyParam = searchParams.get("specialty");
     setSpecialty(specialtyParam || "");
     
+    const diseaseParam = searchParams.get("disease")?.toLowerCase() || "";
     if (specialtyParam) {
       // Filter doctors based on specialty
       const filtered = allDoctors.filter(doctor => {
@@ -292,9 +332,19 @@ const Doctors = () => {
         }
       });
       
-      setFilteredDoctors(filtered);
+      const diseaseFiltered = diseaseParam
+        ? filtered.filter(d => getDiseasesForSpecialty(d.specialty).some(x => x.toLowerCase() === diseaseParam))
+        : filtered;
+
+      const sorted = diseaseFiltered
+        .map(d => ({...d, specialtyRank: d.specialtyRank ?? getDoctorSpecialtyRank(d.id)}))
+        .sort((a, b) => (b.specialtyRank ?? 0) - (a.specialtyRank ?? 0));
+      setFilteredDoctors(sorted);
     } else {
-      setFilteredDoctors(allDoctors);
+      const sortedAll = allDoctors
+        .map(d => ({...d, specialtyRank: d.specialtyRank ?? getDoctorSpecialtyRank(d.id)}))
+        .sort((a, b) => (b.specialtyRank ?? 0) - (a.specialtyRank ?? 0));
+      setFilteredDoctors(sortedAll);
     }
   }, [searchParams]);
 
@@ -375,6 +425,16 @@ const Doctors = () => {
                           <i className="isax isax-language-circle text-dark me-2" />
                           English, French
                         </p>
+                        {(() => {
+                          const diseases = getDiseasesForSpecialty(doctor.specialty);
+                          if (diseases.length === 0) return null;
+                          return (
+                            <p className="d-flex align-items-center mb-0 fs-14 mb-2">
+                              <i className="isax isax-archive-14 text-dark me-2" />
+                              {diseases.join(", ")}
+                            </p>
+                          );
+                        })()}
                         <p className="d-flex align-items-center mb-0 fs-14 mb-2">
                           <i className="isax isax-shield-tick text-dark me-2" />
                           {Array.isArray(doctor.insurance) ? doctor.insurance.join(", ") : doctor.insurance}
@@ -395,8 +455,8 @@ const Doctors = () => {
                     </p>
                   </div>
                   <Link
-                    to="/booking"
-                    state={{ selectedDoctor: doctor }}
+                    to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
+                    state={isAuthenticated && userType === 'patient' ? { selectedDoctor: doctor } : undefined}
                     className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
                   >
                     <i className="isax isax-calendar-1 me-2" />

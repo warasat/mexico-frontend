@@ -85,21 +85,6 @@ const Profile = (props: any) => {
                         Profile
                       </Link>
                     </li>
-                    <li className="nav-item" role="presentation">
-                      <Link className="nav-link" to="/patient/change-password">
-                        Change Password
-                      </Link>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <Link className="nav-link" to="/patient/two-factor-authentication">
-                        2 Factor Authentication
-                      </Link>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <Link className="nav-link" to="/patient/delete-account">
-                        Delete Account
-                      </Link>
-                    </li>
                   </ul>
                 </nav>
                 <div className="card">

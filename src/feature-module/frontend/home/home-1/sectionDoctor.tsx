@@ -14,8 +14,8 @@ const SectionDoctor: React.FC = () => {
         e.preventDefault();
         
         if (!isAuthenticated || userType !== 'patient') {
-            // Redirect to patient login with warning message and return path
-            navigate('/patient/login', { 
+            // Redirect to patient register (tabbed login) with warning message and return path
+            navigate('/pages/patient-signup', { 
                 state: { 
                     from: { pathname: '/' },
                     message: 'Please login first to book an appointment with our doctors.'
@@ -182,23 +182,23 @@ const SectionDoctor: React.FC = () => {
                                             <h3 className="mb-1">
                                                 <Link to="/patient/doctor-profile">Dr. Nicholas Tello</Link>
                                             </h3>
-                                                                                         <div className="d-flex align-items-center">
-                                                 <p className="d-flex align-items-center mb-0 fs-14">
-                                                     <i className="isax isax-location me-2" />
-                                                     Monterrey, Mexico
-                                                 </p>
-                                                 <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                 <span className="fs-14 fw-medium">60 Min</span>
-                                             </div>
-                                         </div>
-                                         <div className="d-flex align-items-center justify-content-center">
-                                             <button
-                                                 onClick={handleBookNow}
-                                                 className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
-                                             >
-                                                 Book Now
-                                             </button>
-                                         </div>
+                                            <div className="d-flex align-items-center">
+                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                    <i className="isax isax-location me-2" />
+                                                    Monterrey, Mexico
+                                                </p>
+                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
+                                                <span className="fs-14 fw-medium">60 Min</span>
+                                            </div>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <button
+                                                onClick={handleBookNow}
+                                                className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                                            >
+                                                Book Now
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -232,23 +232,23 @@ const SectionDoctor: React.FC = () => {
                                             <h3 className="mb-1">
                                                 <Link to="/patient/doctor-profile">Dr. Harold Bryant</Link>
                                             </h3>
-                                                                                         <div className="d-flex align-items-center">
-                                                 <p className="d-flex align-items-center mb-0 fs-14">
-                                                     <i className="isax isax-location me-2" />
-                                                     Puebla, Mexico
-                                                 </p>
-                                                 <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                 <span className="fs-14 fw-medium">30 Min</span>
-                                             </div>
-                                         </div>
-                                         <div className="d-flex align-items-center justify-content-center">
-                                             <button
-                                                 onClick={handleBookNow}
-                                                 className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
-                                             >
-                                                 Book Now
-                                             </button>
-                                         </div>
+                                            <div className="d-flex align-items-center">
+                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                    <i className="isax isax-location me-2" />
+                                                    Puebla, Mexico
+                                                </p>
+                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
+                                                <span className="fs-14 fw-medium">30 Min</span>
+                                            </div>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <button
+                                                onClick={handleBookNow}
+                                                className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                                            >
+                                                Book Now
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -282,23 +282,29 @@ const SectionDoctor: React.FC = () => {
                                             <h3 className="mb-1">
                                                 <Link to="/patient/doctor-profile">Dr. Sandra Jones</Link>
                                             </h3>
-                                                                                         <div className="d-flex align-items-center">
-                                                 <p className="d-flex align-items-center mb-0 fs-14">
-                                                     <i className="isax isax-location me-2" />
-                                                     Tijuana, Mexico
-                                                 </p>
-                                                 <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                 <span className="fs-14 fw-medium">30 Min</span>
-                                             </div>
-                                         </div>
-                                         <div className="d-flex align-items-center justify-content-center">
-                                             <button
-                                                 onClick={handleBookNow}
-                                                 className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
-                                             >
-                                                 Book Now
-                                             </button>
-                                         </div>
+                                            <div className="d-flex align-items-center">
+                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                    <i className="isax isax-location me-2" />
+                                                    Tijuana, Mexico
+                                                </p>
+                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
+                                                <span className="fs-14 fw-medium">30 Min</span>
+                                            </div>
+                                            <div className="d-flex align-items-center mt-2">
+                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                    <i className="isax isax-archive-14 me-2" />
+                                                    Chest Pain, Hypertension, Arrhythmia, High Cholesterol, Heart Disease Follow-Up
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <button
+                                                onClick={handleBookNow}
+                                                className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                                            >
+                                                Book Now
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -368,7 +374,7 @@ const SectionDoctor: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="card-body p-0">
-                                    <div className="d-flex active-bar active-bar-purple align-items-center justify-content-between p-3">
+                                    <div className="d-flex active-bar active-bar active-bar-purple align-items-center justify-content-between p-3">
                                         <Link to="#" className="text-purple fw-medium fs-14">
                                             Dentist
                                         </Link>
@@ -391,7 +397,7 @@ const SectionDoctor: React.FC = () => {
                                                 <span className="fs-14 fw-medium">45 Min</span>
                                             </div>
                                         </div>
-                                        <div className="d-flex align-items-center justify-content-center">
+                                        <div className="d-flex alignments-center justify-content-center">
                                             <button
                                                 onClick={handleBookNow}
                                                 className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
@@ -418,7 +424,7 @@ const SectionDoctor: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="card-body p-0">
-                                    <div className="d-flex active-bar active-bar-green align-items-center justify-content-between p-3">
+                                    <div className="d-flex active-bar active-bar-green alignments-center justify-content-between p-3">
                                         <Link to="#" className="text-green fw-medium fs-14">
                                             OBGYN
                                         </Link>

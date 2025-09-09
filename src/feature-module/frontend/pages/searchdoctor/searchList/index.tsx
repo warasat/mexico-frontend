@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../../../../components/imageWithBasePath";
 import DoctorProfileService from "../../../common/services/doctorProfileService";
+import { getDiseasesForSpecialty } from "../../../common/data/specialties";
+import { useAuth } from "../../../../../core/context/AuthContext";
 
 const SearchList = () => {
+  const { authState } = useAuth();
+  const { isAuthenticated, userType } = authState;
+
   // Get doctor profile service instance
   const doctorProfileService = DoctorProfileService.getInstance();
   
@@ -177,8 +182,8 @@ const SearchList = () => {
               </div>
               <div className="d-flex align-items-center justify-content-between">
                 <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
+                  to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
+                  state={isAuthenticated && userType === 'patient' ? { selectedDoctor: doctors[0] } : undefined}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -237,8 +242,8 @@ const SearchList = () => {
               </div>
               <div className="d-flex align-items-center justify-content-between">
                 <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
+                  to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
+                  state={isAuthenticated && userType === 'patient' ? { selectedDoctor: doctors[0] } : undefined}
                   className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
                 >
                   <i className="isax isax-calendar-1 me-2" />
@@ -348,6 +353,18 @@ const SearchList = () => {
                   <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                   <span className="fs-14 fw-medium">30 Min</span>
                 </div>
+                {(() => {
+                  const diseases = getDiseasesForSpecialty("Cardiologist");
+                  if (diseases.length === 0) return null;
+                  return (
+                    <div className="d-flex align-items-center mt-2">
+                      <p className="d-flex align-items-center mb-0 fs-14">
+                        <i className="isax isax-archive-14 me-2" />
+                        {diseases.join(", ")}
+                      </p>
+                    </div>
+                  );
+                })()}
               </div>
               <div className="d-flex align-items-center justify-content-between">
                 <Link
@@ -456,6 +473,18 @@ const SearchList = () => {
                   <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
                   <span className="fs-14 fw-medium">30 Min</span>
                 </div>
+                {(() => {
+                  const diseases = getDiseasesForSpecialty("Cardiologist");
+                  if (diseases.length === 0) return null;
+                  return (
+                    <div className="d-flex align-items-center mt-2">
+                      <p className="d-flex align-items-center mb-0 fs-14">
+                        <i className="isax isax-archive-14 me-2" />
+                        {diseases.join(", ")}
+                      </p>
+                    </div>
+                  );
+                })()}
               </div>
               <div className="d-flex align-items-center justify-content-between">
                 <Link

@@ -2,14 +2,29 @@ import React, { useEffect, useState } from "react";
 import Header from "../../header";
 import Footer from "../../footer";
 import CommonPhoneInput from "../../common/common-phoneInput/commonPhoneInput";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../../../assets/css/patient-signup-tabs.css";
+import { useAuth } from "../../../../core/context/AuthContext";
 
 const DoctorRegister = (props: any) => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   const [phone, setPhone] = useState<string | undefined>();
   const [isPasswordVisible, setPasswordVisibility] = useState(false);
   const [isConfirmPasswordVisible, setConfirmPasswordVisibility] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const demoCredentials = {
+    email: 'doctor@example.com',
+    password: 'doctor123',
+    name: 'Dr. John Smith',
+    id: 'doctor-001'
+  };
 
   const TogglePasswordVisibility = () => {
     setPasswordVisibility((prev) => !prev);
@@ -26,10 +41,19 @@ const DoctorRegister = (props: any) => {
     };
   }, []);
 
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Login submitted');
+    setIsLoading(true);
+    setError("");
+    await new Promise(resolve => setTimeout(resolve, 700));
+    if (email === demoCredentials.email && password === demoCredentials.password) {
+      login('doctor', { id: demoCredentials.id, name: demoCredentials.name, email: demoCredentials.email });
+      const from = (location.state as { from?: { pathname?: string } } | undefined)?.from?.pathname || '/doctor/profile-setting';
+      navigate(from, { replace: true });
+    } else {
+      setError('Invalid credentials. Please use the demo credentials provided.');
+    }
+    setIsLoading(false);
   };
 
   const handleRegisterSubmit = (e: React.FormEvent) => {
@@ -88,6 +112,8 @@ const DoctorRegister = (props: any) => {
                              type="email" 
                              className="form-control" 
                              placeholder="Enter your email"
+                             value={email}
+                             onChange={(e) => setEmail(e.target.value)}
                              required
                            />
                          </div>
@@ -100,6 +126,8 @@ const DoctorRegister = (props: any) => {
                                type={isPasswordVisible ? "text" : "password"}
                                className="form-control pass-input-sub"
                                placeholder="Enter your password"
+                               value={password}
+                               onChange={(e) => setPassword(e.target.value)}
                                required
                              />
                              <span
@@ -108,6 +136,9 @@ const DoctorRegister = (props: any) => {
                              />
                            </div>
                          </div>
+                         {error && (
+                           <div className="alert alert-danger" role="alert">{error}</div>
+                         )}
                          <div className="mb-3">
                            <div className="d-flex justify-content-between align-items-center">
                              <div className="form-check">
@@ -125,9 +156,15 @@ const DoctorRegister = (props: any) => {
                            <button
                              className="btn btn-primary-gradient w-100"
                              type="submit"
+                             disabled={isLoading}
                            >
-                             Sign In
+                            {isLoading ? 'Signing In...' : 'Sign In'}
                            </button>
+                         </div>
+                         <div className="mt-2">
+                           <h6>Demo Credentials:</h6>
+                           <p><strong>Email:</strong> {demoCredentials.email}</p>
+                           <p><strong>Password:</strong> {demoCredentials.password}</p>
                          </div>
                          <div className="account-signup">
                            <p>

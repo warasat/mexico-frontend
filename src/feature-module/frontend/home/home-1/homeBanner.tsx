@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import ImageWithBasePath from '../../../../components/imageWithBasePath';
 import { useTranslation } from 'react-i18next';
 import Slider from "react-slick";
+import { specialtiesData } from '../../common/data/specialties';
+import { useNavigate } from 'react-router-dom';
 
 // Mexican cities for location dropdown
 const mexicanCities = [
@@ -19,23 +21,7 @@ const mexicanCities = [
   "Chihuahua"
 ];
 
-// Medical specialities for search doctors dropdown
-const medicalSpecialities = [
-  { value: "primary-care", label: "Primary Care Physicians" },
-  { value: "dentists", label: "Dentists" },
-  { value: "obgyn", label: "OBGYNs" },
-  { value: "psychologists", label: "Psychologists" },
-  { value: "psychiatrists", label: "Psychiatrists" },
-  { value: "therapists", label: "Therapist-Counselors" },
-  { value: "urgent-care", label: "Urgent Care" },
-  { value: "chiropractors", label: "Chiropractors" },
-  { value: "optometrists", label: "Optometrists" },
-  { value: "ophthalmologists", label: "Ophthalmologists" },
-  { value: "podiatrists", label: "Podiatrists" },
-  { value: "pediatricians", label: "Pediatricians" },
-  { value: "dermatologists", label: "Dermatologists" },
-  { value: "orthopedic-surgeons", label: "Orthopedic Surgeons" }
-];
+// Removed unused legacy medicalSpecialities list
 
 // Insurance providers for hero section
 const insuranceProviders = [
@@ -91,10 +77,16 @@ const insuranceProviders = [
   "Blue Cross of Maryland"
 ];
 
+
+type Specialty = (typeof specialtiesData)[number];
+
 const HomeBanner: React.FC = () => {
+    const navigate = useNavigate();
     const [selectedInsurance, setSelectedInsurance] = useState<string>('');
     const [selectedLocation, setSelectedLocation] = useState<string>('');
     const [selectedSpeciality, setSelectedSpeciality] = useState<string>('');
+    const [selectedDisease, setSelectedDisease] = useState<string>('');
+    const selectedSpec: Specialty | null = specialtiesData.find((s) => s.specialty === selectedSpeciality) || null;
     const { t } = useTranslation();
 
     // Hero banner slider configuration
@@ -133,6 +125,7 @@ const HomeBanner: React.FC = () => {
         }
     ];
 
+    // Removed unused legacy typeahead handlers and effects
 
     
     return (
@@ -190,23 +183,47 @@ const HomeBanner: React.FC = () => {
                                             </h1>
                                             <p className="lead mb-4">{slide.description}</p>
                                             <div className="search-box-one aos" data-aos="fade-up">
-                                                <form>
+                                                <form onSubmit={(e) => {
+                                                    e.preventDefault();
+                                                    const spec = selectedSpeciality.trim();
+                                                    const disease = selectedDisease.trim();
+                                                    if (!spec) return;
+                                                    const url = disease
+                                                      ? `/patient/search-doctor1?specialty=${encodeURIComponent(spec)}&disease=${encodeURIComponent(disease)}`
+                                                      : `/patient/search-doctor1?specialty=${encodeURIComponent(spec)}`;
+                                                    navigate(url);
+                                                }}>
                                                     <div className="search-input search-line">
                                                         <i className="isax isax-hospital5 bficon" />
-                                                        <div className=" mb-0">
+                                                        <div className=" mb-0 position-relative" style={{width: '100%'}}>
                                                             <select
                                                                 value={selectedSpeciality}
-                                                                onChange={(e) => setSelectedSpeciality(e.target.value)}
+                                                                onChange={(e) => {
+                                                                    const val = e.target.value;
+                                                                    setSelectedSpeciality(val);
+                                                                    setSelectedDisease('');
+                                                                }}
                                                                 className="form-control"
                                                                 style={{ paddingLeft: '45px' }}
                                                             >
-                                                                <option value="">{t('search.searchDoctors')}</option>
-                                                                {medicalSpecialities.map((speciality, idx) => (
-                                                                    <option key={idx} value={speciality.value}>
-                                                                        {speciality.label}
-                                                                    </option>
+                                                                <option value="">{t('search.searchDoctors') as string}</option>
+                                                                {specialtiesData.map((s) => (
+                                                                    <option key={s.specialty} value={s.specialty}>{s.specialty}</option>
                                                                 ))}
                                                             </select>
+                                                            {selectedSpec && (
+                                                                <select
+                                                                    value={selectedDisease}
+                                                                    onChange={(e) => setSelectedDisease(e.target.value)}
+                                                                    className="form-control"
+                                                                    style={{ paddingLeft: '45px', marginTop: 8 }}
+                                                                >
+                                                                    <option value="">Select Condition</option>
+                                                                    {selectedSpec.diseases.map((d) => (
+                                                                        <option key={d} value={d}>{d}</option>
+                                                                    ))}
+                                                                </select>
+                                                            )}
                                                         </div>
                                                     </div>
                                                     <div className="search-input search-map-line">
@@ -325,6 +342,38 @@ const HomeBanner: React.FC = () => {
                 </div>
             </section>
             {/* /Home Banner */}
+            {selectedSpec && (
+                <section className="py-4">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="mb-3">Relevant Conditions{selectedSpec?.specialty ? ` · ${selectedSpec.specialty}` : ''}</h5>
+                                        <div className="row">
+                                            {selectedSpec.diseases.map((d) => (
+                                                <div key={d} className="col-6 col-md-4 col-lg-3 mb-2">
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-outline-primary btn-sm rounded-pill w-100 d-flex align-items-center justify-content-between"
+                                                        onClick={() => navigate(`/patient/search-doctor1?specialty=${encodeURIComponent(selectedSpec.specialty)}&disease=${encodeURIComponent(d)}`)}
+                                                        style={{ whiteSpace: 'normal' }}
+                                                    >
+                                                        <span className="d-inline-flex align-items-center text-start">
+                                                            <i className="isax isax-archive-14 me-2" /> {d}
+                                                        </span>
+                                                        <i className="fa-solid fa-chevron-right" />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
         </>
 
 

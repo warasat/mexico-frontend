@@ -6,6 +6,7 @@ export interface DoctorProfile {
   experience: string;
   education: string;
   languages: string[];
+  specialtyRank?: number;
 }
 
 class DoctorProfileService {
@@ -33,7 +34,8 @@ class DoctorProfileService {
         selectedInsurances: ["Aetna", "Blue Cross Blue Shield", "Cigna"],
         experience: "10+ years",
         education: "MD, PhD",
-        languages: ["English", "Spanish"]
+        languages: ["English", "Spanish"],
+        specialtyRank: 3
       },
       {
         id: "2", 
@@ -41,7 +43,8 @@ class DoctorProfileService {
         selectedInsurances: ["Blue Cross Blue Shield", "Humana", "UnitedHealth"],
         experience: "8+ years",
         education: "MD, MDS",
-        languages: ["English", "French"]
+        languages: ["English", "French"],
+        specialtyRank: 2
       },
       {
         id: "3",
@@ -49,7 +52,8 @@ class DoctorProfileService {
         selectedInsurances: ["Cigna", "Kaiser Permanente", "AARP"],
         experience: "12+ years",
         education: "MD, PhD",
-        languages: ["English", "German"]
+        languages: ["English", "German"],
+        specialtyRank: 4
       },
       {
         id: "4",
@@ -57,7 +61,8 @@ class DoctorProfileService {
         selectedInsurances: ["Humana", "Medicare", "Medicaid"],
         experience: "15+ years", 
         education: "MD, Cardiology",
-        languages: ["English", "Portuguese"]
+        languages: ["English", "Portuguese"],
+        specialtyRank: 5
       },
       {
         id: "5",
@@ -65,7 +70,8 @@ class DoctorProfileService {
         selectedInsurances: ["UnitedHealth", "Tricare", "VA Health Care"],
         experience: "6+ years",
         education: "MD, Neurology",
-        languages: ["English", "Italian"]
+        languages: ["English", "Italian"],
+        specialtyRank: 1
       }
     ];
 
@@ -101,6 +107,29 @@ class DoctorProfileService {
     if (profile) {
       profile.selectedInsurances = insurances;
       this.profiles.set(doctorId, profile);
+    }
+  }
+
+  public getDoctorSpecialtyRank(doctorId: string): number {
+    const profile = this.profiles.get(doctorId);
+    return profile?.specialtyRank ?? 0;
+  }
+
+  public updateDoctorSpecialtyRank(doctorId: string, specialtyRank: number): void {
+    const profile = this.profiles.get(doctorId);
+    if (profile) {
+      profile.specialtyRank = specialtyRank;
+      this.profiles.set(doctorId, profile);
+    } else {
+      this.profiles.set(doctorId, {
+        id: doctorId,
+        name: "",
+        selectedInsurances: [],
+        experience: "",
+        education: "",
+        languages: [],
+        specialtyRank
+      });
     }
   }
 }

@@ -16,11 +16,11 @@ import BookingPage from "../feature-module/frontend/patients/booking/bookingPage
 import PatientAppointments from "../feature-module/frontend/patients/appointments";
 import Profile from "../feature-module/frontend/patients/dashboard/profile";
 import PatientSignup from "../feature-module/frontend/pages/patient-signup";
-import PatientLogin from "../feature-module/frontend/patients/login";
+// Removed separate PatientLogin; route redirects to signup
 
 // Doctor Module
 import DoctorRegister from "../feature-module/frontend/doctors/register";
-import DoctorLogin from "../feature-module/frontend/doctors/login";
+// Removed separate DoctorLogin; route redirects to register
 import DoctorDashboard from "../feature-module/frontend/doctors/dashboard";
 import ProfileSetting from "../feature-module/frontend/doctors/profilesetting";
 import Appointments from "../feature-module/frontend/doctors/appointments";
@@ -121,7 +121,7 @@ export const publicRoutes = [
   },
   {
     path: route.patientLogin,
-    element: <PatientLogin />,
+    element: <Navigate to={route.patientSignup} replace />,
     route: Route,
     meta_title: "Patient Login",
   },
@@ -145,7 +145,7 @@ export const publicRoutes = [
   },
   {
     path: route.doctorLogin,
-    element: <DoctorLogin />,
+    element: <Navigate to={route.doctorRegister} replace />,
     route: Route,
     meta_title: "Doctor Login",
   },

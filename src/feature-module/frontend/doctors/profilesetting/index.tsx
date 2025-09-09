@@ -89,6 +89,7 @@ const ProfileSetting = (props: any) => {
   const [selectedInsurances, setSelectedInsurances] = useState<string[]>([]);
   const [experience, setExperience] = useState<string>('');
   const [education, setEducation] = useState<string>('');
+  const [specialtyRank, setSpecialtyRank] = useState<string>('');
 
   const handleInsurancesChange = (newInsurances: string[]) => {
     setSelectedInsurances(newInsurances);
@@ -105,14 +106,16 @@ const ProfileSetting = (props: any) => {
       selectedInsurances: selectedInsurances,
       experience: experience,
       education: education,
-      languages: tags
+      languages: tags,
+      specialtyRank: Number(specialtyRank) || 0
     });
     
     console.log("Profile saved:", {
       insurances: selectedInsurances,
       experience: experience,
       education: education,
-      languages: tags
+      languages: tags,
+      specialtyRank: Number(specialtyRank) || 0
     });
   };
 
@@ -369,6 +372,21 @@ const ProfileSetting = (props: any) => {
                       placeholder="e.g., MD, PhD, BDS"
                       value={education}
                       onChange={(e) => setEducation(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-4 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Specialty Rank
+                    </label>
+                    <input 
+                      type="number" 
+                      className="form-control" 
+                      placeholder="e.g., 1 (higher shows first)"
+                      value={specialtyRank}
+                      onChange={(e) => setSpecialtyRank(e.target.value)}
+                      min={0}
                     />
                   </div>
                 </div>
