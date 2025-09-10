@@ -191,16 +191,16 @@ const HomeBanner: React.FC = () => {
                                                     if (!spec) return;
                                                     
                                                     // Check if user is authenticated as patient
-                                                    if (!isAuthenticated || userType !== 'patient') {
-                                                        // Redirect to patient login with warning message and return path
-                                                        navigate('/pages/patient-signup', { 
-                                                            state: { 
-                                                                from: { pathname: '/' },
-                                                                message: 'Please login first to search for doctors and book appointments.'
-                                                            }
-                                                        });
-                                                        return;
-                                                    }
+                                                    // if (!isAuthenticated || userType !== 'patient') {
+                                                    //     // Redirect to patient login with warning message and return path
+                                                    //     navigate('/pages/patient-signup', { 
+                                                    //         state: { 
+                                                    //             from: { pathname: '/' },
+                                                    //             message: 'Please login first to search for doctors and book appointments.'
+                                                    //         }
+                                                    //     });
+                                                    //     return;
+                                                    // }
                                                     
                                                     // User is authenticated as patient, proceed to search
                                                     const url = disease
@@ -208,7 +208,7 @@ const HomeBanner: React.FC = () => {
                                                       : `/patient/search-doctor1?specialty=${encodeURIComponent(spec)}`;
                                                     navigate(url);
                                                 }}>
-                                                    <div className="search-input search-line">
+                                                    <div className="search-input search-map-line">
                                                         <i className="isax isax-hospital5 bficon" />
                                                         <div className=" mb-0 position-relative" style={{width: '100%'}}>
                                                             <select
@@ -226,22 +226,35 @@ const HomeBanner: React.FC = () => {
                                                                     <option key={s.specialty} value={s.specialty}>{s.specialty}</option>
                                                                 ))}
                                                             </select>
-                                                            {selectedSpeciality && (() => {
+                                                        </div>
+                                                    </div>
+                                                    <div className="search-input search-map-line">
+                                                        <i className="isax isax-hospital5 bficon" />
+                                                        <div className="mb-0 position-relative" style={{ width: '100%' }}>
+                                                            {selectedSpeciality ? (() => {
                                                                 const selectedSpecialty = specialtiesData.find((s) => s.specialty === selectedSpeciality);
-                                                                return selectedSpecialty ? (
+                                                                const diseases = selectedSpecialty?.diseases ?? [];
+                                                                return (
                                                                     <select
                                                                         value={selectedDisease}
                                                                         onChange={(e) => setSelectedDisease(e.target.value)}
                                                                         className="form-control"
-                                                                        style={{ paddingLeft: '45px', marginTop: 8 }}
+                                                                        style={{ paddingLeft: '45px'}}
                                                                     >
                                                                         <option value="">Select Condition</option>
-                                                                        {selectedSpecialty.diseases.map((d) => (
+                                                                        {diseases.map((d) => (
                                                                             <option key={d} value={d}>{d}</option>
                                                                         ))}
                                                                     </select>
-                                                                ) : null;
-                                                            })()}
+                                                                );
+                                                            })() : <select
+                                                                        value={selectedDisease}
+                                                                        onChange={(e) => setSelectedDisease(e.target.value)}
+                                                                        className="form-control"
+                                                                        style={{ paddingLeft: '45px'}}
+                                                                    >
+                                                                        <option value="">Select Condition</option>
+                                                                    </select>}
                                                         </div>
                                                     </div>
                                                     <div className="search-input search-map-line">
@@ -280,7 +293,6 @@ const HomeBanner: React.FC = () => {
                                                             </select>
                                                         </div>
                                                     </div>
-
                                                     <div className="form-search-btn">
                                                         <button className="btn btn-primary" type="submit">
                                                             <i className="isax isax-search-normal5 me-2" />
