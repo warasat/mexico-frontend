@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Slider from "react-slick";
 import { specialtiesData } from '../../common/data/specialties';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../../core/context/AuthContext';
+// import { useAuth } from '../../../../core/context/AuthContext';
 
 // Mexican cities for location dropdown
 const mexicanCities = [
@@ -82,8 +82,8 @@ const insuranceProviders = [
 
 const HomeBanner: React.FC = () => {
     const navigate = useNavigate();
-    const { authState } = useAuth();
-    const { isAuthenticated, userType } = authState;
+    // const { authState } = useAuth();
+    // const { isAuthenticated, userType } = authState;
     const [selectedInsurance, setSelectedInsurance] = useState<string>('');
     const [selectedLocation, setSelectedLocation] = useState<string>('');
     const [selectedSpeciality, setSelectedSpeciality] = useState<string>('');
