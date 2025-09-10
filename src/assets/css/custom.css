@@ -14070,7 +14070,7 @@ header.inner-header .header-nav .header-navbar-rht li.noti-nav > a i {
   position: relative;
 }
 .search-input.search-line {
-  width: 35%;
+  width: 25%;
 }
 .search-input.search-line::before {
   position: absolute;
@@ -14096,7 +14096,7 @@ header.inner-header .header-nav .header-navbar-rht li.noti-nav > a i {
   }
 }
 .search-input.search-map-line {
-  width: 26%;
+  width: 20%;
 }
 .search-input.search-map-line::before {
   position: absolute;
