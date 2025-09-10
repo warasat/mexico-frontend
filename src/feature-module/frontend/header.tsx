@@ -33,8 +33,17 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    // Store userType before logout clears the authState
+    const currentUserType = userType;
     logout();
-    navigate('/');
+    // Redirect to appropriate login page based on user type
+    if (currentUserType === 'doctor') {
+      navigate('/doctor/doctor-register');
+    } else if (currentUserType === 'patient') {
+      navigate('/pages/patient-signup');
+    } else {
+      navigate('/pages/patient-signup'); // default
+    }
   };
   useEffect(() => {
     AOS.init({
@@ -45,16 +54,13 @@ const Header: React.FC = () => {
 
   const pathnames = window.location.pathname;
 
-  // Function to get the appropriate logo redirect URL based on user type
+  // Function to get the appropriate logo redirect URL - stay on same page for doctors
   const getLogoRedirectUrl = () => {
+    // For doctors, stay on the same page (no redirect)
     if (isAuthenticated && userType === 'doctor') {
-      return '/doctor/doctor-dashboard';
-    } else if (isAuthenticated && userType === 'patient') {
-      return '/patient/dashboard';
-    } else if (isAuthenticated && userType === 'admin') {
-      return '/admin/dashboard';
+      return '#'; // This will prevent navigation
     }
-    return '/index'; // Default to landing page for unauthenticated users
+    return '/index'; // For others, redirect to landing page
   };
 
   const OnHandleMobileMenu = () => {
@@ -270,7 +276,7 @@ const Header: React.FC = () => {
                           {user?.name || userType}
                         </button>
                         <ul className="dropdown-menu">
-                          <li><small className="dropdown-item-text">Logged in as: {userType}</small></li>
+                          <li><small className="dropdown-item-text">Logged in as: {user?.name || userType}</small></li>
                           <li><hr className="dropdown-divider" /></li>
                           <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
                         </ul>

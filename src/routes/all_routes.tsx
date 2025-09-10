@@ -25,7 +25,6 @@ export const all_routes = {
   error500: "/pages/error-500",
 
   // Patient Module Routes
-  patientDashboard: "/patient/dashboard",
   searchDoctor: "/patient/search-doctor1",
   doctorProfile: "/patient/doctor-profile",
   doctorRatings: "/patient/doctor-ratings",
@@ -42,11 +41,11 @@ export const all_routes = {
   myPateint: "/doctor/my-patients",
   availableTimings: "/doctor/available-timings",
 
-  // Admin Module Routes
-  adminDashboard: "/admin",
-  adminAppointmentList: "/admin/appointment-list",
-  adminDoctorList: "/admin/doctor-list",
-  adminPatientList: "/admin/patient-list",
-  adminReviews: "/admin/reviews",
-  adminLogin: "/admin/login",
+  // Admin Module Routes (Secret)
+  adminDashboard: "/system-admin",
+  adminAppointmentList: "/system-admin/appointment-list",
+  adminDoctorList: "/system-admin/doctor-list",
+  adminPatientList: "/system-admin/patient-list",
+  adminReviews: "/system-admin/reviews",
+  adminLogin: "/system-admin/login",
 }

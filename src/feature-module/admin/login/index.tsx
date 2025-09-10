@@ -38,7 +38,7 @@ const AdminLogin: React.FC = () => {
       });
       
       // Redirect to admin dashboard or the page they were trying to access
-      const from = location.state?.from?.pathname || '/admin';
+      const from = location.state?.from?.pathname || '/system-admin';
       navigate(from, { replace: true });
     } else {
       setError('Invalid credentials. Please use the demo credentials provided.');

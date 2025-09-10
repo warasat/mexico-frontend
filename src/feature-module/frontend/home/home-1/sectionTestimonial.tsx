@@ -254,44 +254,6 @@ const SectionTestimonial: React.FC = () => {
             </section>
             {/* /Testimonial Section */}
 
-            <section className="company-section bg-dark aos" data-aos="fade-up">
-                <div className="container">
-                    <div className="section-header sec-header-one text-center">
-                        <h6 className="text-light">
-                            Trusted by 5+ million people at companies like
-                        </h6>
-                    </div>
-                    <div className=" company-slider slick-margins">
-                        <Slider {...TestimonialSlider}>
-                            <div>
-                                <ImageWithBasePath src="assets/img/company/company-01.svg" alt="img" />
-                            </div>
-                            <div>
-                                <ImageWithBasePath src="assets/img/company/company-02.svg" alt="img" />
-                            </div>
-                            <div>
-                                <ImageWithBasePath src="assets/img/company/company-03.svg" alt="img" />
-                            </div>
-                            <div>
-                                <ImageWithBasePath src="assets/img/company/company-04.svg" alt="img" />
-                            </div>
-                            <div>
-                                <ImageWithBasePath src="assets/img/company/company-05.svg" alt="img" />
-                            </div>
-                            <div>
-                                <ImageWithBasePath src="assets/img/company/company-06.svg" alt="img" />
-                            </div>
-                            <div>
-                                <ImageWithBasePath src="assets/img/company/company-07.svg" alt="img" />
-                            </div>
-                            <div>
-                                <ImageWithBasePath src="assets/img/company/company-08.svg" alt="img" />
-                            </div>
-                        </Slider>
-
-                    </div>
-                </div>
-            </section>
 
         </div >
     )

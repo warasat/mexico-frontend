@@ -23,7 +23,7 @@ const AppointmentGrid = (props: any) => {
                     </Link>
                   </li>
                   <li className="breadcrumb-item">
-                    <Link to="/patient/dashboard">Dashboard</Link>
+                    <Link to="/patient/patient-appointments">My Appointments</Link>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     Appointments

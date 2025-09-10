@@ -5,6 +5,7 @@ import CommonPhoneInput from "../../common/common-phoneInput/commonPhoneInput";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../../../assets/css/patient-signup-tabs.css";
 import { useAuth } from "../../../../core/context/AuthContext";
+import doctorAuthService from "../../../../core/services/doctorAuthService";
 
 const DoctorRegister = (props: any) => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
@@ -15,16 +16,20 @@ const DoctorRegister = (props: any) => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  
+  // Register form state
+  const [registerData, setRegisterData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: ""
+  });
+  
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const demoCredentials = {
-    email: 'doctor@example.com',
-    password: 'doctor123',
-    name: 'Dr. John Smith',
-    id: 'doctor-001'
-  };
 
   const TogglePasswordVisibility = () => {
     setPasswordVisibility((prev) => !prev);
@@ -45,21 +50,55 @@ const DoctorRegister = (props: any) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-    await new Promise(resolve => setTimeout(resolve, 700));
-    if (email === demoCredentials.email && password === demoCredentials.password) {
-      login('doctor', { id: demoCredentials.id, name: demoCredentials.name, email: demoCredentials.email });
-      const from = (location.state as { from?: { pathname?: string } } | undefined)?.from?.pathname || '/doctor/profile-setting';
-      navigate(from, { replace: true });
-    } else {
-      setError('Invalid credentials. Please use the demo credentials provided.');
+    
+    try {
+      const response = await doctorAuthService.login({ email, password });
+      
+      if (response.success && response.token && response.doctor) {
+        login('doctor', { 
+          id: response.doctor.id, 
+          name: response.doctor.fullName, 
+          email: response.doctor.email 
+        }, response.token);
+        
+        const from = (location.state as { from?: { pathname?: string } } | undefined)?.from?.pathname || '/doctor/profile-setting';
+        navigate(from, { replace: true });
+      }
+    } catch (error: any) {
+      setError(error.message || 'Login failed. Please try again.');
     }
+    
     setIsLoading(false);
   };
 
-  const handleRegisterSubmit = (e: React.FormEvent) => {
+  const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle register logic here
-    console.log('Register submitted');
+    setIsLoading(true);
+    setError("");
+    
+    try {
+      const response = await doctorAuthService.register(registerData);
+      
+      if (response.success) {
+        // Registration successful, switch to login tab
+        setActiveTab('login');
+        setEmail(registerData.email);
+        setPassword("");
+        setRegisterData({
+          fullName: "",
+          email: "",
+          phone: "",
+          password: "",
+          confirmPassword: ""
+        });
+        setPhone(undefined);
+        setError("");
+      }
+    } catch (error: any) {
+      setError(error.message || 'Registration failed. Please try again.');
+    }
+    
+    setIsLoading(false);
   };
 
   return (
@@ -161,11 +200,6 @@ const DoctorRegister = (props: any) => {
                             {isLoading ? 'Signing In...' : 'Sign In'}
                            </button>
                          </div>
-                         <div className="mt-2">
-                           <h6>Demo Credentials:</h6>
-                           <p><strong>Email:</strong> {demoCredentials.email}</p>
-                           <p><strong>Password:</strong> {demoCredentials.password}</p>
-                         </div>
                          <div className="account-signup">
                            <p>
                              Don't have an account?{" "}
@@ -186,6 +220,8 @@ const DoctorRegister = (props: any) => {
                                type="text" 
                                className="form-control" 
                                placeholder="Enter your full name"
+                               value={registerData.fullName}
+                               onChange={(e) => setRegisterData({...registerData, fullName: e.target.value})}
                                required
                              />
                            </div>
@@ -195,14 +231,16 @@ const DoctorRegister = (props: any) => {
                                type="email" 
                                className="form-control" 
                                placeholder="Enter your email"
+                               value={registerData.email}
+                               onChange={(e) => setRegisterData({...registerData, email: e.target.value})}
                                required
                              />
                            </div>
                            <div className="mb-3">
                              <label className="form-label">Phone</label>
                              <CommonPhoneInput
-                               value={phone}
-                               onChange={setPhone}
+                               value={registerData.phone}
+                               onChange={(value) => setRegisterData({...registerData, phone: value || ""})}
                                placeholder="(201) 555-0123"
                              />
                            </div>
@@ -215,6 +253,8 @@ const DoctorRegister = (props: any) => {
                                  type={isPasswordVisible ? "text" : "password"}
                                  className="form-control pass-input-sub"
                                  placeholder="Create a password"
+                                 value={registerData.password}
+                                 onChange={(e) => setRegisterData({...registerData, password: e.target.value})}
                                  required
                                />
                                <span
@@ -232,6 +272,8 @@ const DoctorRegister = (props: any) => {
                                  type={isConfirmPasswordVisible ? "text" : "password"}
                                  className="form-control pass-input-sub"
                                  placeholder="Confirm your password"
+                                 value={registerData.confirmPassword}
+                                 onChange={(e) => setRegisterData({...registerData, confirmPassword: e.target.value})}
                                  required
                                />
                                <span
@@ -250,12 +292,16 @@ const DoctorRegister = (props: any) => {
                                </label>
                              </div>
                            </div>
+                           {error && (
+                             <div className="alert alert-danger" role="alert">{error}</div>
+                           )}
                            <div className="mb-3">
                              <button
                                className="btn btn-primary-gradient w-100"
                                type="submit"
+                               disabled={isLoading}
                              >
-                               Sign Up
+                               {isLoading ? 'Creating Account...' : 'Sign Up'}
                              </button>
                            </div>
                            <div className="account-signup">

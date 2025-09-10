@@ -48,7 +48,7 @@ const Header = () => {
               </div>
               <ul className="main-nav">
                 <li className="active">
-                  <Link to="/patient/dashboard">Dashboard</Link>
+                  <Link to="/patient/patient-appointments">My Appointments</Link>
                 </li>
                 <li>
                   <Link to="/patient/search-doctor1">Find Doctor</Link>
