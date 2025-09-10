@@ -184,7 +184,7 @@ const HomeBanner: React.FC = () => {
                                             </h1>
                                             <p className="lead mb-4">{slide.description}</p>
                                             <div className="search-box-one aos" data-aos="fade-up">
-                                                <form onSubmit={(e) => {
+                                                <form className='p-3' onSubmit={(e) => {
                                                     e.preventDefault();
                                                     const spec = selectedSpeciality.trim();
                                                     const disease = selectedDisease.trim();
@@ -275,7 +275,7 @@ const HomeBanner: React.FC = () => {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div className="search-input search-calendar-line">
+                                                    <div className="search-input search-map-line">
                                                         <i className="isax isax-shield-tick5 bficon" />
                                                         <div className=" mb-0">
                                                             <select
@@ -293,7 +293,7 @@ const HomeBanner: React.FC = () => {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div className="form-search-btn">
+                                                    <div className=" mt-2 form-search-btn">
                                                         <button className="btn btn-primary" type="submit">
                                                             <i className="isax isax-search-normal5 me-2" />
                                                             {t('common.search')}
