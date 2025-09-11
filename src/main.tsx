@@ -25,7 +25,7 @@ import './assets/css/language-switcher.css'
 import './assets/css/scrollable-dropdown.css'
 
 // Conditional imports based on route
-if (window.location.pathname.includes("admin")) {
+if (window.location.pathname.includes("system-admin")) {
   // Admin-specific styles
   import('./assets/admin/assets/css/feathericon.min.css');
   import('./assets/admin/assets/scss/main.scss');

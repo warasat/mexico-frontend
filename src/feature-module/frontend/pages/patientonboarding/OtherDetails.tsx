@@ -278,7 +278,7 @@ const OtherDetails: React.FC = () => {
                             className="onboarding-btn pop-btn "
                             onClick={() => window.location.reload()}
                           >
-                            <Link to="/patient/dashboard">Go to Dashboard</Link>
+                            <Link to="/patient/patient-appointments">Go to My Appointments</Link>
                           </div>
                         </div>
                       </div>

@@ -4,11 +4,24 @@ import NavLinks from "../../common/nav";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { all_routes } from "../../../../routes/all_routes";
 import DarkModeToggle from "../../dark-mode";
+import { useAuth } from "../../../../core/context/AuthContext";
 
 const Header: React.FC = () => {
   const [headerClass, setHeaderClass] = useState(
     "header header-custom header-fixed inner-header relative"
   );
+  const { authState } = useAuth();
+  const { isAuthenticated, userType } = authState;
+
+  // Function to get the appropriate logo redirect URL - stay on same page for doctors
+  const getLogoRedirectUrl = () => {
+    // For doctors, stay on the same page (no redirect)
+    if (isAuthenticated && userType === 'doctor') {
+      return '#'; // This will prevent navigation
+    }
+    return all_routes.generalHomeOne; // For others, redirect to landing page
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -154,7 +167,7 @@ const Header: React.FC = () => {
                   </span>
                 </Link>
                 <Link
-                  to={all_routes.generalHomeOne}
+                  to={getLogoRedirectUrl()}
                   className="navbar-brand logo"
                 >
                   <ImageWithBasePath
@@ -167,7 +180,7 @@ const Header: React.FC = () => {
               <div className="header-menu">
                 <div className="main-menu-wrapper">
                   <div className="menu-header">
-                    <Link to={all_routes.generalHomeOne} className="menu-logo">
+                    <Link to={getLogoRedirectUrl()} className="menu-logo">
                       <ImageWithBasePath
                         src="assets/img/logo.svg"
                         className="img-fluid"

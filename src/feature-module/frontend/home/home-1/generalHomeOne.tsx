@@ -7,7 +7,6 @@ import 'aos/dist/aos.css';
 import SectionSpeciality from './sectionSpeciality';
 import SectionDoctor from './sectionDoctor';
 import SectionService from './sectionService';
-import SectionReason from './sectionReason';
 import SectionBook from './sectionBook';
 import SectionTestimonial from './sectionTestimonial';
 import SectionFaq from './sectionFaq';
@@ -32,7 +31,6 @@ const GeneralHomeOne: React.FC = () => {
       <SectionSpeciality />
       <SectionDoctor />
       <SectionService />
-      <SectionReason />
       <SectionBook />
       <SectionTestimonial />
       <SectionFaq />

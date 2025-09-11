@@ -6,9 +6,9 @@ import Contactus from "../feature-module/frontend/pages/contactus/contactus";
 import Error404 from "../feature-module/frontend/pages/error/Error404";
 import Error500 from "../feature-module/frontend/pages/error/Error500";
 import SpecialtyDoctors from "../feature-module/frontend/pages/speciality/speciality";
+import ProtectedRoute from "../core/components/ProtectedRoute";
 
 // Patient Module
-import Dashboard from "../feature-module/frontend/patients/dashboard";
 import SearchDoctor from "../feature-module/frontend/pages/searchdoctor/search-doctor1";
 import DoctorProfile from "../feature-module/frontend/patients/doctorprofile";
 import DoctorRatings from "../feature-module/frontend/patients/doctorprofile/doctorRatings";
@@ -72,15 +72,10 @@ export const publicRoutes = [
     route: Route,
   },
   
-  // Patient Module Routes
-  {
-    path: route.patientDashboard,
-    element: <Dashboard />,
-    route: Route,
-  },
+  // Patient Module Routes (Protected)
   {
     path: route.searchDoctor,
-    element: <SearchDoctor />,
+    element: <ProtectedRoute requiredUserType="patient"><SearchDoctor /></ProtectedRoute>,
     route: Route,
   },
   {
@@ -90,27 +85,27 @@ export const publicRoutes = [
   },
   {
     path: route.doctorProfile,
-    element: <DoctorProfile />,
+    element: <ProtectedRoute requiredUserType="patient"><DoctorProfile /></ProtectedRoute>,
     route: Route,
   },
   {
     path: route.doctorRatings,
-    element: <DoctorRatings />,
+    element: <ProtectedRoute requiredUserType="patient"><DoctorRatings /></ProtectedRoute>,
     route: Route,
   },
   {
     path: route.booking,
-    element: <BookingPage />,
+    element: <ProtectedRoute requiredUserType="patient"><BookingPage /></ProtectedRoute>,
     route: Route,
   },
   {
     path: route.patientAppointments,
-    element: <PatientAppointments />,
+    element: <ProtectedRoute requiredUserType="patient"><PatientAppointments /></ProtectedRoute>,
     route: Route,
   },
   {
     path: route.patientProfile,
-    element: <Profile />,
+    element: <ProtectedRoute requiredUserType="patient"><Profile /></ProtectedRoute>,
     route: Route,
   },
   {
@@ -126,15 +121,15 @@ export const publicRoutes = [
     meta_title: "Patient Login",
   },
 
-  // Doctor Module Routes
+  // Doctor Module Routes (Protected)
   {
     path: route.doctorDashboard,
-    element: <DoctorDashboard />,
+    element: <ProtectedRoute requiredUserType="doctor"><DoctorDashboard /></ProtectedRoute>,
     route: Route,
   },
   {
     path: route.appointments,
-    element: <Appointments />,
+    element: <ProtectedRoute requiredUserType="doctor"><Appointments /></ProtectedRoute>,
     route: Route,
   },
   {
@@ -151,19 +146,19 @@ export const publicRoutes = [
   },
   {
     path: route.profileSetting,
-    element: <ProfileSetting />,
+    element: <ProtectedRoute requiredUserType="doctor"><ProfileSetting /></ProtectedRoute>,
     route: Route,
     meta_title: "Profile Settings",
   },
   {
     path: route.myPateint,
-    element: <MyPatient />,
+    element: <ProtectedRoute requiredUserType="doctor"><MyPatient /></ProtectedRoute>,
     route: Route,
     meta_title: "My Patient",
   },
   {
     path: route.availableTimings,
-    element: <AvailableTimings />,
+    element: <ProtectedRoute requiredUserType="doctor"><AvailableTimings /></ProtectedRoute>,
     route: Route,
     meta_title: "Available Timings",
   },
@@ -175,27 +170,27 @@ export const adminRoutes = [
   {
     id: "1",
     path: route.adminDashboard,
-    element: <AdminDashboard />,
+    element: <ProtectedRoute requiredUserType="admin"><AdminDashboard /></ProtectedRoute>,
   },
   {
     id: "2",
     path: route.adminAppointmentList,
-    element: <AdminAppointments />,
+    element: <ProtectedRoute requiredUserType="admin"><AdminAppointments /></ProtectedRoute>,
   },
   {
     id: "3",
     path: route.adminDoctorList,
-    element: <AdminDoctors />,
+    element: <ProtectedRoute requiredUserType="admin"><AdminDoctors /></ProtectedRoute>,
   },
   {
     id: "4",
     path: route.adminPatientList,
-    element: <AdminPatients />,
+    element: <ProtectedRoute requiredUserType="admin"><AdminPatients /></ProtectedRoute>,
   },
   {
     id: "5",
     path: route.adminReviews,
-    element: <AdminReviews />,
+    element: <ProtectedRoute requiredUserType="admin"><AdminReviews /></ProtectedRoute>,
   },
   {
     id: "6",

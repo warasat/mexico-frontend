@@ -15,7 +15,7 @@ const Appointments = (props: any) => {
     if (isAuthenticated && userType === 'doctor') {
       return '/doctor/doctor-dashboard';
     } else if (isAuthenticated && userType === 'patient') {
-      return '/patient/dashboard';
+      return '/index';
     } else if (isAuthenticated && userType === 'admin') {
       return '/admin/dashboard';
     }

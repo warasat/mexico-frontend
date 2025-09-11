@@ -310,27 +310,6 @@ const HomeBanner: React.FC = () => {
                                                 className="img-fluid"
                                                 alt="patient-image"
                                             />
-                                            <div className="banner-appointment">
-                                                <h6>1K</h6>
-                                                <p>
-                                                    Appointments <span className="d-block">Completed</span>
-                                                </p>
-                                            </div>
-                                            <div className="banner-patient">
-                                                <div className="avatar-list-stacked avatar-group-sm">
-                                                    <span className="avatar avatar-rounded">
-                                                        <ImageWithBasePath src="assets/img/patients/patient19.jpg" alt="img" />
-                                                    </span>
-                                                    <span className="avatar avatar-rounded">
-                                                        <ImageWithBasePath src="assets/img/patients/patient16.jpg" alt="img" />
-                                                    </span>
-                                                    <span className="avatar avatar-rounded">
-                                                        <ImageWithBasePath src="assets/img/patients/patient18.jpg" alt="img" />
-                                                    </span>
-                                                </div>
-                                                <p>15K+</p>
-                                                <p>Satisfied Patients</p>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

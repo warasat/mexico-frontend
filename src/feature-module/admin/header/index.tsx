@@ -14,16 +14,13 @@ const Header: React.FC = () => {
   const { isAuthenticated, userType } = authState;
   const navigate = useNavigate();
 
-  // Function to get the appropriate logo redirect URL based on user type
+  // Function to get the appropriate logo redirect URL - stay on same page for doctors
   const getLogoRedirectUrl = () => {
+    // For doctors, stay on the same page (no redirect)
     if (isAuthenticated && userType === 'doctor') {
-      return '/doctor/doctor-dashboard';
-    } else if (isAuthenticated && userType === 'patient') {
-      return '/patient/dashboard';
-    } else if (isAuthenticated && userType === 'admin') {
-      return '/admin';
+      return '#'; // This will prevent navigation
     }
-    return '/index'; // Default to landing page for unauthenticated users
+    return '/index'; // For others, redirect to landing page
   };
   
   const handleSidebar = () => {

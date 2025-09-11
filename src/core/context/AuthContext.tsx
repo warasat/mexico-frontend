@@ -14,7 +14,7 @@ interface AuthState {
 
 interface AuthContextType {
   authState: AuthState;
-  login: (userType: UserType, user: { id: string; name: string; email: string }) => void;
+  login: (userType: UserType, user: { id: string; name: string; email: string }, token?: string) => void;
   logout: () => void;
 }
 
@@ -53,7 +53,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, []);
 
-  const login = (userType: UserType, user: { id: string; name: string; email: string }) => {
+  const login = (userType: UserType, user: { id: string; name: string; email: string }, token?: string) => {
     const newAuthState = {
       isAuthenticated: true,
       userType,
@@ -61,6 +61,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
     setAuthState(newAuthState);
     localStorage.setItem('auth', JSON.stringify(newAuthState));
+    
+    // Store JWT token if provided
+    if (token) {
+      localStorage.setItem('token', token);
+    }
   };
 
   const logout = () => {
@@ -71,6 +76,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
     setAuthState(newAuthState);
     localStorage.removeItem('auth');
+    localStorage.removeItem('token');
   };
 
   const value = {

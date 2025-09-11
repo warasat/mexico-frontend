@@ -32,12 +32,6 @@ export const DashboardSidebar: React.FC = () => {
         <div className="dashboard-widget">
           <nav className="dashboard-menu">
             <ul>
-              <li className={pathnames.includes('/patient/dashboard') ? 'active' : ''}>
-                <Link to="/patient/dashboard">
-                  <i className="isax isax-category-2"></i>
-                  <span>Dashboard</span>
-                </Link>
-              </li>
               <li className={pathnames.includes('/patient/patient-appointments') || pathnames.includes('/patient/appoinment-grid') || pathnames.includes('/patient/patient-cancelled-appointment') || pathnames.includes('/patient/patient-cancelled-appointment') || pathnames.includes('/patient/patient-completed-appointment') || pathnames.includes('/patient/upcoming-appointment') ? 'active' : ''}>
 
                 <Link to="/patient/patient-appointments">

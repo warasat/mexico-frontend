@@ -33,14 +33,6 @@ const Content = () => {
                   Reviews
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="#doc_business_hours"
-                  data-bs-toggle="tab">
-                  Business Hours
-                </Link>
-              </li>
             </ul>
           </nav>
           {/* /Tab Menu */}
@@ -255,176 +247,29 @@ const Content = () => {
             {/* /Overview Content */}
             {/* Locations Content */}
             <div role="tabpanel" id="doc_locations" className="tab-pane fade">
-              {/* Location List */}
-              <div className="location-list">
+              {/* Map Section */}
+              <div className="map-section">
                 <div className="row">
-                  {/* Clinic Content */}
-                  <div className="col-md-6">
-                    <div className="clinic-content">
-                      <h4 className="clinic-name">
-                        <Link to="#">Smile Cute Dental Care Center</Link>
-                      </h4>
-                      <p className="doc-speciality">
-                        MDS - Periodontology and Oral Implantology, BDS
-                      </p>
-                      <div className="rating">
-                        <i className="fas fa-star filled" />
-                        <i className="fas fa-star filled" />
-                        <i className="fas fa-star filled" />
-                        <i className="fas fa-star filled" />
-                        <i className="fas fa-star" />
-                        <span className="d-inline-block average-rating ms-1">
-                          (4)
-                        </span>
-                      </div>
-                      <div className="clinic-details mb-0">
-                        <h5 className="clinic-direction">
-                          {" "}
-                          <i className="fas fa-map-marker-alt" /> 2286 Sundown
-                          Lane, Austin, Texas 78749, USA <br />
-                          <Link to="#;">Get Directions</Link>
-                        </h5>
-                        <ul>
-                          <li>
-                            <Link to="#" data-fancybox="gallery2">
-                              <img src={IMG07} alt="Feature Image" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#" data-fancybox="gallery2">
-                              <img src={IMG08} alt="Feature Image" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#" data-fancybox="gallery2">
-                              <img src={IMG07} alt="Feature Image" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#" data-fancybox="gallery2">
-                              <img src={IMG01} alt="Feature Image" />
-                            </Link>
-                          </li>
-                        </ul>
+                  <div className="col-md-12">
+                    <div className="map-container">
+                      <h4 className="mb-3">Location</h4>
+                      <div className="contact-map">
+                        <iframe
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.7301009561315!2d-76.13077892422932!3d36.82498697224007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89bae976cfe9f8af%3A0xa61eac05156fbdb9!2sBeachStreet%20USA!5e0!3m2!1sen!2sin!4v1669777904208!5m2!1sen!2sin"
+                          width="100%"
+                          height="400"
+                          style={{ border: 0 }}
+                          allowFullScreen
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                          title="Doctor Location Map"
+                        />
                       </div>
                     </div>
-                  </div>
-                  {/* /Clinic Content */}
-                  {/* Clinic Timing */}
-                  <div className="col-md-4">
-                    <div className="clinic-timing">
-                      <div>
-                        <p className="timings-days">
-                          <span> Mon - Sat </span>
-                        </p>
-                        <p className="timings-times">
-                          <span>10:00 AM - 2:00 PM</span>
-                          <span>4:00 PM - 9:00 PM</span>
-                        </p>
-                      </div>
-                      <div>
-                        <p className="timings-days">
-                          <span>Sun</span>
-                        </p>
-                        <p className="timings-times">
-                          <span>10:00 AM - 2:00 PM</span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /Clinic Timing */}
-                  <div className="col-md-2">
-                    <div className="consult-price">$250</div>
                   </div>
                 </div>
               </div>
-              {/* /Location List */}
-              {/* Location List */}
-              <div className="location-list">
-                <div className="row">
-                  {/* Clinic Content */}
-                  <div className="col-md-6">
-                    <div className="clinic-content">
-                      <h4 className="clinic-name">
-                        <Link to="#">The Family Dentistry Clinic</Link>
-                      </h4>
-                      <p className="doc-speciality">
-                        MDS - Periodontology and Oral Implantology, BDS
-                      </p>
-                      <div className="rating">
-                        <i className="fas fa-star filled" />
-                        <i className="fas fa-star filled" />
-                        <i className="fas fa-star filled" />
-                        <i className="fas fa-star filled" />
-                        <i className="fas fa-star" />
-                        <span className="d-inline-block average-rating ms-1">
-                          (4)
-                        </span>
-                      </div>
-                      <div className="clinic-details mb-0">
-                        <p className="clinic-direction">
-                          {" "}
-                          <i className="fas fa-map-marker-alt" /> 2883
-                          University Street, Seattle, Texas Washington, 98155{" "}
-                          <br />
-                          <Link to="#;">Get Directions</Link>
-                        </p>
-                        <ul>
-                          <li>
-                            <Link to="#" data-fancybox="gallery2">
-                              <img src={IMG01} alt="Feature Image" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#" data-fancybox="gallery2">
-                              <img src={IMG02} alt="Feature Image" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#" data-fancybox="gallery2">
-                              <img src={IMG03} alt="Feature Image" />
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="#" data-fancybox="gallery2">
-                              <img src={IMG04} alt="Feature Image" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /Clinic Content */}
-                  {/* Clinic Timing */}
-                  <div className="col-md-4">
-                    <div className="clinic-timing">
-                      <div>
-                        <p className="timings-days">
-                          <span> Tue - Fri </span>
-                        </p>
-                        <p className="timings-times">
-                          <span>11:00 AM - 1:00 PM</span>
-                          <span>6:00 PM - 11:00 PM</span>
-                        </p>
-                      </div>
-                      <div>
-                        <p className="timings-days">
-                          <span>Sat - Sun</span>
-                        </p>
-                        <p className="timings-times">
-                          <span>8:00 AM - 10:00 AM</span>
-                          <span>3:00 PM - 7:00 PM</span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /Clinic Timing */}
-                  <div className="col-md-2">
-                    <div className="consult-price">$350</div>
-                  </div>
-                </div>
-              </div>
-              {/* /Location List */}
+              {/* /Map Section */}
             </div>
             {/* /Locations Content */}
             {/* Reviews Content */}
@@ -694,84 +539,6 @@ const Content = () => {
               {/* /Write Review */}
             </div>
             {/* /Reviews Content */}
-            {/* Business Hours Content */}
-            <div
-              role="tabpanel"
-              id="doc_business_hours"
-              className="tab-pane fade">
-              <div className="row">
-                <div className="col-md-6 offset-md-3">
-                  {/* Business Hours Widget */}
-                  <div className="widget business-widget">
-                    <div className="widget-content">
-                      <div className="listing-hours">
-                        <div className="listing-day current">
-                          <div className="day">
-                            Today <span>5 Nov 2019</span>
-                          </div>
-                          <div className="time-items">
-                            <span className="open-status">
-                              <span className="badge bg-success-light">
-                                Open Now
-                              </span>
-                            </span>
-                            <span className="time">07:00 AM - 09:00 PM</span>
-                          </div>
-                        </div>
-                        <div className="listing-day">
-                          <div className="day">Monday</div>
-                          <div className="time-items">
-                            <span className="time">07:00 AM - 09:00 PM</span>
-                          </div>
-                        </div>
-                        <div className="listing-day">
-                          <div className="day">Tuesday</div>
-                          <div className="time-items">
-                            <span className="time">07:00 AM - 09:00 PM</span>
-                          </div>
-                        </div>
-                        <div className="listing-day">
-                          <div className="day">Wednesday</div>
-                          <div className="time-items">
-                            <span className="time">07:00 AM - 09:00 PM</span>
-                          </div>
-                        </div>
-                        <div className="listing-day">
-                          <div className="day">Thursday</div>
-                          <div className="time-items">
-                            <span className="time">07:00 AM - 09:00 PM</span>
-                          </div>
-                        </div>
-                        <div className="listing-day">
-                          <div className="day">Friday</div>
-                          <div className="time-items">
-                            <span className="time">07:00 AM - 09:00 PM</span>
-                          </div>
-                        </div>
-                        <div className="listing-day">
-                          <div className="day">Saturday</div>
-                          <div className="time-items">
-                            <span className="time">07:00 AM - 09:00 PM</span>
-                          </div>
-                        </div>
-                        <div className="listing-day closed">
-                          <div className="day">Sunday</div>
-                          <div className="time-items">
-                            <span className="time">
-                              <span className="badge bg-danger-light">
-                                Closed
-                              </span>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /Business Hours Widget */}
-                </div>
-              </div>
-            </div>
-            {/* /Business Hours Content */}
           </div>
         </div>
       </div>

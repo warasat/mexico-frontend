@@ -31,12 +31,6 @@ const PatientSidebar: React.FC = () => {
                 <div className="dashboard-widget">
                     <nav className="dashboard-menu">
                         <ul>
-                            <li className="active">
-                                <Link to="/patient/dashboard">
-                                    <i className="fa-solid fa-shapes" />
-                                    <span>Dashboard</span>
-                                </Link>
-                            </li>
                             <li>
                                 <Link to="/patient/patient-appointments">
                                     <i className="fa-solid fa-calendar-days" />

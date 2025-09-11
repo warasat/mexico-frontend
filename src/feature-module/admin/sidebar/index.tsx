@@ -67,27 +67,27 @@ const SidebarNav = () => {
                 <li className="menu-title">
                   <span>Main</span>
                 </li>
-                <li className={pathname === "/admin" ? "active" : ""}>
-                  <Link to="/admin">
+                <li className={pathname === "/system-admin" ? "active" : ""}>
+                  <Link to="/system-admin">
                     <Home size={16} />
                     <span>Dashboard</span>
                   </Link>
                 </li>
                 <li
                   className={
-                    pathname?.includes("/admin/appointment-list")
+                    pathname?.includes("/system-admin/appointment-list")
                       ? "active"
                       : ""
                   }
                 >
-                  <Link to="/admin/appointment-list">
+                  <Link to="/system-admin/appointment-list">
                     <Layout size={16} /> <span>Appointments</span>
                   </Link>
                 </li>
                 <li
                   className={pathname?.includes("doctor-list") ? "active" : ""}
                 >
-                  <Link to="/admin/doctor-list">
+                  <Link to="/system-admin/doctor-list">
                     <UserPlus size={16} />
                     <span>Doctors</span>
                   </Link>
@@ -95,12 +95,12 @@ const SidebarNav = () => {
                 <li
                   className={pathname?.includes("patient-list") ? "active" : ""}
                 >
-                  <Link to="/admin/patient-list">
+                  <Link to="/system-admin/patient-list">
                     <User size={16} /> <span>Patients</span>
                   </Link>
                 </li>
                 <li className={pathname?.includes("reviews") ? "active" : ""}>
-                  <Link to="/admin/reviews">
+                  <Link to="/system-admin/reviews">
                     <Star size={16} /> <span>Reviews</span>
                   </Link>
                 </li>

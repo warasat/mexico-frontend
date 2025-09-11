@@ -140,7 +140,7 @@ const PatientAppointments = (props: any) => {
                   </ul>
                 </div>
               </div>
-              <div className="tab-content appointment-tab-content">
+              <div className="tab-content appointment-tab-content" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
                 <div
                   className="tab-pane fade show active"
                   id="pills-upcoming"
@@ -564,47 +564,6 @@ const PatientAppointments = (props: any) => {
                     </ul>
                   </div>
                   {/* /Appointment List */}
-                  {/* Pagination */}
-                  <div className="pagination dashboard-pagination">
-                    <ul>
-                      <li>
-                        <Link to="#" className="page-link">
-                          <i className="fa-solid fa-chevron-left" />
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          1
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link active">
-                          2
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          3
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          4
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          ...
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          <i className="fa-solid fa-chevron-right" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Pagination */}
                 </div>
                 <div
                   className="tab-pane fade"
@@ -957,47 +916,6 @@ const PatientAppointments = (props: any) => {
                     </ul>
                   </div>
                   {/* /Appointment List */}
-                  {/* Pagination */}
-                  <div className="pagination dashboard-pagination">
-                    <ul>
-                      <li>
-                        <Link to="#" className="page-link">
-                          <i className="fa-solid fa-chevron-left" />
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          1
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link active">
-                          2
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          3
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          4
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          ...
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          <i className="fa-solid fa-chevron-right" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Pagination */}
                 </div>
                 <div
                   className="tab-pane fade"
@@ -1350,47 +1268,6 @@ const PatientAppointments = (props: any) => {
                     </ul>
                   </div>
                   {/* /Appointment List */}
-                  {/* Pagination */}
-                  <div className="pagination dashboard-pagination">
-                    <ul>
-                      <li>
-                        <Link to="#" className="page-link">
-                          <i className="fa-solid fa-chevron-left" />
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          1
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link active">
-                          2
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          3
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          4
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          ...
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="page-link">
-                          <i className="fa-solid fa-chevron-right" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Pagination */}
                 </div>
               </div>
             </div>
