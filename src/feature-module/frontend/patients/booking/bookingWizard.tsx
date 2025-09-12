@@ -5,16 +5,15 @@ import { Calendar, theme } from 'antd';
 import InsuranceSelector from './components/InsuranceSelector';
 import Header from '../../header';
 import '../../../../assets/css/booking-map.css';
-const OnPanelChange = (value: any, mode: any) => {
-  console.log(value.format('YYYY-MM-DD'), mode);
-};
+
 interface BookingWizardProps {
   selectedDoctor?: any;
   onBack?: () => void;
 }
 
 const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack }) => {
-  const [currentStep, setCurrentStep] = useState(1);
+  // If doctor has pre-selected date, start at step 3
+  const [currentStep, setCurrentStep] = useState(selectedDoctor?.selectedDate ? 3 : 1);
   
   // Default doctor data if none selected
   const defaultDoctor = {
@@ -30,6 +29,8 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
   const doctor = selectedDoctor || defaultDoctor;
   const [selectType, setSelectType] = useState(2); // Default to Video Call
   const [selectedInsurance, setSelectedInsurance] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string>(selectedDoctor?.selectedDate || '');
+  const [selectedTime, setSelectedTime] = useState<string>(selectedDoctor?.selectedTime || '');
   const [bookingId] = useState(() => `BK${Date.now().toString().slice(-6)}`);
   const { token } = theme.useToken();
   const wrapperStyle = {
@@ -37,6 +38,12 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
     border: `1px solid ${token.colorBorderSecondary}`,
     borderRadius: token.borderRadiusLG,
   };
+
+  const OnPanelChange = (value: any, mode: any) => {
+    console.log(value.format('YYYY-MM-DD'), mode);
+    setSelectedDate(value.format('YYYY-MM-DD'));
+  };
+
   const HandleNext = () => {
     setCurrentStep(currentStep + 1);
   };
@@ -293,7 +300,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                   >
                                     <i className="isax isax-messages-15" />
                                     <span className="service-title d-block">
-                                      Home Visit
+                                      Clinic Visit
                                     </span>
                                   </label>
                                 </div>
@@ -378,7 +385,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                     <h6 className="fs-14 fw-medium mb-1">
                                       Date &amp; Time
                                     </h6>
-                                    <p className="mb-0">10:00 - 11:00 AM, 15, Oct</p>
+                                    <p className="mb-0">{selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : '10:00 - 11:00 AM, 15, Oct'}</p>
                                   </div>
                                 </div>
                                 <div className="col-lg-3 col-sm-6">
@@ -417,10 +424,12 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                       <div className="form-check-inline visits me-1">
                                         <label className="visit-btns">
                                           <input
-                                            type="checkbox"
+                                            type="radio"
                                             className="form-check-input"
-                                            name="appintment"
-                                            defaultChecked
+                                            name="appointment-time"
+                                            value="09:45"
+                                            checked={selectedTime === '09:45'}
+                                            onChange={(e) => setSelectedTime(e.target.value)}
                                           />
                                           <span className="visit-rsn">09:45</span>
                                         </label>
@@ -428,19 +437,25 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                       <div className="form-check-inline visits me-1">
                                         <label className="visit-btns">
                                           <input
-                                            type="checkbox"
+                                            type="radio"
                                             className="form-check-input"
-                                            name="appintment"
+                                            name="appointment-time"
+                                            value="10:00"
+                                            checked={selectedTime === '10:00'}
+                                            onChange={(e) => setSelectedTime(e.target.value)}
                                           />
-                                          <span className="visit-rsn">-</span>
+                                          <span className="visit-rsn">10:00</span>
                                         </label>
                                       </div>
                                       <div className="form-check-inline visits me-1">
                                         <label className="visit-btns">
                                           <input
-                                            type="checkbox"
+                                            type="radio"
                                             className="form-check-input"
-                                            name="appintment"
+                                            name="appointment-time"
+                                            value="10:45"
+                                            checked={selectedTime === '10:45'}
+                                            onChange={(e) => setSelectedTime(e.target.value)}
                                           />
                                           <span className="visit-rsn">10:45</span>
                                         </label>
@@ -788,7 +803,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                     <h6 className="fs-14 fw-medium mb-1">
                                       Date &amp; Time
                                     </h6>
-                                    <p className="mb-0">10:00 - 11:00 AM, 15, Oct</p>
+                                    <p className="mb-0">{selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : '10:00 - 11:00 AM, 15, Oct'}</p>
                                   </div>
                                 </div>
                                 <div className="col-lg-3 col-sm-6">
@@ -939,7 +954,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                     Date &amp; Time
                                   </label>
                                   <div className="form-plain-text">
-                                    10:00 - 11:00 AM, 15, Oct 2025{" "}
+                                    {selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : '10:00 - 11:00 AM, 15, Oct 2025'}{" "}
                                   </div>
                                 </div>
                                 <div className="mb-3">
@@ -947,7 +962,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                     Appointment Type
                                   </label>
                                   <div className="form-plain-text">
-                                    {selectType === 2 ? 'Video Call' : 'Home Visit'}
+                                    {selectType === 2 ? 'Video Call' : 'Clinic Visit'}
                                   </div>
                                 </div>
                                 <div className="mb-3">
@@ -1051,7 +1066,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                           Date &amp; Time
                                         </label>
                                         <div className="form-plain-text">
-                                          10:00 - 11:00 AM, 15, Oct 2025{" "}
+                                          {selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : '10:00 - 11:00 AM, 15, Oct 2025'}{" "}
                                         </div>
                                       </div>
                                     </div>
@@ -1061,7 +1076,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                           Appointment Type
                                         </label>
                                         <div className="form-plain-text">
-                                          {selectType === 2 ? 'Video Call' : 'Home Visit'}
+                                          {selectType === 2 ? 'Video Call' : 'Clinic Visit'}
                                         </div>
                                       </div>
                                     </div>

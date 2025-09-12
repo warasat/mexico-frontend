@@ -9,7 +9,6 @@ import doctorAuthService from "../../../../core/services/doctorAuthService";
 
 const DoctorRegister = (props: any) => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
-  const [phone, setPhone] = useState<string | undefined>();
   const [isPasswordVisible, setPasswordVisibility] = useState(false);
   const [isConfirmPasswordVisible, setConfirmPasswordVisibility] = useState(false);
   const [email, setEmail] = useState("");
@@ -91,7 +90,6 @@ const DoctorRegister = (props: any) => {
           password: "",
           confirmPassword: ""
         });
-        setPhone(undefined);
         setError("");
       }
     } catch (error: any) {

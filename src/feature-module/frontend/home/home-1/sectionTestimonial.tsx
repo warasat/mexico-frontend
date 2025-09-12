@@ -5,41 +5,6 @@ import ImageWithBasePath from '../../../../components/imageWithBasePath';
 import { Link } from 'react-router-dom';
 
 const SectionTestimonial: React.FC = () => {
-    const TestimonialSlider = {
-        slidesToShow:8,
-        slidesToScroll: 1,
-        dots: false,
-        arrows: false,
-        infinite: true,
-        focusOnSelect: true,
-        responsive: [
-            {
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 8,
-                },
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 4,
-                },
-            },
-            {
-                breakpoint: 580,
-                settings: {
-                    slidesToShow: 2,
-                },
-            },
-            {
-                breakpoint: 0,
-                settings: {
-                    vertical: false,
-                    slidesToShow: 1,
-                },
-            },
-        ],
-    };
     const TestimonialSlider1 = {
         slidesToShow:3,
         slidesToScroll: 1,

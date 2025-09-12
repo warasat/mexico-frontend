@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Slider from "react-slick";
 import ImageWithBasePath from '../../../../components/imageWithBasePath';
 import { useNavigate } from 'react-router-dom';

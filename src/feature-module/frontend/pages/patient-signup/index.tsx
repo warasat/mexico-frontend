@@ -9,7 +9,6 @@ import patientAuthService from "../../../../core/services/patientAuthService";
 
 const PatientSignup: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
-  const [phone, setPhone] = useState<string | undefined>();
   const [isPasswordVisible, setPasswordVisibility] = useState(false);
   const [isConfirmPasswordVisible, setConfirmPasswordVisibility] = useState(false);
   const [email, setEmail] = useState("");
@@ -92,7 +91,6 @@ const PatientSignup: React.FC = () => {
           password: "",
           confirmPassword: ""
         });
-        setPhone(undefined);
         setError("");
       }
     } catch (error: any) {

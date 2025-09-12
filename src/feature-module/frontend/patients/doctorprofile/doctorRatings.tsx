@@ -17,6 +17,7 @@ const DoctorRatings: React.FC = () => {
       totalReviews: 35,
       image: "assets/img/doctor-grid/doc3.png",
       location: "Guadalajara, Mexico",
+      services: ["Dental Fillings", "Teeth Whitening"],
       feedback: [
         { id: 1, patient: "Richard Wilson", rating: 4, comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. Curabitur non nulla sit amet nisl tempus", date: "Reviewed 2 Days ago", image: "assets/img/patients/patient1.jpg" },
         { id: 2, patient: "Charlene Reed", rating: 4, comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. Curabitur non nulla sit amet nisl tempus", date: "Reviewed 3 Days ago", image: "assets/img/patients/patient2.jpg" },
@@ -32,6 +33,7 @@ const DoctorRatings: React.FC = () => {
       totalReviews: 28,
       image: "assets/img/doctor-grid/doc1.png",
       location: "Monterrey, Mexico",
+      services: ["Therapy Sessions", "Mental Health Counseling"],
       feedback: [
         { id: 1, patient: "Lisa Anderson", rating: 5, comment: "Very understanding and helpful. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", date: "Reviewed 3 Days ago", image: "assets/img/patients/patient4.jpg" },
         { id: 2, patient: "Robert Taylor", rating: 4, comment: "Good listener and provides great advice. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", date: "Reviewed 1 Week ago", image: "assets/img/patients/patient5.jpg" }
@@ -46,6 +48,7 @@ const DoctorRatings: React.FC = () => {
       totalReviews: 42,
       image: "assets/img/doctor-grid/doc2.png",
       location: "Puebla, Mexico",
+      services: ["Heart Checkup", "Cardiac Surgery"],
       feedback: [
         { id: 1, patient: "Mark Thompson", rating: 5, comment: "Saved my life! Excellent cardiologist. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", date: "Reviewed 1 Day ago", image: "assets/img/patients/patient6.jpg" },
         { id: 2, patient: "Anna Garcia", rating: 4, comment: "Very thorough and professional. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", date: "Reviewed 1 Week ago", image: "assets/img/patients/patient7.jpg" }
@@ -141,7 +144,7 @@ const DoctorRatings: React.FC = () => {
                   <div key={doctor.id} className="col-lg-4 col-md-6 mb-4 d-flex">
                     <div className="card w-100 d-flex flex-column">
                       <div className="card-img card-img-hover">
-                        <Link to="/patient/doctor-profile">
+                        <Link to="/patient/doctor-profile" state={{ selectedDoctor: doctor }}>
                           <ImageWithBasePath src={doctor.image} alt={doctor.name} />
                         </Link>
                         <div className="grid-overlay-item d-flex align-items-center justify-content-between">
@@ -167,7 +170,7 @@ const DoctorRatings: React.FC = () => {
                         <div className="p-3 pt-0 d-flex flex-column flex-grow-1">
                           <div className="doctor-info-detail mb-3 pb-3 flex-grow-1">
                             <h3 className="mb-1">
-                              <Link to="/patient/doctor-profile">{doctor.name}</Link>
+                              <Link to="/patient/doctor-profile" state={{ selectedDoctor: doctor }}>{doctor.name}</Link>
                             </h3>
                             <div className="d-flex align-items-center">
                               <p className="d-flex align-items-center mb-0 fs-14">
@@ -191,7 +194,7 @@ const DoctorRatings: React.FC = () => {
                             })()}
                           </div>
                           <div className="d-flex align-items-center justify-content-center mt-auto">
-                            <Link to="/patient/doctor-profile" className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate">
+                            <Link to="/patient/doctor-profile" state={{ selectedDoctor: doctor }} className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate">
                               View Profile
                             </Link>
                           </div>

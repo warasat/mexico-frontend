@@ -1,4 +1,4 @@
-import { IMG01, IMG02, IMG03, IMG04, IMG07, IMG08, IMG09 } from "./img";
+import { IMG07, IMG08, IMG09 } from "./img";
 
 import { Link } from "react-router-dom";
 const Content = () => {

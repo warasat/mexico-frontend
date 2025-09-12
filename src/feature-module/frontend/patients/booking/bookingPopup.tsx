@@ -327,7 +327,7 @@ const BookingPopup = () => {
                                   >
                                     <i className="isax isax-messages-15" />
                                     <span className="service-title d-block">
-                                      Home Visit
+                                      Clinic Visit
                                     </span>
                                   </label>
                                 </div>
