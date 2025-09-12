@@ -393,6 +393,18 @@ const ProfileSetting = (props: any) => {
                 <div className="col-lg-12">
                   <div className="form-wrap">
                     <label className="form-label">
+                      About Me <span className="text-danger">*</span>
+                    </label>
+                    <textarea 
+                      className="form-control" 
+                      rows={4}
+                      placeholder="Tell patients about yourself, your experience, and approach to care..."
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="form-wrap">
+                    <label className="form-label">
                       Known Languages <span className="text-danger">*</span>
                     </label>
                     <div className="input-block input-block-new mb-0">
@@ -407,6 +419,243 @@ const ProfileSetting = (props: any) => {
                 </div>
               </div>
             </div>
+
+            {/* Education Details Section */}
+            <div className="setting-card">
+              <h4 className="card-title">Education Details</h4>
+              <div className="row">
+                <div className="col-lg-6 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Institution Name <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., Harvard Medical School"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Degree <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., MD, PhD, BDS"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Start Year <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="number" 
+                      className="form-control" 
+                      placeholder="e.g., 2010"
+                      min="1950"
+                      max="2030"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      End Year <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="number" 
+                      className="form-control" 
+                      placeholder="e.g., 2014"
+                      min="1950"
+                      max="2030"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-12">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Description
+                    </label>
+                    <textarea 
+                      className="form-control" 
+                      rows={2}
+                      placeholder="Additional details about your education..."
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <button type="button" className="btn btn-outline-primary">
+                    + Add Another Education
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Work Experience Section */}
+            <div className="setting-card">
+              <h4 className="card-title">Work Experience</h4>
+              <div className="row">
+                <div className="col-lg-6 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Organization/Hospital <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., City General Hospital"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Position/Title <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., Senior Cardiologist"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Start Year <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="number" 
+                      className="form-control" 
+                      placeholder="e.g., 2015"
+                      min="1950"
+                      max="2030"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      End Year
+                    </label>
+                    <input 
+                      type="number" 
+                      className="form-control" 
+                      placeholder="Leave empty if current"
+                      min="1950"
+                      max="2030"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-12">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Description
+                    </label>
+                    <textarea 
+                      className="form-control" 
+                      rows={2}
+                      placeholder="Describe your role and responsibilities..."
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <button type="button" className="btn btn-outline-primary">
+                    + Add Another Experience
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Services Section */}
+            <div className="setting-card">
+              <h4 className="card-title">Services Offered</h4>
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Medical Services <span className="text-danger">*</span>
+                    </label>
+                    <div className="input-block input-block-new mb-0">
+                        <CommonTagInputs
+                            initialTags={["General Consultation", "Health Checkup"]}
+                            onTagsChange={handleTagsChange }/>
+                        <Link to="#" className="input-text save-btn">
+                          Save
+                        </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Awards & Recognition Section */}
+            <div className="setting-card">
+              <h4 className="card-title">Awards & Recognition</h4>
+              <div className="row">
+                <div className="col-lg-6 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Award Title <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., Best Doctor Award"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-6">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Year <span className="text-danger">*</span>
+                    </label>
+                    <input 
+                      type="number" 
+                      className="form-control" 
+                      placeholder="e.g., 2020"
+                      min="1950"
+                      max="2030"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-12">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Organization
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., Medical Association"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="form-wrap">
+                    <label className="form-label">
+                      Description
+                    </label>
+                    <textarea 
+                      className="form-control" 
+                      rows={2}
+                      placeholder="Describe the award and its significance..."
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <button type="button" className="btn btn-outline-primary">
+                    + Add Another Award
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <div className="modal-btn text-end">
               <Link to="#" className="btn btn-gray">
                 Cancel

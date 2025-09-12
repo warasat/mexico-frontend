@@ -158,7 +158,7 @@ const SectionSpeciality: React.FC = () => {
                         <Slider {...SpecialitySlider}>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Cardiology")}>
                                 <div className="spaciality-img">
-                                    <ImageWithBasePath src="assets/img/specialities/speciality-01.jpg" alt="img" />
+                                    <ImageWithBasePath src="assets/img/specialities/top-speciality-1.jpeg" alt="img" />
                                     <span className="spaciality-icon">
                                         <ImageWithBasePath
                                             src="assets/img/specialities/speciality-icon-01.svg"
@@ -173,7 +173,7 @@ const SectionSpeciality: React.FC = () => {
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Orthopedics")}>
                                 <div className="spaciality-img">
-                                    <ImageWithBasePath src="assets/img/specialities/speciality-02.jpg" alt="img" />
+                                    <ImageWithBasePath src="assets/img/specialities/top-speciality-2.jpg" alt="img" />
                                     <span className="spaciality-icon">
                                         <ImageWithBasePath
                                             src="assets/img/specialities/speciality-icon-02.svg"
@@ -188,7 +188,7 @@ const SectionSpeciality: React.FC = () => {
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Neurology")}>
                                 <div className="spaciality-img">
-                                    <ImageWithBasePath src="assets/img/specialities/speciality-03.jpg" alt="img" />
+                                    <ImageWithBasePath src="assets/img/specialities/top-speciality-3.png" alt="img" />
                                     <span className="spaciality-icon">
                                         <ImageWithBasePath
                                             src="assets/img/specialities/speciality-icon-03.svg"
@@ -203,7 +203,7 @@ const SectionSpeciality: React.FC = () => {
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Pediatrics")}>
                                 <div className="spaciality-img">
-                                    <ImageWithBasePath src="assets/img/specialities/speciality-04.jpg" alt="img" />
+                                    <ImageWithBasePath src="assets/img/specialities/top-speciality-4.webp" alt="img" />
                                     <span className="spaciality-icon">
                                         <ImageWithBasePath
                                             src="assets/img/specialities/speciality-icon-04.svg"
@@ -218,7 +218,7 @@ const SectionSpeciality: React.FC = () => {
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Psychiatry")}>
                                 <div className="spaciality-img">
-                                    <ImageWithBasePath src="assets/img/specialities/speciality-05.jpg" alt="img" />
+                                    <ImageWithBasePath src="assets/img/specialities/top-speciality-5.jpg" alt="img" />
                                     <span className="spaciality-icon">
                                         <ImageWithBasePath
                                             src="assets/img/specialities/speciality-icon-05.svg"
@@ -233,7 +233,7 @@ const SectionSpeciality: React.FC = () => {
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Endocrinology")}>
                                 <div className="spaciality-img">
-                                    <ImageWithBasePath src="assets/img/specialities/speciality-06.jpg" alt="img" />
+                                    <ImageWithBasePath src="assets/img/specialities/top-speciality-6.png" alt="img" />
                                     <span className="spaciality-icon">
                                         <ImageWithBasePath
                                             src="assets/img/specialities/speciality-icon-06.svg"
@@ -248,7 +248,7 @@ const SectionSpeciality: React.FC = () => {
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Pulmonology")}>
                                 <div className="spaciality-img">
-                                    <ImageWithBasePath src="assets/img/specialities/speciality-07.jpg" alt="img" />
+                                    <ImageWithBasePath src="assets/img/specialities/top-speciality-7.webp" alt="img" />
                                     <span className="spaciality-icon">
                                         <ImageWithBasePath
                                             src="assets/img/specialities/speciality-icon-07.svg"
@@ -263,7 +263,7 @@ const SectionSpeciality: React.FC = () => {
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Urology")}>
                                 <div className="spaciality-img">
-                                    <ImageWithBasePath src="assets/img/specialities/speciality-08.jpg" alt="img" />
+                                    <ImageWithBasePath src="assets/img/specialities/top-speciality-8.jpg" alt="img" />
                                     <span className="spaciality-icon">
                                         <ImageWithBasePath
                                             src="assets/img/specialities/speciality-icon-08.svg"
