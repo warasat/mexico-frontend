@@ -16,7 +16,7 @@ const Pagecontent = () => {
     rating: 4.0,
     totalReviews: 35,
     image: "assets/img/doctor-grid/doc3.png",
-    location: "Newyork, USA",
+    location: "Guadalajara",
     services: ["Dental Fillings", "Teeth Whitening"]
   };
   

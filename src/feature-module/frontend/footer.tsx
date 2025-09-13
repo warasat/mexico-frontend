@@ -49,7 +49,7 @@ const Footer = () => {
                       <h6 className="footer-title">Company</h6>
                       <ul>
                         <li>
-                          <Link to="/pages/about-us">About</Link>
+                          <Link to="/aboutus">About</Link>
                         </li>
                         <li>
                           <Link to="/patient/search-doctor1">Features</Link>
@@ -117,16 +117,10 @@ const Footer = () => {
                       <h6 className="footer-title">Utilites</h6>
                       <ul>
                         <li>
-                          <Link to="/pages/pricing">Pricing</Link>
-                        </li>
-                        <li>
-                          <Link to="/pages/contact-us">Contact</Link>
+                          <Link to="/contactus">Contact</Link>
                         </li>
                         <li>
                           <Link to="/pages/contact-us">Request A Quote</Link>
-                        </li>
-                        <li>
-                          <Link to="#">Premium Membership</Link>
                         </li>
                         <li>
                           <Link to="#">Integrations</Link>

@@ -282,6 +282,162 @@
   margin-bottom: 20px !important;
 }
 
+/* Dark Mode Styles */
+.dark-mode .account-content {
+  background: #0D0D0D;
+  border: 1px solid #1B1B1B;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode .login-header h3 {
+  color: #FAFCFF;
+}
+
+.dark-mode .form-control {
+  background: #121212;
+  border-color: #1B1B1B;
+  color: #FAFCFF;
+}
+
+.dark-mode .form-control:focus {
+  background: #0D0D0D;
+  border-color: #0E82FD;
+  box-shadow: 0 0 0 0.2rem rgba(14, 130, 253, 0.25);
+  color: #FAFCFF;
+}
+
+.dark-mode .form-control::placeholder {
+  color: #738399;
+}
+
+.dark-mode .form-label {
+  color: #FAFCFF;
+}
+
+.dark-mode .account-signup {
+  border-top-color: #1B1B1B;
+}
+
+.dark-mode .account-signup p {
+  color: #738399;
+}
+
+.dark-mode .account-signup a {
+  color: #0E82FD;
+}
+
+.dark-mode .account-signup a:hover {
+  color: #06AED4;
+}
+
+.dark-mode .forgot-link {
+  color: #0E82FD;
+}
+
+.dark-mode .forgot-link:hover {
+  color: #06AED4;
+}
+
+.dark-mode .nav-tabs-custom .nav-tabs {
+  border-bottom-color: #1B1B1B;
+}
+
+.dark-mode .nav-tabs-custom .nav-tabs .nav-link {
+  color: #738399;
+}
+
+.dark-mode .nav-tabs-custom .nav-tabs .nav-link:hover {
+  color: #0E82FD;
+}
+
+.dark-mode .nav-tabs-custom .nav-tabs .nav-link.active {
+  color: #0E82FD;
+}
+
+.dark-mode .nav-tabs-custom .nav-tabs .nav-link.active::after {
+  background: #0E82FD;
+}
+
+.dark-mode .nav-tabs-custom .nav-tabs .nav-link:hover::before {
+  background: #0E82FD;
+}
+
+.dark-mode .form-check-label {
+  color: #FAFCFF;
+}
+
+.dark-mode .alert {
+  background: #121212;
+  border-color: #1B1B1B;
+  color: #FAFCFF;
+}
+
+.dark-mode .alert-danger {
+  background: #2D1B1B;
+  border-color: #FF0000;
+  color: #FF6B6B;
+}
+
+/* Admin login dark mode styles */
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap {
+  background: #0D0D0D;
+  border: 1px solid #1B1B1B;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .login-header h3 {
+  color: #FAFCFF;
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .account-subtitle {
+  color: #738399;
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .form-control {
+  background: #121212;
+  border-color: #1B1B1B;
+  color: #FAFCFF;
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .form-control:focus {
+  background: #0D0D0D;
+  border-color: #0E82FD;
+  box-shadow: 0 0 0 0.2rem rgba(14, 130, 253, 0.25);
+  color: #FAFCFF;
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .form-control::placeholder {
+  color: #738399;
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .form-label {
+  color: #FAFCFF;
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .account-signup {
+  border-top-color: #1B1B1B;
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .account-signup p {
+  color: #738399;
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .account-signup a {
+  color: #0E82FD;
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .account-signup a:hover {
+  color: #06AED4;
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .forgot-link {
+  color: #0E82FD;
+}
+
+.dark-mode .login-body .login-wrapper .loginbox .login-right .login-right-wrap .forgot-link:hover {
+  color: #06AED4;
+}
+
 /* Mobile responsive tab styles */
 @media (max-width: 768px) {
   .nav-tabs-custom .nav-tabs .nav-link {

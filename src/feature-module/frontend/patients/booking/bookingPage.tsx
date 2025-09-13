@@ -41,7 +41,7 @@ const BookingPage: React.FC = () => {
       rating: 5.0,
       experience: "10+ years",
       image: "assets/img/doctor-grid/doc1.png",
-      location: "Guadalajara, Mexico",
+      location: "Puerto Vallarta",
       insurance: getDoctorInsurances(1)
     },
     {
@@ -51,7 +51,7 @@ const BookingPage: React.FC = () => {
       rating: 4.8,
       experience: "8+ years",
       image: "assets/img/doctor-grid/doc2.png",
-      location: "Monterrey, Mexico",
+      location: "Mexico City",
       insurance: getDoctorInsurances(2)
     },
     {
@@ -61,7 +61,7 @@ const BookingPage: React.FC = () => {
       rating: 4.9,
       experience: "12+ years",
       image: "assets/img/doctor-grid/doc3.png",
-      location: "Puebla, Mexico",
+      location: "Playa del Carmen",
       insurance: getDoctorInsurances(3)
     },
     {
@@ -71,7 +71,7 @@ const BookingPage: React.FC = () => {
       rating: 4.7,
       experience: "6+ years",
       image: "assets/img/doctor-grid/doc4.png",
-      location: "Tijuana, Mexico",
+      location: "Lake Chapala",
       insurance: getDoctorInsurances(4)
     },
     {
@@ -81,7 +81,7 @@ const BookingPage: React.FC = () => {
       rating: 4.9,
       experience: "15+ years",
       image: "assets/img/doctor-grid/doc5.png",
-      location: "León, Mexico",
+      location: "San Miguel de Allende",
       insurance: getDoctorInsurances(5)
     },
     {
@@ -91,7 +91,7 @@ const BookingPage: React.FC = () => {
       rating: 4.8,
       experience: "11+ years",
       image: "assets/img/doctor-grid/doc6.png",
-      location: "Cancún, Mexico",
+      location: "Guadalajara",
       insurance: getDoctorInsurances(6)
     }
   ]

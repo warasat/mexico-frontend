@@ -47,16 +47,19 @@ const Doctors = () => {
   const [searchParams] = useSearchParams();
   const [filteredDoctors, setFilteredDoctors] = useState<DoctorCard[]>([]);
   const [specialty, setSpecialty] = useState<string>("");
-  const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedDates, setSelectedDates] = useState<{[doctorId: number]: string}>({});
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
   
   // Get doctor profile service instance
   const doctorProfileService = DoctorProfileService.getInstance();
 
-  // Function to handle date selection
-  const handleDateSelect = (dateInfo: any) => {
-    setSelectedDate(dateInfo.fullDate);
+  // Function to handle date selection for a specific doctor
+  const handleDateSelect = (dateInfo: any, doctorId: number) => {
+    // Clear all previous selections and set only the current doctor's date
+    setSelectedDates({
+      [doctorId]: dateInfo.fullDate
+    });
   };
 
   // Function to get insurance data for a doctor
@@ -78,7 +81,7 @@ const Doctors = () => {
       specialtyClass: "text-indigo",
       image: "assets/img/doctor-grid/doc1.png",
       rating: "5.0",
-      location: "Guadalajara, Mexico",
+      location: "Puerto Vallarta",
       duration: "30 Min",
       available: true,
       insurance: getDoctorInsurances(1),
@@ -91,7 +94,7 @@ const Doctors = () => {
       specialtyClass: "text-pink",
       image: "assets/img/doctor-grid/doc2.png",
       rating: "4.6",
-      location: "Monterrey, Mexico",
+      location: "Mexico City",
       duration: "60 Min",
       available: true,
       insurance: getDoctorInsurances(2),
@@ -104,7 +107,7 @@ const Doctors = () => {
       specialtyClass: "text-teal",
       image: "assets/img/doctor-grid/doc3.png",
       rating: "4.8",
-      location: "Puebla, Mexico",
+      location: "Playa del Carmen",
       duration: "30 Min",
       available: true,
       insurance: getDoctorInsurances(3),
@@ -117,7 +120,7 @@ const Doctors = () => {
       specialtyClass: "text-info",
       image: "assets/img/doctor-grid/doc4.png",
       rating: "4.8",
-      location: "Tijuana, Mexico",
+      location: "Lake Chapala",
       duration: "30 Min",
       available: true,
       insurance: getDoctorInsurances(4),
@@ -130,7 +133,7 @@ const Doctors = () => {
       specialtyClass: "text-teal",
       image: "assets/img/doctor-grid/doc5.png",
       rating: "4.2",
-      location: "León, Mexico",
+      location: "San Miguel de Allende",
       duration: "30 Min",
       available: true,
       insurance: getDoctorInsurances(5),
@@ -143,7 +146,7 @@ const Doctors = () => {
       specialtyClass: "text-purple",
       image: "assets/img/doctor-grid/doc6.png",
       rating: "4.7",
-      location: "Mexico City, Mexico",
+      location: "Guadalajara",
       duration: "45 Min",
       available: true,
       insurance: getDoctorInsurances(6),
@@ -156,7 +159,7 @@ const Doctors = () => {
       specialtyClass: "text-green",
       image: "assets/img/doctor-grid/doc7.png",
       rating: "4.9",
-      location: "Cancún, Mexico",
+      location: "Puerto Vallarta",
       duration: "60 Min",
       available: true,
       insurance: getDoctorInsurances(7),
@@ -169,7 +172,7 @@ const Doctors = () => {
       specialtyClass: "text-orange",
       image: "assets/img/doctor-grid/doc8.png",
       rating: "4.5",
-      location: "Querétaro, Mexico",
+      location: "Mexico City",
       duration: "45 Min",
       available: true,
       insurance: getDoctorInsurances(8),
@@ -182,7 +185,7 @@ const Doctors = () => {
       specialtyClass: "text-blue",
       image: "assets/img/doctor-grid/doc1.png",
       rating: "4.6",
-      location: "Mérida, Mexico",
+      location: "Playa del Carmen",
       duration: "50 Min",
       available: true,
       insurance: getDoctorInsurances(9),
@@ -195,7 +198,7 @@ const Doctors = () => {
       specialtyClass: "text-red",
       image: "assets/img/doctor-grid/doc2.png",
       rating: "4.4",
-      location: "Toluca, Mexico",
+      location: "Lake Chapala",
       duration: "20 Min",
       available: true,
       insurance: getDoctorInsurances(10),
@@ -208,7 +211,7 @@ const Doctors = () => {
       specialtyClass: "text-yellow",
       image: "assets/img/doctor-grid/doc3.png",
       rating: "4.8",
-      location: "San Luis Potosí, Mexico",
+      location: "San Miguel de Allende",
       duration: "40 Min",
       available: true,
       insurance: getDoctorInsurances(11),
@@ -221,7 +224,7 @@ const Doctors = () => {
       specialtyClass: "text-cyan",
       image: "assets/img/doctor-grid/doc4.png",
       rating: "4.7",
-      location: "Chihuahua, Mexico",
+      location: "Guadalajara",
       duration: "35 Min",
       available: true,
       insurance: getDoctorInsurances(12),
@@ -234,7 +237,7 @@ const Doctors = () => {
       specialtyClass: "text-indigo",
       image: "assets/img/doctor-grid/doc5.png",
       rating: "4.9",
-      location: "Guadalajara, Mexico",
+      location: "Puerto Vallarta",
       duration: "45 Min",
       available: true,
       insurance: getDoctorInsurances(13),
@@ -247,7 +250,7 @@ const Doctors = () => {
       specialtyClass: "text-brown",
       image: "assets/img/doctor-grid/doc6.png",
       rating: "4.5",
-      location: "Puebla, Mexico",
+      location: "Mexico City",
       duration: "30 Min",
       available: true,
       insurance: getDoctorInsurances(14),
@@ -260,7 +263,7 @@ const Doctors = () => {
       specialtyClass: "text-pink",
       image: "assets/img/doctor-grid/doc7.png",
       rating: "4.8",
-      location: "Monterrey, Mexico",
+      location: "Playa del Carmen",
       duration: "40 Min",
       available: true,
       insurance: getDoctorInsurances(15),
@@ -273,7 +276,7 @@ const Doctors = () => {
       specialtyClass: "text-dark",
       image: "assets/img/doctor-grid/doc8.png",
       rating: "4.9",
-      location: "Tijuana, Mexico",
+      location: "Lake Chapala",
       duration: "60 Min",
       available: true,
       insurance: getDoctorInsurances(16),
@@ -286,7 +289,7 @@ const Doctors = () => {
       specialtyClass: "text-primary",
       image: "assets/img/doctor-grid/doc1.png",
       rating: "4.6",
-      location: "León, Mexico",
+      location: "San Miguel de Allende",
       duration: "30 Min",
       available: true,
       insurance: getDoctorInsurances(17),
@@ -401,9 +404,9 @@ const Doctors = () => {
       {filteredDoctors.length > 0 ? (
         filteredDoctors.map((doctor) => (
           <div key={doctor.id} className="col-lg-12">
-        <div className="card doctor-list-card">
-          <div className="d-md-flex align-items-center">
-            <div className="card-img card-img-hover">
+        <div className="card doctor-list-card" style={{height: 'auto', minHeight: '400px', marginBottom: '20px'}}>
+          <div className="d-md-flex align-items-stretch" style={{height: '100%', minHeight: '400px'}}>
+            <div className="card-img card-img-hover" style={{minWidth: '200px', maxWidth: '200px', height: '200px', overflow: 'hidden'}}>
               <Link to="/patient/doctor-profile">
                     <ImageWithBasePath src={doctor.image} alt="" />
               </Link>
@@ -417,17 +420,17 @@ const Doctors = () => {
                 </Link>
               </div>
             </div>
-            <div className="card-body p-0">
-              <div className="d-flex align-items-center justify-content-between border-bottom p-3">
+            <div className="card-body p-0" style={{flex: '1', display: 'flex', flexDirection: 'column'}}>
+              <div className="d-flex align-items-center justify-content-between border-bottom p-3" style={{minHeight: '60px'}}>
                     <Link to="#" className={`${doctor.specialtyClass} fw-medium fs-14`}>
                       {doctor.specialty}
                 </Link>
-                    <span className={`badge ${doctor.available ? 'bg-success-light' : 'bg-danger-light'} d-inline-flex align-items-center`}>
+                    <span className={`badge ${doctor.available ? 'bg-success-light' : 'bg-danger-light'} d-inline-flex align-items-center`} style={{minWidth: '80px', textAlign: 'center'}}>
                   <i className="fa-solid fa-circle fs-5 me-1" />
                       {doctor.available ? 'Available' : 'Unavailable'}
                 </span>
               </div>
-              <div className="p-3">
+              <div className="p-3" style={{flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
                 <div className="doctor-info-detail pb-3">
                   <div className="row align-items-center gy-3">
                     <div className="col-sm-6">
@@ -484,10 +487,12 @@ const Doctors = () => {
                     {generateWeekDates().map((dateInfo, index) => (
                       <div
                         key={index}
-                        onClick={() => handleDateSelect(dateInfo)}
+                        onClick={() => handleDateSelect(dateInfo, doctor.id)}
                         className={`d-flex flex-column align-items-center justify-content-center p-2 rounded border cursor-pointer ${
-                          selectedDate === dateInfo.fullDate
+                          selectedDates[doctor.id] === dateInfo.fullDate
                             ? 'bg-success text-white border-success'
+                            : Object.keys(selectedDates).length > 0
+                            ? 'bg-light border-secondary hover-bg-light'
                             : dateInfo.isToday 
                             ? 'bg-primary text-white border-primary' 
                             : 'bg-light border-secondary hover-bg-light'
@@ -505,10 +510,10 @@ const Doctors = () => {
                       </div>
                     ))}
                   </div>
-                  {selectedDate && (
+                  {selectedDates[doctor.id] && (
                     <p className="text-success fs-14 mt-2 mb-0">
                       <i className="isax isax-tick-circle me-1" />
-                      Selected: {new Date(selectedDate).toLocaleDateString('en-US', { 
+                      Selected: {new Date(selectedDates[doctor.id]).toLocaleDateString('en-US', { 
                         weekday: 'long', 
                         year: 'numeric', 
                         month: 'long', 
@@ -529,22 +534,22 @@ const Doctors = () => {
                     to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
                     state={isAuthenticated && userType === 'patient' ? { 
                       selectedDoctor: doctor,
-                      selectedDate: selectedDate 
+                      selectedDate: selectedDates[doctor.id] 
                     } : undefined}
                     className={`btn btn-md d-inline-flex align-items-center rounded-pill ${
-                      selectedDate 
+                      selectedDates[doctor.id] 
                         ? 'btn-primary-gradient' 
                         : 'btn-secondary'
                     }`}
                     onClick={(e) => {
-                      if (!selectedDate) {
+                      if (!selectedDates[doctor.id]) {
                         e.preventDefault();
                         alert('Please select a date first');
                       }
                     }}
                   >
                     <i className="isax isax-calendar-1 me-2" />
-                    {selectedDate ? 'Book Appointment' : 'Select Date First'}
+                    {selectedDates[doctor.id] ? 'Book Appointment' : 'Select Date First'}
                   </Link>
                 </div>
               </div>

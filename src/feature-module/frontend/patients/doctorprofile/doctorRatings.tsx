@@ -16,7 +16,7 @@ const DoctorRatings: React.FC = () => {
       rating: 4.0,
       totalReviews: 35,
       image: "assets/img/doctor-grid/doc3.png",
-      location: "Guadalajara, Mexico",
+      location: "Puerto Vallarta",
       services: ["Dental Fillings", "Teeth Whitening"],
       feedback: [
         { id: 1, patient: "Richard Wilson", rating: 4, comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. Curabitur non nulla sit amet nisl tempus", date: "Reviewed 2 Days ago", image: "assets/img/patients/patient1.jpg" },
@@ -32,7 +32,7 @@ const DoctorRatings: React.FC = () => {
       rating: 4.8,
       totalReviews: 28,
       image: "assets/img/doctor-grid/doc1.png",
-      location: "Monterrey, Mexico",
+      location: "Mexico City",
       services: ["Therapy Sessions", "Mental Health Counseling"],
       feedback: [
         { id: 1, patient: "Lisa Anderson", rating: 5, comment: "Very understanding and helpful. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", date: "Reviewed 3 Days ago", image: "assets/img/patients/patient4.jpg" },
@@ -47,7 +47,7 @@ const DoctorRatings: React.FC = () => {
       rating: 4.6,
       totalReviews: 42,
       image: "assets/img/doctor-grid/doc2.png",
-      location: "Puebla, Mexico",
+      location: "Playa del Carmen",
       services: ["Heart Checkup", "Cardiac Surgery"],
       feedback: [
         { id: 1, patient: "Mark Thompson", rating: 5, comment: "Saved my life! Excellent cardiologist. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", date: "Reviewed 1 Day ago", image: "assets/img/patients/patient6.jpg" },
@@ -177,8 +177,6 @@ const DoctorRatings: React.FC = () => {
                                 <i className="isax isax-location me-2" />
                                 {doctor.location}
                               </p>
-                              <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                              <span className="fs-14 fw-medium">30 Min</span>
                             </div>
                             {(() => {
                               const diseases = getDiseasesForSpecialty(doctor.specialty);

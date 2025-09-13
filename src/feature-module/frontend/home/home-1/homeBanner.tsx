@@ -8,18 +8,12 @@ import { useNavigate } from 'react-router-dom';
 
 // Mexican cities for location dropdown
 const mexicanCities = [
-  "Mexico City",
-  "Guadalajara",
-  "Monterrey",
-  "Puebla",
-  "Tijuana",
-  "León",
-  "Cancún",
-  "Mérida",
-  "Toluca",
-  "Querétaro",
-  "San Luis Potosí",
-  "Chihuahua"
+  "Puerto Vallarta",
+  "Mexico City", 
+  "Playa del Carmen",
+  "Lake Chapala",
+  "San Miguel de Allende",
+  "Guadalajara"
 ];
 
 // Removed unused legacy medicalSpecialities list
