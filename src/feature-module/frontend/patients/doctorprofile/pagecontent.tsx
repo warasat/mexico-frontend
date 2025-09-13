@@ -2,11 +2,14 @@ import { IMG01, IMG02 } from "./img";
 import MyComponent from "./mycomponent";
 import { Link, useLocation } from "react-router-dom";
 import { doctorthumb02 } from "../../imagepath";
+import { useAuth } from "../../../../core/context/AuthContext";
 
 const Pagecontent = () => {
   const location = useLocation();
   const selectedDoctor = location.state?.selectedDoctor;
-  
+  const { authState } = useAuth();
+  const { isAuthenticated, userType } = authState;
+
   // Default doctor data (Dr. Darren Elder)
   const defaultDoctor = {
     id: 1,
@@ -17,9 +20,9 @@ const Pagecontent = () => {
     totalReviews: 35,
     image: "assets/img/doctor-grid/doc3.png",
     location: "Guadalajara",
-    services: ["Dental Fillings", "Teeth Whitening"]
+    services: ["Dental Fillings", "Teeth Whitening"],
   };
-  
+
   // Use selected doctor or default
   const doctor = selectedDoctor || defaultDoctor;
   return (
@@ -27,32 +30,33 @@ const Pagecontent = () => {
       <div>
         <div className="card">
           <div className="card-body">
-            <div className="doctor-widget">
+            <div className="doctor-widget justify-content-between align-items-center">
               <div className="doc-info-left">
                 <div className="doctor-img">
-                  <img 
-                    src={doctor.image} 
-                    className="img-fluid" 
-                    alt="User Image" 
+                  <img
+                    src={doctor.image}
+                    className="img-fluid"
+                    alt="User Image"
                     onError={(e) => {
                       e.currentTarget.src = IMG01;
                     }}
                   />
                 </div>
+
                 <div className="doc-info-cont">
                   <h4 className="doc-name">{doctor.name}</h4>
-                  <p className="doc-speciality">
-                    {doctor.department}
-                  </p>
+                  <p className="doc-speciality">{doctor.department}</p>
                   <p className="doc-department">
                     <img src={IMG02} className="img-fluid" alt="Speciality" />
                     {doctor.specialty}
                   </p>
                   <div className="rating">
                     {[...Array(5)].map((_, i) => (
-                      <i 
-                        key={i} 
-                        className={`fas fa-star ${i < Math.floor(doctor.rating) ? 'filled' : ''}`} 
+                      <i
+                        key={i}
+                        className={`fas fa-star ${
+                          i < Math.floor(doctor.rating) ? "filled" : ""
+                        }`}
                       />
                     ))}
                     <span className="d-inline-block average-rating ms-1">
@@ -61,11 +65,12 @@ const Pagecontent = () => {
                   </div>
                   <div className="clinic-details">
                     <p className="doc-location">
-                      <i className="fas fa-map-marker-alt"></i> {doctor.location} -
+                      <i className="fas fa-map-marker-alt"></i>{" "}
+                      {doctor.location} -
                     </p>
 
                     {/* <i className="fas fa-map-marker-alt" /> Newyork, USA -{" "}
-              <Link to="#;">Get Directions</Link> */}
+                  <Link to="#;">Get Directions</Link> */}
 
                     <div>
                       <MyComponent />
@@ -83,6 +88,36 @@ const Pagecontent = () => {
                   </div>
                 </div>
               </div>
+              <Link
+                  to={
+                    isAuthenticated && userType === "patient"
+                      ? "/booking"
+                      : "/patient/login"
+                  }
+                  state={
+                    isAuthenticated && userType === "patient"
+                      ? {
+                          selectedDoctor: doctor,
+                        }
+                      : undefined
+                  }
+                  // ${
+                  //   selectedDates[doctor.id]
+                  //     ? 'btn-primary-gradient'
+                  //     : 'btn-secondary'
+                  // }
+                  className={`btn btn-lg d-inline-flex align-items-center rounded-pill btn-primary-gradient
+                                      `}
+                  // onClick={(e) => {
+                  //   if (!selectedDates[doctor.id]) {
+                  //     e.preventDefault();
+                  //     alert('Please select a date first');
+                  //   }
+                  // }}
+                >
+                  <i className="isax isax-calendar-1 me-2" />
+                  Book Appointment
+                </Link>
             </div>
           </div>
         </div>
