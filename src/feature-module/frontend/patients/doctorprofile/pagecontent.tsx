@@ -1,6 +1,5 @@
 import { IMG01, IMG02 } from "./img";
 import MyComponent from "./mycomponent";
-import DoctorCalendar from "./components/DoctorCalendar";
 import { Link, useLocation } from "react-router-dom";
 import { doctorthumb02 } from "../../imagepath";
 
@@ -84,11 +83,6 @@ const Pagecontent = () => {
                   </div>
                 </div>
               </div>
-              <DoctorCalendar 
-                doctorId={doctor.id.toString()} 
-                doctorName={doctor.name}
-                doctorData={doctor}
-              />
             </div>
           </div>
         </div>
