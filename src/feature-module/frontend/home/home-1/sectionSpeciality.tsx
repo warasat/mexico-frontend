@@ -2,12 +2,9 @@ import React from 'react';
 import Slider from "react-slick";
 import ImageWithBasePath from '../../../../components/imageWithBasePath';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../../core/context/AuthContext';
 
 const SectionSpeciality: React.FC = () => {
     const navigate = useNavigate();
-    const { authState } = useAuth();
-    const { isAuthenticated, userType } = authState;
 
     interface ArrowProps {
         onClick?: React.MouseEventHandler<HTMLButtonElement>;
