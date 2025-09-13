@@ -27,7 +27,6 @@ export const all_routes = {
   // Patient Module Routes
   searchDoctor: "/patient/search-doctor1",
   doctorProfile: "/patient/doctor-profile",
-  doctorRatings: "/patient/doctor-ratings",
   booking: "/booking",
   specialtyDoctors: "/specialty-doctors",
   patientAppointments: "/patient/patient-appointments",

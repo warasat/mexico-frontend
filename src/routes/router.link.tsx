@@ -11,7 +11,6 @@ import ProtectedRoute from "../core/components/ProtectedRoute";
 // Patient Module
 import SearchDoctor from "../feature-module/frontend/pages/searchdoctor/search-doctor1";
 import DoctorProfile from "../feature-module/frontend/patients/doctorprofile";
-import DoctorRatings from "../feature-module/frontend/patients/doctorprofile/doctorRatings";
 import BookingPage from "../feature-module/frontend/patients/booking/bookingPage";
 import PatientAppointments from "../feature-module/frontend/patients/appointments";
 import Profile from "../feature-module/frontend/patients/dashboard/profile";
@@ -86,11 +85,6 @@ export const publicRoutes = [
   {
     path: route.doctorProfile,
     element: <ProtectedRoute requiredUserType="patient"><DoctorProfile /></ProtectedRoute>,
-    route: Route,
-  },
-  {
-    path: route.doctorRatings,
-    element: <ProtectedRoute requiredUserType="patient"><DoctorRatings /></ProtectedRoute>,
     route: Route,
   },
   {

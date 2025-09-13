@@ -6,6 +6,7 @@ import { useAuth } from "../../../core/context/AuthContext";
 const NavLinks: React.FC = () => {
   const [isSideDoctor, setSideDoctor] = useState("");
   const [isSidePatient, setSidePatient] = useState("");
+  const [isSideLogin, setSideLogin] = useState("");
   
   const Location = useLocation();
   const pathnames = Location.pathname;
@@ -17,6 +18,7 @@ const NavLinks: React.FC = () => {
     // Immediately close all dropdowns when authentication changes
     setSideDoctor("");
     setSidePatient("");
+    setSideLogin("");
     
     // Also close the mobile menu if it's open
     const root = document.getElementsByTagName("html")[0];
@@ -38,17 +40,8 @@ const NavLinks: React.FC = () => {
     setSidePatient(value);
   };
 
-
-
-  // Helper function to determine if a module should be visible
-  const shouldShowModule = (moduleType: 'doctor' | 'patient') => {
-    // If not authenticated, show both modules
-    if (!isAuthenticated) {
-      return true;
-    }
-    
-    // If authenticated, only show the module for the current user type
-    return userType === moduleType;
+  const toggleSidebarLogin = (value: string) => {
+    setSideLogin(value);
   };
 
   return (
@@ -62,8 +55,8 @@ const NavLinks: React.FC = () => {
         </li>
       )}
 
-      {/* Doctors Dropdown - Only show if not authenticated or if user is doctor */}
-      {shouldShowModule('doctor') && (
+      {/* Doctors Dropdown - Only show if authenticated as doctor */}
+      {isAuthenticated && userType === 'doctor' && (
         <li className={`has-submenu ${pathnames.includes("/doctor") ? "active" : ""}`}>
         <Link
           to="#"
@@ -75,52 +68,38 @@ const NavLinks: React.FC = () => {
         </Link>
         {isSideDoctor === "doctors" && (
           <ul className="submenu d-block">
-            {/* Show Register/Login if not authenticated as doctor */}
-            {!isAuthenticated || userType !== 'doctor' ? (
-              <>
-                <li className={pathnames.includes("doctor-register") ? "active" : ""}>
-                  <Link to="/doctor/doctor-register" onClick={() => onhandleCloseMenu()}>
-                    Register/Login
-                  </Link>
-                </li>
-              </>
-            ) : (
-              /* Show doctor features if authenticated as doctor */
-              <>
-                <li className={pathnames.includes("doctor-dashboard") ? "active" : ""}>
-                  <Link to="/doctor/doctor-dashboard" onClick={() => onhandleCloseMenu()}>
-                    Dashboard
-                  </Link>
-                </li>
-                <li className={pathnames.includes("available-timings") ? "active" : ""}>
-                  <Link to="/doctor/available-timings" onClick={() => onhandleCloseMenu()}>
-                    Manage Availability
-                  </Link>
-                </li>
-                <li className={pathnames.includes("appointments") ? "active" : ""}>
-                  <Link to="/doctor/appointments" onClick={() => onhandleCloseMenu()}>
-                    Appointments
-                  </Link>
-                </li>
-                <li className={pathnames.includes("my-patients") ? "active" : ""}>
-                  <Link to="/doctor/my-patients" onClick={() => onhandleCloseMenu()}>
-                    Patient History & Notes
-                  </Link>
-                </li>
-                <li className={pathnames.includes("profile-setting") ? "active" : ""}>
-                  <Link to="/doctor/profile-setting" onClick={() => onhandleCloseMenu()}>
-                    Profile Settings
-                  </Link>
-                </li>
-              </>
-            )}
+            <li className={pathnames.includes("doctor-dashboard") ? "active" : ""}>
+              <Link to="/doctor/doctor-dashboard" onClick={() => onhandleCloseMenu()}>
+                Dashboard
+              </Link>
+            </li>
+            <li className={pathnames.includes("available-timings") ? "active" : ""}>
+              <Link to="/doctor/available-timings" onClick={() => onhandleCloseMenu()}>
+                Manage Availability
+              </Link>
+            </li>
+            <li className={pathnames.includes("appointments") ? "active" : ""}>
+              <Link to="/doctor/appointments" onClick={() => onhandleCloseMenu()}>
+                Appointments
+              </Link>
+            </li>
+            <li className={pathnames.includes("my-patients") ? "active" : ""}>
+              <Link to="/doctor/my-patients" onClick={() => onhandleCloseMenu()}>
+                Patient History & Notes
+              </Link>
+            </li>
+            <li className={pathnames.includes("profile-setting") ? "active" : ""}>
+              <Link to="/doctor/profile-setting" onClick={() => onhandleCloseMenu()}>
+                Profile Settings
+              </Link>
+            </li>
           </ul>
         )}
       </li>
       )}
 
-      {/* Patients Dropdown - Only show if not authenticated or if user is patient */}
-      {shouldShowModule('patient') && (
+      {/* Patients Dropdown - Only show if authenticated as patient */}
+      {isAuthenticated && userType === 'patient' && (
       <li className={`has-submenu ${pathnames.includes("/patient") ? "active" : ""}`}>
         <Link
           to="#"
@@ -132,55 +111,30 @@ const NavLinks: React.FC = () => {
         </Link>
         {isSidePatient === "patients" && (
           <ul className="submenu d-block">
-            {/* Show Register/Login if not authenticated as patient */}
-            {!isAuthenticated || userType !== 'patient' ? (
-              <>
-                <li className={pathnames.includes("patient-signup") ? "active" : ""}>
-                  <Link to="/pages/patient-signup" onClick={() => onhandleCloseMenu()}>
-                    Register/Login
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/booking" onClick={() => onhandleCloseMenu()}>
-                    Book Appointment
-                  </Link>
-                </li>
-              </>
-            ) : (
-              /* Show patient features if authenticated as patient */
-              <>
-                <li className={pathnames.includes("profile") ? "active" : ""}>
-                  <Link to="/patient/profile" onClick={() => onhandleCloseMenu()}>
-                    Profile Management
-                  </Link>
-                </li>
+            <li className={pathnames.includes("profile") ? "active" : ""}>
+              <Link to="/patient/profile" onClick={() => onhandleCloseMenu()}>
+                Profile Management
+              </Link>
+            </li>
                 <li className={pathnames.includes("search-doctor") ? "active" : ""}>
                   <Link to="/patient/search-doctor1" onClick={() => onhandleCloseMenu()}>
                     Search Doctors
                   </Link>
                 </li>
-                <li className={pathnames.includes("doctor-ratings") ? "active" : ""}>
-                  <Link to="/patient/doctor-ratings" onClick={() => onhandleCloseMenu()}>
-                    View Doctor Ratings
-                  </Link>
-                </li>
-                <li className={pathnames.includes("booking") ? "active" : ""}>
-                  <Link to="/booking" onClick={() => onhandleCloseMenu()}>
-                    Book Appointments
-                  </Link>
-                </li>
-                <li className={pathnames.includes("appointments") ? "active" : ""}>
-                  <Link to="/patient/patient-appointments" onClick={() => onhandleCloseMenu()}>
-                    Appointment History
-                  </Link>
-                </li>
-              </>
-            )}
+            <li className={pathnames.includes("booking") ? "active" : ""}>
+              <Link to="/booking" onClick={() => onhandleCloseMenu()}>
+                Book Appointments
+              </Link>
+            </li>
+            <li className={pathnames.includes("appointments") ? "active" : ""}>
+              <Link to="/patient/patient-appointments" onClick={() => onhandleCloseMenu()}>
+                Appointment History
+              </Link>
+            </li>
           </ul>
         )}
       </li>
       )}
-
 
       {/* About */}
       <li className={pathnames.includes("aboutus") ? "active" : ""}>
@@ -195,6 +149,34 @@ const NavLinks: React.FC = () => {
           Contact
         </Link>
       </li>
+
+      {/* Login Dropdown - Only show if not authenticated */}
+      {!isAuthenticated && (
+        <li className={`has-submenu ${pathnames.includes("login") || pathnames.includes("signup") || pathnames.includes("register") ? "active" : ""}`}>
+          <Link
+            to="#"
+            className={isSideLogin === "login" ? "subdrop" : ""}
+            onClick={() => toggleSidebarLogin(isSideLogin === "login" ? "" : "login")}
+            onMouseEnter={() => toggleSidebarLogin("login")}
+          >
+            Login <i className="fas fa-chevron-down" />
+          </Link>
+          {isSideLogin === "login" && (
+            <ul className="submenu d-block">
+              <li className={pathnames.includes("patient-signup") ? "active" : ""}>
+                <Link to="/pages/patient-signup" onClick={() => onhandleCloseMenu()}>
+                  Patient Login
+                </Link>
+              </li>
+              <li className={pathnames.includes("doctor-register") ? "active" : ""}>
+                <Link to="/doctor/doctor-register" onClick={() => onhandleCloseMenu()}>
+                  Doctor Login
+                </Link>
+              </li>
+            </ul>
+          )}
+        </li>
+      )}
     </>
   );
 };
