@@ -75,7 +75,7 @@ export const publicRoutes = [
   // Patient Module Routes (Protected)
   {
     path: route.searchDoctor,
-    element: <ProtectedRoute requiredUserType="patient"><SearchDoctor /></ProtectedRoute>,
+    element: <SearchDoctor />,
     route: Route,
   },
   {
