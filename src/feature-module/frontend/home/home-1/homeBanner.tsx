@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Slider from "react-slick";
 import { specialtiesData } from '../../common/data/specialties';
 import { useNavigate } from 'react-router-dom';
-// import { useAuth } from '../../../../core/context/AuthContext';
+import { useAuth } from '../../../../core/context/AuthContext';
 
 // Mexican cities for location dropdown
 const mexicanCities = [
@@ -76,8 +76,8 @@ const insuranceProviders = [
 
 const HomeBanner: React.FC = () => {
     const navigate = useNavigate();
-    // const { authState } = useAuth();
-    // const { isAuthenticated, userType } = authState;
+    const { authState } = useAuth();
+    const { isAuthenticated, userType } = authState;
     const [selectedInsurance, setSelectedInsurance] = useState<string>('');
     const [selectedLocation, setSelectedLocation] = useState<string>('');
     const [selectedSpeciality, setSelectedSpeciality] = useState<string>('');
@@ -124,231 +124,292 @@ const HomeBanner: React.FC = () => {
 
     
     return (
-
-        <>
-            {/* Home Banner */}
-            <section className="banner-section banner-sec-one">
-                <Slider {...HeroSlider}>
-                    {heroSlides.map((slide, index) => (
-                        <div key={index}>
-                            <div className="container">
-                                <div className="row align-items-center">
-                                    <div className="col-lg-7">
-                                        <div className="banner-content aos" data-aos="fade-up">
-                                            <div className="rating-appointment d-inline-flex align-items-center gap-2">
-                                                <div className="avatar-list-stacked avatar-group-lg">
-                                                    <span className="avatar avatar-rounded">
-                                                        <ImageWithBasePath
-                                                            className="border border-white"
-                                                            src="assets/img/doctors/doctor-thumb-22.jpg"
-                                                            alt="img"
-                                                        />
-                                                    </span>
-                                                    <span className="avatar avatar-rounded">
-                                                        <ImageWithBasePath
-                                                            className="border border-white"
-                                                            src="assets/img/doctors/doctor-thumb-23.jpg"
-                                                            alt="img"
-                                                        />
-                                                    </span>
-                                                    <span className="avatar avatar-rounded">
-                                                        <ImageWithBasePath src="assets/img/doctors/doctor-thumb-24.jpg" alt="img" />
-                                                    </span>
-                                                </div>
-                                                <div className="me-2">
-                                                    <h6 className="mb-1">{t('home.appointments')}</h6>
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="d-flex align-items-center">
-                                                            <i className="fa-solid fa-star text-orange me-1" />
-                                                            <i className="fa-solid fa-star text-orange me-1" />
-                                                            <i className="fa-solid fa-star text-orange me-1" />
-                                                            <i className="fa-solid fa-star text-orange me-1" />
-                                                            <i className="fa-solid fa-star text-orange me-1" />
-                                                        </div>
-                                                        <p>{t('home.ratings')}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <h1 className="display-5">
-                                                {slide.title}{" "}
-                                                <span className="banner-icon">
-                                                    <ImageWithBasePath src="assets/img/icons/video.svg" alt="img" />
-                                                </span>{" "}
-                                                <span className="text-gradient">{slide.subtitle}</span>
-                                            </h1>
-                                            <p className="lead mb-4">{slide.description}</p>
-                                            <div className="search-box-one aos" data-aos="fade-up">
-                                                <form className='p-3' onSubmit={(e) => {
-                                                    e.preventDefault();
-                                                    const spec = selectedSpeciality.trim();
-                                                    const disease = selectedDisease.trim();
-                                                    if (!spec) return;
-                                                    
-                                                    // Check if user is authenticated as patient
-                                                    // if (!isAuthenticated || userType !== 'patient') {
-                                                    //     // Redirect to patient login with warning message and return path
-                                                    //     navigate('/pages/patient-signup', { 
-                                                    //         state: { 
-                                                    //             from: { pathname: '/' },
-                                                    //             message: 'Please login first to search for doctors and book appointments.'
-                                                    //         }
-                                                    //     });
-                                                    //     return;
-                                                    // }
-                                                    
-                                                    // User is authenticated as patient, proceed to search
-                                                    const url = disease
-                                                      ? `/patient/search-doctor1?specialty=${encodeURIComponent(spec)}&disease=${encodeURIComponent(disease)}`
-                                                      : `/patient/search-doctor1?specialty=${encodeURIComponent(spec)}`;
-                                                    navigate(url);
-                                                }}>
-                                                    <div className="search-input search-map-line">
-                                                        <i className="isax isax-hospital5 bficon" />
-                                                        <div className=" mb-0 position-relative" style={{width: '100%'}}>
-                                                            <select
-                                                                value={selectedSpeciality}
-                                                                onChange={(e) => {
-                                                                    const val = e.target.value;
-                                                                    setSelectedSpeciality(val);
-                                                                    setSelectedDisease('');
-                                                                }}
-                                                                className="form-control"
-                                                                style={{ paddingLeft: '45px' }}
-                                                            >
-                                                                <option value="">{t('search.searchDoctors') as string}</option>
-                                                                {specialtiesData.map((s) => (
-                                                                    <option key={s.specialty} value={s.specialty}>{s.specialty}</option>
-                                                                ))}
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div className="search-input search-map-line">
-                                                        <i className="isax isax-hospital5 bficon" />
-                                                        <div className="mb-0 position-relative" style={{ width: '100%' }}>
-                                                            {selectedSpeciality ? (() => {
-                                                                const selectedSpecialty = specialtiesData.find((s) => s.specialty === selectedSpeciality);
-                                                                const diseases = selectedSpecialty?.diseases ?? [];
-                                                                return (
-                                                                    <select
-                                                                        value={selectedDisease}
-                                                                        onChange={(e) => setSelectedDisease(e.target.value)}
-                                                                        className="form-control"
-                                                                        style={{ paddingLeft: '45px'}}
-                                                                    >
-                                                                        <option value="">Select Condition</option>
-                                                                        {diseases.map((d) => (
-                                                                            <option key={d} value={d}>{d}</option>
-                                                                        ))}
-                                                                    </select>
-                                                                );
-                                                            })() : <select
-                                                                        value={selectedDisease}
-                                                                        onChange={(e) => setSelectedDisease(e.target.value)}
-                                                                        className="form-control"
-                                                                        style={{ paddingLeft: '45px'}}
-                                                                    >
-                                                                        <option value="">Select Condition</option>
-                                                                    </select>}
-                                                        </div>
-                                                    </div>
-                                                    <div className="search-input search-map-line">
-                                                        <i className="isax isax-location5" />
-                                                        <div className=" mb-0">
-                                                            <select
-                                                                value={selectedLocation}
-                                                                onChange={(e) => setSelectedLocation(e.target.value)}
-                                                                className="form-control"
-                                                                style={{ paddingLeft: '45px' }}
-                                                            >
-                                                                <option value="">{t('maps.location')}</option>
-                                                                {mexicanCities.map((city, idx) => (
-                                                                    <option key={idx} value={city}>
-                                                                        {city}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div className="search-input search-map-line">
-                                                        <i className="isax isax-shield-tick5 bficon" />
-                                                        <div className=" mb-0">
-                                                            <select
-                                                                value={selectedInsurance}
-                                                                onChange={(e) => setSelectedInsurance(e.target.value)}
-                                                                className="form-control"
-                                                                style={{ paddingLeft: '45px' }}
-                                                            >
-                                                                <option value="">Insurance</option>
-                                                                {insuranceProviders.map((insurance, idx) => (
-                                                                    <option key={idx} value={insurance}>
-                                                                        {insurance}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div className=" mt-2 form-search-btn">
-                                                        <button className="btn btn-primary" type="submit">
-                                                            <i className="isax isax-search-normal5 me-2" />
-                                                            {t('common.search')}
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-5">
-                                        <div className="banner-img aos" data-aos="fade-up">
-                                            <ImageWithBasePath
-                                                src="assets/img/banner/banner-doctor.svg"
-                                                className="img-fluid"
-                                                alt="patient-image"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
+      <>
+        {/* Home Banner */}
+        <section className="banner-section banner-sec-one">
+          <Slider {...HeroSlider}>
+            {heroSlides.map((slide, index) => (
+              <div key={index}>
+                <div className="container">
+                  <div className="row align-items-center">
+                    <div className="col-lg-7">
+                      <div className="banner-content aos" data-aos="fade-up">
+                        <div className="rating-appointment d-inline-flex align-items-center gap-2">
+                          <div className="avatar-list-stacked avatar-group-lg">
+                            <span className="avatar avatar-rounded">
+                              <ImageWithBasePath
+                                className="border border-white"
+                                src="assets/img/doctors/doctor-thumb-22.jpg"
+                                alt="img"
+                              />
+                            </span>
+                            <span className="avatar avatar-rounded">
+                              <ImageWithBasePath
+                                className="border border-white"
+                                src="assets/img/doctors/doctor-thumb-23.jpg"
+                                alt="img"
+                              />
+                            </span>
+                            <span className="avatar avatar-rounded">
+                              <ImageWithBasePath
+                                src="assets/img/doctors/doctor-thumb-24.jpg"
+                                alt="img"
+                              />
+                            </span>
+                          </div>
+                          <div className="me-2">
+                            <h6 className="mb-1">{t("home.appointments")}</h6>
+                            <div className="d-flex align-items-center">
+                              <div className="d-flex align-items-center">
+                                <i className="fa-solid fa-star text-orange me-1" />
+                                <i className="fa-solid fa-star text-orange me-1" />
+                                <i className="fa-solid fa-star text-orange me-1" />
+                                <i className="fa-solid fa-star text-orange me-1" />
+                                <i className="fa-solid fa-star text-orange me-1" />
+                              </div>
+                              <p>{t("home.ratings")}</p>
                             </div>
+                          </div>
                         </div>
-                    ))}
-                </Slider>
-                <div className="banner-bg">
-                    <ImageWithBasePath
-                        src="assets/img/bg/banner-bg-02.png"
-                        alt="img"
-                        className="banner-bg-01"
-                    />
-                    <ImageWithBasePath
-                        src="assets/img/bg/banner-bg-03.png"
-                        alt="img"
-                        className="banner-bg-02"
-                    />
-                    <ImageWithBasePath
-                        src="assets/img/bg/banner-bg-04.png"
-                        alt="img"
-                        className="banner-bg-03"
-                    />
-                    <ImageWithBasePath
-                        src="assets/img/bg/banner-bg-05.png"
-                        alt="img"
-                        className="banner-bg-04"
-                    />
-                    <ImageWithBasePath
-                        src="assets/img/bg/banner-icon-01.svg"
-                        alt="img"
-                        className="banner-bg-05"
-                    />
-                    <ImageWithBasePath
-                        src="assets/img/bg/banner-icon-01.svg"
-                        alt="img"
-                        className="banner-bg-06"
-                    />
+                        <h1 className="display-5">
+                          {slide.title}{" "}
+                          <span className="banner-icon">
+                            <ImageWithBasePath
+                              src="assets/img/icons/video.svg"
+                              alt="img"
+                            />
+                          </span>{" "}
+                          <span className="text-gradient">
+                            {slide.subtitle}
+                          </span>
+                        </h1>
+                        <p className="lead mb-4">{slide.description}</p>
+                        <div className="search-box-one aos" data-aos="fade-up">
+                          <form
+                            className="p-3"
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              const spec = selectedSpeciality.trim();
+                              const disease = selectedDisease.trim();
+                              if (!spec) return;
+
+                              // Check if user is authenticated as patient
+                              if (!isAuthenticated || userType !== 'patient') {
+                                  // Redirect to patient login with warning message and return path
+                                  navigate('/pages/patient-signup', {
+                                      state: {
+                                          from: { pathname: '/' },
+                                          message: 'Please login first to search for doctors and book appointments.'
+                                      }
+                                  });
+                                  return;
+                              }
+
+                              // User is authenticated as patient, proceed to search
+                              const url = disease
+                                ? `/patient/search-doctor1?specialty=${encodeURIComponent(
+                                    spec
+                                  )}&disease=${encodeURIComponent(disease)}`
+                                : `/patient/search-doctor1?specialty=${encodeURIComponent(
+                                    spec
+                                  )}`;
+                              navigate(url);
+                            }}
+                          >
+                            <div className="row flex-row justify-content-center align-items-center">
+                              <div className="col-lg-8">
+                                <div className="search-input search-map-line">
+                                  <i className="isax isax-hospital5 bficon" />
+                                  <div
+                                    className=" mb-0 position-relative"
+                                    style={{ width: "100%" }}
+                                  >
+                                    <select
+                                      value={selectedSpeciality}
+                                      onChange={(e) => {
+                                        const val = e.target.value;
+                                        setSelectedSpeciality(val);
+                                        setSelectedDisease("");
+                                      }}
+                                      className="form-control"
+                                      style={{ paddingLeft: "45px" }}
+                                    >
+                                      <option value="">
+                                        {t("search.searchDoctors") as string}
+                                      </option>
+                                      {specialtiesData.map((s) => (
+                                        <option
+                                          key={s.specialty}
+                                          value={s.specialty}
+                                        >
+                                          {s.specialty}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  </div>
+                                </div>
+                                <div className="search-input search-map-line">
+                                  <i className="isax isax-hospital5 bficon" />
+                                  <div
+                                    className="mb-0 position-relative"
+                                    style={{ width: "100%" }}
+                                  >
+                                    {selectedSpeciality ? (
+                                      (() => {
+                                        const selectedSpecialty =
+                                          specialtiesData.find(
+                                            (s) =>
+                                              s.specialty === selectedSpeciality
+                                          );
+                                        const diseases =
+                                          selectedSpecialty?.diseases ?? [];
+                                        return (
+                                          <select
+                                            value={selectedDisease}
+                                            onChange={(e) =>
+                                              setSelectedDisease(e.target.value)
+                                            }
+                                            className="form-control"
+                                            style={{ paddingLeft: "45px" }}
+                                          >
+                                            <option value="">
+                                              Select Condition
+                                            </option>
+                                            {diseases.map((d) => (
+                                              <option key={d} value={d}>
+                                                {d}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        );
+                                      })()
+                                    ) : (
+                                      <select
+                                        value={selectedDisease}
+                                        onChange={(e) =>
+                                          setSelectedDisease(e.target.value)
+                                        }
+                                        className="form-control"
+                                        style={{ paddingLeft: "45px" }}
+                                      >
+                                        <option value="">
+                                          Select Condition
+                                        </option>
+                                      </select>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="search-input search-map-line">
+                                  <i className="isax isax-location5" />
+                                  <div className=" mb-0">
+                                    <select
+                                      value={selectedLocation}
+                                      onChange={(e) =>
+                                        setSelectedLocation(e.target.value)
+                                      }
+                                      className="form-control"
+                                      style={{ paddingLeft: "45px" }}
+                                    >
+                                      <option value="">
+                                        {t("maps.location")}
+                                      </option>
+                                      {mexicanCities.map((city, idx) => (
+                                        <option key={idx} value={city}>
+                                          {city}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  </div>
+                                </div>
+                                <div className="search-input search-map-line">
+                                  <i className="isax isax-shield-tick5 bficon" />
+                                  <div className=" mb-0">
+                                    <select
+                                      value={selectedInsurance}
+                                      onChange={(e) =>
+                                        setSelectedInsurance(e.target.value)
+                                      }
+                                      className="form-control"
+                                      style={{ paddingLeft: "45px" }}
+                                    >
+                                      <option value="">Insurance</option>
+                                      {insuranceProviders.map(
+                                        (insurance, idx) => (
+                                          <option key={idx} value={insurance}>
+                                            {insurance}
+                                          </option>
+                                        )
+                                      )}
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-lg-4">
+                                <div className=" mt-2 form-search-btn">
+                                  <button
+                                    className="btn btn-primary"
+                                    type="submit"
+                                  >
+                                    <i className="isax isax-search-normal5 me-2" />
+                                    {t("common.search")}
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-5">
+                      <div className="banner-img aos" data-aos="fade-up">
+                        <ImageWithBasePath
+                          src="assets/img/banner/banner-doctor.svg"
+                          className="img-fluid"
+                          alt="patient-image"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </section>
-            {/* /Home Banner */}
-        </>
-
-
-    )
+              </div>
+            ))}
+          </Slider>
+          <div className="banner-bg">
+            <ImageWithBasePath
+              src="assets/img/bg/banner-bg-02.png"
+              alt="img"
+              className="banner-bg-01"
+            />
+            <ImageWithBasePath
+              src="assets/img/bg/banner-bg-03.png"
+              alt="img"
+              className="banner-bg-02"
+            />
+            <ImageWithBasePath
+              src="assets/img/bg/banner-bg-04.png"
+              alt="img"
+              className="banner-bg-03"
+            />
+            <ImageWithBasePath
+              src="assets/img/bg/banner-bg-05.png"
+              alt="img"
+              className="banner-bg-04"
+            />
+            <ImageWithBasePath
+              src="assets/img/bg/banner-icon-01.svg"
+              alt="img"
+              className="banner-bg-05"
+            />
+            <ImageWithBasePath
+              src="assets/img/bg/banner-icon-01.svg"
+              alt="img"
+              className="banner-bg-06"
+            />
+          </div>
+        </section>
+        {/* /Home Banner */}
+      </>
+    );
 }
 
 export default HomeBanner
