@@ -5,6 +5,30 @@ import DoctorProfileService from "../../common/services/doctorProfileService";
 import { getDiseasesForSpecialty } from "../../common/data/specialties";
 import { useAuth } from "../../../../core/context/AuthContext";
 
+// Utility function to generate one week of dates starting from today
+const generateWeekDates = () => {
+  const dates = [];
+  const today = new Date();
+  
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    dates.push({
+      date: date.getDate(),
+      day: dayNames[date.getDay()],
+      month: monthNames[date.getMonth()],
+      fullDate: date.toISOString().split('T')[0],
+      isToday: i === 0
+    });
+  }
+  
+  return dates;
+};
+
 type DoctorCard = {
   id: number;
   name: string;
@@ -23,11 +47,17 @@ const Doctors = () => {
   const [searchParams] = useSearchParams();
   const [filteredDoctors, setFilteredDoctors] = useState<DoctorCard[]>([]);
   const [specialty, setSpecialty] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState<string>("");
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
   
   // Get doctor profile service instance
   const doctorProfileService = DoctorProfileService.getInstance();
+
+  // Function to handle date selection
+  const handleDateSelect = (dateInfo: any) => {
+    setSelectedDate(dateInfo.fullDate);
+  };
 
   // Function to get insurance data for a doctor
   const getDoctorInsurances = (doctorId: number): string[] => {
@@ -447,6 +477,47 @@ const Doctors = () => {
                     </div>
                   </div>
                 </div>
+                {/* One Week Date Display */}
+                <div className="mb-3">
+                  <h6 className="mb-2 text-dark">Available Dates</h6>
+                  <div className="d-flex flex-wrap gap-2">
+                    {generateWeekDates().map((dateInfo, index) => (
+                      <div
+                        key={index}
+                        onClick={() => handleDateSelect(dateInfo)}
+                        className={`d-flex flex-column align-items-center justify-content-center p-2 rounded border cursor-pointer ${
+                          selectedDate === dateInfo.fullDate
+                            ? 'bg-success text-white border-success'
+                            : dateInfo.isToday 
+                            ? 'bg-primary text-white border-primary' 
+                            : 'bg-light border-secondary hover-bg-light'
+                        }`}
+                        style={{ 
+                          minWidth: '60px', 
+                          minHeight: '60px',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        <span className="fw-bold fs-14">{dateInfo.date}</span>
+                        <span className="fs-12">{dateInfo.day}</span>
+                        <span className="fs-10">{dateInfo.month}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {selectedDate && (
+                    <p className="text-success fs-14 mt-2 mb-0">
+                      <i className="isax isax-tick-circle me-1" />
+                      Selected: {new Date(selectedDate).toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}
+                    </p>
+                  )}
+                </div>
+                
                 <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-3 mt-3">
                   <div className="d-flex align-items-center flex-wrap row-gap-3">
                     <p className="mb-0">
@@ -456,11 +527,24 @@ const Doctors = () => {
                   </div>
                   <Link
                     to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
-                    state={isAuthenticated && userType === 'patient' ? { selectedDoctor: doctor } : undefined}
-                    className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
+                    state={isAuthenticated && userType === 'patient' ? { 
+                      selectedDoctor: doctor,
+                      selectedDate: selectedDate 
+                    } : undefined}
+                    className={`btn btn-md d-inline-flex align-items-center rounded-pill ${
+                      selectedDate 
+                        ? 'btn-primary-gradient' 
+                        : 'btn-secondary'
+                    }`}
+                    onClick={(e) => {
+                      if (!selectedDate) {
+                        e.preventDefault();
+                        alert('Please select a date first');
+                      }
+                    }}
                   >
                     <i className="isax isax-calendar-1 me-2" />
-                    Book Appointment
+                    {selectedDate ? 'Book Appointment' : 'Select Date First'}
                   </Link>
                 </div>
               </div>
