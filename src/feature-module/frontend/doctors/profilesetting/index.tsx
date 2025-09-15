@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../header";
 import DoctorFooter from "../../common/doctorFooter/index.jsx";
 import { Link } from "react-router-dom";
@@ -8,9 +7,10 @@ import CommonTagInputs from "../../common/common-tagInput/commonTagInputs.js";
 import InsuranceTagInputs from "../../common/common-tagInput/insuranceTagInputs";
 import DoctorSidebar from "../sidebar/index.js";
 import { useAuth } from "../../../../core/context/AuthContext";
-import DoctorProfileService from "../../common/services/doctorProfileService";
+import doctorProfileApi from "../../../../core/services/doctorProfileApi";
 
-const ProfileSetting = (props: any) => {
+interface ProfileSettingProps { [key: string]: unknown }
+const ProfileSetting = (props: ProfileSettingProps) => {
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
 
@@ -27,7 +27,7 @@ const ProfileSetting = (props: any) => {
   };
 
 
-  const [tags, setTags] = useState<string[]>(["English", "German", "Portugese"]);
+  const [tags, setTags] = useState<string[]>([]);
   const handleTagsChange = (newTags: string[]) => {
     setTags(newTags);
   };
@@ -90,36 +90,154 @@ const ProfileSetting = (props: any) => {
   const [experience, setExperience] = useState<string>('');
   const [education, setEducation] = useState<string>('');
   const [specialtyRank, setSpecialtyRank] = useState<string>('');
+  const [servicesOffered, setServicesOffered] = useState<string[]>([]);
+  const [isEditMode, setIsEditMode] = useState<boolean>(true);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+
+  // Basic fields
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [displayName, setDisplayName] = useState<string>('');
+  const [designation, setDesignation] = useState<string>('');
+  const [phoneNumbers, setPhoneNumbers] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [city, setCity] = useState<string>('');
+  const [stateName, setStateName] = useState<string>('');
+  const [country, setCountry] = useState<string>('');
+  const [pincode, setPincode] = useState<string>('');
+  const [aboutMe, setAboutMe] = useState<string>('');
+  const [, setProfileImageUrl] = useState<string>('');
+
+  // Load existing profile on mount
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const res = await doctorProfileApi.getMe();
+        // Expected: { success: true, doctor: doc | null }
+        const doc = res?.doctor;
+        if (mounted && doc) {
+          setFirstName(doc.firstName || '');
+          setLastName(doc.lastName || '');
+          setDisplayName(doc.displayName || '');
+          setDesignation(doc.designation || '');
+          setPhoneNumbers(Array.isArray(doc.phones) ? (doc.phones.filter(Boolean).join(', ')) : '');
+          setEmail(doc.email || '');
+          setAddress(doc.address?.address || '');
+          setCity(doc.address?.city || '');
+          setStateName(doc.address?.state || '');
+          setCountry(doc.address?.country || '');
+          setPincode(doc.address?.pincode || '');
+          setExperience(doc.experience || '');
+          setSelectedInsurances(Array.isArray(doc.insurances) ? doc.insurances : []);
+          setEducation(typeof doc.education === 'string' ? doc.education : '');
+          setSpecialtyRank((doc.specialtyRank ?? '').toString());
+          setAboutMe(doc.aboutMe || '');
+          setTags(Array.isArray(doc.knownLanguages) ? doc.knownLanguages : []);
+          setServicesOffered(Array.isArray(doc.servicesOffered) ? doc.servicesOffered : []);
+          setProfileImageUrl(doc.profileImage?.url || '');
+          setIsEditMode(false);
+        }
+      } catch {
+        // If no profile yet, stay with empty form
+      }
+    })();
+    return () => { mounted = false };
+  }, []);
 
   const handleInsurancesChange = (newInsurances: string[]) => {
     setSelectedInsurances(newInsurances);
   };
 
-  const handleSaveProfile = () => {
-    // Save the doctor profile data
-    const doctorProfileService = DoctorProfileService.getInstance();
-    const currentDoctorId = "1"; // This should be the actual logged-in doctor's ID
-    
-    doctorProfileService.updateDoctorProfile(currentDoctorId, {
-      id: currentDoctorId,
-      name: "Dr. Current User", // This should be the actual doctor's name
-      selectedInsurances: selectedInsurances,
-      experience: experience,
-      education: education,
-      languages: tags,
-      specialtyRank: Number(specialtyRank) || 0
-    });
-    
-    console.log("Profile saved:", {
-      insurances: selectedInsurances,
-      experience: experience,
-      education: education,
-      languages: tags,
-      specialtyRank: Number(specialtyRank) || 0
-    });
+  const handleSaveProfile = async () => {
+    try {
+      setIsSaving(true);
+      await doctorProfileApi.updateMe({
+        firstName,
+        lastName,
+        displayName,
+        designation,
+        phones: phoneNumbers
+          .split(',')
+          .map((p) => p.trim())
+          .filter(Boolean),
+        email,
+        address: {
+          address,
+          city,
+          state: stateName,
+          country,
+          pincode,
+        },
+        experience,
+        insurances: selectedInsurances,
+        education,
+        knownLanguages: tags,
+        specialtyRank: Number(specialtyRank) || 0,
+        servicesOffered,
+        aboutMe,
+      });
+      // Re-fetch to ensure freshest data is shown
+      try {
+        const res = await doctorProfileApi.getMe();
+        const doc = res?.doctor;
+        if (doc) {
+          setDisplayName(doc.displayName || displayName);
+          setDesignation(doc.designation || designation);
+          setTags(Array.isArray(doc.knownLanguages) ? doc.knownLanguages : tags);
+          setSelectedInsurances(Array.isArray(doc.insurances) ? doc.insurances : selectedInsurances);
+        }
+      } catch {
+        // ignore refresh errors
+      }
+      setIsEditMode(false);
+      // Notify other components (e.g., sidebar) to refresh
+      window.dispatchEvent(new CustomEvent('doctorProfileUpdated'));
+    } catch {
+      // no-op
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const onPrimaryButtonClick = async () => {
+    if (!isEditMode) {
+      setIsEditMode(true);
+      return;
+    }
+    await handleSaveProfile();
+  };
+
+  const onImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/svg+xml"];
+    if (!allowed.includes(file.type)) {
+      alert("Only JPG, JPEG, PNG, SVG files are allowed");
+      return;
+    }
+    if (file.size > 4 * 1024 * 1024) {
+      alert("File must be 4MB or smaller");
+      return;
+    }
+    try {
+      const res = await doctorProfileApi.uploadImage(file);
+      const doc = res?.doctor;
+      if (doc?.profileImage?.url) setProfileImageUrl(doc.profileImage.url);
+    } catch (err: unknown) {
+      let message = 'Failed to upload image';
+      if (typeof err === 'object' && err !== null) {
+        const maybeMsg = (err as Record<string, unknown>).message;
+        if (typeof maybeMsg === 'string') message = maybeMsg;
+      }
+      alert(message);
+    }
   };
 
 
+
+  const disabledAll = !isEditMode;
 
   return (
     <div>
@@ -205,7 +323,7 @@ const ProfileSetting = (props: any) => {
                   <div className="imgs-load d-flex align-items-center">
                     <div className="change-photo">
                       Upload New
-                      <input type="file" className="upload" />
+                      <input type="file" className="upload" accept="image/jpeg,image/jpg,image/png,image/svg+xml" onChange={onImageChange} disabled={disabledAll} />
                     </div>
                     <Link to="#" className="upload-remove">
                       Remove
@@ -224,7 +342,7 @@ const ProfileSetting = (props: any) => {
                     <label className="form-label">
                       First Name <span className="text-danger">*</span>
                     </label>
-                    <input type="text" className="form-control" />
+                    <input type="text" className="form-control" value={firstName} onChange={(e) => setFirstName(e.target.value)} disabled={disabledAll} />
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6">
@@ -232,7 +350,7 @@ const ProfileSetting = (props: any) => {
                     <label className="form-label">
                       Last Name <span className="text-danger">*</span>
                     </label>
-                    <input type="text" className="form-control" />
+                    <input type="text" className="form-control" value={lastName} onChange={(e) => setLastName(e.target.value)} disabled={disabledAll} />
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6">
@@ -240,7 +358,7 @@ const ProfileSetting = (props: any) => {
                     <label className="form-label">
                       Display Name <span className="text-danger">*</span>
                     </label>
-                    <input type="text" className="form-control" />
+                    <input type="text" className="form-control" value={displayName} onChange={(e) => setDisplayName(e.target.value)} disabled={disabledAll} />
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6">
@@ -248,7 +366,7 @@ const ProfileSetting = (props: any) => {
                     <label className="form-label">
                       Designation <span className="text-danger">*</span>
                     </label>
-                    <input type="text" className="form-control" />
+                    <input type="text" className="form-control" value={designation} onChange={(e) => setDesignation(e.target.value)} disabled={disabledAll} />
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6">
@@ -256,7 +374,7 @@ const ProfileSetting = (props: any) => {
                     <label className="form-label">
                       Phone Numbers <span className="text-danger">*</span>
                     </label>
-                    <input type="text" className="form-control" />
+                    <input type="text" className="form-control" placeholder="Comma separated" value={phoneNumbers} onChange={(e) => setPhoneNumbers(e.target.value)} disabled={disabledAll} />
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6">
@@ -264,7 +382,7 @@ const ProfileSetting = (props: any) => {
                     <label className="form-label">
                       Email Address <span className="text-danger">*</span>
                     </label>
-                    <input type="text" className="form-control" />
+                    <input type="text" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} disabled={disabledAll} />
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -276,6 +394,9 @@ const ProfileSetting = (props: any) => {
                       type="text" 
                       className="form-control" 
                       placeholder="Enter your full address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      disabled={disabledAll}
                     />
                   </div>
                 </div>
@@ -288,7 +409,9 @@ const ProfileSetting = (props: any) => {
                       type="text" 
                       className="form-control" 
                       placeholder="e.g., Guadalajara"
-                      defaultValue="Guadalajara"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      disabled={disabledAll}
                     />
                   </div>
                 </div>
@@ -301,7 +424,9 @@ const ProfileSetting = (props: any) => {
                       type="text" 
                       className="form-control" 
                       placeholder="e.g., Jalisco"
-                      defaultValue="Jalisco"
+                      value={stateName}
+                      onChange={(e) => setStateName(e.target.value)}
+                      disabled={disabledAll}
                     />
                   </div>
                 </div>
@@ -314,7 +439,9 @@ const ProfileSetting = (props: any) => {
                       type="text" 
                       className="form-control" 
                       placeholder="e.g., Mexico"
-                      defaultValue="Mexico"
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      disabled={disabledAll}
                     />
                   </div>
                 </div>
@@ -327,6 +454,9 @@ const ProfileSetting = (props: any) => {
                       type="text" 
                       className="form-control" 
                       placeholder="e.g., 44100"
+                      value={pincode}
+                      onChange={(e) => setPincode(e.target.value)}
+                      disabled={disabledAll}
                     />
                   </div>
                 </div>
@@ -341,6 +471,7 @@ const ProfileSetting = (props: any) => {
                       placeholder="e.g., 10+ years"
                       value={experience}
                       onChange={(e) => setExperience(e.target.value)}
+                      disabled={disabledAll}
                     />
                   </div>
                 </div>
@@ -372,6 +503,7 @@ const ProfileSetting = (props: any) => {
                       placeholder="e.g., MD, PhD, BDS"
                       value={education}
                       onChange={(e) => setEducation(e.target.value)}
+                      disabled={disabledAll}
                     />
                   </div>
                 </div>
@@ -387,6 +519,7 @@ const ProfileSetting = (props: any) => {
                       value={specialtyRank}
                       onChange={(e) => setSpecialtyRank(e.target.value)}
                       min={0}
+                      disabled={disabledAll}
                     />
                   </div>
                 </div>
@@ -399,6 +532,9 @@ const ProfileSetting = (props: any) => {
                       className="form-control" 
                       rows={4}
                       placeholder="Tell patients about yourself, your experience, and approach to care..."
+                      value={aboutMe}
+                      onChange={(e) => setAboutMe(e.target.value)}
+                      disabled={disabledAll}
                     />
                   </div>
                 </div>
@@ -583,8 +719,8 @@ const ProfileSetting = (props: any) => {
                     </label>
                     <div className="input-block input-block-new mb-0">
                         <CommonTagInputs
-                            initialTags={["General Consultation", "Health Checkup"]}
-                            onTagsChange={handleTagsChange }/>
+                            initialTags={servicesOffered}
+                            onTagsChange={setServicesOffered}/>
                         <Link to="#" className="input-text save-btn">
                           Save
                         </Link>
@@ -660,8 +796,8 @@ const ProfileSetting = (props: any) => {
               <Link to="#" className="btn btn-gray">
                 Cancel
               </Link>
-              <button type="button" className="btn btn-primary prime-btn" onClick={handleSaveProfile}>
-                Save Changes
+              <button type="button" className="btn btn-primary prime-btn" onClick={onPrimaryButtonClick} disabled={isSaving}>
+                {isEditMode ? (isSaving ? 'Saving...' : 'Save Changes') : 'Edit Profile'}
               </button>
             </div>
           </form>

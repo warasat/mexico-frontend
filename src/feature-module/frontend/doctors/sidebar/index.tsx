@@ -1,13 +1,50 @@
 import { Link } from "react-router-dom";
 import Select from 'react-select'
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
+import { useEffect, useMemo, useState } from 'react'
+import doctorProfileApi from "../../../../core/services/doctorProfileApi";
 const DoctorSidebar = () => {
   const pathnames = window.location.pathname;
 
-  const availablity = [
-    { value: 'I am Available Now', label: 'I am Available Now' },
-    { value: 'Not Available', label: 'Not Available' },
-  ]
+  const [profile, setProfile] = useState<any>(null)
+  const [availability, setAvailability] = useState<'available' | 'unavailable'>('unavailable')
+  const availablity = useMemo(() => ([
+    { value: 'available', label: 'I am Available Now' },
+    { value: 'unavailable', label: 'Not Available' },
+  ]), [])
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await doctorProfileApi.getMe();
+        const doc = res?.doctor;
+        setProfile(doc || null)
+        if (doc?.availability) setAvailability(doc.availability)
+      } catch {}
+    })()
+    const onUpdated = async () => {
+      try {
+        const res = await doctorProfileApi.getMe();
+        setProfile(res?.doctor || null)
+      } catch {}
+    }
+    window.addEventListener('doctorProfileUpdated', onUpdated)
+    return () => window.removeEventListener('doctorProfileUpdated', onUpdated)
+  }, [])
+
+  const onAvailabilityChange = async (opt: any) => {
+    try {
+      setAvailability(opt?.value)
+      await fetch('http://localhost:5000/api/doctors/me/availability', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(localStorage.getItem('token') ? { Authorization: `Bearer ${localStorage.getItem('token')}` } : {})
+        },
+        body: JSON.stringify({ availability: opt?.value })
+      })
+    } catch {}
+  }
 
   return (
     <>
@@ -16,23 +53,24 @@ const DoctorSidebar = () => {
         <div className="widget-profile pro-widget-content">
           <div className="profile-info-widget">
             <Link to="/patient/doctor-profile" className="booking-doc-img">
-              <ImageWithBasePath
-                src="assets/img/doctor-grid/doc1.png"
-                alt="User Image"
-              />
+              {profile?.profileImage?.url ? (
+                <img src={profile.profileImage.url} alt="User Image" />
+              ) : (
+                <ImageWithBasePath src="assets/img/doctor-grid/doc1.png" alt="User Image" />
+              )}
             </Link>
             <div className="profile-det-info">
               <h3>
-                <Link to="/patient/doctor-profile">Dr Edalin Hendry</Link>
+                <Link to="/patient/doctor-profile">{profile?.displayName || [profile?.firstName, profile?.lastName].filter(Boolean).join(' ') || 'Your Name'}</Link>
               </h3>
               <div className="patient-details">
                 <h5 className="mb-0">
-                  BDS, MDS - Oral &amp; Maxillofacial Surgery
+                  {profile?.designation || ''}
                 </h5>
               </div>
               <span className="badge doctor-role-badge">
                 <i className="fa-solid fa-circle" />
-                Dentist
+                {profile?.designation || 'Doctor'}
               </span>
             </div>
           </div>
@@ -46,7 +84,9 @@ const DoctorSidebar = () => {
             <Select
               className='select'
               options={availablity}
-              defaultValue={availablity[0]} />
+              value={availablity.find(a => a.value === availability)}
+              onChange={onAvailabilityChange}
+            />
 
           </div>
         </div>

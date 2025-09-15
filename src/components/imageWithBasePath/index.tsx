@@ -13,8 +13,9 @@ interface Image {
 }
 
 const ImageWithBasePath = (props: Image) => {
-  // Combine the base path and the provided src to create the full image source URL
-  const fullSrc = `${image_path}${props.src}`;
+  // If src is absolute (http/https/protocol-relative) or data URI, use as-is; otherwise prefix with base path
+  const isAbsolute = /^(https?:)?\/\//i.test(props.src) || /^data:/i.test(props.src);
+  const fullSrc = isAbsolute ? props.src : `${image_path}${props.src}`;
   return (
     <img
       className={props.className}

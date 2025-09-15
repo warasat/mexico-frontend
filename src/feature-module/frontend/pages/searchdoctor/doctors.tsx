@@ -1,12 +1,12 @@
 import { Link, useSearchParams } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { useEffect, useState } from "react";
-import DoctorProfileService from "../../common/services/doctorProfileService";
+import publicDoctorApi from "../../../../core/services/publicDoctorApi";
 import { getDiseasesForSpecialty } from "../../common/data/specialties";
 import { useAuth } from "../../../../core/context/AuthContext";
 
 type DoctorCard = {
-  id: number;
+  id: string;
   name: string;
   specialty: string;
   specialtyClass: string;
@@ -17,6 +17,9 @@ type DoctorCard = {
   available: boolean;
   insurance: string[];
   specialtyRank?: number;
+  languages?: string[];
+  experience?: string;
+  servicesOffered?: string[];
 };
 
 const Doctors = () => {
@@ -26,243 +29,51 @@ const Doctors = () => {
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
   
-  // Get doctor profile service instance
-  const doctorProfileService = DoctorProfileService.getInstance();
-
-  // Function to get insurance data for a doctor
-  const getDoctorInsurances = (doctorId: number): string[] => {
-    const profile = doctorProfileService.getDoctorProfile(doctorId.toString());
-    return profile?.selectedInsurances || [];
+  // Helper to colorize specialties (kept for UI styling)
+  const specialtyColor = (spec: string): string => {
+    const key = spec.toLowerCase();
+    if (key.includes('psych')) return 'text-indigo';
+    if (key.includes('pediatric')) return 'text-pink';
+    if (key.includes('neuro')) return 'text-teal';
+    if (key.includes('cardio')) return 'text-info';
+    if (key.includes('denti')) return 'text-purple';
+    if (key.includes('chiro')) return 'text-yellow';
+    if (key.includes('opto')) return 'text-cyan';
+    if (key.includes('ophthal')) return 'text-indigo';
+    if (key.includes('podi')) return 'text-brown';
+    if (key.includes('derma')) return 'text-pink';
+    if (key.includes('ortho')) return 'text-dark';
+    return 'text-primary';
   };
-  // Function to get specialty rank for a doctor
-  const getDoctorSpecialtyRank = (doctorId: number): number => {
-    return doctorProfileService.getDoctorSpecialtyRank(doctorId.toString());
-  };
 
-  // Doctor data matching the sectionDoctor.tsx structure
-  const allDoctors = [
-    {
-      id: 1,
-      name: "Dr. Michael Brown",
-      specialty: "Psychologist",
-      specialtyClass: "text-indigo",
-      image: "assets/img/doctor-grid/doc1.png",
-      rating: "5.0",
-      location: "Guadalajara, Mexico",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(1),
-      specialtyRank: getDoctorSpecialtyRank(1)
-    },
-    {
-      id: 2,
-      name: "Dr. Nicholas Tello",
-      specialty: "Pediatrician",
-      specialtyClass: "text-pink",
-      image: "assets/img/doctor-grid/doc2.png",
-      rating: "4.6",
-      location: "Monterrey, Mexico",
-      duration: "60 Min",
-      available: true,
-      insurance: getDoctorInsurances(2),
-      specialtyRank: getDoctorSpecialtyRank(2)
-    },
-    {
-      id: 3,
-      name: "Dr. Harold Bryant",
-      specialty: "Neurologist",
-      specialtyClass: "text-teal",
-      image: "assets/img/doctor-grid/doc3.png",
-      rating: "4.8",
-      location: "Puebla, Mexico",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(3),
-      specialtyRank: getDoctorSpecialtyRank(3)
-    },
-    {
-      id: 4,
-      name: "Dr. Sandra Jones",
-      specialty: "Cardiologist",
-      specialtyClass: "text-info",
-      image: "assets/img/doctor-grid/doc4.png",
-      rating: "4.8",
-      location: "Tijuana, Mexico",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(4),
-      specialtyRank: getDoctorSpecialtyRank(4)
-    },
-    {
-      id: 5,
-      name: "Dr. Charles Scott",
-      specialty: "Neurologist",
-      specialtyClass: "text-teal",
-      image: "assets/img/doctor-grid/doc5.png",
-      rating: "4.2",
-      location: "León, Mexico",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(5),
-      specialtyRank: getDoctorSpecialtyRank(5)
-    },
-    {
-      id: 6,
-      name: "Dr. Maria Rodriguez",
-      specialty: "Dentist",
-      specialtyClass: "text-purple",
-      image: "assets/img/doctor-grid/doc6.png",
-      rating: "4.7",
-      location: "Mexico City, Mexico",
-      duration: "45 Min",
-      available: true,
-      insurance: getDoctorInsurances(6),
-      specialtyRank: getDoctorSpecialtyRank(6)
-    },
-    {
-      id: 7,
-      name: "Dr. Ana Martinez",
-      specialty: "OB-GYN (Obstetrician-Gynecologist)",
-      specialtyClass: "text-green",
-      image: "assets/img/doctor-grid/doc7.png",
-      rating: "4.9",
-      location: "Cancún, Mexico",
-      duration: "60 Min",
-      available: true,
-      insurance: getDoctorInsurances(7),
-      specialtyRank: getDoctorSpecialtyRank(7)
-    },
-    {
-      id: 8,
-      name: "Dr. Carlos Lopez",
-      specialty: "Psychiatrist",
-      specialtyClass: "text-orange",
-      image: "assets/img/doctor-grid/doc8.png",
-      rating: "4.5",
-      location: "Querétaro, Mexico",
-      duration: "45 Min",
-      available: true,
-      insurance: getDoctorInsurances(8),
-      specialtyRank: getDoctorSpecialtyRank(8)
-    },
-    {
-      id: 9,
-      name: "Dr. Elena Garcia",
-      specialty: "Psychologist",
-      specialtyClass: "text-blue",
-      image: "assets/img/doctor-grid/doc1.png",
-      rating: "4.6",
-      location: "Mérida, Mexico",
-      duration: "50 Min",
-      available: true,
-      insurance: getDoctorInsurances(9),
-      specialtyRank: getDoctorSpecialtyRank(9)
-    },
-    {
-      id: 10,
-      name: "Dr. Roberto Silva",
-      specialty: "Urgent Care Specialist",
-      specialtyClass: "text-red",
-      image: "assets/img/doctor-grid/doc2.png",
-      rating: "4.4",
-      location: "Toluca, Mexico",
-      duration: "20 Min",
-      available: true,
-      insurance: getDoctorInsurances(10),
-      specialtyRank: getDoctorSpecialtyRank(10)
-    },
-    {
-      id: 11,
-      name: "Dr. Carmen Vega",
-      specialty: "Chiropractor",
-      specialtyClass: "text-yellow",
-      image: "assets/img/doctor-grid/doc3.png",
-      rating: "4.8",
-      location: "San Luis Potosí, Mexico",
-      duration: "40 Min",
-      available: true,
-      insurance: getDoctorInsurances(11),
-      specialtyRank: getDoctorSpecialtyRank(11)
-    },
-    {
-      id: 12,
-      name: "Dr. Fernando Ruiz",
-      specialty: "Optometrist",
-      specialtyClass: "text-cyan",
-      image: "assets/img/doctor-grid/doc4.png",
-      rating: "4.7",
-      location: "Chihuahua, Mexico",
-      duration: "35 Min",
-      available: true,
-      insurance: getDoctorInsurances(12),
-      specialtyRank: getDoctorSpecialtyRank(12)
-    },
-    {
-      id: 13,
-      name: "Dr. Patricia Morales",
-      specialty: "Ophthalmologist",
-      specialtyClass: "text-indigo",
-      image: "assets/img/doctor-grid/doc5.png",
-      rating: "4.9",
-      location: "Guadalajara, Mexico",
-      duration: "45 Min",
-      available: true,
-      insurance: getDoctorInsurances(13),
-      specialtyRank: getDoctorSpecialtyRank(13)
-    },
-    {
-      id: 14,
-      name: "Dr. Alejandro Torres",
-      specialty: "Podiatrist",
-      specialtyClass: "text-brown",
-      image: "assets/img/doctor-grid/doc6.png",
-      rating: "4.5",
-      location: "Puebla, Mexico",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(14),
-      specialtyRank: getDoctorSpecialtyRank(14)
-    },
-    {
-      id: 15,
-      name: "Dr. Sofia Herrera",
-      specialty: "Dermatologist",
-      specialtyClass: "text-pink",
-      image: "assets/img/doctor-grid/doc7.png",
-      rating: "4.8",
-      location: "Monterrey, Mexico",
-      duration: "40 Min",
-      available: true,
-      insurance: getDoctorInsurances(15),
-      specialtyRank: getDoctorSpecialtyRank(15)
-    },
-    {
-      id: 16,
-      name: "Dr. Miguel Castro",
-      specialty: "Orthopedic Surgeon (Orthopedist)",
-      specialtyClass: "text-dark",
-      image: "assets/img/doctor-grid/doc8.png",
-      rating: "4.9",
-      location: "Tijuana, Mexico",
-      duration: "60 Min",
-      available: true,
-      insurance: getDoctorInsurances(16),
-      specialtyRank: getDoctorSpecialtyRank(16)
-    },
-    {
-      id: 17,
-      name: "Dr. Laura Jimenez",
-      specialty: "Primary Care Physician (PCP)",
-      specialtyClass: "text-primary",
-      image: "assets/img/doctor-grid/doc1.png",
-      rating: "4.6",
-      location: "León, Mexico",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(17),
-      specialtyRank: getDoctorSpecialtyRank(17)
-    }
-  ];
+  const [allDoctors, setAllDoctors] = useState<DoctorCard[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await publicDoctorApi.list({ sort: 'rank', limit: 100 });
+        const cards: DoctorCard[] = res.results.map((d) => ({
+          id: d.id,
+          name: d.displayName,
+          specialty: d.designation || 'Doctor',
+          specialtyClass: specialtyColor(d.designation || ''),
+          image: d.image || 'assets/img/doctor-grid/doc1.png',
+          rating: '4.8',
+          location: d.location || '',
+          duration: '30 Min',
+          available: d.availability === 'available',
+          insurance: Array.isArray(d.insurances) ? d.insurances : [],
+          specialtyRank: d.specialtyRank ?? 0,
+          languages: (d as any).knownLanguages || (d as any).languages || [],
+          experience: (d as any).experience || '',
+          servicesOffered: (d as any).servicesOffered || [],
+        }));
+        setAllDoctors(cards);
+      } catch {
+        setAllDoctors([]);
+      }
+    })();
+  }, []);
 
   // Specialty mapping from URL parameters to display names
   const specialtyMapping: { [key: string]: string } = {
@@ -337,16 +148,16 @@ const Doctors = () => {
         : filtered;
 
       const sorted = diseaseFiltered
-        .map(d => ({...d, specialtyRank: d.specialtyRank ?? getDoctorSpecialtyRank(d.id)}))
+        .map(d => ({...d, specialtyRank: d.specialtyRank ?? 0}))
         .sort((a, b) => (b.specialtyRank ?? 0) - (a.specialtyRank ?? 0));
       setFilteredDoctors(sorted);
     } else {
       const sortedAll = allDoctors
-        .map(d => ({...d, specialtyRank: d.specialtyRank ?? getDoctorSpecialtyRank(d.id)}))
+        .map(d => ({...d, specialtyRank: d.specialtyRank ?? 0}))
         .sort((a, b) => (b.specialtyRank ?? 0) - (a.specialtyRank ?? 0));
       setFilteredDoctors(sortedAll);
     }
-  }, [searchParams]);
+  }, [searchParams, allDoctors]);
 
   return (
     <>
@@ -406,7 +217,7 @@ const Doctors = () => {
                               <Link to="/patient/doctor-profile">{doctor.name}</Link>
                           <i className="isax isax-tick-circle5 text-success ms-2" />
                         </h6>
-                            <p className="mb-2">MBBS, MD - {doctor.specialty}</p>
+                            <p className="mb-2">{doctor.specialty}</p>
                         <p className="d-flex align-items-center mb-0 fs-14">
                           <i className="isax isax-location me-2" />
                               {doctor.location}
@@ -423,8 +234,23 @@ const Doctors = () => {
                       <div>
                         <p className="d-flex align-items-center mb-0 fs-14 mb-2">
                           <i className="isax isax-language-circle text-dark me-2" />
-                          English, French
+                          {(() => {
+                            // languages from backend are not mapped into card, so render from a hidden map on filteredDoctors
+                            // We attach languages onto the doctor object when mapping API response; fallback to empty
+                            const lang = (doctor as any).languages;
+                            return Array.isArray(lang) && lang.length ? lang.join(', ') : '';
+                          })()}
                         </p>
+                        {(() => {
+                          const services = (doctor as any).servicesOffered;
+                          if (!Array.isArray(services) || services.length === 0) return null;
+                          return (
+                            <p className="d-flex align-items-center mb-0 fs-14 mb-2">
+                              <i className="isax isax-archive-14 text-dark me-2" />
+                              {services.join(", ")}
+                            </p>
+                          );
+                        })()}
                         {(() => {
                           const diseases = getDiseasesForSpecialty(doctor.specialty);
                           if (diseases.length === 0) return null;
@@ -441,7 +267,10 @@ const Doctors = () => {
                         </p>
                         <p className="d-flex align-items-center mb-0 fs-14">
                           <i className="isax isax-archive-14 text-dark me-2" />
-                          20 Years of Experience
+                          {(() => {
+                            const exp = (doctor as any).experience;
+                            return exp ? `${exp}`.replace(/years?/i, 'Years of Experience') : '';
+                          })()}
                         </p>
                       </div>
                     </div>

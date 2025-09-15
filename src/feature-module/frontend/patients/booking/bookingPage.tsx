@@ -3,22 +3,14 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import ImageWithBasePath from '../../../../components/imageWithBasePath'
 import Header from '../../header'
 import BookingWizard from './bookingWizard'
-import DoctorProfileService from '../../common/services/doctorProfileService'
 import { getDiseasesForSpecialty } from '../../common/data/specialties'
 import { useAuth } from '../../../../core/context/AuthContext'
+import publicDoctorApi from '../../../../core/services/publicDoctorApi'
 
 const BookingPage: React.FC = () => {
   const [selectedDoctor, setSelectedDoctor] = useState<any>(null)
   const [showBookingWizard, setShowBookingWizard] = useState(false)
-  
-  // Get doctor profile service instance
-  const doctorProfileService = DoctorProfileService.getInstance();
-  
-  // Function to get insurance data for a doctor
-  const getDoctorInsurances = (doctorId: number): string[] => {
-    const profile = doctorProfileService.getDoctorProfile(doctorId.toString());
-    return profile?.selectedInsurances || [];
-  };
+  const [doctors, setDoctors] = useState<any[]>([])
   const { authState } = useAuth()
   const { isAuthenticated, userType } = authState
   const navigate = useNavigate()
@@ -32,69 +24,26 @@ const BookingPage: React.FC = () => {
     }
   }, [location.state])
 
-  // Sample doctors data (you can replace this with API data)
-  const doctors = [
-    {
-      id: 1,
-      name: "Dr. Michael Brown",
-      specialty: "Psychologist",
-      rating: 5.0,
-      experience: "10+ years",
-      image: "assets/img/doctor-grid/doc1.png",
-      location: "Guadalajara, Mexico",
-      insurance: getDoctorInsurances(1)
-    },
-    {
-      id: 2,
-      name: "Dr. Sarah Johnson",
-      specialty: "Cardiologist",
-      rating: 4.8,
-      experience: "8+ years",
-      image: "assets/img/doctor-grid/doc2.png",
-      location: "Monterrey, Mexico",
-      insurance: getDoctorInsurances(2)
-    },
-    {
-      id: 3,
-      name: "Dr. David Wilson",
-      specialty: "Neurologist",
-      rating: 4.9,
-      experience: "12+ years",
-      image: "assets/img/doctor-grid/doc3.png",
-      location: "Puebla, Mexico",
-      insurance: getDoctorInsurances(3)
-    },
-    {
-      id: 4,
-      name: "Dr. Emily Davis",
-      specialty: "Pediatrician",
-      rating: 4.7,
-      experience: "6+ years",
-      image: "assets/img/doctor-grid/doc4.png",
-      location: "Tijuana, Mexico",
-      insurance: getDoctorInsurances(4)
-    },
-    {
-      id: 5,
-      name: "Dr. James Miller",
-      specialty: "Dermatologist",
-      rating: 4.9,
-      experience: "15+ years",
-      image: "assets/img/doctor-grid/doc5.png",
-      location: "León, Mexico",
-      insurance: getDoctorInsurances(5)
-    },
-    {
-      id: 6,
-      name: "Dr. Lisa Anderson",
-      specialty: "Orthopedist",
-      rating: 4.8,
-      experience: "11+ years",
-      image: "assets/img/doctor-grid/doc6.png",
-      location: "Cancún, Mexico",
-      insurance: getDoctorInsurances(6)
-    }
-  ]
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await publicDoctorApi.list({ sort: 'rank', limit: 100 })
+        const mapped = res.results.map((d) => ({
+          id: d.id,
+          name: d.displayName,
+          specialty: d.designation || 'Doctor',
+          rating: 4.8,
+          experience: d.experience || '',
+          image: d.image || 'assets/img/doctor-grid/doc1.png',
+          location: d.location || '',
+          insurance: Array.isArray(d.insurances) ? d.insurances : [],
+        }))
+        setDoctors(mapped)
+      } catch {
+        setDoctors([])
+      }
+    })()
+  }, [])
 
   const handleBookNow = (doctor: any) => {
     if (!isAuthenticated || userType !== 'patient') {
