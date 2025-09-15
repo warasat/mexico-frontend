@@ -1,7 +1,9 @@
 import { IMG07, IMG08, IMG09 } from "./img";
+import { Link, useLocation } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 const Content = () => {
+  const location = useLocation();
+  const selectedDoctor = location.state?.selectedDoctor;
   return (
     <div>
       <div className="card">
@@ -216,17 +218,16 @@ const Content = () => {
                   </div>
                   {/* /Awards Details */}
                   {/* Services List */}
-                  <div className="service-list">
-                    <h4>Services</h4>
-                    <ul className="clearfix">
-                      <li>Tooth cleaning </li>
-                      <li>Root Canal Therapy</li>
-                      <li>Implants</li>
-                      <li>Composite Bonding</li>
-                      <li>Fissure Sealants</li>
-                      <li>Surgical Extractions</li>
-                    </ul>
-                  </div>
+                  {selectedDoctor?.servicesOffered && selectedDoctor.servicesOffered.length > 0 && (
+                    <div className="service-list">
+                      <h4>Services</h4>
+                      <ul className="clearfix">
+                        {selectedDoctor.servicesOffered.map((service: string, index: number) => (
+                          <li key={index}>{service}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   {/* /Services List */}
                   {/* Specializations List */}
                   <div className="service-list">

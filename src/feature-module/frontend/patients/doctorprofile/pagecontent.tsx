@@ -20,7 +20,7 @@ const Pagecontent = () => {
     totalReviews: 35,
     image: "assets/img/doctor-grid/doc3.png",
     location: "Guadalajara",
-    services: ["Dental Fillings", "Teeth Whitening"],
+    servicesOffered: [],
   };
 
   // Use selected doctor or default
@@ -77,14 +77,11 @@ const Pagecontent = () => {
                     </div>
                   </div>
                   <div className="clinic-services">
-                    {doctor.services?.map((service: string, index: number) => (
-                      <span key={index}>{service}</span>
-                    )) || (
-                      <>
-                        <span>Dental Fillings</span>
-                        <span>Teeth Whitening</span>
-                      </>
-                    )}
+                    {doctor.servicesOffered && doctor.servicesOffered.length > 0 ? (
+                      doctor.servicesOffered.map((service: string, index: number) => (
+                        <span key={index}>{service}</span>
+                      ))
+                    ) : null}
                   </div>
                 </div>
               </div>

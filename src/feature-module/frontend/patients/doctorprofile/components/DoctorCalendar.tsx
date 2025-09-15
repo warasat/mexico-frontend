@@ -41,7 +41,7 @@ const DoctorCalendar: React.FC<DoctorCalendarProps> = ({ doctorId, doctorName, d
         totalReviews: 35,
         image: 'assets/img/doctor-grid/doc3.png',
         location: 'Lake Chapala',
-        services: ['Dental Fillings', 'Teeth Whitening'],
+        servicesOffered: [],
         selectedDate
       };
       

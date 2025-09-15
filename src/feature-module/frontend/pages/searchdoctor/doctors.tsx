@@ -2,8 +2,8 @@ import { Link, useSearchParams } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { useEffect, useState } from "react";
 import publicDoctorApi from "../../../../core/services/publicDoctorApi";
-import { getDiseasesForSpecialty } from "../../common/data/specialties";
 import { useAuth } from "../../../../core/context/AuthContext";
+import SocketService from "../../../../core/services/socketService";
 
 // Utility function to generate one week of dates starting from today
 const generateWeekDates = () => {
@@ -105,6 +105,23 @@ const Doctors = () => {
     })();
   }, []);
 
+  // Listen for doctor availability updates
+  useEffect(() => {
+    const socketService = SocketService.getInstance();
+    
+    const unsubscribe = socketService.subscribe('doctorAvailabilityUpdate', (data: { doctorId: string; availability: 'available' | 'unavailable' }) => {
+      setAllDoctors(prevDoctors => 
+        prevDoctors.map(doctor => 
+          doctor.id === data.doctorId 
+            ? { ...doctor, available: data.availability === 'available' }
+            : doctor
+        )
+      );
+    });
+
+    return unsubscribe;
+  }, []);
+
   // Specialty mapping from URL parameters to display names
   const specialtyMapping: { [key: string]: string } = {
     "primary-care": "Primary Care Physicians",
@@ -126,8 +143,6 @@ const Doctors = () => {
   useEffect(() => {
     const specialtyParam = searchParams.get("specialty");
     setSpecialty(specialtyParam || "");
-    
-    const diseaseParam = searchParams.get("disease")?.toLowerCase() || "";
     if (specialtyParam) {
       // Filter doctors based on specialty
       const filtered = allDoctors.filter(doctor => {
@@ -173,9 +188,7 @@ const Doctors = () => {
         }
       });
       
-      const diseaseFiltered = diseaseParam
-        ? filtered.filter(d => getDiseasesForSpecialty(d.specialty).some(x => x.toLowerCase() === diseaseParam))
-        : filtered;
+      const diseaseFiltered = filtered; // Disease filtering removed as per requirements
 
       const sorted = diseaseFiltered
         .map(d => ({...d, specialtyRank: d.specialtyRank ?? 0}))
@@ -272,22 +285,12 @@ const Doctors = () => {
                           })()}
                         </p>
                         {(() => {
-                          const services = (doctor as any).servicesOffered;
+                          const services = doctor.servicesOffered;
                           if (!Array.isArray(services) || services.length === 0) return null;
                           return (
                             <p className="d-flex align-items-center mb-0 fs-14 mb-2">
                               <i className="isax isax-archive-14 text-dark me-2" />
                               {services.join(", ")}
-                            </p>
-                          );
-                        })()}
-                        {(() => {
-                          const diseases = getDiseasesForSpecialty(doctor.specialty);
-                          if (diseases.length === 0) return null;
-                          return (
-                            <p className="d-flex align-items-center mb-0 fs-14 mb-2">
-                              <i className="isax isax-archive-14 text-dark me-2" />
-                              {diseases.join(", ")}
                             </p>
                           );
                         })()}

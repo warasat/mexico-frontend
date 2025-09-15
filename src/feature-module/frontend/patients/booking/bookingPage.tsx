@@ -3,14 +3,28 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import ImageWithBasePath from '../../../../components/imageWithBasePath'
 import Header from '../../header'
 import BookingWizard from './bookingWizard'
-import { getDiseasesForSpecialty } from '../../common/data/specialties'
 import { useAuth } from '../../../../core/context/AuthContext'
-import publicDoctorApi from '../../../../core/services/publicDoctorApi'
+import publicDoctorApi, { type PublicDoctor } from '../../../../core/services/publicDoctorApi'
+import SocketService from '../../../../core/services/socketService'
+
+interface Doctor {
+  id: number
+  name: string
+  specialty: string
+  rating: number
+  experience: string
+  image: string
+  location: string
+  insurance: string[]
+  available: boolean
+  servicesOffered: string[]
+}
 
 const BookingPage: React.FC = () => {
-  const [selectedDoctor, setSelectedDoctor] = useState<any>(null)
+  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null)
   const [showBookingWizard, setShowBookingWizard] = useState(false)
-  const [doctors, setDoctors] = useState<any[]>([])
+  const [doctors, setDoctors] = useState<Doctor[]>([])
+  const [doctorAvailability, setDoctorAvailability] = useState<{[key: string]: 'available' | 'unavailable'}>({})
   const { authState } = useAuth()
   const { isAuthenticated, userType } = authState
   const navigate = useNavigate()
@@ -27,8 +41,8 @@ const BookingPage: React.FC = () => {
     (async () => {
       try {
         const res = await publicDoctorApi.list({ sort: 'rank', limit: 100 })
-        const mapped = res.results.map((d) => ({
-          id: d.id,
+        const mapped: Doctor[] = res.results.map((d: PublicDoctor) => ({
+          id: parseInt(d.id),
           name: d.displayName,
           specialty: d.designation || 'Doctor',
           rating: 4.8,
@@ -36,6 +50,8 @@ const BookingPage: React.FC = () => {
           image: d.image || 'assets/img/doctor-grid/doc1.png',
           location: d.location || '',
           insurance: Array.isArray(d.insurances) ? d.insurances : [],
+          available: d.availability === 'available', // Get availability from database
+          servicesOffered: d.servicesOffered || [], // Get services from database
         }))
         setDoctors(mapped)
       } catch {
@@ -44,7 +60,30 @@ const BookingPage: React.FC = () => {
     })()
   }, [])
 
-  const handleBookNow = (doctor: any) => {
+  // Subscribe to real-time availability updates
+  useEffect(() => {
+    const socketService = SocketService.getInstance()
+    const unsubscribe = socketService.subscribe('doctorAvailabilityUpdate', (data: { doctorId: string; availability: 'available' | 'unavailable' }) => {
+      console.log('Booking page received availability update:', data)
+      
+      setDoctorAvailability(prev => ({
+        ...prev,
+        [data.doctorId]: data.availability
+      }))
+      
+      // Also update the doctors array
+      setDoctors(prevDoctors => 
+        prevDoctors.map(doctor => 
+          doctor.id.toString() === data.doctorId 
+            ? { ...doctor, available: data.availability === 'available' }
+            : doctor
+        )
+      )
+    })
+    return unsubscribe
+  }, [])
+
+  const handleBookNow = (doctor: Doctor) => {
     if (!isAuthenticated || userType !== 'patient') {
       // Redirect to patient login with return path
       navigate('/patient/login', { 
@@ -63,6 +102,17 @@ const BookingPage: React.FC = () => {
   const handleBackToDoctors = () => {
     setSelectedDoctor(null)
     setShowBookingWizard(false)
+  }
+
+  // Helper function to get doctor availability
+  const getDoctorAvailability = (doctor: Doctor): 'available' | 'unavailable' => {
+    // First check if we have a real-time update for this doctor
+    const realTimeAvailability = doctorAvailability[doctor.id.toString()]
+    if (realTimeAvailability) {
+      return realTimeAvailability
+    }
+    // Fall back to the doctor's stored availability
+    return doctor.available ? 'available' : 'unavailable'
   }
 
   // If booking wizard is active, show it
@@ -130,9 +180,9 @@ const BookingPage: React.FC = () => {
                           <Link to="#" className={`${index % 2 === 0 ? 'text-pink' : 'text-indigo'} fw-medium fs-14`}>
                             {doctor.specialty}
                           </Link>
-                          <span className="badge bg-success-light d-inline-flex align-items-center">
+                          <span className={`badge ${getDoctorAvailability(doctor) === 'available' ? 'bg-success-light' : 'bg-danger-light'} d-inline-flex align-items-center`}>
                             <i className="fa-solid fa-circle fs-5 me-1" />
-                            Available
+                            {getDoctorAvailability(doctor) === 'available' ? 'Available' : 'Unavailable'}
                           </span>
                         </div>
                         <div className="p-3 pt-0 d-flex flex-column flex-grow-1">
@@ -155,13 +205,13 @@ const BookingPage: React.FC = () => {
                               </p>
                             </div>
                             {(() => {
-                              const diseases = getDiseasesForSpecialty(doctor.specialty);
-                              if (diseases.length === 0) return null;
+                              const services = doctor.servicesOffered;
+                              if (!Array.isArray(services) || services.length === 0) return null;
                               return (
                                 <div className="d-flex align-items-center mt-2">
                                   <p className="d-flex align-items-center mb-0 fs-14">
                                     <i className="isax isax-archive-14 me-2" />
-                                    {diseases.join(", ")}
+                                    {services.join(", ")}
                                   </p>
                                 </div>
                               );
@@ -170,9 +220,12 @@ const BookingPage: React.FC = () => {
                           <div className="d-flex align-items-center justify-content-center mt-auto">
                             <button
                               onClick={() => handleBookNow(doctor)}
-                              className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
+                              disabled={getDoctorAvailability(doctor) === 'unavailable'}
+                              className={`btn btn-md d-inline-flex align-items-center rounded-pill text-truncate ${
+                                getDoctorAvailability(doctor) === 'available' ? 'btn-dark' : 'btn-secondary'
+                              }`}
                             >
-                              Book Now
+                              {getDoctorAvailability(doctor) === 'available' ? 'Book Now' : 'Unavailable'}
                             </button>
                           </div>
                         </div>

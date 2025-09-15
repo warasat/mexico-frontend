@@ -2,12 +2,25 @@ import { useState } from 'react'
 import ImageWithBasePath from '../../../../components/imageWithBasePath'
 import { Link } from "react-router-dom";
 import { Calendar, theme } from 'antd';
+import type { Dayjs } from 'dayjs';
 import InsuranceSelector from './components/InsuranceSelector';
 import Header from '../../header';
 import '../../../../assets/css/booking-map.css';
 
+interface Doctor {
+  id: number;
+  name: string;
+  specialty: string;
+  rating: number;
+  experience: string;
+  image: string;
+  location: string;
+  selectedDate?: string;
+  selectedTime?: string;
+}
+
 interface BookingWizardProps {
-  selectedDoctor?: any;
+  selectedDoctor?: Doctor;
   onBack?: () => void;
 }
 
@@ -39,7 +52,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
     borderRadius: token.borderRadiusLG,
   };
 
-  const OnPanelChange = (value: any, mode: any) => {
+  const OnPanelChange = (value: Dayjs, mode: string) => {
     console.log(value.format('YYYY-MM-DD'), mode);
     setSelectedDate(value.format('YYYY-MM-DD'));
   };
@@ -157,7 +170,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                         <div className="booking-header pb-0">
                           <div className="card mb-0">
                             <div className="card-body">
-                              <div className="d-flex align-items-center flex-wrap rpw-gap-2 flex-wrap row-gap-2">
+                              <div className="d-flex align-items-center flex-wrap rpw-gap-2 row-gap-2">
                                 <span className="avatar avatar-xxxl avatar-rounded me-2 flex-shrink-0">
                                   <ImageWithBasePath
                                     src={doctor.image}
@@ -230,7 +243,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                         <div className="booking-header pb-0">
                           <div className="card mb-0">
                             <div className="card-body">
-                              <div className="d-flex align-items-center flex-wrap rpw-gap-2 flex-wrap row-gap-2">
+                              <div className="d-flex align-items-center flex-wrap rpw-gap-2 row-gap-2">
                                 <span className="avatar avatar-xxxl avatar-rounded me-2 flex-shrink-0">
                                   <ImageWithBasePath
                                     src={doctor.image}
@@ -342,7 +355,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                         <div className="booking-header pb-0">
                           <div className="card mb-0">
                             <div className="card-body">
-                              <div className="d-flex align-items-center flex-wrap rpw-gap-2 mb-4 flex-wrap row-gap-2">
+                              <div className="d-flex align-items-center flex-wrap rpw-gap-2 mb-4 row-gap-2">
                                 <span className="avatar avatar-xxxl avatar-rounded me-2 flex-shrink-0">
                                   <ImageWithBasePath
                                     src={doctor.image}
@@ -760,7 +773,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                         <div className="booking-header pb-0">
                           <div className="card mb-0">
                             <div className="card-body">
-                              <div className="d-flex align-items-center flex-wrap rpw-gap-2 mb-4 flex-wrap row-gap-2">
+                              <div className="d-flex align-items-center flex-wrap rpw-gap-2 mb-4 row-gap-2">
                                 <span className="avatar avatar-xxxl avatar-rounded me-2 flex-shrink-0">
                                   <ImageWithBasePath
                                     src={doctor.image}
@@ -905,7 +918,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                         <div className="booking-header pb-0">
                           <div className="card mb-0">
                             <div className="card-body">
-                              <div className="d-flex align-items-center flex-wrap rpw-gap-2 flex-wrap row-gap-2">
+                              <div className="d-flex align-items-center flex-wrap rpw-gap-2 row-gap-2">
                                 <span className="avatar avatar-xxxl avatar-rounded me-2 flex-shrink-0">
                                   <ImageWithBasePath
                                     src={doctor.image}

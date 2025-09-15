@@ -88,7 +88,6 @@ const ProfileSetting = (props: ProfileSettingProps) => {
 
   const [selectedInsurances, setSelectedInsurances] = useState<string[]>([]);
   const [experience, setExperience] = useState<string>('');
-  const [education, setEducation] = useState<string>('');
   const [specialtyRank, setSpecialtyRank] = useState<string>('');
   const [servicesOffered, setServicesOffered] = useState<string[]>([]);
   const [isEditMode, setIsEditMode] = useState<boolean>(true);
@@ -131,7 +130,6 @@ const ProfileSetting = (props: ProfileSettingProps) => {
           setPincode(doc.address?.pincode || '');
           setExperience(doc.experience || '');
           setSelectedInsurances(Array.isArray(doc.insurances) ? doc.insurances : []);
-          setEducation(typeof doc.education === 'string' ? doc.education : '');
           setSpecialtyRank((doc.specialtyRank ?? '').toString());
           setAboutMe(doc.aboutMe || '');
           setTags(Array.isArray(doc.knownLanguages) ? doc.knownLanguages : []);
@@ -172,7 +170,6 @@ const ProfileSetting = (props: ProfileSettingProps) => {
         },
         experience,
         insurances: selectedInsurances,
-        education,
         knownLanguages: tags,
         specialtyRank: Number(specialtyRank) || 0,
         servicesOffered,
@@ -490,21 +487,6 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                         Save
                       </Link>
                     </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6">
-                  <div className="form-wrap">
-                    <label className="form-label">
-                      Education <span className="text-danger">*</span>
-                    </label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      placeholder="e.g., MD, PhD, BDS"
-                      value={education}
-                      onChange={(e) => setEducation(e.target.value)}
-                      disabled={disabledAll}
-                    />
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6">

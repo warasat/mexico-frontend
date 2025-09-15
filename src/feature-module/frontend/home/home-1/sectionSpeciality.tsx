@@ -1,73 +1,70 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from "react-slick";
 import ImageWithBasePath from '../../../../components/imageWithBasePath';
 import { useNavigate } from 'react-router-dom';
+import publicDoctorApi, { type PublicDoctor } from '../../../../core/services/publicDoctorApi';
 
 const SectionSpeciality: React.FC = () => {
     const navigate = useNavigate();
+    const [allDoctors, setAllDoctors] = useState<PublicDoctor[]>([]);
 
     interface ArrowProps {
         onClick?: React.MouseEventHandler<HTMLButtonElement>;
     }
 
-    // Doctor data to count by specialty
-    const allDoctors = [
-        { id: 1, name: "Dr. Michael Brown", specialty: "Psychologist" },
-        { id: 2, name: "Dr. Nicholas Tello", specialty: "Pediatrician" },
-        { id: 3, name: "Dr. Harold Bryant", specialty: "Neurologist" },
-        { id: 4, name: "Dr. Sandra Jones", specialty: "Cardiologist" },
-        { id: 5, name: "Dr. Charles Scott", specialty: "Neurologist" },
-        { id: 6, name: "Dr. Maria Rodriguez", specialty: "Dentist" },
-        { id: 7, name: "Dr. Lisa Anderson", specialty: "Orthopedist" },
-        { id: 8, name: "Dr. Robert Wilson", specialty: "Dermatologist" },
-        { id: 9, name: "Dr. Jennifer Davis", specialty: "Psychiatrist" },
-        { id: 10, name: "Dr. David Martinez", specialty: "Urologist" },
-        { id: 11, name: "Dr. Sarah Johnson", specialty: "Endocrinologist" },
-        { id: 12, name: "Dr. James Thompson", specialty: "Pulmonologist" },
-        { id: 13, name: "Dr. Emily White", specialty: "Gastroenterologist" },
-        { id: 14, name: "Dr. Christopher Lee", specialty: "Ophthalmologist" },
-        { id: 15, name: "Dr. Amanda Garcia", specialty: "OB-GYN" },
-        { id: 16, name: "Dr. Kevin Brown", specialty: "Chiropractor" },
-        { id: 17, name: "Dr. Rachel Green", specialty: "Optometrist" },
-        { id: 18, name: "Dr. Mark Taylor", specialty: "Podiatrist" },
-        { id: 19, name: "Dr. Jessica Clark", specialty: "Primary Care Physician" },
-        { id: 20, name: "Dr. Daniel Adams", specialty: "ENT" }
-    ];
+    // Fetch doctors from database
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await publicDoctorApi.list({ sort: 'rank', limit: 100 });
+                setAllDoctors(res.results);
+            } catch {
+                setAllDoctors([]);
+            }
+        })();
+    }, []);
 
     // Function to count doctors by specialty
     const getDoctorCount = (specialtyName: string): number => {
-        const specialtyMapping: { [key: string]: string } = {
-            "Cardiology": "Cardiologist",
-            "Orthopedics": "Orthopedist", 
-            "Neurology": "Neurologist",
-            "Pediatrics": "Pediatrician",
-            "Psychiatry": "Psychiatrist",
-            "Endocrinology": "Endocrinologist",
-            "Pulmonology": "Pulmonologist",
-            "Urology": "Urologist"
+        const specialtyMapping: { [key: string]: string[] } = {
+            "Dentist": ["Dentist", "Dental"],
+            "Cardiologist": ["Cardiologist", "Cardiology", "Heart Specialist"],
+            "Dermatologist": ["Dermatologist", "Dermatology", "Skin Specialist"],
+            "Pediatrician": ["Pediatrician", "Pediatrics", "Child Specialist"],
+            "Orthopedic Surgeon": ["Orthopedic Surgeon", "Orthopedist", "Orthopedics", "Bone Specialist"],
+            "Psychologist": ["Psychologist", "Psychology", "Mental Health"],
+            "Psychiatrist": ["Psychiatrist", "Psychiatry", "Mental Health Specialist"],
+            "Primary Care Physician": ["Primary Care Physician", "PCP", "General Practitioner", "Family Doctor"],
+            "Chiropractor": ["Chiropractor", "Chiropractic", "Spine Specialist"],
+            "Optometrist": ["Optometrist", "Optometry", "Eye Care"]
         };
 
-        const mappedSpecialty = specialtyMapping[specialtyName] || specialtyName;
-        return allDoctors.filter(doctor => 
-            doctor.specialty.toLowerCase() === mappedSpecialty.toLowerCase()
-        ).length;
+        const mappedSpecialties = specialtyMapping[specialtyName] || [specialtyName];
+        return allDoctors.filter(doctor => {
+            const doctorSpecialty = doctor.designation?.toLowerCase() || '';
+            return mappedSpecialties.some(specialty => 
+                doctorSpecialty.includes(specialty.toLowerCase())
+            );
+        }).length;
     };
 
     // Function to handle specialty click
     const handleSpecialtyClick = (specialtyName: string) => {
         // Allow search without authentication
         const specialtyMapping: { [key: string]: string } = {
-            "Cardiology": "cardiologists",
-            "Orthopedics": "orthopedic-surgeons",
-            "Neurology": "neurologists", 
-            "Pediatrics": "pediatricians",
-            "Psychiatry": "psychiatrists",
-            "Endocrinology": "endocrinologists",
-            "Pulmonology": "pulmonologists",
-            "Urology": "urologists"
+            "Dentist": "dentists",
+            "Cardiologist": "cardiologists",
+            "Dermatologist": "dermatologists",
+            "Pediatrician": "pediatricians",
+            "Orthopedic Surgeon": "orthopedic-surgeons",
+            "Psychologist": "psychologists",
+            "Psychiatrist": "psychiatrists",
+            "Primary Care Physician": "primary-care",
+            "Chiropractor": "chiropractors",
+            "Optometrist": "optometrists"
         };
 
-        const urlParam = specialtyMapping[specialtyName] || specialtyName.toLowerCase();
+        const urlParam = specialtyMapping[specialtyName] || specialtyName.toLowerCase().replace(/\s+/g, '-');
         navigate(`/patient/search-doctor1?specialty=${encodeURIComponent(urlParam)}`);
     };
 
@@ -87,7 +84,7 @@ const SectionSpeciality: React.FC = () => {
         </div>
     );
     const SpecialitySlider = {
-        slidesToShow: 8,
+        slidesToShow: 10,
         slidesToScroll: 1,
         dots: false,
         arrows: true,
@@ -100,9 +97,15 @@ const SectionSpeciality: React.FC = () => {
         pauseOnHover: true,
         responsive: [
             {
-                breakpoint: 992,
+                breakpoint: 1200,
                 settings: {
                     slidesToShow: 8,
+                },
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 6,
                 },
             },
             {
@@ -141,7 +144,7 @@ const SectionSpeciality: React.FC = () => {
                     </div>
                     <div className="spciality-slider slick-margins slick-arrow-center aos" data-aos="fade-up">
                         <Slider {...SpecialitySlider}>
-                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Cardiology")}>
+                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Dentist")}>
                                 <div className="spaciality-img">
                                     <ImageWithBasePath src="assets/img/specialities/top-speciality-1.jpeg" alt="img" />
                                     <span className="spaciality-icon">
@@ -152,11 +155,11 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Cardiology</span>
+                                    <span style={{ cursor: 'pointer' }}>Dentist</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Cardiology")} Doctors</p>
+                                <p className="mb-0">{getDoctorCount("Dentist")} Doctors</p>
                             </div>
-                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Orthopedics")}>
+                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Cardiologist")}>
                                 <div className="spaciality-img">
                                     <ImageWithBasePath src="assets/img/specialities/top-speciality-2.jpg" alt="img" />
                                     <span className="spaciality-icon">
@@ -167,11 +170,11 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Orthopedics</span>
+                                    <span style={{ cursor: 'pointer' }}>Cardiologist</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Orthopedics")} Doctors</p>
+                                <p className="mb-0">{getDoctorCount("Cardiologist")} Doctors</p>
                             </div>
-                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Neurology")}>
+                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Dermatologist")}>
                                 <div className="spaciality-img">
                                     <ImageWithBasePath src="assets/img/specialities/top-speciality-3.png" alt="img" />
                                     <span className="spaciality-icon">
@@ -182,11 +185,11 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Neurology</span>
+                                    <span style={{ cursor: 'pointer' }}>Dermatologist</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Neurology")} Doctors</p>
+                                <p className="mb-0">{getDoctorCount("Dermatologist")} Doctors</p>
                             </div>
-                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Pediatrics")}>
+                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Pediatrician")}>
                                 <div className="spaciality-img">
                                     <ImageWithBasePath src="assets/img/specialities/top-speciality-4.webp" alt="img" />
                                     <span className="spaciality-icon">
@@ -197,11 +200,11 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Pediatrics</span>
+                                    <span style={{ cursor: 'pointer' }}>Pediatrician</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Pediatrics")} Doctors</p>
+                                <p className="mb-0">{getDoctorCount("Pediatrician")} Doctors</p>
                             </div>
-                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Psychiatry")}>
+                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Orthopedic Surgeon")}>
                                 <div className="spaciality-img">
                                     <ImageWithBasePath src="assets/img/specialities/top-speciality-5.jpg" alt="img" />
                                     <span className="spaciality-icon">
@@ -212,11 +215,11 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Psychiatry</span>
+                                    <span style={{ cursor: 'pointer' }}>Orthopedic Surgeon</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Psychiatry")} Doctors</p>
+                                <p className="mb-0">{getDoctorCount("Orthopedic Surgeon")} Doctors</p>
                             </div>
-                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Endocrinology")}>
+                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Psychologist")}>
                                 <div className="spaciality-img">
                                     <ImageWithBasePath src="assets/img/specialities/top-speciality-6.png" alt="img" />
                                     <span className="spaciality-icon">
@@ -227,11 +230,11 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Endocrinology</span>
+                                    <span style={{ cursor: 'pointer' }}>Psychologist</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Endocrinology")} Doctors</p>
+                                <p className="mb-0">{getDoctorCount("Psychologist")} Doctors</p>
                             </div>
-                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Pulmonology")}>
+                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Psychiatrist")}>
                                 <div className="spaciality-img">
                                     <ImageWithBasePath src="assets/img/specialities/top-speciality-7.webp" alt="img" />
                                     <span className="spaciality-icon">
@@ -242,11 +245,11 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Pulmonology</span>
+                                    <span style={{ cursor: 'pointer' }}>Psychiatrist</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Pulmonology")} Doctors</p>
+                                <p className="mb-0">{getDoctorCount("Psychiatrist")} Doctors</p>
                             </div>
-                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Urology")}>
+                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Primary Care Physician")}>
                                 <div className="spaciality-img">
                                     <ImageWithBasePath src="assets/img/specialities/top-speciality-8.jpg" alt="img" />
                                     <span className="spaciality-icon">
@@ -257,9 +260,39 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Urology</span>
+                                    <span style={{ cursor: 'pointer' }}>Primary Care Physician</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Urology")} Doctors</p>
+                                <p className="mb-0">{getDoctorCount("Primary Care Physician")} Doctors</p>
+                            </div>
+                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Chiropractor")}>
+                                <div className="spaciality-img">
+                                    <ImageWithBasePath src="assets/img/specialities/top-speciality-1.jpeg" alt="img" />
+                                    <span className="spaciality-icon">
+                                        <ImageWithBasePath
+                                            src="assets/img/specialities/speciality-icon-01.svg"
+                                            alt="img"
+                                        />
+                                    </span>
+                                </div>
+                                <h6>
+                                    <span style={{ cursor: 'pointer' }}>Chiropractor</span>
+                                </h6>
+                                <p className="mb-0">{getDoctorCount("Chiropractor")} Doctors</p>
+                            </div>
+                            <div className="spaciality-item" onClick={() => handleSpecialtyClick("Optometrist")}>
+                                <div className="spaciality-img">
+                                    <ImageWithBasePath src="assets/img/specialities/top-speciality-2.jpg" alt="img" />
+                                    <span className="spaciality-icon">
+                                        <ImageWithBasePath
+                                            src="assets/img/specialities/speciality-icon-02.svg"
+                                            alt="img"
+                                        />
+                                    </span>
+                                </div>
+                                <h6>
+                                    <span style={{ cursor: 'pointer' }}>Optometrist</span>
+                                </h6>
+                                <p className="mb-0">{getDoctorCount("Optometrist")} Doctors</p>
                             </div>
                         </Slider>
 

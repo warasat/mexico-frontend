@@ -16,27 +16,7 @@ export interface DoctorProfilePayload {
 	};
 	experience?: string;
 	insurances?: string[];
-	education?: string | Array<{
-		degree?: string;
-		institution?: string;
-		startYear?: number;
-		endYear?: number;
-		description?: string;
-	}>;
-	workExperience?: Array<{
-		organization?: string;
-		title?: string;
-		startYear?: number;
-		endYear?: number | undefined;
-		description?: string;
-	}>;
 	servicesOffered?: string[];
-	awards?: Array<{
-		title?: string;
-		year?: number;
-		organization?: string;
-		description?: string;
-	}>;
 	aboutMe?: string;
 	knownLanguages?: string[];
 	specialtyRank?: number;

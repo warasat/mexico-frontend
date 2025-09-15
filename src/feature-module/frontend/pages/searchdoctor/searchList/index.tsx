@@ -3,10 +3,13 @@ import ImageWithBasePath from "../../../../../components/imageWithBasePath";
 import DoctorProfileService from "../../../common/services/doctorProfileService";
 import { getDiseasesForSpecialty } from "../../../common/data/specialties";
 import { useAuth } from "../../../../../core/context/AuthContext";
+import { useEffect, useState } from "react";
+import SocketService from "../../../../../core/services/socketService";
 
 const SearchList = () => {
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
+  const [doctorAvailability, setDoctorAvailability] = useState<{[key: string]: 'available' | 'unavailable'}>({});
 
   // Get doctor profile service instance
   const doctorProfileService = DoctorProfileService.getInstance();
@@ -15,6 +18,25 @@ const SearchList = () => {
   const getDoctorInsurances = (doctorId: number): string[] => {
     const profile = doctorProfileService.getDoctorProfile(doctorId.toString());
     return profile?.selectedInsurances || [];
+  };
+
+  // Listen for doctor availability updates
+  useEffect(() => {
+    const socketService = SocketService.getInstance();
+    
+    const unsubscribe = socketService.subscribe('doctorAvailabilityUpdate', (data: { doctorId: string; availability: 'available' | 'unavailable' }) => {
+      setDoctorAvailability(prev => ({
+        ...prev,
+        [data.doctorId]: data.availability
+      }));
+    });
+
+    return unsubscribe;
+  }, []);
+
+  // Function to get doctor availability
+  const getDoctorAvailability = (doctorId: number): 'available' | 'unavailable' => {
+    return doctorAvailability[doctorId.toString()] || 'available'; // Default to available if not set
   };
 
   // Doctor data for the search list
@@ -161,9 +183,9 @@ const SearchList = () => {
               <Link to="#" className="text-indigo fw-medium fs-14">
                 Psychologist
               </Link>
-              <span className="badge bg-success-light d-inline-flex align-items-center">
+              <span className={`badge ${getDoctorAvailability(1) === 'available' ? 'bg-success-light' : 'bg-danger-light'} d-inline-flex align-items-center`}>
                 <i className="fa-solid fa-circle fs-5 me-1" />
-                Available
+                {getDoctorAvailability(1) === 'available' ? 'Available' : 'Unavailable'}
               </span>
             </div>
             <div className="p-3 pt-0">
@@ -215,9 +237,9 @@ const SearchList = () => {
               <Link to="#" className="text-pink fw-medium fs-14">
                 Pediatrician
               </Link>
-              <span className="badge bg-success-light d-inline-flex align-items-center">
+              <span className={`badge ${getDoctorAvailability(2) === 'available' ? 'bg-success-light' : 'bg-danger-light'} d-inline-flex align-items-center`}>
                 <i className="fa-solid fa-circle fs-5 me-1" />
-                Available
+                {getDoctorAvailability(2) === 'available' ? 'Available' : 'Unavailable'}
               </span>
             </div>
             <div className="p-3 pt-0">

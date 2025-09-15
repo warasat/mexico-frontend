@@ -26,18 +26,6 @@ const SettingsHeader: React.FC = () => {
             Experience
           </Link>
         </li>
-        <li>
-          <Link className={`nav-link ${pathnames.includes("/doctor/education") ? "active" : ""}`}
-          to="/doctor/education"
-          >
-            Education
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className={`nav-link ${pathnames.includes("/doctor/doctor-awards-settings") ? "active" : ""}`}  to="/doctor/doctor-awards-settings">
-            Awards
-          </Link>
-        </li>
         <li className="nav-item">
           <Link className={`nav-link ${pathnames.includes("/doctor/doctor-insurance-settings") ? "active" : ""}`} to='/doctor/doctor-insurance-settings'>
             Insurances
