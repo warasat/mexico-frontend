@@ -50,11 +50,10 @@ const Doctors = () => {
   const [searchParams] = useSearchParams();
   const [filteredDoctors, setFilteredDoctors] = useState<DoctorCard[]>([]);
   const [specialty, setSpecialty] = useState<string>("");
-  const [selectedDates, setSelectedDates] = useState<{[doctorId: number]: string}>({});
+  const [selectedDates, setSelectedDates] = useState<{[doctorId: string]: string}>({});
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
   
-<<<<<<< HEAD
   // Helper to colorize specialties (kept for UI styling)
   const specialtyColor = (spec: string): string => {
     const key = spec.toLowerCase();
@@ -73,6 +72,11 @@ const Doctors = () => {
   };
 
   const [allDoctors, setAllDoctors] = useState<DoctorCard[]>([]);
+  const handleDateSelect = (dateInfo: any, doctorId: string) => {
+    setSelectedDates({
+      [doctorId]: dateInfo.fullDate,
+    });
+  };
 
   useEffect(() => {
     (async () => {
@@ -100,253 +104,6 @@ const Doctors = () => {
       }
     })();
   }, []);
-=======
-  // Get doctor profile service instance
-  const doctorProfileService = DoctorProfileService.getInstance();
-
-  // Function to handle date selection for a specific doctor
-  const handleDateSelect = (dateInfo: any, doctorId: number) => {
-    // Clear all previous selections and set only the current doctor's date
-    setSelectedDates({
-      [doctorId]: dateInfo.fullDate
-    });
-  };
-
-  // Function to get insurance data for a doctor
-  const getDoctorInsurances = (doctorId: number): string[] => {
-    const profile = doctorProfileService.getDoctorProfile(doctorId.toString());
-    return profile?.selectedInsurances || [];
-  };
-  // Function to get specialty rank for a doctor
-  const getDoctorSpecialtyRank = (doctorId: number): number => {
-    return doctorProfileService.getDoctorSpecialtyRank(doctorId.toString());
-  };
-
-  // Doctor data matching the sectionDoctor.tsx structure
-  const allDoctors = [
-    {
-      id: 1,
-      name: "Dr. Michael Brown",
-      specialty: "Psychologist",
-      specialtyClass: "text-indigo",
-      image: "assets/img/doctor-grid/doc1.png",
-      rating: "5.0",
-      location: "Puerto Vallarta",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(1),
-      specialtyRank: getDoctorSpecialtyRank(1)
-    },
-    {
-      id: 2,
-      name: "Dr. Nicholas Tello",
-      specialty: "Pediatrician",
-      specialtyClass: "text-pink",
-      image: "assets/img/doctor-grid/doc2.png",
-      rating: "4.6",
-      location: "Mexico City",
-      duration: "60 Min",
-      available: true,
-      insurance: getDoctorInsurances(2),
-      specialtyRank: getDoctorSpecialtyRank(2)
-    },
-    {
-      id: 3,
-      name: "Dr. Harold Bryant",
-      specialty: "Neurologist",
-      specialtyClass: "text-teal",
-      image: "assets/img/doctor-grid/doc3.png",
-      rating: "4.8",
-      location: "Playa del Carmen",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(3),
-      specialtyRank: getDoctorSpecialtyRank(3)
-    },
-    {
-      id: 4,
-      name: "Dr. Sandra Jones",
-      specialty: "Cardiologist",
-      specialtyClass: "text-info",
-      image: "assets/img/doctor-grid/doc4.png",
-      rating: "4.8",
-      location: "Lake Chapala",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(4),
-      specialtyRank: getDoctorSpecialtyRank(4)
-    },
-    {
-      id: 5,
-      name: "Dr. Charles Scott",
-      specialty: "Neurologist",
-      specialtyClass: "text-teal",
-      image: "assets/img/doctor-grid/doc5.png",
-      rating: "4.2",
-      location: "San Miguel de Allende",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(5),
-      specialtyRank: getDoctorSpecialtyRank(5)
-    },
-    {
-      id: 6,
-      name: "Dr. Maria Rodriguez",
-      specialty: "Dentist",
-      specialtyClass: "text-purple",
-      image: "assets/img/doctor-grid/doc6.png",
-      rating: "4.7",
-      location: "Guadalajara",
-      duration: "45 Min",
-      available: true,
-      insurance: getDoctorInsurances(6),
-      specialtyRank: getDoctorSpecialtyRank(6)
-    },
-    {
-      id: 7,
-      name: "Dr. Ana Martinez",
-      specialty: "OB-GYN (Obstetrician-Gynecologist)",
-      specialtyClass: "text-green",
-      image: "assets/img/doctor-grid/doc7.png",
-      rating: "4.9",
-      location: "Puerto Vallarta",
-      duration: "60 Min",
-      available: true,
-      insurance: getDoctorInsurances(7),
-      specialtyRank: getDoctorSpecialtyRank(7)
-    },
-    {
-      id: 8,
-      name: "Dr. Carlos Lopez",
-      specialty: "Psychiatrist",
-      specialtyClass: "text-orange",
-      image: "assets/img/doctor-grid/doc8.png",
-      rating: "4.5",
-      location: "Mexico City",
-      duration: "45 Min",
-      available: true,
-      insurance: getDoctorInsurances(8),
-      specialtyRank: getDoctorSpecialtyRank(8)
-    },
-    {
-      id: 9,
-      name: "Dr. Elena Garcia",
-      specialty: "Psychologist",
-      specialtyClass: "text-blue",
-      image: "assets/img/doctor-grid/doc1.png",
-      rating: "4.6",
-      location: "Playa del Carmen",
-      duration: "50 Min",
-      available: true,
-      insurance: getDoctorInsurances(9),
-      specialtyRank: getDoctorSpecialtyRank(9)
-    },
-    {
-      id: 10,
-      name: "Dr. Roberto Silva",
-      specialty: "Urgent Care Specialist",
-      specialtyClass: "text-red",
-      image: "assets/img/doctor-grid/doc2.png",
-      rating: "4.4",
-      location: "Lake Chapala",
-      duration: "20 Min",
-      available: true,
-      insurance: getDoctorInsurances(10),
-      specialtyRank: getDoctorSpecialtyRank(10)
-    },
-    {
-      id: 11,
-      name: "Dr. Carmen Vega",
-      specialty: "Chiropractor",
-      specialtyClass: "text-yellow",
-      image: "assets/img/doctor-grid/doc3.png",
-      rating: "4.8",
-      location: "San Miguel de Allende",
-      duration: "40 Min",
-      available: true,
-      insurance: getDoctorInsurances(11),
-      specialtyRank: getDoctorSpecialtyRank(11)
-    },
-    {
-      id: 12,
-      name: "Dr. Fernando Ruiz",
-      specialty: "Optometrist",
-      specialtyClass: "text-cyan",
-      image: "assets/img/doctor-grid/doc4.png",
-      rating: "4.7",
-      location: "Guadalajara",
-      duration: "35 Min",
-      available: true,
-      insurance: getDoctorInsurances(12),
-      specialtyRank: getDoctorSpecialtyRank(12)
-    },
-    {
-      id: 13,
-      name: "Dr. Patricia Morales",
-      specialty: "Ophthalmologist",
-      specialtyClass: "text-indigo",
-      image: "assets/img/doctor-grid/doc5.png",
-      rating: "4.9",
-      location: "Puerto Vallarta",
-      duration: "45 Min",
-      available: true,
-      insurance: getDoctorInsurances(13),
-      specialtyRank: getDoctorSpecialtyRank(13)
-    },
-    {
-      id: 14,
-      name: "Dr. Alejandro Torres",
-      specialty: "Podiatrist",
-      specialtyClass: "text-brown",
-      image: "assets/img/doctor-grid/doc6.png",
-      rating: "4.5",
-      location: "Mexico City",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(14),
-      specialtyRank: getDoctorSpecialtyRank(14)
-    },
-    {
-      id: 15,
-      name: "Dr. Sofia Herrera",
-      specialty: "Dermatologist",
-      specialtyClass: "text-pink",
-      image: "assets/img/doctor-grid/doc7.png",
-      rating: "4.8",
-      location: "Playa del Carmen",
-      duration: "40 Min",
-      available: true,
-      insurance: getDoctorInsurances(15),
-      specialtyRank: getDoctorSpecialtyRank(15)
-    },
-    {
-      id: 16,
-      name: "Dr. Miguel Castro",
-      specialty: "Orthopedic Surgeon (Orthopedist)",
-      specialtyClass: "text-dark",
-      image: "assets/img/doctor-grid/doc8.png",
-      rating: "4.9",
-      location: "Lake Chapala",
-      duration: "60 Min",
-      available: true,
-      insurance: getDoctorInsurances(16),
-      specialtyRank: getDoctorSpecialtyRank(16)
-    },
-    {
-      id: 17,
-      name: "Dr. Laura Jimenez",
-      specialty: "Primary Care Physician (PCP)",
-      specialtyClass: "text-primary",
-      image: "assets/img/doctor-grid/doc1.png",
-      rating: "4.6",
-      location: "San Miguel de Allende",
-      duration: "30 Min",
-      available: true,
-      insurance: getDoctorInsurances(17),
-      specialtyRank: getDoctorSpecialtyRank(17)
-    }
-  ];
->>>>>>> 138eeec3caa5d95f3760a61b478ae31889740ed4
 
   // Specialty mapping from URL parameters to display names
   const specialtyMapping: { [key: string]: string } = {
