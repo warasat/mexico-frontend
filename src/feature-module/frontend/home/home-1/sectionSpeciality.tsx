@@ -2,12 +2,9 @@ import React from 'react';
 import Slider from "react-slick";
 import ImageWithBasePath from '../../../../components/imageWithBasePath';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../../core/context/AuthContext';
 
 const SectionSpeciality: React.FC = () => {
     const navigate = useNavigate();
-    const { authState } = useAuth();
-    const { isAuthenticated, userType } = authState;
 
     interface ArrowProps {
         onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -58,19 +55,7 @@ const SectionSpeciality: React.FC = () => {
 
     // Function to handle specialty click
     const handleSpecialtyClick = (specialtyName: string) => {
-        // Check if user is authenticated as patient
-        if (!isAuthenticated || userType !== 'patient') {
-            // Redirect to patient login with warning message and return path
-            navigate('/pages/patient-signup', { 
-                state: { 
-                    from: { pathname: '/' },
-                    message: 'Please login first to search for doctors and book appointments.'
-                }
-            });
-            return;
-        }
-        
-        // User is authenticated as patient, proceed to search
+        // Allow search without authentication
         const specialtyMapping: { [key: string]: string } = {
             "Cardiology": "cardiologists",
             "Orthopedics": "orthopedic-surgeons",

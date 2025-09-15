@@ -24,6 +24,7 @@ const BookingPage: React.FC = () => {
     }
   }, [location.state])
 
+<<<<<<< HEAD
   useEffect(() => {
     (async () => {
       try {
@@ -44,6 +45,71 @@ const BookingPage: React.FC = () => {
       }
     })()
   }, [])
+=======
+  // Sample doctors data (you can replace this with API data)
+  const doctors = [
+    {
+      id: 1,
+      name: "Dr. Michael Brown",
+      specialty: "Psychologist",
+      rating: 5.0,
+      experience: "10+ years",
+      image: "assets/img/doctor-grid/doc1.png",
+      location: "Puerto Vallarta",
+      insurance: getDoctorInsurances(1)
+    },
+    {
+      id: 2,
+      name: "Dr. Sarah Johnson",
+      specialty: "Cardiologist",
+      rating: 4.8,
+      experience: "8+ years",
+      image: "assets/img/doctor-grid/doc2.png",
+      location: "Mexico City",
+      insurance: getDoctorInsurances(2)
+    },
+    {
+      id: 3,
+      name: "Dr. David Wilson",
+      specialty: "Neurologist",
+      rating: 4.9,
+      experience: "12+ years",
+      image: "assets/img/doctor-grid/doc3.png",
+      location: "Playa del Carmen",
+      insurance: getDoctorInsurances(3)
+    },
+    {
+      id: 4,
+      name: "Dr. Emily Davis",
+      specialty: "Pediatrician",
+      rating: 4.7,
+      experience: "6+ years",
+      image: "assets/img/doctor-grid/doc4.png",
+      location: "Lake Chapala",
+      insurance: getDoctorInsurances(4)
+    },
+    {
+      id: 5,
+      name: "Dr. James Miller",
+      specialty: "Dermatologist",
+      rating: 4.9,
+      experience: "15+ years",
+      image: "assets/img/doctor-grid/doc5.png",
+      location: "San Miguel de Allende",
+      insurance: getDoctorInsurances(5)
+    },
+    {
+      id: 6,
+      name: "Dr. Lisa Anderson",
+      specialty: "Orthopedist",
+      rating: 4.8,
+      experience: "11+ years",
+      image: "assets/img/doctor-grid/doc6.png",
+      location: "Guadalajara",
+      insurance: getDoctorInsurances(6)
+    }
+  ]
+>>>>>>> 138eeec3caa5d95f3760a61b478ae31889740ed4
 
   const handleBookNow = (doctor: any) => {
     if (!isAuthenticated || userType !== 'patient') {

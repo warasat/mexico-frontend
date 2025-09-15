@@ -24,7 +24,7 @@ const SearchList = () => {
       name: "Dr. Michael Brown",
       specialty: "Psychologist",
       rating: "5.0",
-      location: "Guadalajara, Mexico",
+      location: "Puerto Vallarta",
       experience: "10+ years",
       image: "assets/img/doctor-grid/doc1.png",
       insurance: getDoctorInsurances(1)
@@ -34,7 +34,7 @@ const SearchList = () => {
       name: "Dr. Nicholas Tello",
       specialty: "Pediatrician", 
       rating: "4.6",
-      location: "Monterrey, Mexico",
+      location: "Mexico City",
       experience: "8+ years",
       image: "assets/img/doctor-grid/doc2.png",
       insurance: getDoctorInsurances(2)
@@ -44,7 +44,7 @@ const SearchList = () => {
       name: "Dr. Harold Bryant",
       specialty: "Neurologist",
       rating: "4.8", 
-      location: "Puebla, Mexico",
+      location: "Playa del Carmen",
       experience: "12+ years",
       image: "assets/img/doctor-grid/doc3.png",
       insurance: getDoctorInsurances(3)
@@ -54,7 +54,7 @@ const SearchList = () => {
       name: "Dr. Sandra Jones",
       specialty: "Cardiologist",
       rating: "4.8",
-      location: "Tijuana, Mexico", 
+      location: "Lake Chapala", 
       experience: "15+ years",
       image: "assets/img/doctor-grid/doc4.png",
       insurance: getDoctorInsurances(4)
@@ -64,7 +64,7 @@ const SearchList = () => {
       name: "Dr. Charles Scott",
       specialty: "Neurologist",
       rating: "4.2",
-      location: "León, Mexico",
+      location: "San Miguel de Allende",
       experience: "6+ years", 
       image: "assets/img/doctor-grid/doc5.png",
       insurance: getDoctorInsurances(5)
@@ -74,7 +74,7 @@ const SearchList = () => {
       name: "Dr. Lisa Anderson",
       specialty: "Orthopedist",
       rating: "4.7",
-      location: "Cancún, Mexico",
+      location: "Guadalajara",
       experience: "11+ years",
       image: "assets/img/doctor-grid/doc6.png",
       insurance: getDoctorInsurances(6)
@@ -84,7 +84,7 @@ const SearchList = () => {
       name: "Dr. Robert Wilson",
       specialty: "Dermatologist", 
       rating: "4.7",
-      location: "Mérida, Mexico",
+      location: "Guadalajara",
       experience: "9+ years",
       image: "assets/img/doctor-grid/doc7.png",
       insurance: getDoctorInsurances(7)
@@ -94,7 +94,7 @@ const SearchList = () => {
       name: "Dr. Jennifer Davis",
       specialty: "Pediatrician",
       rating: "4.7", 
-      location: "Toluca, Mexico",
+      location: "Puerto Vallarta",
       experience: "7+ years",
       image: "assets/img/doctor-grid/doc8.png",
       insurance: getDoctorInsurances(8)
@@ -104,7 +104,7 @@ const SearchList = () => {
       name: "Dr. Mark Thompson",
       specialty: "Cardiologist",
       rating: "4.9",
-      location: "Querétaro, Mexico",
+      location: "Mexico City",
       experience: "13+ years", 
       image: "assets/img/doctor-grid/doc9.png",
       insurance: getDoctorInsurances(9)
@@ -114,7 +114,7 @@ const SearchList = () => {
       name: "Dr. Sarah Johnson",
       specialty: "Psychiatrist",
       rating: "5.0",
-      location: "San Luis Potosí, Mexico",
+      location: "Playa del Carmen",
       experience: "14+ years",
       image: "assets/img/doctor-grid/doc10.png",
       insurance: getDoctorInsurances(10)
@@ -124,7 +124,7 @@ const SearchList = () => {
       name: "Dr. David Miller",
       specialty: "Urologist",
       rating: "4.4",
-      location: "Chihuahua, Mexico", 
+      location: "Lake Chapala", 
       experience: "8+ years",
       image: "assets/img/doctor-grid/doc11.png"
     },
@@ -133,7 +133,7 @@ const SearchList = () => {
       name: "Dr. Emily Garcia",
       specialty: "Gynecologist",
       rating: "4.2",
-      location: "Guadalajara, Mexico",
+      location: "San Miguel de Allende",
       experience: "5+ years",
       image: "assets/img/doctor-grid/doc12.png"
     }

@@ -132,12 +132,10 @@ const SectionDoctor: React.FC = () => {
                                                 <Link to="/patient/doctor-profile">Dr. Michael Brown</Link>
                                             </h3>
                                             <div className="d-flex align-items-center">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                <p className="d-flex align-items-center mb-0 fs-14" style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                                                     <i className="isax isax-location me-2" />
-                                                    Guadalajara, Mexico
+                                                    Puerto Vallarta
                                                 </p>
-                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                <span className="fs-14 fw-medium">30 Min</span>
                                             </div>
                                         </div>
                                                                                  <div className="d-flex align-items-center justify-content-center">
@@ -183,12 +181,10 @@ const SectionDoctor: React.FC = () => {
                                                 <Link to="/patient/doctor-profile">Dr. Nicholas Tello</Link>
                                             </h3>
                                             <div className="d-flex align-items-center">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                <p className="d-flex align-items-center mb-0 fs-14" style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                                                     <i className="isax isax-location me-2" />
-                                                    Monterrey, Mexico
+                                                    Mexico City
                                                 </p>
-                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                <span className="fs-14 fw-medium">60 Min</span>
                                             </div>
                                         </div>
                                         <div className="d-flex align-items-center justify-content-center">
@@ -233,12 +229,10 @@ const SectionDoctor: React.FC = () => {
                                                 <Link to="/patient/doctor-profile">Dr. Harold Bryant</Link>
                                             </h3>
                                             <div className="d-flex align-items-center">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                <p className="d-flex align-items-center mb-0 fs-14" style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                                                     <i className="isax isax-location me-2" />
-                                                    Puebla, Mexico
+                                                    Playa del Carmen
                                                 </p>
-                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                <span className="fs-14 fw-medium">30 Min</span>
                                             </div>
                                         </div>
                                         <div className="d-flex align-items-center justify-content-center">
@@ -283,12 +277,10 @@ const SectionDoctor: React.FC = () => {
                                                 <Link to="/patient/doctor-profile">Dr. Sandra Jones</Link>
                                             </h3>
                                             <div className="d-flex align-items-center">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                <p className="d-flex align-items-center mb-0 fs-14" style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                                                     <i className="isax isax-location me-2" />
-                                                    Tijuana, Mexico
+                                                    Lake Chapala
                                                 </p>
-                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                <span className="fs-14 fw-medium">30 Min</span>
                                             </div>
                                         </div>
                                         <div className="d-flex align-items-center justify-content-center">
@@ -333,12 +325,10 @@ const SectionDoctor: React.FC = () => {
                                                 <Link to="/patient/doctor-profile">Dr. Charles Scott</Link>
                                             </h3>
                                                                                          <div className="d-flex align-items-center">
-                                                 <p className="d-flex align-items-center mb-0 fs-14">
+                                                 <p className="d-flex align-items-center mb-0 fs-14" style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                                                      <i className="isax isax-location me-2" />
-                                                     León, Mexico
+                                                     San Miguel de Allende
                                                  </p>
-                                                 <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                 <span className="fs-14 fw-medium">30 Min</span>
                                              </div>
                                          </div>
                                          <div className="d-flex align-items-center justify-content-center">
@@ -368,7 +358,7 @@ const SectionDoctor: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="card-body p-0">
-                                    <div className="d-flex active-bar active-bar active-bar-purple align-items-center justify-content-between p-3">
+                                    <div className="d-flex active-bar active-bar-purple align-items-center justify-content-between p-3">
                                         <Link to="#" className="text-purple fw-medium fs-14">
                                             Dentist
                                         </Link>
@@ -383,15 +373,13 @@ const SectionDoctor: React.FC = () => {
                                                 <Link to="/patient/doctor-profile">Dr. Maria Rodriguez</Link>
                                             </h3>
                                             <div className="d-flex align-items-center">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                <p className="d-flex align-items-center mb-0 fs-14" style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                                                     <i className="isax isax-location me-2" />
-                                                    Mexico City, Mexico
+                                                    Guadalajara
                                                 </p>
-                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                <span className="fs-14 fw-medium">45 Min</span>
                                             </div>
                                         </div>
-                                        <div className="d-flex alignments-center justify-content-center">
+                                        <div className="d-flex align-items-center justify-content-center">
                                             <button
                                                 onClick={handleBookNow}
                                                 className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill text-truncate"
@@ -418,7 +406,7 @@ const SectionDoctor: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="card-body p-0">
-                                    <div className="d-flex active-bar active-bar-green alignments-center justify-content-between p-3">
+                                    <div className="d-flex active-bar active-bar-green align-items-center justify-content-between p-3">
                                         <Link to="#" className="text-green fw-medium fs-14">
                                             OBGYN
                                         </Link>
@@ -433,12 +421,10 @@ const SectionDoctor: React.FC = () => {
                                                 <Link to="/patient/doctor-profile">Dr. Ana Martinez</Link>
                                             </h3>
                                             <div className="d-flex align-items-center">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                <p className="d-flex align-items-center mb-0 fs-14" style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                                                     <i className="isax isax-location me-2" />
-                                                    Cancún, Mexico
+                                                    Puerto Vallarta
                                                 </p>
-                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                <span className="fs-14 fw-medium">60 Min</span>
                                             </div>
                                         </div>
                                         <div className="d-flex align-items-center justify-content-center">
@@ -483,12 +469,10 @@ const SectionDoctor: React.FC = () => {
                                                 <Link to="/patient/doctor-profile">Dr. Carlos Lopez</Link>
                                             </h3>
                                             <div className="d-flex align-items-center">
-                                                <p className="d-flex align-items-center mb-0 fs-14">
+                                                <p className="d-flex align-items-center mb-0 fs-14" style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                                                     <i className="isax isax-location me-2" />
-                                                    Querétaro, Mexico
+                                                    Mexico City
                                                 </p>
-                                                <i className="fa-solid fa-circle fs-5 text-primary mx-2 me-1" />
-                                                <span className="fs-14 fw-medium">45 Min</span>
                                             </div>
                                         </div>
                                         <div className="d-flex align-items-center justify-content-center">
