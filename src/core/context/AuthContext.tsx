@@ -7,6 +7,7 @@ interface AuthState {
   userType: UserType;
   user: {
     id: string;
+    patientId?: string;
     name: string;
     email: string;
   } | null;
@@ -14,7 +15,7 @@ interface AuthState {
 
 interface AuthContextType {
   authState: AuthState;
-  login: (userType: UserType, user: { id: string; name: string; email: string }, token?: string) => void;
+  login: (userType: UserType, user: { id: string; patientId?: string; name: string; email: string }, token?: string) => void;
   logout: () => void;
 }
 
@@ -53,7 +54,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, []);
 
-  const login = (userType: UserType, user: { id: string; name: string; email: string }, token?: string) => {
+  const login = (userType: UserType, user: { id: string; patientId?: string; name: string; email: string }, token?: string) => {
     const newAuthState = {
       isAuthenticated: true,
       userType,

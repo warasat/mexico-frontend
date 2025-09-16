@@ -56,7 +56,8 @@ const PatientSignup: React.FC = () => {
       
       if (response.success && response.token && response.patient) {
         login('patient', { 
-          id: response.patient.id, 
+          id: response.patient.id,
+          patientId: response.patient.patientId,
           name: response.patient.fullName, 
           email: response.patient.email 
         }, response.token);

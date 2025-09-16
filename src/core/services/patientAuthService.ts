@@ -1,5 +1,6 @@
-const API_BASE_URL = 'https://doctor-appointment-system-backend-rho.vercel.app/api';
-// const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = (typeof window !== 'undefined' && window.location.hostname === 'localhost')
+  ? 'http://localhost:5000/api'
+  : 'https://doctor-appointment-system-backend-rho.vercel.app/api';
 
 export interface PatientRegisterData {
   fullName: string;
@@ -16,6 +17,7 @@ export interface PatientLoginData {
 
 export interface Patient {
   id: string;
+  patientId?: string;
   fullName: string;
   email: string;
   phone: string;
