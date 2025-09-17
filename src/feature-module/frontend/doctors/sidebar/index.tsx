@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 import { Link } from "react-router-dom";
 import Select from 'react-select'
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
@@ -6,6 +7,7 @@ import doctorProfileApi from "../../../../core/services/doctorProfileApi";
 const DoctorSidebar = () => {
   const pathnames = window.location.pathname;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [profile, setProfile] = useState<any>(null)
   const [availability, setAvailability] = useState<'available' | 'unavailable'>('unavailable')
   const availablity = useMemo(() => ([
@@ -32,10 +34,11 @@ const DoctorSidebar = () => {
     return () => window.removeEventListener('doctorProfileUpdated', onUpdated)
   }, [])
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onAvailabilityChange = async (opt: any) => {
     try {
       setAvailability(opt?.value)
-      await fetch('http://localhost:5000/api/doctors/me/availability', {
+      await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'}/doctors/me/availability`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
