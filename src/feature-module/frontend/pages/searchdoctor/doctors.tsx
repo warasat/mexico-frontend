@@ -5,29 +5,6 @@ import publicDoctorApi from "../../../../core/services/publicDoctorApi";
 import { useAuth } from "../../../../core/context/AuthContext";
 import SocketService from "../../../../core/services/socketService";
 
-// Utility function to generate one week of dates starting from today
-const generateWeekDates = () => {
-  const dates = [];
-  const today = new Date();
-  
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() + i);
-    
-    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    
-    dates.push({
-      date: date.getDate(),
-      day: dayNames[date.getDay()],
-      month: monthNames[date.getMonth()],
-      fullDate: date.toISOString().split('T')[0],
-      isToday: i === 0
-    });
-  }
-  
-  return dates;
-};
 
 type DoctorCard = {
   id: string;
@@ -50,7 +27,6 @@ const Doctors = () => {
   const [searchParams] = useSearchParams();
   const [filteredDoctors, setFilteredDoctors] = useState<DoctorCard[]>([]);
   const [specialty, setSpecialty] = useState<string>("");
-  const [selectedDates, setSelectedDates] = useState<{[doctorId: string]: string}>({});
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
   
@@ -72,11 +48,6 @@ const Doctors = () => {
   };
 
   const [allDoctors, setAllDoctors] = useState<DoctorCard[]>([]);
-  const handleDateSelect = (dateInfo: any, doctorId: string) => {
-    setSelectedDates({
-      [doctorId]: dateInfo.fullDate,
-    });
-  };
 
   useEffect(() => {
     (async () => {
@@ -309,52 +280,12 @@ const Doctors = () => {
                     </div>
                   </div>
                 </div>
-                {/* One Week Date Display */}
-                <div className="mb-3">
-                  <h6 className="mb-2 text-dark">Available Dates</h6>
-                  <div className="d-flex flex-wrap gap-2">
-                    {generateWeekDates().map((dateInfo, index) => (
-                      <div
-                        key={index}
-                        onClick={() => handleDateSelect(dateInfo, doctor.id)}
-                        className={`d-flex flex-column align-items-center justify-content-center p-2 rounded border cursor-pointer ${
-                          selectedDates[doctor.id] === dateInfo.fullDate
-                            ? 'bg-success text-white border-success'
-                            : Object.keys(selectedDates).length > 0
-                            ? 'bg-light border-secondary hover-bg-light'
-                            : dateInfo.isToday 
-                            ? 'bg-primary text-white border-primary' 
-                            : 'bg-light border-secondary hover-bg-light'
-                        }`}
-                        style={{ 
-                          minWidth: '60px', 
-                          minHeight: '60px',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease'
-                        }}
-                      >
-                        <span className="fw-bold fs-14">{dateInfo.date}</span>
-                        <span className="fs-12">{dateInfo.day}</span>
-                        <span className="fs-10">{dateInfo.month}</span>
-                      </div>
-                    ))}
-                  </div>
-                  {selectedDates[doctor.id] && (
-                    <p className="text-success fs-14 mt-2 mb-0">
-                      <i className="isax isax-tick-circle me-1" />
-                      Selected: {new Date(selectedDates[doctor.id]).toLocaleDateString('en-US', { 
-                        weekday: 'long', 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
-                      })}
-                    </p>
-                  )}
-                </div>
                 
-                <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-3 mt-3">
-                  <div className="d-flex align-items-center flex-wrap row-gap-3">
-                    <p className="mb-0">
+                {/* Next Available Time Display with Inline Booking Button */}
+                <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-3 mt-1">
+                  <div>
+                    <h6 className="mb-1 text-dark">Next Available</h6>
+                    <p className="mb-0 text-muted">
                       Next available at <br />
                       10:00 AM - 15 Oct, Tue
                     </p>
@@ -362,23 +293,12 @@ const Doctors = () => {
                   <Link
                     to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
                     state={isAuthenticated && userType === 'patient' ? { 
-                      selectedDoctor: doctor,
-                      selectedDate: selectedDates[doctor.id] 
+                      selectedDoctor: doctor
                     } : undefined}
-                    className={`btn btn-md d-inline-flex align-items-center rounded-pill ${
-                      selectedDates[doctor.id] 
-                        ? 'btn-primary-gradient' 
-                        : 'btn-secondary'
-                    }`}
-                    onClick={(e) => {
-                      if (!selectedDates[doctor.id]) {
-                        e.preventDefault();
-                        alert('Please select a date first');
-                      }
-                    }}
+                    className="btn btn-md d-inline-flex align-items-center rounded-pill btn-primary-gradient"
                   >
                     <i className="isax isax-calendar-1 me-2" />
-                    {selectedDates[doctor.id] ? 'Book Appointment' : 'Select Date First'}
+                    Book Appointment
                   </Link>
                 </div>
               </div>
