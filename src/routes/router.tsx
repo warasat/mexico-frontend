@@ -3,13 +3,13 @@ import { publicRoutes, adminRoutes} from "./router.link";
 import Feature from "./feature";
 import AdminFeature from "./adminFeature";
 
-import HomePage from "../feature-module/frontend/home/home-1/generalHomeOne"; // Example: Import your home page component for the default route
+import ProtectedHomePage from "../feature-module/frontend/home/home-1/ProtectedHomePage"; // Protected home page that redirects doctors
 
 const ALLRoutes: React.FC = () => {
   return (
     <Routes>
       {/* Default route for the root path ("/") */}
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<ProtectedHomePage />} />
 
       {/* Public Routes */}
       <Route element={<Feature />}>

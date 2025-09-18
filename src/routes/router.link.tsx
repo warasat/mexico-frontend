@@ -1,6 +1,6 @@
 import { Navigate, Route } from "react-router";
 import { all_routes } from "./all_routes";
-import GeneralHomeOne from "../feature-module/frontend/home/home-1/generalHomeOne";
+import ProtectedHomePage from "../feature-module/frontend/home/home-1/ProtectedHomePage";
 import Aboutus from "../feature-module/frontend/pages/aboutus/aboutus";
 import Contactus from "../feature-module/frontend/pages/contactus/contactus";
 import Error404 from "../feature-module/frontend/pages/error/Error404";
@@ -47,7 +47,7 @@ export const publicRoutes = [
   },
   {
     path: route.generalHomeOne,
-    element: <GeneralHomeOne />,
+    element: <ProtectedHomePage />,
     route: Route,
   },
   {

@@ -256,8 +256,8 @@ const Header: React.FC = () => {
               
               {/* Right side navigation - simplified */}
               <ul className="nav header-navbar-rht">
-                {/* Only show these elements if NOT on contact or about pages */}
-                {!pathnames.includes("contactus") && !pathnames.includes("aboutus") && (
+                {/* Show these elements for authenticated users (patients/doctors) on all pages, or for non-authenticated users when not on contact/about pages */}
+                {((isAuthenticated && (userType === 'patient' || userType === 'doctor')) || (!pathnames.includes("contactus") && !pathnames.includes("aboutus"))) && (
                   <>
                     {/* Dark mode toggle */}
                     <li className="header-theme noti-nav">

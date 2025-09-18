@@ -1,17 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import NavLinks from "../../common/nav";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { all_routes } from "../../../../routes/all_routes";
 import DarkModeToggle from "../../dark-mode";
+import LanguageSwitcher from "../../../../components/LanguageSwitcher";
 import { useAuth } from "../../../../core/context/AuthContext";
 
 const Header: React.FC = () => {
   const [headerClass, setHeaderClass] = useState(
     "header header-custom header-fixed inner-header relative"
   );
-  const { authState } = useAuth();
-  const { isAuthenticated, userType } = authState;
+  const { authState, logout } = useAuth();
+  const { isAuthenticated, userType, user } = authState;
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Store userType before logout clears the authState
+    const currentUserType = userType;
+    logout();
+    // Redirect to appropriate login page based on user type
+    if (currentUserType === 'doctor') {
+      navigate('/doctor/doctor-register');
+    } else if (currentUserType === 'patient') {
+      navigate('/pages/patient-signup');
+    } else {
+      navigate('/pages/patient-signup'); // default
+    }
+  };
 
   // Function to get the appropriate logo redirect URL - stay on same page for doctors
   const getLogoRedirectUrl = () => {
@@ -68,67 +84,30 @@ const Header: React.FC = () => {
                 </p>
               </div>
               <ul>
-                <li className="header-theme">
-                  <DarkModeToggle />
-                </li>
-                <li className="d-inline-flex align-items-center drop-header">
-                  <div className="dropdown dropdown-country me-3">
-                    <Link
-                      to="#"
-                      className="d-inline-flex align-items-center"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <ImageWithBasePath
-                        src="assets/img/flags/us-flag.svg"
-                        className="me-2"
-                        alt="flag"
-                      />
-                    </Link>
-                    <ul className="dropdown-menu p-2 mt-2">
-                      <li>
-                        <Link
-                          className="dropdown-item rounded d-flex align-items-center"
-                          to="#"
-                        >
-                          <ImageWithBasePath
-                            src="assets/img/flags/us-flag.svg"
-                            className="me-2"
-                            alt="flag"
-                          />
-                          ENG
-                        </Link>
+                {/* Only show these buttons for patients or unauthenticated users - doctors are redirected away */}
+                {(!isAuthenticated || (isAuthenticated && userType === 'patient')) && (
+                  <>
+                    <li className="header-theme">
+                      <DarkModeToggle />
+                    </li>
+                    <li className="header-language">
+                      <LanguageSwitcher />
+                    </li>
+                    {/* User dropdown for authenticated patients only */}
+                    {isAuthenticated && userType === 'patient' && (
+                      <li className="nav-item dropdown">
+                        <button className="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                          {user?.name || userType}
+                        </button>
+                        <ul className="dropdown-menu">
+                          <li><small className="dropdown-item-text">Logged in as: {user?.name || userType}</small></li>
+                          <li><hr className="dropdown-divider" /></li>
+                          <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
+                        </ul>
                       </li>
-                      <li>
-                        <Link
-                          className="dropdown-item rounded d-flex align-items-center"
-                          to="#"
-                        >
-                          <ImageWithBasePath
-                            src="assets/img/flags/arab-flag.svg"
-                            className="me-2"
-                            alt="flag"
-                          />
-                          ARA
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          className="dropdown-item rounded d-flex align-items-center"
-                          to="#"
-                        >
-                          <ImageWithBasePath
-                            src="assets/img/flags/france-flag.svg"
-                            className="me-2"
-                            alt="flag"
-                          />
-                          FRA
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* Currency dropdown removed */}
-                </li>
+                    )}
+                  </>
+                )}
                 {/* Social media icons commented out
                 <li className="social-header">
                   <div className="social-icon">

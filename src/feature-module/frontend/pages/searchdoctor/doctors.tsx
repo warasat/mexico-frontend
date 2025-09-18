@@ -196,8 +196,8 @@ const Doctors = () => {
       {filteredDoctors.length > 0 ? (
         filteredDoctors.map((doctor) => (
           <div key={doctor.id} className="col-lg-12">
-        <div className="card doctor-list-card" style={{height: 'auto', minHeight: '400px', marginBottom: '20px'}}>
-          <div className="d-md-flex align-items-stretch" style={{height: '100%', minHeight: '400px'}}>
+        <div className="card doctor-list-card" style={{height: 'auto', minHeight: '300px', marginBottom: '15px'}}>
+          <div className="d-md-flex align-items-stretch" style={{height: '100%', minHeight: '300px'}}>
             <div className="card-img card-img-hover" style={{minWidth: '200px', maxWidth: '200px', height: '200px', overflow: 'hidden'}}>
               <Link to="/patient/doctor-profile">
                     <ImageWithBasePath src={doctor.image} alt="" />
@@ -213,7 +213,7 @@ const Doctors = () => {
               </div>
             </div>
             <div className="card-body p-0" style={{flex: '1', display: 'flex', flexDirection: 'column'}}>
-              <div className="d-flex align-items-center justify-content-between border-bottom p-3" style={{minHeight: '60px'}}>
+              <div className="d-flex align-items-center justify-content-between border-bottom p-2" style={{minHeight: '50px'}}>
                     <Link to="#" className={`${doctor.specialtyClass} fw-medium fs-14`}>
                       {doctor.specialty}
                 </Link>
@@ -222,16 +222,16 @@ const Doctors = () => {
                       {doctor.available ? 'Available' : 'Unavailable'}
                 </span>
               </div>
-              <div className="p-3" style={{flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
-                <div className="doctor-info-detail pb-3">
-                  <div className="row align-items-center gy-3">
+              <div className="p-2" style={{flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                <div className="doctor-info-detail pb-1">
+                  <div className="row align-items-center gy-1">
                     <div className="col-sm-6">
                       <div>
-                        <h6 className="d-flex align-items-center mb-1">
+                        <h6 className="d-flex align-items-center mb-0">
                               <Link to="/patient/doctor-profile">{doctor.name}</Link>
                           <i className="isax isax-tick-circle5 text-success ms-2" />
                         </h6>
-                            <p className="mb-2">{doctor.specialty}</p>
+                            <p className="mb-1">{doctor.specialty}</p>
                         <p className="d-flex align-items-center mb-0 fs-14">
                           <i className="isax isax-location me-2" />
                               {doctor.location}
@@ -246,7 +246,7 @@ const Doctors = () => {
                     </div>
                     <div className="col-sm-6">
                       <div>
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
+                        <p className="d-flex align-items-center mb-0 fs-14 mb-1">
                           <i className="isax isax-language-circle text-dark me-2" />
                           {(() => {
                             // languages from backend are not mapped into card, so render from a hidden map on filteredDoctors
@@ -259,13 +259,13 @@ const Doctors = () => {
                           const services = doctor.servicesOffered;
                           if (!Array.isArray(services) || services.length === 0) return null;
                           return (
-                            <p className="d-flex align-items-center mb-0 fs-14 mb-2">
+                            <p className="d-flex align-items-center mb-0 fs-14 mb-1">
                               <i className="isax isax-archive-14 text-dark me-2" />
                               {services.join(", ")}
                             </p>
                           );
                         })()}
-                        <p className="d-flex align-items-center mb-0 fs-14 mb-2">
+                        <p className="d-flex align-items-center mb-0 fs-14 mb-1">
                           <i className="isax isax-shield-tick text-dark me-2" />
                           {Array.isArray(doctor.insurance) ? doctor.insurance.join(", ") : doctor.insurance}
                         </p>
@@ -282,9 +282,9 @@ const Doctors = () => {
                 </div>
                 
                 {/* Next Available Time Display with Inline Booking Button */}
-                <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-3 mt-1">
+                <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-1 mt-1">
                   <div>
-                    <h6 className="mb-1 text-dark">Next Available</h6>
+                    <h6 className="mb-0 text-dark">Next Available</h6>
                     <p className="mb-0 text-muted">
                       Next available at <br />
                       10:00 AM - 15 Oct, Tue
