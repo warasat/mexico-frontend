@@ -199,7 +199,7 @@ const Doctors = () => {
         <div className="card doctor-list-card" style={{height: 'auto', minHeight: '300px', marginBottom: '15px'}}>
           <div className="d-md-flex align-items-stretch" style={{height: '100%', minHeight: '300px'}}>
             <div className="card-img card-img-hover" style={{minWidth: '200px', maxWidth: '200px', height: '200px', overflow: 'hidden'}}>
-              <Link to="/patient/doctor-profile">
+              <Link to="/patient/doctor-profile" state={{ selectedDoctor: doctor }}>
                     <ImageWithBasePath src={doctor.image} alt="" />
               </Link>
               <div className="grid-overlay-item d-flex align-items-center justify-content-between">
@@ -228,7 +228,7 @@ const Doctors = () => {
                     <div className="col-sm-6">
                       <div>
                         <h6 className="d-flex align-items-center mb-0">
-                              <Link to="/patient/doctor-profile">{doctor.name}</Link>
+                              <Link to="/patient/doctor-profile" state={{ selectedDoctor: doctor }}>{doctor.name}</Link>
                           <i className="isax isax-tick-circle5 text-success ms-2" />
                         </h6>
                             <p className="mb-1">{doctor.specialty}</p>

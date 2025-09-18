@@ -8,7 +8,7 @@ import publicDoctorApi, { type PublicDoctor } from '../../../../core/services/pu
 import SocketService from '../../../../core/services/socketService'
 
 interface Doctor {
-  id: number
+  id: string
   name: string
   specialty: string
   rating: number
@@ -42,7 +42,7 @@ const BookingPage: React.FC = () => {
       try {
         const res = await publicDoctorApi.list({ sort: 'rank', limit: 100 })
         const mapped: Doctor[] = res.results.map((d: PublicDoctor) => ({
-          id: parseInt(d.id),
+          id: d.id,
           name: d.displayName,
           specialty: d.designation || 'Doctor',
           rating: 4.8,

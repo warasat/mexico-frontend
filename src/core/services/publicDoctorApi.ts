@@ -39,6 +39,12 @@ class PublicDoctorApi {
 		if (!res.ok) throw new Error('Failed to list doctors');
 		return (await res.json()) as ListDoctorsResponse;
 	}
+
+	async getById(id: string): Promise<{ success: boolean; doctor: any; reviews?: any[] }> {
+		const res = await fetch(`${API_BASE_URL}/doctors/${id}`);
+		if (!res.ok) throw new Error('Failed to fetch doctor');
+		return res.json();
+	}
 }
 
 export default new PublicDoctorApi();

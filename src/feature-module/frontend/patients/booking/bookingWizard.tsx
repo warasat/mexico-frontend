@@ -1,4 +1,6 @@
-import { useState } from 'react'
+/* eslint-disable no-empty */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useMemo, useState } from 'react'
 import ImageWithBasePath from '../../../../components/imageWithBasePath'
 import { Link } from "react-router-dom";
 import { Calendar, theme } from 'antd';
@@ -6,9 +8,10 @@ import type { Dayjs } from 'dayjs';
 import InsuranceSelector from './components/InsuranceSelector';
 import Header from '../../header';
 import '../../../../assets/css/booking-map.css';
+import doctorProfileApi from '../../../../core/services/doctorProfileApi';
 
 interface Doctor {
-  id: number;
+  id: string;
   name: string;
   specialty: string;
   rating: number;
@@ -42,9 +45,11 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
   const doctor = selectedDoctor || defaultDoctor;
   const [selectType, setSelectType] = useState(2); // Default to Video Call
   const [selectedInsurance, setSelectedInsurance] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string>(selectedDoctor?.selectedDate || '');
+  const formatDate = (d: Date) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const [selectedDate, setSelectedDate] = useState<string>(selectedDoctor?.selectedDate || formatDate(new Date()));
   const [selectedTime, setSelectedTime] = useState<string>(selectedDoctor?.selectedTime || '');
   const [bookingId] = useState(() => `BK${Date.now().toString().slice(-6)}`);
+  const [weeklyAvailability, setWeeklyAvailability] = useState<Record<string, { morning: string[]; afternoon: string[]; evening: string[] }>>({});
   const { token } = theme.useToken();
   const wrapperStyle = {
     width: '100%',
@@ -56,11 +61,36 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
     console.log(value.format('YYYY-MM-DD'), mode);
     setSelectedDate(value.format('YYYY-MM-DD'));
   };
+  const onSelectDate = (value: Dayjs) => {
+    setSelectedDate(value.format('YYYY-MM-DD'));
+  };
 
   const HandleNext = () => {
     setCurrentStep(currentStep + 1);
   };
+  // Fetch doctor availability once when entering step 3 or when doctor changes
+  useEffect(() => {
+    (async () => {
+      try {
+        if (!doctor?.id) return;
+        const res = await doctorProfileApi.getWeeklyAvailability(String(doctor.id));
+        setWeeklyAvailability((res as any)?.weeklyAvailability || {});
+      } catch {}
+    })();
+  }, [doctor?.id]);
 
+  const dayKey = useMemo(() => {
+    if (!selectedDate) return '';
+    const parts = selectedDate.split('-');
+    if (parts.length !== 3) return '';
+    const y = Number(parts[0]);
+    const m = Number(parts[1]) - 1;
+    const d = Number(parts[2]);
+    const idx = new Date(y, m, d).getDay(); // local day, 0=Sun..6=Sat
+    return ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][idx];
+  }, [selectedDate]);
+
+  
   const HandlePrev = () => {
     setCurrentStep(currentStep - 1);
   };
@@ -422,7 +452,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                 <div className="card">
                                   <div className="card-body p-2 pt-3">
                                     <div style={wrapperStyle}>
-                                      <Calendar fullscreen={false} onPanelChange={OnPanelChange} />
+                                      <Calendar fullscreen={false} onPanelChange={OnPanelChange} onSelect={onSelectDate} />
                                     </div>
                                   </div>
                                 </div>
@@ -434,307 +464,73 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                       <h6 className="fs-14 mb-2">Morning</h6>
                                     </div>
                                     <div className="token-slot mt-2 mb-2">
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="radio"
-                                            className="form-check-input"
-                                            name="appointment-time"
-                                            value="09:45"
-                                            checked={selectedTime === '09:45'}
-                                            onChange={(e) => setSelectedTime(e.target.value)}
-                                          />
-                                          <span className="visit-rsn">09:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="radio"
-                                            className="form-check-input"
-                                            name="appointment-time"
-                                            value="10:00"
-                                            checked={selectedTime === '10:00'}
-                                            onChange={(e) => setSelectedTime(e.target.value)}
-                                          />
-                                          <span className="visit-rsn">10:00</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="radio"
-                                            className="form-check-input"
-                                            name="appointment-time"
-                                            value="10:45"
-                                            checked={selectedTime === '10:45'}
-                                            onChange={(e) => setSelectedTime(e.target.value)}
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">-</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">09:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">-</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
+                                      {(weeklyAvailability as any)?.[dayKey]?.morning?.length ? (
+                                        (weeklyAvailability as any)[dayKey].morning.map((slot: string) => (
+                                          <div key={`m-${slot}`} className="form-check-inline visits me-1">
+                                            <label className="visit-btns">
+                                              <input
+                                                type="radio"
+                                                className="form-check-input"
+                                                name="appointment-time"
+                                                value={slot}
+                                                checked={selectedTime === slot}
+                                                onChange={(e) => setSelectedTime(e.target.value)}
+                                              />
+                                              <span className="visit-rsn">{slot}</span>
+                                            </label>
+                                          </div>
+                                        ))
+                                      ) : (
+                                        <p className="text-muted mb-0">No morning slots</p>
+                                      )}
                                     </div>
                                     <div className="book-title">
                                       <h6 className="fs-14 mb-2">Afternoon</h6>
                                     </div>
                                     <div className="token-slot mt-2 mb-2">
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                            defaultChecked
-                                          />
-                                          <span className="visit-rsn">09:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">-</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
+                                      {(weeklyAvailability as any)?.[dayKey]?.afternoon?.length ? (
+                                        (weeklyAvailability as any)[dayKey].afternoon.map((slot: string) => (
+                                          <div key={`a-${slot}`} className="form-check-inline visits me-1">
+                                            <label className="visit-btns">
+                                              <input
+                                                type="radio"
+                                                className="form-check-input"
+                                                name="appointment-time"
+                                                value={slot}
+                                                checked={selectedTime === slot}
+                                                onChange={(e) => setSelectedTime(e.target.value)}
+                                              />
+                                              <span className="visit-rsn">{slot}</span>
+                                            </label>
+                                          </div>
+                                        ))
+                                      ) : (
+                                        <p className="text-muted mb-0">No afternoon slots</p>
+                                      )}
                                     </div>
                                     <div className="book-title">
                                       <h6 className="fs-14 mb-2">Evening</h6>
                                     </div>
                                     <div className="token-slot mt-2 mb-2">
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                            defaultChecked
-                                          />
-                                          <span className="visit-rsn">09:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">-</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">-</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">09:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">-</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">10:45</span>
-                                        </label>
-                                      </div>
-                                      <div className="form-check-inline visits me-1">
-                                        <label className="visit-btns">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            name="appintment"
-                                          />
-                                          <span className="visit-rsn">-</span>
-                                        </label>
-                                      </div>
+                                      {(weeklyAvailability as any)?.[dayKey]?.evening?.length ? (
+                                        (weeklyAvailability as any)[dayKey].evening.map((slot: string) => (
+                                          <div key={`e-${slot}`} className="form-check-inline visits me-1">
+                                            <label className="visit-btns">
+                                              <input
+                                                type="radio"
+                                                className="form-check-input"
+                                                name="appointment-time"
+                                                value={slot}
+                                                checked={selectedTime === slot}
+                                                onChange={(e) => setSelectedTime(e.target.value)}
+                                              />
+                                              <span className="visit-rsn">{slot}</span>
+                                            </label>
+                                          </div>
+                                        ))
+                                      ) : (
+                                        <p className="text-muted mb-0">No evening slots</p>
+                                      )}
                                     </div>
                                   </div>
                                 </div>

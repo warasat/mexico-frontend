@@ -1,12 +1,12 @@
 import { IMG01, IMG02 } from "./img";
 import MyComponent from "./mycomponent";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { doctorthumb02 } from "../../imagepath";
 import { useAuth } from "../../../../core/context/AuthContext";
 
-const Pagecontent = () => {
-  const location = useLocation();
-  const selectedDoctor = location.state?.selectedDoctor;
+type Props = { doctor?: any };
+
+const Pagecontent = ({ doctor: doctorProp }: Props) => {
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
 
@@ -24,7 +24,7 @@ const Pagecontent = () => {
   };
 
   // Use selected doctor or default
-  const doctor = selectedDoctor || defaultDoctor;
+  const doctor = doctorProp || defaultDoctor;
   return (
     <>
       <div>

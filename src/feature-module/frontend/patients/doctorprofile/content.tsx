@@ -1,9 +1,30 @@
 import { IMG07, IMG08, IMG09 } from "./img";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useMemo } from "react";
 
-const Content = () => {
-  const location = useLocation();
-  const selectedDoctor = location.state?.selectedDoctor;
+type Props = { doctor?: any; reviews?: any[] };
+
+const Content = ({ doctor: doctorProp, reviews: reviewsProp }: Props) => {
+  const doctor = doctorProp;
+  const reviews = Array.isArray(reviewsProp) ? reviewsProp : [];
+  const aboutText = doctor?.aboutMe || `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                      sint occaecat cupidatat non proident, sunt in culpa qui
+                      officia deserunt mollit anim id est laborum.`;
+  const services: string[] = Array.isArray(doctor?.servicesOffered) ? doctor.servicesOffered : [];
+  const insurances: string[] = Array.isArray(doctor?.insurances) ? doctor.insurances : [];
+  const experienceSummary = doctor?.experience || '';
+  const mapSrc = useMemo(() => {
+    const q = [doctor?.address?.address, doctor?.address?.city, doctor?.address?.state, doctor?.address?.country]
+      .filter(Boolean)
+      .join(', ');
+    const encoded = encodeURIComponent(q || '');
+    return `https://maps.google.com/maps?q=${encoded}&z=13&output=embed`;
+  }, [doctor]);
   return (
     <div>
       <div className="card">
@@ -49,186 +70,57 @@ const Content = () => {
                 <div className="col-md-12 col-lg-9">
                   {/* About Details */}
                   <div className="widget about-widget">
-                    <h4 className="widget-title">About Me</h4>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                      sint occaecat cupidatat non proident, sunt in culpa qui
-                      officia deserunt mollit anim id est laborum.
-                    </p>
+                    <h4 className="widget-title">About</h4>
+                    <p>{aboutText}</p>
                   </div>
                   {/* /About Details */}
-                  {/* Education Details */}
-                  <div className="widget education-widget">
-                    <h4 className="widget-title">Education</h4>
-                    <div className="experience-box">
-                      <ul className="experience-list">
-                        <li>
-                          <div className="experience-user">
-                            <div className="before-circle" />
-                          </div>
-                          <div className="experience-content">
-                            <div className="timeline-content">
-                              <Link to="#/" className="name">
-                                American Dental Medical University
-                              </Link>
-                              <div>BDS</div>
-                              <span className="time">1998 - 2003</span>
+                  
+                  {/* Experience Summary */}
+                  {experienceSummary ? (
+                    <div className="widget experience-widget">
+                      <h4 className="widget-title">Experience</h4>
+                      <div className="experience-box">
+                        <ul className="experience-list">
+                          <li>
+                            <div className="experience-user">
+                              <div className="before-circle" />
                             </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="experience-user">
-                            <div className="before-circle" />
-                          </div>
-                          <div className="experience-content">
-                            <div className="timeline-content">
-                              <Link to="#/" className="name">
-                                American Dental Medical University
-                              </Link>
-                              <div>MDS</div>
-                              <span className="time">2003 - 2005</span>
+                            <div className="experience-content">
+                              <div className="timeline-content">
+                                <div className="time">{experienceSummary}</div>
+                              </div>
                             </div>
-                          </div>
-                        </li>
-                      </ul>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                  {/* /Education Details */}
-                  {/* Experience Details */}
-                  <div className="widget experience-widget">
-                    <h4 className="widget-title">Work &amp; Experience</h4>
-                    <div className="experience-box">
-                      <ul className="experience-list">
-                        <li>
-                          <div className="experience-user">
-                            <div className="before-circle" />
-                          </div>
-                          <div className="experience-content">
-                            <div className="timeline-content">
-                              <Link to="#/" className="name">
-                                Glowing Smiles Family Dental Clinic
-                              </Link>
-                              <span className="time">
-                                2010 - Present (5 years)
-                              </span>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="experience-user">
-                            <div className="before-circle" />
-                          </div>
-                          <div className="experience-content">
-                            <div className="timeline-content">
-                              <Link to="#/" className="name">
-                                Comfort Care Dental Clinic
-                              </Link>
-                              <span className="time">
-                                2007 - 2010 (3 years)
-                              </span>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="experience-user">
-                            <div className="before-circle" />
-                          </div>
-                          <div className="experience-content">
-                            <div className="timeline-content">
-                              <Link to="#/" className="name">
-                                Dream Smile Dental Practice
-                              </Link>
-                              <span className="time">
-                                2005 - 2007 (2 years)
-                              </span>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  {/* /Experience Details */}
-                  {/* Awards Details */}
-                  <div className="widget awards-widget">
-                    <h4 className="widget-title">Awards</h4>
-                    <div className="experience-box">
-                      <ul className="experience-list">
-                        <li>
-                          <div className="experience-user">
-                            <div className="before-circle" />
-                          </div>
-                          <div className="experience-content">
-                            <div className="timeline-content">
-                              <p className="exp-year">July 2019</p>
-                              <h4 className="exp-title">Humanitarian Award</h4>
-                              <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Proin a ipsum tellus. Interdum
-                                et malesuada fames ac ante ipsum primis in
-                                faucibus.
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="experience-user">
-                            <div className="before-circle" />
-                          </div>
-                          <div className="experience-content">
-                            <div className="timeline-content">
-                              <p className="exp-year">March 2011</p>
-                              <h4 className="exp-title">
-                                Certificate for International Volunteer Service
-                              </h4>
-                              <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Proin a ipsum tellus. Interdum
-                                et malesuada fames ac ante ipsum primis in
-                                faucibus.
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="experience-user">
-                            <div className="before-circle" />
-                          </div>
-                          <div className="experience-content">
-                            <div className="timeline-content">
-                              <p className="exp-year">May 2008</p>
-                              <h4 className="exp-title">
-                                The Dental Professional of The Year Award
-                              </h4>
-                              <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Proin a ipsum tellus. Interdum
-                                et malesuada fames ac ante ipsum primis in
-                                faucibus.
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  {/* /Awards Details */}
+                  ) : null}
+                  {/* /Experience Summary */}
+                  
                   {/* Services List */}
-                  {selectedDoctor?.servicesOffered && selectedDoctor.servicesOffered.length > 0 && (
+                  {services.length > 0 && (
                     <div className="service-list">
                       <h4>Services</h4>
                       <ul className="clearfix">
-                        {selectedDoctor.servicesOffered.map((service: string, index: number) => (
+                        {services.map((service: string, index: number) => (
                           <li key={index}>{service}</li>
                         ))}
                       </ul>
                     </div>
                   )}
                   {/* /Services List */}
+                  {/* Insurance List */}
+                  {insurances.length > 0 && (
+                    <div className="service-list">
+                      <h4>Insurance</h4>
+                      <ul className="clearfix">
+                        {insurances.map((ins: string, index: number) => (
+                          <li key={index}>{ins}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {/* /Insurance List */}
                   {/* Specializations List */}
                   <div className="service-list">
                     <h4>Specializations</h4>
@@ -256,11 +148,10 @@ const Content = () => {
                       <h4 className="mb-3">Location</h4>
                       <div className="contact-map">
                         <iframe
-                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.7301009561315!2d-76.13077892422932!3d36.82498697224007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89bae976cfe9f8af%3A0xa61eac05156fbdb9!2sBeachStreet%20USA!5e0!3m2!1sen!2sin!4v1669777904208!5m2!1sen!2sin"
+                          src={mapSrc}
                           width="100%"
                           height="400"
                           style={{ border: 0 }}
-                          allowFullScreen
                           loading="lazy"
                           referrerPolicy="no-referrer-when-downgrade"
                           title="Doctor Location Map"
@@ -278,7 +169,30 @@ const Content = () => {
               {/* Review Listing */}
               <div className="widget review-listing">
                 <ul className="comments-list">
-                  {/* Comment List */}
+                  {/* If we have backend reviews show them; else keep placeholder */}
+                  {reviews.length > 0 ? (
+                    reviews.map((rv, idx) => (
+                      <li key={idx}>
+                        <div className="comment">
+                          <img className="avatar avatar-sm rounded-circle" alt="User Image" src={rv.imageUrl || IMG07} />
+                          <div className="comment-body">
+                            <div className="meta-data">
+                              <span className="comment-author">{rv.patientName || 'Anonymous'}</span>
+                              <span className="comment-date">{new Date(rv.createdAt).toLocaleDateString()}</span>
+                              <div className="review-count rating">
+                                {[...Array(5)].map((_, i) => (
+                                  <i key={i} className={`fas fa-star ${i < (rv.rating || 0) ? 'filled' : ''}`} />
+                                ))}
+                              </div>
+                            </div>
+                            <p className="comment-content">{rv.comment}</p>
+                          </div>
+                        </div>
+                      </li>
+                    ))
+                  ) : (
+                    <>
+                    {/* Comment List */}
                   <li>
                     <div className="comment">
                       <img
@@ -426,6 +340,8 @@ const Content = () => {
                     </div>
                   </li>
                   {/* /Comment List */}
+                  </>
+                  )}
                 </ul>
                 {/* Show All */}
                 <div className="all-feedback text-center">

@@ -62,6 +62,25 @@ class DoctorProfileApi {
 		if (!res.ok) throw new Error('Failed to upload image');
 		return res.json();
 	}
+
+	async saveWeeklyAvailability(weeklyAvailability: any) {
+		const res = await fetch(`${API_BASE_URL}/doctor/availability`, {
+			method: 'POST',
+			headers: getAuthHeaders(),
+			body: JSON.stringify({ weeklyAvailability }),
+		});
+		if (!res.ok) throw new Error('Failed to save availability');
+		return res.json() as Promise<{ success: boolean; weeklyAvailability: any }>
+	}
+
+	async getWeeklyAvailability(doctorId: string) {
+		const res = await fetch(`${API_BASE_URL}/doctor/availability/${doctorId}`, {
+			method: 'GET',
+			headers: getAuthHeaders(false),
+		});
+		if (!res.ok) throw new Error('Failed to fetch availability');
+		return res.json() as Promise<{ success: boolean; weeklyAvailability: any }>
+	}
 }
 
 export default new DoctorProfileApi();

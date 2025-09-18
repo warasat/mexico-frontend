@@ -6,26 +6,138 @@ import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import CommonDatePicker from "../../common/common-datePicker/commonDatePicker";
 import { useAuth } from "../../../../core/context/AuthContext";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import doctorProfileApi from "../../../../core/services/doctorProfileApi";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const AvailableTimings = (props: any) => {
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
   
-  // State for selected time slot (single selection)
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
+  // Editing mode and weekly availability state
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const emptyDay = { morning: [] as string[], afternoon: [] as string[], evening: [] as string[] };
+  const [weeklyAvailability, setWeeklyAvailability] = useState<Record<string, { morning: string[]; afternoon: string[]; evening: string[] }>>({
+    monday: { ...emptyDay },
+    tuesday: { ...emptyDay },
+    wednesday: { ...emptyDay },
+    thursday: { ...emptyDay },
+    friday: { ...emptyDay },
+    saturday: { ...emptyDay },
+    sunday: { ...emptyDay },
+  });
+  const [doctorId, setDoctorId] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [saving, setSaving] = useState<boolean>(false);
 
-  // Function to handle time slot selection (single selection mode)
-  const handleTimeSlotClick = (timeSlot: string) => {
-    setSelectedTimeSlot(prev => {
-      // If clicking the same slot, deselect it
-      if (prev === timeSlot) {
-        return null;
+  // Legacy bindings to satisfy static JSX checks (no-op)
+  const selectedTimeSlot: string | null = null;
+  const handleTimeSlotClick = (_slot: string) => {};
+
+  // Container ref to delegate clicks and sync classes
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // Load current doctor's availability
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        const me = await doctorProfileApi.getMe();
+        const id = me?.doctor?._id || me?.doctor?.id || null;
+        setDoctorId(id);
+        if (id) {
+          const res = await doctorProfileApi.getWeeklyAvailability(id);
+          const avail = res?.weeklyAvailability || {};
+          setWeeklyAvailability((prev) => ({ ...prev, ...avail }));
+        }
+        // Start in view mode; user must click Edit to modify
+        setIsEditing(false);
+      } catch {
+        setIsEditing(true);
+      } finally {
+        setLoading(false);
+        // After state set, reflect classes in DOM
+        setTimeout(() => applyActiveClasses(), 0);
       }
-      // Otherwise, select the new slot (this automatically deselects the previous one)
-      return timeSlot;
+    })();
+  }, []);
+
+  // Apply active classes and show/hide slots depending on edit/view mode
+  const applyActiveClasses = () => {
+    const root = containerRef.current;
+    if (!root) return;
+    const links = Array.from(root.querySelectorAll('a.timing')) as HTMLAnchorElement[];
+    const hasAnySelected = Object.values(weeklyAvailability || {}).some((d: any) =>
+      Array.isArray(d?.morning) && d.morning.length || Array.isArray(d?.afternoon) && d.afternoon.length || Array.isArray(d?.evening) && d.evening.length
+    );
+    for (const link of links) {
+      const pane = link.closest('.tab-pane') as HTMLElement | null;
+      const dayId = pane?.id as keyof typeof weeklyAvailability;
+      const block = link.closest('.time-slot') as HTMLElement | null;
+      const periodTitle = block?.querySelector('h4')?.textContent?.trim().toLowerCase();
+      const period = (periodTitle === 'morning' ? 'morning' : periodTitle === 'afternoon' ? 'afternoon' : 'evening') as 'morning'|'afternoon'|'evening';
+      const label = (link.querySelector('span')?.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!dayId || !label) continue;
+      const active = weeklyAvailability?.[dayId]?.[period]?.includes(label);
+      if (active) link.classList.add('active'); else link.classList.remove('active');
+
+      // Control visibility: in view mode with saved selection, hide unselected slots
+      const li = link.closest('li');
+      if (!li) continue;
+      if (isEditing || !hasAnySelected) {
+        li.classList.remove('d-none');
+      } else {
+        if (active) li.classList.remove('d-none'); else li.classList.add('d-none');
+      }
+    }
+  };
+
+  useEffect(() => { applyActiveClasses(); }, [weeklyAvailability, isEditing]);
+
+  // Toggle a slot only in editing mode
+  const onContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isEditing) return;
+    const target = e.target as HTMLElement;
+    const link = target.closest('a.timing') as HTMLAnchorElement | null;
+    if (!link) return;
+    e.preventDefault();
+    const pane = link.closest('.tab-pane') as HTMLElement | null;
+    const dayId = pane?.id as keyof typeof weeklyAvailability;
+    const block = link.closest('.time-slot') as HTMLElement | null;
+    const periodTitle = block?.querySelector('h4')?.textContent?.trim().toLowerCase();
+    const period = (periodTitle === 'morning' ? 'morning' : periodTitle === 'afternoon' ? 'afternoon' : 'evening') as 'morning'|'afternoon'|'evening';
+    const label = (link.querySelector('span')?.textContent || '').replace(/\s+/g, ' ').trim();
+    if (!dayId || !label) return;
+    setWeeklyAvailability((prev) => {
+      const current = new Set(prev[dayId][period]);
+      if (current.has(label)) current.delete(label); else current.add(label);
+      const next = { ...prev, [dayId]: { ...prev[dayId], [period]: Array.from(current) } };
+      return next;
     });
+  };
+
+  const onSave = async () => {
+    try {
+      setSaving(true);
+      await doctorProfileApi.saveWeeklyAvailability(weeklyAvailability);
+      setIsEditing(false);
+    } catch {
+      // keep editing on error
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const onCancel = async () => {
+    try {
+      if (!doctorId) return setIsEditing(false);
+      const res = await doctorProfileApi.getWeeklyAvailability(doctorId);
+      const avail = res?.weeklyAvailability || {};
+      setWeeklyAvailability((prev) => ({ ...prev, ...avail }));
+      setIsEditing(false);
+    } catch {
+      setIsEditing(false);
+    }
   };
 
   // Function to get the appropriate home redirect URL based on user type
@@ -130,13 +242,23 @@ const AvailableTimings = (props: any) => {
                     </li>
                   </ul>
                 </div>
-                <div className="tab-content pt-0 timing-content">
+                <div className="tab-content pt-0 timing-content" ref={containerRef} onClick={onContainerClick}>
                   {/* General Availability */}
                   <div className="tab-pane fade show active" id="general-availability">
                     <div className="card custom-card">
                       <div className="card-body">
                         <div className="card-header">
                           <h3>Select Available Slots</h3>
+                        </div>
+                        <div className="text-end mb-3">
+                          {isEditing ? (
+                            <>
+                              <button className="btn btn-gray me-2" onClick={onCancel} disabled={saving}>Cancel</button>
+                              <button className="btn btn-primary prime-btn" onClick={onSave} disabled={saving}>{saving ? 'Saving...' : 'Save Changes'}</button>
+                            </>
+                          ) : (
+                            <button className="btn btn-primary prime-btn" onClick={() => setIsEditing(true)} disabled={loading}>Edit</button>
+                          )}
                         </div>
                         <div className="available-tab">
                           <label className="form-label">Select Available days</label>
@@ -195,7 +317,7 @@ const AvailableTimings = (props: any) => {
                                     <ul>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === 'monday-09:00-09:30' ? 'active' : ''}`} 
+                                          className={`timing`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
@@ -209,7 +331,7 @@ const AvailableTimings = (props: any) => {
                                       </li>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === 'monday-09:30-10:00' ? 'active' : ''}`} 
+                                          className={`timing`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
@@ -223,7 +345,7 @@ const AvailableTimings = (props: any) => {
                                       </li>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === 'monday-10:00-10:30' ? 'active' : ''}`} 
+                                          className={`timing`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
@@ -237,7 +359,7 @@ const AvailableTimings = (props: any) => {
                                       </li>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === 'monday-10:30-11:00' ? 'active' : ''}`} 
+                                          className={`timing`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
@@ -251,7 +373,7 @@ const AvailableTimings = (props: any) => {
                                       </li>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === 'monday-11:00-11:30' ? 'active' : ''}`} 
+                                          className={`timing`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
@@ -1920,19 +2042,7 @@ const AvailableTimings = (props: any) => {
                             </div>
                           </div>
                           {/* /Slot */}
-                          <div className="modal-btn text-end">
-                            <Link
-                              to="#"
-                              className="btn btn-gray"
-                              data-bs-toggle="modal"
-                              data-bs-dismiss="modal"
-                            >
-                              Cancel
-                            </Link>
-                            <button className="btn btn-primary prime-btn">
-                              Save Changes
-                            </button>
-                          </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -2069,23 +2179,7 @@ const AvailableTimings = (props: any) => {
                 </div>
               </div>
               <div className="modal-footer">
-                <div className="modal-btn text-end">
-                  <Link
-                    to="#"
-                    className="btn btn-gray"
-                    data-bs-toggle="modal"
-                    data-bs-dismiss="modal"
-                  >
-                    Cancel
-                  </Link>
-                  <Link
-                    to="#"
-                    className="btn btn-primary prime-btn"
-                    data-bs-dismiss="modal"
-                  >
-                    Save Changes
-                  </Link>
-                </div>
+                
               </div>
             </form>
           </div>
