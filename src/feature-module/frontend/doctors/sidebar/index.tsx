@@ -38,7 +38,7 @@ const DoctorSidebar = () => {
   const onAvailabilityChange = async (opt: any) => {
     try {
       setAvailability(opt?.value)
-      await fetch(`${import.meta.env.VITE_API_BASE_URL || 'https://doctor-appointment-system-backend-rho.vercel.app/api'}/doctors/me/availability`, {
+      await fetch(`${import.meta.env.VITE_API_BASE_URL}/doctors/me/availability`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
