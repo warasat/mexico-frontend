@@ -18,7 +18,7 @@ class SocketService {
 
   private initializeSocket() {
     try {
-      const socketUrl = import.meta.env.VITE_SOCKET_URL || 'https://doctor-appointment-system-backend-rho.vercel.app/';
+      const socketUrl = import.meta.env.VITE_SOCKET_URL || 'https://doctor-appointment-system-backend-rho.vercel.app';
       this.socket = io(socketUrl, {
         transports: ['websocket'],
         autoConnect: true,
