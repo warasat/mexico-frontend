@@ -7,6 +7,7 @@ import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import CommonDatePicker from "../../common/common-datePicker/commonDatePicker";
 import { useAuth } from "../../../../core/context/AuthContext";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const AvailableTimings = (props: any) => {
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;

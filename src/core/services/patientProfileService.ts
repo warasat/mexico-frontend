@@ -1,6 +1,6 @@
 const API_BASE_URL = (typeof window !== 'undefined' && window.location.hostname === 'localhost')
-  ? 'http://localhost:5000/api'
-  : 'https://doctor-appointment-system-backend-rho.vercel.app/api';
+  ? (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api')
+  : (import.meta.env.VITE_API_BASE_URL_PROD || 'https://doctor-appointment-system-backend-rho.vercel.app/api');
 
 function getAuthHeaders() {
   const token = localStorage.getItem('token');

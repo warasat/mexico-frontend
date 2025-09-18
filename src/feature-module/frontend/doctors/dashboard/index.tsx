@@ -440,6 +440,7 @@ const DoctorDashboard = (props: any) => {
                                       </Link>
                                     </h5>
                                   </div>
+
                                 </div>
                               </td>
                               <td>
@@ -481,6 +482,7 @@ const DoctorDashboard = (props: any) => {
                                       </Link>
                                     </h5>
                                   </div>
+
                                 </div>
                               </td>
                               <td>
