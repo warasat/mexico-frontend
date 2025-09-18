@@ -1,10 +1,12 @@
- 
- 
- 
 import DoctorSidebar from "../sidebar";
 import Header from "../../header";
-import { doctordashboardprofile01, doctordashboardprofile02, doctordashboardprofile04, doctordashboardprofile05, doctordashboardprofile3 } from "../../imagepath";
-import ApexCharts from 'react-apexcharts';
+import {
+  doctordashboardprofile01,
+  doctordashboardprofile02,
+  doctordashboardprofile04,
+  doctordashboardprofile05,
+  doctordashboardprofile3,
+} from "../../imagepath";
 import DoctorFooter from "../../common/doctorFooter";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
@@ -16,146 +18,14 @@ const DoctorDashboard = (props: any) => {
 
   // Function to get the appropriate home redirect URL based on user type
   const getHomeRedirectUrl = () => {
-    if (isAuthenticated && userType === 'doctor') {
-      return '/doctor/doctor-dashboard';
-    } else if (isAuthenticated && userType === 'patient') {
-      return '/index';
-    } else if (isAuthenticated && userType === 'admin') {
-      return '/admin/dashboard';
+    if (isAuthenticated && userType === "doctor") {
+      return "/doctor/doctor-dashboard";
+    } else if (isAuthenticated && userType === "patient") {
+      return "/index";
+    } else if (isAuthenticated && userType === "admin") {
+      return "/admin/dashboard";
     }
-    return '/index'; // Default to landing page for unauthenticated users
-  };
-
-  // revenue chart options
-  const revenueChartOptions = {
-    chart: {
-      height: 300,
-      type: 'bar' as const,
-      stacked: false,
-      toolbar: {
-        show: false,
-      },
-      background: 'transparent'
-    },
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: '60%',
-        endingShape: 'rounded',
-        borderRadius: 8,
-        distributed: false,
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-    stroke: {
-      show: false,
-      width: 0
-    },
-    colors: ['#0E82FD', '#00D4AA', '#FF6B6B'],
-    series: [{
-      name: 'Revenue',
-      data: [50, 40, 15, 45, 35, 48, 65]
-    }],
-    xaxis: {
-      categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      labels: {
-        style: {
-          colors: '#666',
-          fontSize: '12px'
-        }
-      }
-    },
-    yaxis: {
-      labels: {
-        formatter: function (val: any) {
-          return "$" + val + "k"
-        },
-        style: {
-          colors: '#666',
-          fontSize: '12px'
-        }
-      }
-    },
-    tooltip: {
-      y: {
-        formatter: function (val: any) {
-          return "$" + val + "k"
-        }
-      },
-      theme: 'dark'
-    },
-    grid: {
-      borderColor: '#f1f1f1',
-      strokeDashArray: 3
-    }
-  };
-
-  // appointment chart options
-  const appointmentChartOptions = {
-    chart: {
-      height: 300,
-      type: 'bar' as const,
-      stacked: false,
-      toolbar: {
-        show: false,
-      },
-      background: 'transparent'
-    },
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: '60%',
-        endingShape: 'rounded',
-        borderRadius: 8,
-        distributed: false,
-      },
-    },
-    dataLabels: {
-      enabled: false
-    },
-    stroke: {
-      show: false,
-      width: 0,
-    },
-    colors: ['#00D4AA', '#FF6B6B', '#FFA500'],
-    series: [{
-      name: 'Appointments',
-      data: [40, 20, 30, 60, 90, 40, 110]
-    }],
-    xaxis: {
-      categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      labels: {
-        style: {
-          colors: '#666',
-          fontSize: '12px'
-        }
-      }
-    },
-    yaxis: {
-      labels: {
-        formatter: function (val: any) {
-          return val + " appointments"
-        },
-        style: {
-          colors: '#666',
-          fontSize: '12px'
-        }
-      }
-    },
-    tooltip: {
-      y: {
-        formatter: function (val: any) {
-          return val + " appointments"
-        }
-      },
-      theme: 'dark'
-    },
-    grid: {
-      borderColor: '#f1f1f1',
-      strokeDashArray: 3
-    }
+    return "/index"; // Default to landing page for unauthenticated users
   };
 
   return (
@@ -328,7 +198,9 @@ const DoctorDashboard = (props: any) => {
                               <td>
                                 <div className="appointment-date-created">
                                   <h6>11 Nov 2025 10.45 AM</h6>
-                                  <span className="badge table-badge">General</span>
+                                  <span className="badge table-badge">
+                                    General
+                                  </span>
                                 </div>
                               </td>
                               <td>
@@ -357,7 +229,9 @@ const DoctorDashboard = (props: any) => {
                                   <div className="patient-name-info">
                                     <span>#Apt0002</span>
                                     <h5>
-                                      <Link to="/doctor/appointments">Kelly Stevens</Link>
+                                      <Link to="/doctor/appointments">
+                                        Kelly Stevens
+                                      </Link>
                                     </h5>
                                   </div>
                                 </div>
@@ -406,7 +280,9 @@ const DoctorDashboard = (props: any) => {
                               <td>
                                 <div className="appointment-date-created">
                                   <h6>03 Nov 2025 02.00 PM</h6>
-                                  <span className="badge table-badge">General</span>
+                                  <span className="badge table-badge">
+                                    General
+                                  </span>
                                 </div>
                               </td>
                               <td>
@@ -440,7 +316,6 @@ const DoctorDashboard = (props: any) => {
                                       </Link>
                                     </h5>
                                   </div>
-
                                 </div>
                               </td>
                               <td>
@@ -482,13 +357,14 @@ const DoctorDashboard = (props: any) => {
                                       </Link>
                                     </h5>
                                   </div>
-
                                 </div>
                               </td>
                               <td>
                                 <div className="appointment-date-created">
                                   <h6>28 Oct 2025 05.30 PM</h6>
-                                  <span className="badge table-badge">General</span>
+                                  <span className="badge table-badge">
+                                    General
+                                  </span>
                                 </div>
                               </td>
                               <td>
