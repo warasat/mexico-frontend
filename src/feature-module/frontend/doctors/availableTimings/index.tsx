@@ -195,11 +195,11 @@ const AvailableTimings = (props: any) => {
                                     <ul>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '09:00-09:30' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-09:00-09:30' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('09:00-09:30');
+                                            handleTimeSlotClick('monday-09:00-09:30');
                                           }}
                                         >
                                           <span>
@@ -209,11 +209,11 @@ const AvailableTimings = (props: any) => {
                                       </li>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '09:30-10:00' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-09:30-10:00' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('09:30-10:00');
+                                            handleTimeSlotClick('monday-09:30-10:00');
                                           }}
                                         >
                                           <span>
@@ -223,11 +223,11 @@ const AvailableTimings = (props: any) => {
                                       </li>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '10:00-10:30' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-10:00-10:30' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('10:00-10:30');
+                                            handleTimeSlotClick('monday-10:00-10:30');
                                           }}
                                         >
                                           <span>
@@ -237,11 +237,11 @@ const AvailableTimings = (props: any) => {
                                       </li>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '10:30-11:00' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-10:30-11:00' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('10:30-11:00');
+                                            handleTimeSlotClick('monday-10:30-11:00');
                                           }}
                                         >
                                           <span>
@@ -251,11 +251,11 @@ const AvailableTimings = (props: any) => {
                                       </li>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '11:00-11:30' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-11:00-11:30' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('11:00-11:30');
+                                            handleTimeSlotClick('monday-11:00-11:30');
                                           }}
                                         >
                                           <span>
@@ -276,11 +276,11 @@ const AvailableTimings = (props: any) => {
                                 <ul>
                                   <li>
                                     <Link
-                                          className={`timing ${selectedTimeSlot === '12:00-12:30' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-12:00-12:30' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('12:00-12:30');
+                                            handleTimeSlotClick('monday-12:00-12:30');
                                           }}
                                         >
                                           <span>
@@ -290,11 +290,11 @@ const AvailableTimings = (props: any) => {
                                       </li>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '12:30-01:00' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-12:30-01:00' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('12:30-01:00');
+                                            handleTimeSlotClick('monday-12:30-01:00');
                                           }}
                                         >
                                           <span>
@@ -304,11 +304,11 @@ const AvailableTimings = (props: any) => {
                                       </li>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '01:00-01:30' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-01:00-01:30' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('01:00-01:30');
+                                            handleTimeSlotClick('monday-01:00-01:30');
                                           }}
                                         >
                                           <span>
@@ -318,11 +318,11 @@ const AvailableTimings = (props: any) => {
                                       </li>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '01:30-02:00' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-01:30-02:00' ? 'active' : ''}`} 
                                       to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('01:30-02:00');
+                                            handleTimeSlotClick('monday-01:30-02:00');
                                           }}
                                         >
                                           <span>
@@ -332,11 +332,11 @@ const AvailableTimings = (props: any) => {
                                   </li>
                                   <li>
                                     <Link
-                                          className={`timing ${selectedTimeSlot === '02:00-02:30' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-02:00-02:30' ? 'active' : ''}`} 
                                       to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('02:00-02:30');
+                                            handleTimeSlotClick('monday-02:00-02:30');
                                           }}
                                         >
                                           <span>
@@ -357,11 +357,11 @@ const AvailableTimings = (props: any) => {
                                     <ul>
                                       <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '05:00-05:30' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-05:00-05:30' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('05:00-05:30');
+                                            handleTimeSlotClick('monday-05:00-05:30');
                                           }}
                                         >
                                           <span>
@@ -371,11 +371,11 @@ const AvailableTimings = (props: any) => {
                                   </li>
                                   <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '05:30-06:00' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-05:30-06:00' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('05:30-06:00');
+                                            handleTimeSlotClick('monday-05:30-06:00');
                                           }}
                                         >
                                           <span>
@@ -385,11 +385,11 @@ const AvailableTimings = (props: any) => {
                                   </li>
                                   <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '06:00-06:30' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-06:00-06:30' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('06:00-06:30');
+                                            handleTimeSlotClick('monday-06:00-06:30');
                                           }}
                                         >
                                           <span>
@@ -399,11 +399,11 @@ const AvailableTimings = (props: any) => {
                                   </li>
                                   <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '06:30-07:00' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-06:30-07:00' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('06:30-07:00');
+                                            handleTimeSlotClick('monday-06:30-07:00');
                                           }}
                                         >
                                           <span>
@@ -413,11 +413,11 @@ const AvailableTimings = (props: any) => {
                                   </li>
                                   <li>
                                         <Link 
-                                          className={`timing ${selectedTimeSlot === '07:00-07:30' ? 'active' : ''}`} 
+                                          className={`timing ${selectedTimeSlot === 'monday-07:00-07:30' ? 'active' : ''}`} 
                                           to="#"
                                           onClick={(e) => {
                                             e.preventDefault();
-                                            handleTimeSlotClick('07:00-07:30');
+                                            handleTimeSlotClick('monday-07:00-07:30');
                                           }}
                                         >
                                           <span>
@@ -434,204 +434,1488 @@ const AvailableTimings = (props: any) => {
                           {/* /Slot */}
                           {/* Slot */}
                           <div className="tab-pane fade" id="tuesday">
-                            <div className="slot-box">
-                              <div className="slot-header">
-                                <h5>Tuesday</h5>
-                                <ul>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="add-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#add_slot"
-                                    >
-                                      Add Slots
-                                    </Link>
-                                  </li>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="del-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#delete_slot"
-                                    >
-                                      Delete All
-                                    </Link>
-                                  </li>
-                                </ul>
+                            <div className="row">
+                              {/* Morning Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Morning</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-09:00-09:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-09:00-09:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:00 - 09:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-09:30-10:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-09:30-10:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:30 - 10:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-10:00-10:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-10:00-10:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:00 - 10:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-10:30-11:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-10:30-11:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:30 - 11:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-11:00-11:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-11:00-11:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 11:00 - 11:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="slot-body">
-                                <p>No Slots Available</p>
+                              
+                              {/* Afternoon Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Afternoon</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-12:00-12:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-12:00-12:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:00 - 12:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-12:30-01:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-12:30-01:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:30 - 01:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-01:00-01:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-01:00-01:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:00 - 01:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-01:30-02:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-01:30-02:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:30 - 02:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-02:00-02:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-02:00-02:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 02:00 - 02:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* Evening Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Evening</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-05:00-05:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-05:00-05:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:00 - 05:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-05:30-06:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-05:30-06:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:30 - 06:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-06:00-06:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-06:00-06:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:00 - 06:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-06:30-07:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-06:30-07:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:30 - 07:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'tuesday-07:00-07:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('tuesday-07:00-07:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 07:00 - 07:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                           {/* /Slot */}
                           {/* Slot */}
                           <div className="tab-pane fade" id="wednesday">
-                            <div className="slot-box">
-                              <div className="slot-header">
-                                <h5>Wednesday</h5>
-                                <ul>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="add-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#add_slot"
-                                    >
-                                      Add Slots
-                                    </Link>
-                                  </li>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="del-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#delete_slot"
-                                    >
-                                      Delete All
-                                    </Link>
-                                  </li>
-                                </ul>
+                            <div className="row">
+                              {/* Morning Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Morning</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-09:00-09:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-09:00-09:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:00 - 09:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-09:30-10:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-09:30-10:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:30 - 10:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-10:00-10:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-10:00-10:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:00 - 10:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-10:30-11:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-10:30-11:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:30 - 11:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-11:00-11:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-11:00-11:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 11:00 - 11:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="slot-body">
-                                <p>No Slots Available</p>
+                              
+                              {/* Afternoon Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Afternoon</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-12:00-12:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-12:00-12:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:00 - 12:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-12:30-01:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-12:30-01:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:30 - 01:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-01:00-01:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-01:00-01:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:00 - 01:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-01:30-02:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-01:30-02:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:30 - 02:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-02:00-02:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-02:00-02:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 02:00 - 02:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* Evening Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Evening</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-05:00-05:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-05:00-05:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:00 - 05:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-05:30-06:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-05:30-06:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:30 - 06:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-06:00-06:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-06:00-06:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:00 - 06:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-06:30-07:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-06:30-07:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:30 - 07:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'wednesday-07:00-07:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('wednesday-07:00-07:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 07:00 - 07:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                           {/* /Slot */}
                           {/* Slot */}
                           <div className="tab-pane fade" id="thursday">
-                            <div className="slot-box">
-                              <div className="slot-header">
-                                <h5>Thursday</h5>
-                                <ul>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="add-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#add_slot"
-                                    >
-                                      Add Slots
-                                    </Link>
-                                  </li>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="del-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#delete_slot"
-                                    >
-                                      Delete All
-                                    </Link>
-                                  </li>
-                                </ul>
+                            <div className="row">
+                              {/* Morning Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Morning</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-09:00-09:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-09:00-09:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:00 - 09:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-09:30-10:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-09:30-10:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:30 - 10:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-10:00-10:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-10:00-10:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:00 - 10:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-10:30-11:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-10:30-11:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:30 - 11:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-11:00-11:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-11:00-11:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 11:00 - 11:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="slot-body">
-                                <p>No Slots Available</p>
+                              
+                              {/* Afternoon Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Afternoon</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-12:00-12:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-12:00-12:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:00 - 12:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-12:30-01:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-12:30-01:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:30 - 01:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-01:00-01:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-01:00-01:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:00 - 01:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-01:30-02:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-01:30-02:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:30 - 02:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-02:00-02:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-02:00-02:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 02:00 - 02:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* Evening Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Evening</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-05:00-05:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-05:00-05:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:00 - 05:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-05:30-06:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-05:30-06:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:30 - 06:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-06:00-06:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-06:00-06:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:00 - 06:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-06:30-07:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-06:30-07:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:30 - 07:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'thursday-07:00-07:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('thursday-07:00-07:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 07:00 - 07:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                           {/* /Slot */}
                           {/* Slot */}
                           <div className="tab-pane fade" id="friday">
-                            <div className="slot-box">
-                              <div className="slot-header">
-                                <h5>Friday</h5>
-                                <ul>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="add-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#add_slot"
-                                    >
-                                      Add Slots
-                                    </Link>
-                                  </li>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="del-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#delete_slot"
-                                    >
-                                      Delete All
-                                    </Link>
-                                  </li>
-                                </ul>
+                            <div className="row">
+                              {/* Morning Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Morning</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-09:00-09:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-09:00-09:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:00 - 09:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-09:30-10:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-09:30-10:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:30 - 10:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-10:00-10:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-10:00-10:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:00 - 10:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-10:30-11:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-10:30-11:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:30 - 11:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-11:00-11:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-11:00-11:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 11:00 - 11:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="slot-body">
-                                <p>No Slots Available</p>
+                              
+                              {/* Afternoon Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Afternoon</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-12:00-12:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-12:00-12:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:00 - 12:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-12:30-01:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-12:30-01:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:30 - 01:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-01:00-01:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-01:00-01:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:00 - 01:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-01:30-02:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-01:30-02:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:30 - 02:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-02:00-02:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-02:00-02:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 02:00 - 02:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* Evening Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Evening</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-05:00-05:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-05:00-05:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:00 - 05:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-05:30-06:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-05:30-06:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:30 - 06:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-06:00-06:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-06:00-06:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:00 - 06:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-06:30-07:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-06:30-07:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:30 - 07:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'friday-07:00-07:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('friday-07:00-07:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 07:00 - 07:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                           {/* /Slot */}
                           {/* Slot */}
                           <div className="tab-pane fade" id="saturday">
-                            <div className="slot-box">
-                              <div className="slot-header">
-                                <h5>Saturday</h5>
-                                <ul>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="add-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#add_slot"
-                                    >
-                                      Add Slots
-                                    </Link>
-                                  </li>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="del-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#delete_slot"
-                                    >
-                                      Delete All
-                                    </Link>
-                                  </li>
-                                </ul>
+                            <div className="row">
+                              {/* Morning Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Morning</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-09:00-09:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-09:00-09:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:00 - 09:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-09:30-10:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-09:30-10:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:30 - 10:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-10:00-10:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-10:00-10:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:00 - 10:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-10:30-11:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-10:30-11:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:30 - 11:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-11:00-11:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-11:00-11:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 11:00 - 11:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="slot-body">
-                                <p>No Slots Available</p>
+                              
+                              {/* Afternoon Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Afternoon</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-12:00-12:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-12:00-12:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:00 - 12:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-12:30-01:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-12:30-01:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:30 - 01:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-01:00-01:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-01:00-01:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:00 - 01:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-01:30-02:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-01:30-02:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:30 - 02:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-02:00-02:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-02:00-02:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 02:00 - 02:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* Evening Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Evening</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-05:00-05:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-05:00-05:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:00 - 05:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-05:30-06:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-05:30-06:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:30 - 06:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-06:00-06:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-06:00-06:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:00 - 06:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-06:30-07:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-06:30-07:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:30 - 07:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'saturday-07:00-07:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('saturday-07:00-07:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 07:00 - 07:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                           {/* /Slot */}
                           {/* Slot */}
                           <div className="tab-pane fade" id="sunday">
-                            <div className="slot-box">
-                              <div className="slot-header">
-                                <h5>Sunday</h5>
-                                <ul>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="add-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#add_slot"
-                                    >
-                                      Add Slots
-                                    </Link>
-                                  </li>
-                                  <li>
-                                    <Link
-                                      to="#"
-                                      className="del-slot"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#delete_slot"
-                                    >
-                                      Delete All
-                                    </Link>
-                                  </li>
-                                </ul>
+                            <div className="row">
+                              {/* Morning Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Morning</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-09:00-09:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-09:00-09:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:00 - 09:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-09:30-10:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-09:30-10:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 09:30 - 10:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-10:00-10:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-10:00-10:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:00 - 10:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-10:30-11:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-10:30-11:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 10:30 - 11:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-11:00-11:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-11:00-11:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 11:00 - 11:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="slot-body">
-                                <p>No Slots Available</p>
+                              
+                              {/* Afternoon Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Afternoon</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-12:00-12:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-12:00-12:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:00 - 12:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-12:30-01:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-12:30-01:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 12:30 - 01:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-01:00-01:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-01:00-01:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:00 - 01:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-01:30-02:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-01:30-02:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 01:30 - 02:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-02:00-02:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-02:00-02:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 02:00 - 02:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* Evening Section */}
+                              <div className="col-lg-4 col-md-4">
+                                <div className="time-slot time-slot-blk">
+                                  <h4>Evening</h4>
+                                  <div className="time-slot-list">
+                                    <ul>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-05:00-05:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-05:00-05:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:00 - 05:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-05:30-06:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-05:30-06:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 05:30 - 06:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-06:00-06:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-06:00-06:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:00 - 06:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-06:30-07:00' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-06:30-07:00');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 06:30 - 07:00
+                                          </span>
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link 
+                                          className={`timing ${selectedTimeSlot === 'sunday-07:00-07:30' ? 'active' : ''}`} 
+                                          to="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleTimeSlotClick('sunday-07:00-07:30');
+                                          }}
+                                        >
+                                          <span>
+                                            <i className="isax isax-clock" /> 07:00 - 07:30
+                                          </span>
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
