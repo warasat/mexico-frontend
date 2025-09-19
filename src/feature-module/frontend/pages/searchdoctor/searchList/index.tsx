@@ -203,14 +203,25 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
-                  state={isAuthenticated && userType === 'patient' ? { selectedDoctor: doctors[0] } : undefined}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
+                    state={isAuthenticated && userType === 'patient' ? { selectedDoctor: doctors[0] } : undefined}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -263,14 +274,25 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
-                  state={isAuthenticated && userType === 'patient' ? { selectedDoctor: doctors[0] } : undefined}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
+                    state={isAuthenticated && userType === 'patient' ? { selectedDoctor: doctors[0] } : undefined}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -323,14 +345,25 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to="/booking"
+                    state={{ selectedDoctor: doctors[0] }}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -389,14 +422,25 @@ const SearchList = () => {
                 })()}
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to="/booking"
+                    state={{ selectedDoctor: doctors[0] }}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -443,14 +487,25 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to="/booking"
+                    state={{ selectedDoctor: doctors[0] }}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -509,14 +564,25 @@ const SearchList = () => {
                 })()}
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to="/booking"
+                    state={{ selectedDoctor: doctors[0] }}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -563,14 +629,25 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to="/booking"
+                    state={{ selectedDoctor: doctors[0] }}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -617,14 +694,25 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to="/booking"
+                    state={{ selectedDoctor: doctors[0] }}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -671,14 +759,25 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to="/booking"
+                    state={{ selectedDoctor: doctors[0] }}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -725,14 +824,25 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to="/booking"
+                    state={{ selectedDoctor: doctors[0] }}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -779,14 +889,25 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to="/booking"
+                    state={{ selectedDoctor: doctors[0] }}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -833,14 +954,25 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                <Link
-                  to="/booking"
-                  state={{ selectedDoctor: doctors[0] }}
-                  className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
-                >
-                  <i className="isax isax-calendar-1 me-2" />
-                  Book Now
-                </Link>
+                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                  <Link
+                    to="/booking"
+                    state={{ selectedDoctor: doctors[0] }}
+                    className="btn btn-md btn-dark d-inline-flex align-items-center rounded-pill"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Book Now
+                  </Link>
+                ) : (
+                  <button
+                    className="btn btn-md btn-secondary d-inline-flex align-items-center rounded-pill"
+                    disabled
+                    title="Doctor is currently unavailable"
+                  >
+                    <i className="isax isax-calendar-1 me-2" />
+                    Unavailable
+                  </button>
+                )}
               </div>
             </div>
           </div>

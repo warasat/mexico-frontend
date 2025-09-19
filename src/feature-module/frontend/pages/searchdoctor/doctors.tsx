@@ -291,22 +291,42 @@ const Doctors = () => {
                 {/* Next Available Time Display with Inline Booking Button */}
                 <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-1 mt-1">
                   <div>
-                    <h6 className="mb-0 text-dark">Next Available</h6>
+                    <h6 className="mb-0 text-dark">{doctor.available ? 'Next Available' : 'Status'}</h6>
                     <p className="mb-0 text-muted">
-                      Next available at <br />
-                      10:00 AM - 15 Oct, Tue
+                      {doctor.available ? (
+                        <>
+                          Next available at <br />
+                          10:00 AM - 15 Oct, Tue
+                        </>
+                      ) : (
+                        <>
+                          Currently <br />
+                          Unavailable
+                        </>
+                      )}
                     </p>
                   </div>
-                  <Link
-                    to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
-                    state={isAuthenticated && userType === 'patient' ? { 
-                      selectedDoctor: doctor
-                    } : undefined}
-                    className="btn btn-md d-inline-flex align-items-center rounded-pill btn-primary-gradient"
-                  >
-                    <i className="isax isax-calendar-1 me-2" />
-                    Book Appointment
-                  </Link>
+                  {doctor.available ? (
+                    <Link
+                      to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
+                      state={isAuthenticated && userType === 'patient' ? { 
+                        selectedDoctor: doctor
+                      } : undefined}
+                      className="btn btn-md d-inline-flex align-items-center rounded-pill btn-primary-gradient"
+                    >
+                      <i className="isax isax-calendar-1 me-2" />
+                      Book Appointment
+                    </Link>
+                  ) : (
+                    <button
+                      className="btn btn-md d-inline-flex align-items-center rounded-pill btn-secondary"
+                      disabled
+                      title="Doctor is currently unavailable"
+                    >
+                      <i className="isax isax-calendar-1 me-2" />
+                      Unavailable
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

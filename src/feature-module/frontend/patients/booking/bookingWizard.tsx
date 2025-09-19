@@ -50,6 +50,15 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
   const [selectedTime, setSelectedTime] = useState<string>(selectedDoctor?.selectedTime || '');
   const [bookingId] = useState(() => `BK${Date.now().toString().slice(-6)}`);
   const [weeklyAvailability, setWeeklyAvailability] = useState<Record<string, { morning: string[]; afternoon: string[]; evening: string[] }>>({});
+  
+  // Basic information form state
+  const [basicInfo, setBasicInfo] = useState({
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    email: '',
+    symptoms: ''
+  });
   const { token } = theme.useToken();
   const wrapperStyle = {
     width: '100%',
@@ -65,7 +74,21 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
     setSelectedDate(value.format('YYYY-MM-DD'));
   };
 
+  const validateBasicInfo = () => {
+    const { firstName, lastName, phoneNumber, email, symptoms } = basicInfo;
+    return firstName.trim() !== '' && 
+           lastName.trim() !== '' && 
+           phoneNumber.trim() !== '' && 
+           email.trim() !== '' && 
+           symptoms.trim() !== '';
+  };
+
   const HandleNext = () => {
+    // Validate basic information on step 4 (basic info step)
+    if (currentStep === 4 && !validateBasicInfo()) {
+      alert('Please fill in all required fields before proceeding.');
+      return;
+    }
     setCurrentStep(currentStep + 1);
   };
   // Fetch doctor availability once when entering step 3 or when doctor changes
@@ -411,32 +434,26 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                               </div>
                               <h6 className="mb-2">Booking Info</h6>
                               <div className="row gx-2 gy-3">
-                                <div className="col-lg-3 col-sm-6">
+                                <div className="col-lg-4 col-sm-6">
                                   <div>
                                     <h6 className="fs-14 fw-medium mb-1">Service</h6>
-                                    <p className="mb-0">Cardiology (30 Mins)</p>
+                                    <p className="mb-0">{doctor.specialty || 'General Consultation'} (30 Mins)</p>
                                   </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-6">
-                                  <div>
-                                    <h6 className="fs-14 fw-medium mb-1">Service</h6>
-                                    <p className="mb-0">Echocardiograms</p>
-                                  </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-6">
+                                <div className="col-lg-4 col-sm-6">
                                   <div>
                                     <h6 className="fs-14 fw-medium mb-1">
                                       Date &amp; Time
                                     </h6>
-                                    <p className="mb-0">{selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : '10:00 - 11:00 AM, 15, Oct'}</p>
+                                    <p className="mb-0">{selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : 'Select date and time'}</p>
                                   </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-6">
+                                <div className="col-lg-4 col-sm-6">
                                   <div>
                                     <h6 className="fs-14 fw-medium mb-1">
                                       Appointment type
                                     </h6>
-                                    <p className="mb-0">Clinic (Wellness Path)</p>
+                                    <p className="mb-0">{selectType === 2 ? 'Video Call' : 'Clinic Visit'}</p>
                                   </div>
                                 </div>
                               </div>
@@ -595,32 +612,26 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                               </div>
                               <h6 className="mb-2">Booking Info</h6>
                               <div className="row gx-2 gy-3">
-                                <div className="col-lg-3 col-sm-6">
+                                <div className="col-lg-4 col-sm-6">
                                   <div>
                                     <h6 className="fs-14 fw-medium mb-1">Service</h6>
-                                    <p className="mb-0">Cardiology (30 Mins)</p>
+                                    <p className="mb-0">{doctor.specialty || 'General Consultation'} (30 Mins)</p>
                                   </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-6">
-                                  <div>
-                                    <h6 className="fs-14 fw-medium mb-1">Service</h6>
-                                    <p className="mb-0">Echocardiograms</p>
-                                  </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-6">
+                                <div className="col-lg-4 col-sm-6">
                                   <div>
                                     <h6 className="fs-14 fw-medium mb-1">
                                       Date &amp; Time
                                     </h6>
-                                    <p className="mb-0">{selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : '10:00 - 11:00 AM, 15, Oct'}</p>
+                                    <p className="mb-0">{selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : 'Select date and time'}</p>
                                   </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-6">
+                                <div className="col-lg-4 col-sm-6">
                                   <div>
                                     <h6 className="fs-14 fw-medium mb-1">
                                       Appointment type
                                     </h6>
-                                    <p className="mb-0">Clinic (Wellness Path)</p>
+                                    <p className="mb-0">{selectType === 2 ? 'Video Call' : 'Clinic Visit'}</p>
                                   </div>
                                 </div>
                               </div>
@@ -634,49 +645,61 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                             <div className="row">
                               <div className="col-lg-4 col-md-6">
                                 <div className="mb-3">
-                                  <label className="form-label">First Name</label>
-                                  <input type="text" className="form-control" />
+                                  <label className="form-label">First Name *</label>
+                                  <input 
+                                    type="text" 
+                                    className="form-control" 
+                                    value={basicInfo.firstName}
+                                    onChange={(e) => setBasicInfo({...basicInfo, firstName: e.target.value})}
+                                    required
+                                  />
                                 </div>
                               </div>
                               <div className="col-lg-4 col-md-6">
                                 <div className="mb-3">
-                                  <label className="form-label">Last Name</label>
-                                  <input type="text" className="form-control" />
+                                  <label className="form-label">Last Name *</label>
+                                  <input 
+                                    type="text" 
+                                    className="form-control" 
+                                    value={basicInfo.lastName}
+                                    onChange={(e) => setBasicInfo({...basicInfo, lastName: e.target.value})}
+                                    required
+                                  />
                                 </div>
                               </div>
                               <div className="col-lg-4 col-md-6">
                                 <div className="mb-3">
-                                  <label className="form-label">Phone Number</label>
-                                  <input type="text" className="form-control" />
+                                  <label className="form-label">Phone Number *</label>
+                                  <input 
+                                    type="tel" 
+                                    className="form-control" 
+                                    value={basicInfo.phoneNumber}
+                                    onChange={(e) => setBasicInfo({...basicInfo, phoneNumber: e.target.value})}
+                                    required
+                                  />
                                 </div>
                               </div>
                               <div className="col-lg-4 col-md-6">
                                 <div className="mb-3">
-                                  <label className="form-label">Email Address</label>
-                                  <input type="text" className="form-control" />
+                                  <label className="form-label">Email Address *</label>
+                                  <input 
+                                    type="email" 
+                                    className="form-control" 
+                                    value={basicInfo.email}
+                                    onChange={(e) => setBasicInfo({...basicInfo, email: e.target.value})}
+                                    required
+                                  />
                                 </div>
                               </div>
                               <div className="col-lg-4 col-md-6">
                                 <div className="mb-3">
-                                  <label className="form-label">Symptoms</label>
-                                  <input type="text" className="form-control" />
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="mb-3">
-                                  <label className="form-label">Attachment</label>
-                                  <input type="file" className="form-control" />
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="mb-3">
-                                  <label className="form-label">
-                                    Reason for Visit
-                                  </label>
-                                  <textarea
-                                    className="form-control"
-                                    rows={3}
-                                    defaultValue={""}
+                                  <label className="form-label">Symptoms *</label>
+                                  <input 
+                                    type="text" 
+                                    className="form-control" 
+                                    value={basicInfo.symptoms}
+                                    onChange={(e) => setBasicInfo({...basicInfo, symptoms: e.target.value})}
+                                    required
                                   />
                                 </div>
                               </div>
@@ -763,7 +786,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                     Date &amp; Time
                                   </label>
                                   <div className="form-plain-text">
-                                    {selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : '10:00 - 11:00 AM, 15, Oct 2025'}{" "}
+                                    {selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : 'Select date and time'}{" "}
                                   </div>
                                 </div>
                                 <div className="mb-3">
@@ -875,7 +898,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                           Date &amp; Time
                                         </label>
                                         <div className="form-plain-text">
-                                          {selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : '10:00 - 11:00 AM, 15, Oct 2025'}{" "}
+                                          {selectedDate && selectedTime ? `${selectedTime}, ${selectedDate}` : 'Select date and time'}{" "}
                                         </div>
                                       </div>
                                     </div>
