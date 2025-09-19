@@ -84,6 +84,7 @@ class SocketService {
       this.socket.disconnect();
       this.socket = null;
     }
+
   }
 
   public isConnected(): boolean {
@@ -92,3 +93,4 @@ class SocketService {
 }
 
 export default SocketService;
+

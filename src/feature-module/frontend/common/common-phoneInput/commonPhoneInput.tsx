@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
@@ -16,19 +16,32 @@ const CommonPhoneInput: React.FC<CommonPhoneInputProps> = ({
   inputClassName = "",
   placeholder = "Enter phone number",
 }) => {
+  const handleChange = useCallback((val: string | undefined) => {
+    if (onChange) {
+      onChange(val);
+    }
+  }, [onChange]);
+
+  const inputComponent = useMemo(() => {
+    return (props: any) => (
+      <input
+        {...props}
+        className={inputClassName ? `phone-input ${inputClassName}` : "phone-input"}
+        autoComplete="tel"
+      />
+    );
+  }, [inputClassName]);
+
   return (
-    <div >
+    <div>
       <PhoneInput
         defaultCountry="US"
         value={value}
-        onChange={onChange ? (val) => onChange(val as string | undefined) : () => {}}
+        onChange={handleChange}
         placeholder={placeholder}
-        inputComponent={(props) => (
-          <input
-            {...props}
-            className={inputClassName ? `phone-input ${inputClassName}` : "phone-input"}
-          />
-        )}
+        inputComponent={inputComponent}
+        international
+        countryCallingCodeEditable={false}
       />
     </div>
   );

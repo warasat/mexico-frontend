@@ -206,14 +206,12 @@ const HomeBanner: React.FC = () => {
                               }
 
                               // User is authenticated as patient, proceed to search
-                              const url = disease
-                                ? `/patient/search-doctor1?specialty=${encodeURIComponent(
-                                    spec
-                                  )}&disease=${encodeURIComponent(disease)}`
-                                : `/patient/search-doctor1?specialty=${encodeURIComponent(
-                                    spec
-                                  )}`;
-                              navigate(url);
+                              const params = new URLSearchParams();
+                              params.append('specialty', spec);
+                              if (disease) params.append('disease', disease);
+                              if (selectedLocation) params.append('city', selectedLocation);
+                              
+                              navigate(`/patient/search-doctor1?${params.toString()}`);
                             }}
                           >
                             <div className="row flex-row justify-content-center align-items-center">

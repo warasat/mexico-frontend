@@ -113,10 +113,14 @@ const Doctors = () => {
 
   useEffect(() => {
     const specialtyParam = searchParams.get("specialty");
+    const cityParam = searchParams.get("city");
     setSpecialty(specialtyParam || "");
+    
+    let filtered = allDoctors;
+    
+    // Filter by specialty if provided
     if (specialtyParam) {
-      // Filter doctors based on specialty
-      const filtered = allDoctors.filter(doctor => {
+      filtered = filtered.filter(doctor => {
         const doctorSpecialty = doctor.specialty.toLowerCase();
         const paramSpecialty = specialtyParam.toLowerCase();
         
@@ -158,19 +162,22 @@ const Doctors = () => {
             return doctorSpecialty.includes(paramSpecialty) || paramSpecialty.includes(doctorSpecialty);
         }
       });
-      
-      const diseaseFiltered = filtered; // Disease filtering removed as per requirements
-
-      const sorted = diseaseFiltered
-        .map(d => ({...d, specialtyRank: d.specialtyRank ?? 0}))
-        .sort((a, b) => (b.specialtyRank ?? 0) - (a.specialtyRank ?? 0));
-      setFilteredDoctors(sorted);
-    } else {
-      const sortedAll = allDoctors
-        .map(d => ({...d, specialtyRank: d.specialtyRank ?? 0}))
-        .sort((a, b) => (b.specialtyRank ?? 0) - (a.specialtyRank ?? 0));
-      setFilteredDoctors(sortedAll);
     }
+    
+    // Filter by city if provided
+    if (cityParam) {
+      filtered = filtered.filter(doctor => {
+        const doctorLocation = doctor.location.toLowerCase();
+        const paramCity = cityParam.toLowerCase();
+        // Check if the doctor's location contains the selected city
+        return doctorLocation.includes(paramCity);
+      });
+    }
+
+    const sorted = filtered
+      .map(d => ({...d, specialtyRank: d.specialtyRank ?? 0}))
+      .sort((a, b) => (b.specialtyRank ?? 0) - (a.specialtyRank ?? 0));
+    setFilteredDoctors(sorted);
   }, [searchParams, allDoctors]);
 
   return (

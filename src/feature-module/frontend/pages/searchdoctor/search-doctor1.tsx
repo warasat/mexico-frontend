@@ -1,18 +1,30 @@
 import Header from "../../header";
 import Doctors from "./doctors";
 import Footer from "../../footer";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { specialtiesData } from "../../common/data/specialties";
 
 const SearchDoctor = (props: any) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
   const [selectedInsurance, setSelectedInsurance] = useState<string>('');
   const [selectedLocation, setSelectedLocation] = useState<string>('');
   const [selectedSpeciality, setSelectedSpeciality] = useState<string>('');
   const [selectedDisease, setSelectedDisease] = useState<string>('');
+  
+  // Read URL parameters and set initial form values
+  useEffect(() => {
+    const specialtyParam = searchParams.get("specialty");
+    const cityParam = searchParams.get("city");
+    const diseaseParam = searchParams.get("disease");
+    
+    if (specialtyParam) setSelectedSpeciality(specialtyParam);
+    if (cityParam) setSelectedLocation(cityParam);
+    if (diseaseParam) setSelectedDisease(diseaseParam);
+  }, [searchParams]);
   
   // Mexican cities for location dropdown
   const mexicanCities = [
@@ -38,116 +50,163 @@ const SearchDoctor = (props: any) => {
       <div className="container" style={{paddingTop: '120px', paddingBottom: '80px'}}>
         <div className="row justify-content-center">
           <div className="col-lg-10 col-xl-8 col-xxl-6">
-            <div className="search-box-one aos" data-aos="fade-up" style={{
-              borderRadius: '70px', 
-              margin: '0 auto',
-              background: 'transparent',
-              border: '1px solid transparent',
-              backgroundImage: 'linear-gradient(white, white), linear-gradient(90.08deg, #0E82FD 0.09%, #06AED4 70.28%)',
-              backgroundOrigin: 'border-box',
-              backgroundClip: 'padding-box, border-box',
-              padding: '8px'
-            }}>
-              <form className='p-3' onSubmit={(e) => {
-                e.preventDefault();
-                const spec = selectedSpeciality.trim();
-                const disease = selectedDisease.trim();
-                if (!spec) return;
-                const url = disease
-                  ? `/patient/search-doctor1?specialty=${encodeURIComponent(spec)}&disease=${encodeURIComponent(disease)}`
-                  : `/patient/search-doctor1?specialty=${encodeURIComponent(spec)}`;
-                navigate(url);
-              }}>
-                <div className="search-input search-map-line">
-                  <i className="isax isax-hospital5 bficon" />
-                  <div className=" mb-0 position-relative" style={{width: '100%'}}>
-                    <select
-                      value={selectedSpeciality}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setSelectedSpeciality(val);
-                        setSelectedDisease('');
-                      }}
-                      className="form-control"
-                      style={{ paddingLeft: '45px' }}
-                    >
-                      <option value="">{t('search.searchDoctors') as string}</option>
-                      {specialtiesData.map((s) => (
-                        <option key={s.specialty} value={s.specialty}>{s.specialty}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="search-input search-map-line">
-                  <i className="isax isax-hospital5 bficon" />
-                  <div className="mb-0 position-relative" style={{ width: '100%' }}>
-                    {selectedSpeciality ? (() => {
-                      const selectedSpecialty = specialtiesData.find((s) => s.specialty === selectedSpeciality);
-                      const diseases = selectedSpecialty?.diseases ?? [];
-                      return (
+            <div className="search-box-one aos" data-aos="fade-up">
+              <form
+                className="p-3"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const spec = selectedSpeciality.trim();
+                  const disease = selectedDisease.trim();
+                  if (!spec) return;
+
+                  // User is authenticated as patient, proceed to search
+                  const params = new URLSearchParams();
+                  params.append('specialty', spec);
+                  if (disease) params.append('disease', disease);
+                  if (selectedLocation) params.append('city', selectedLocation);
+                  
+                  navigate(`/patient/search-doctor1?${params.toString()}`);
+                }}
+              >
+                <div className="row flex-row justify-content-center align-items-center">
+                  <div className="col-lg-8">
+                    <div className="search-input search-map-line">
+                      <i className="isax isax-hospital5 bficon" />
+                      <div
+                        className=" mb-0 position-relative"
+                        style={{ width: "100%" }}
+                      >
                         <select
-                          value={selectedDisease}
-                          onChange={(e) => setSelectedDisease(e.target.value)}
+                          value={selectedSpeciality}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setSelectedSpeciality(val);
+                            setSelectedDisease("");
+                          }}
                           className="form-control"
-                          style={{ paddingLeft: '45px'}}
+                          style={{ paddingLeft: "45px" }}
                         >
-                          <option value="">Select Condition</option>
-                          {diseases.map((d) => (
-                            <option key={d} value={d}>{d}</option>
+                          <option value="">
+                            {t("search.searchDoctors") as string}
+                          </option>
+                          {specialtiesData.map((s) => (
+                            <option
+                              key={s.specialty}
+                              value={s.specialty}
+                            >
+                              {s.specialty}
+                            </option>
                           ))}
                         </select>
-                      );
-                    })() : <select
-                              value={selectedDisease}
-                              onChange={(e) => setSelectedDisease(e.target.value)}
-                              className="form-control"
-                              style={{ paddingLeft: '45px'}}
-                            >
-                              <option value="">Select Condition</option>
-                            </select>}
+                      </div>
+                    </div>
+                    <div className="search-input search-map-line">
+                      <i className="isax isax-hospital5 bficon" />
+                      <div
+                        className="mb-0 position-relative"
+                        style={{ width: "100%" }}
+                      >
+                        {selectedSpeciality ? (
+                          (() => {
+                            const selectedSpecialty =
+                              specialtiesData.find(
+                                (s) =>
+                                  s.specialty === selectedSpeciality
+                              );
+                            const diseases =
+                              selectedSpecialty?.diseases ?? [];
+                            return (
+                              <select
+                                value={selectedDisease}
+                                onChange={(e) =>
+                                  setSelectedDisease(e.target.value)
+                                }
+                                className="form-control"
+                                style={{ paddingLeft: "45px" }}
+                              >
+                                <option value="">
+                                  Select Condition
+                                </option>
+                                {diseases.map((d) => (
+                                  <option key={d} value={d}>
+                                    {d}
+                                  </option>
+                                ))}
+                              </select>
+                            );
+                          })()
+                        ) : (
+                          <select
+                            value={selectedDisease}
+                            onChange={(e) =>
+                              setSelectedDisease(e.target.value)
+                            }
+                            className="form-control"
+                            style={{ paddingLeft: "45px" }}
+                          >
+                            <option value="">
+                              Select Condition
+                            </option>
+                          </select>
+                        )}
+                      </div>
+                    </div>
+                    <div className="search-input search-map-line">
+                      <i className="isax isax-location5" />
+                      <div className=" mb-0">
+                        <select
+                          value={selectedLocation}
+                          onChange={(e) =>
+                            setSelectedLocation(e.target.value)
+                          }
+                          className="form-control"
+                          style={{ paddingLeft: "45px" }}
+                        >
+                          <option value="">
+                            {t("maps.location")}
+                          </option>
+                          {mexicanCities.map((city, idx) => (
+                            <option key={idx} value={city}>
+                              {city}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="search-input search-map-line">
+                      <i className="isax isax-shield-tick5 bficon" />
+                      <div className=" mb-0">
+                        <select
+                          value={selectedInsurance}
+                          onChange={(e) =>
+                            setSelectedInsurance(e.target.value)
+                          }
+                          className="form-control"
+                          style={{ paddingLeft: "45px" }}
+                        >
+                          <option value="">Insurance</option>
+                          {insuranceProviders.map(
+                            (insurance, idx) => (
+                              <option key={idx} value={insurance}>
+                                {insurance}
+                              </option>
+                            )
+                          )}
+                        </select>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="search-input search-map-line">
-                  <i className="isax isax-location5" />
-                  <div className=" mb-0">
-                    <select
-                      value={selectedLocation}
-                      onChange={(e) => setSelectedLocation(e.target.value)}
-                      className="form-control"
-                      style={{ paddingLeft: '45px' }}
-                    >
-                      <option value="">{t('maps.location')}</option>
-                      {mexicanCities.map((city, idx) => (
-                        <option key={idx} value={city}>
-                          {city}
-                        </option>
-                      ))}
-                    </select>
+                  <div className="col-lg-4">
+                    <div className=" mt-2 form-search-btn">
+                      <button
+                        className="btn btn-primary"
+                        type="submit"
+                      >
+                        <i className="isax isax-search-normal5 me-2" />
+                        {t("common.search")}
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div className="search-input search-map-line">
-                  <i className="isax isax-shield-tick5 bficon" />
-                  <div className=" mb-0">
-                    <select
-                      value={selectedInsurance}
-                      onChange={(e) => setSelectedInsurance(e.target.value)}
-                      className="form-control"
-                      style={{ paddingLeft: '45px' }}
-                    >
-                      <option value="">Insurance</option>
-                      {insuranceProviders.map((insurance, idx) => (
-                        <option key={idx} value={insurance}>
-                          {insurance}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className=" mt-2 form-search-btn">
-                  <button className="btn btn-primary" type="submit">
-                    <i className="isax isax-search-normal5 me-2" />
-                    {t('common.search')}
-                  </button>
                 </div>
               </form>
             </div>
