@@ -1,0 +1,80 @@
+/* Doctor Cards Size Fix for Landing Page, Booking Page, and Search Doctor Page */
+.doctor-section .card,
+.booking-page .card,
+.search-doctor-page .card {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.doctor-section .card-img-hover,
+.booking-page .card-img-hover,
+.search-doctor-page .card-img-hover {
+    height: 250px !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+.doctor-section .card-img-hover img,
+.booking-page .card-img-hover img,
+.search-doctor-page .card-img-hover img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transition: transform 0.5s ease !important;
+}
+
+.doctor-section .card-img-hover:hover img,
+.booking-page .card-img-hover:hover img,
+.search-doctor-page .card-img-hover:hover img {
+    transform: scale(1.1) !important;
+}
+
+.doctor-section .card-body,
+.booking-page .card-body,
+.search-doctor-page .card-body {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+}
+
+.doctor-section .card-body > div:last-child,
+.booking-page .card-body > div:last-child,
+.search-doctor-page .card-body > div:last-child {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+}
+
+/* Ensure consistent spacing */
+.doctor-section .doctor-info-detail,
+.booking-page .doctor-info-detail,
+.search-doctor-page .doctor-info-detail {
+    flex: 1 !important;
+}
+
+.doctor-section .d-flex.align-items-center.justify-content-center,
+.booking-page .d-flex.align-items-center.justify-content-center,
+.search-doctor-page .d-flex.align-items-center.justify-content-center {
+    margin-top: auto !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .doctor-section .card-img-hover,
+    .booking-page .card-img-hover,
+    .search-doctor-page .card-img-hover {
+        height: 200px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .doctor-section .card-img-hover,
+    .booking-page .card-img-hover,
+    .search-doctor-page .card-img-hover {
+        height: 180px !important;
+    }
+}

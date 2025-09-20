@@ -2,14 +2,17 @@
 import { Link } from "react-router-dom";
 import Select from 'react-select'
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useRef } from 'react'
 import doctorProfileApi from "../../../../core/services/doctorProfileApi";
 const DoctorSidebar = () => {
   const pathnames = window.location.pathname;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [profile, setProfile] = useState<any>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isUpdating, setIsUpdating] = useState(false)
   const [availability, setAvailability] = useState<'available' | 'unavailable'>('unavailable')
+  const hasInitialLoad = useRef(false)
   const availablity = useMemo(() => ([
     { value: 'available', label: 'I am Available Now' },
     { value: 'unavailable', label: 'Not Available' },
@@ -22,13 +25,23 @@ const DoctorSidebar = () => {
         const doc = res?.doctor;
         setProfile(doc || null)
         if (doc?.availability) setAvailability(doc.availability)
+        hasInitialLoad.current = true
       } catch {}
+      finally {
+        setIsLoading(false)
+      }
     })()
     const onUpdated = async () => {
+      // Only update if we have already loaded the profile initially
+      if (!hasInitialLoad.current) return
       try {
+        setIsUpdating(true)
         const res = await doctorProfileApi.getMe();
         setProfile(res?.doctor || null)
       } catch {}
+      finally {
+        setIsUpdating(false)
+      }
     }
     window.addEventListener('doctorProfileUpdated', onUpdated)
     return () => window.removeEventListener('doctorProfileUpdated', onUpdated)
@@ -56,24 +69,61 @@ const DoctorSidebar = () => {
         <div className="widget-profile pro-widget-content">
           <div className="profile-info-widget">
             <Link to="/patient/doctor-profile" className="booking-doc-img">
-              {profile?.profileImage?.url ? (
-                <img src={profile.profileImage.url} alt="User Image" />
+              {isLoading ? (
+                <div className="placeholder-img" style={{width: '100%', height: '100%', backgroundColor: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                  <div className="spinner-border spinner-border-sm text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </div>
               ) : (
-                <ImageWithBasePath src="assets/img/doctor-grid/doc1.png" alt="User Image" />
+                <div style={{position: 'relative'}}>
+                  {profile?.profileImage?.url ? (
+                    <img src={profile.profileImage.url} alt="User Image" />
+                  ) : (
+                    <ImageWithBasePath src="assets/img/doctor-grid/doc1.png" alt="User Image" />
+                  )}
+                  {isUpdating && (
+                    <div style={{position: 'absolute', top: '5px', right: '5px', backgroundColor: 'rgba(0,0,0,0.7)', borderRadius: '50%', padding: '2px'}}>
+                      <div className="spinner-border spinner-border-sm text-white" role="status" style={{width: '12px', height: '12px'}}>
+                        <span className="visually-hidden">Updating...</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
             </Link>
             <div className="profile-det-info">
               <h3>
-                <Link to="/patient/doctor-profile">{profile?.displayName || [profile?.firstName, profile?.lastName].filter(Boolean).join(' ') || 'Your Name'}</Link>
+                <Link to="/patient/doctor-profile">
+                  {isLoading ? (
+                    <div className="placeholder-text" style={{height: '20px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '120px'}}></div>
+                  ) : (
+                    <span style={{opacity: isUpdating ? 0.7 : 1}}>
+                      {profile?.displayName || [profile?.firstName, profile?.lastName].filter(Boolean).join(' ') || 'Your Name'}
+                    </span>
+                  )}
+                </Link>
               </h3>
               <div className="patient-details">
                 <h5 className="mb-0">
-                  {profile?.designation || ''}
+                  {isLoading ? (
+                    <div className="placeholder-text" style={{height: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '100px'}}></div>
+                  ) : (
+                    <span style={{opacity: isUpdating ? 0.7 : 1}}>
+                      {profile?.designation || ''}
+                    </span>
+                  )}
                 </h5>
               </div>
               <span className="badge doctor-role-badge">
                 <i className="fa-solid fa-circle" />
-                {profile?.designation || 'Doctor'}
+                {isLoading ? (
+                  <div className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '60px', display: 'inline-block'}}></div>
+                ) : (
+                  <span style={{opacity: isUpdating ? 0.7 : 1}}>
+                    {profile?.designation || 'Doctor'}
+                  </span>
+                )}
               </span>
             </div>
           </div>

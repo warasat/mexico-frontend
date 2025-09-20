@@ -106,7 +106,7 @@ const DoctorProfile  = (props: any) => {
       <div className="content">
         <div className="container">
           <Pagecontent doctor={uiDoctor} />
-          <Content doctor={doctor} reviews={reviews} />
+          <Content doctor={doctor} />
         </div>
       </div>
       <Footer {...props} />

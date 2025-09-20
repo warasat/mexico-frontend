@@ -42,9 +42,9 @@ const SearchList = () => {
   // Doctor data for the search list
   const doctors = [
     {
-      id: 1,
-      name: "Dr. Michael Brown",
-      specialty: "Psychologist",
+      id: "68cd5ac1f22a2bbb33df46f5",
+      name: "Dr. Elena Rivera",
+      specialty: "Dentist",
       rating: "5.0",
       location: "Puerto Vallarta",
       experience: "10+ years",
@@ -168,15 +168,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc1.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                5.0
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar align-items-center justify-content-between p-3">
@@ -203,7 +194,7 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
                     state={isAuthenticated && userType === 'patient' ? { selectedDoctor: doctors[0] } : undefined}
@@ -233,15 +224,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc2.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                4.6
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar active-bar-pink align-items-center justify-content-between p-3">
@@ -274,7 +256,7 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
                     state={isAuthenticated && userType === 'patient' ? { selectedDoctor: doctors[0] } : undefined}
@@ -304,15 +286,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc3.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                4.8
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar active-bar-teal align-items-center justify-content-between p-3">
@@ -345,7 +318,7 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to="/booking"
                     state={{ selectedDoctor: doctors[0] }}
@@ -375,15 +348,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc4.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                4.8
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar active-bar-info align-items-center justify-content-between p-3">
@@ -422,7 +386,7 @@ const SearchList = () => {
                 })()}
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to="/booking"
                     state={{ selectedDoctor: doctors[0] }}
@@ -452,15 +416,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc5.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                4.2
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar active-bar-teal align-items-center justify-content-between p-3">
@@ -487,7 +442,7 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to="/booking"
                     state={{ selectedDoctor: doctors[0] }}
@@ -517,15 +472,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc6.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                4.2
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar active-bar-info align-items-center justify-content-between p-3">
@@ -564,7 +510,7 @@ const SearchList = () => {
                 })()}
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to="/booking"
                     state={{ selectedDoctor: doctors[0] }}
@@ -594,15 +540,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc7.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                4.7
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar active-bar-indigo align-items-center justify-content-between p-3">
@@ -629,7 +566,7 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to="/booking"
                     state={{ selectedDoctor: doctors[0] }}
@@ -659,15 +596,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc8.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                4.7
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar active-bar-pink align-items-center justify-content-between p-3">
@@ -694,7 +622,7 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to="/booking"
                     state={{ selectedDoctor: doctors[0] }}
@@ -724,15 +652,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc9.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                4.9
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar active-bar-indigo align-items-center justify-content-between p-3">
@@ -759,7 +678,7 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to="/booking"
                     state={{ selectedDoctor: doctors[0] }}
@@ -789,15 +708,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc10.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                5.0
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar active-bar-danger align-items-center justify-content-between p-3">
@@ -824,7 +734,7 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to="/booking"
                     state={{ selectedDoctor: doctors[0] }}
@@ -854,15 +764,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc11.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                4.4
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar active-bar-info align-items-center justify-content-between p-3">
@@ -889,7 +790,7 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to="/booking"
                     state={{ selectedDoctor: doctors[0] }}
@@ -919,15 +820,6 @@ const SearchList = () => {
             <Link to="/patient/doctor-profile">
               <ImageWithBasePath src="assets/img/doctor-grid/doc12.png" alt="" />
             </Link>
-            <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-              <span className="badge bg-orange">
-                <i className="fa-solid fa-star me-1" />
-                4.2
-              </span>
-              <Link to="javascript:void(0)" className="fav-icon">
-                <i className="fa fa-heart" />
-              </Link>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="d-flex active-bar active-bar-pink align-items-center justify-content-between p-3">
@@ -954,7 +846,7 @@ const SearchList = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
-                {getDoctorAvailability(doctors[0].id) === 'available' ? (
+                {getDoctorAvailability(Number(doctors[0].id)) === 'available' ? (
                   <Link
                     to="/booking"
                     state={{ selectedDoctor: doctors[0] }}

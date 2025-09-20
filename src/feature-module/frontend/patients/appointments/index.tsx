@@ -1,13 +1,268 @@
+import { useState, useEffect } from "react";
 import Header from "../../header";
 import DashboardSidebar from "../dashboard/sidebar/sidebar";
 import Footer from "../../footer";
 import StickyBox from "react-sticky-box";
 import { Link } from "react-router-dom";
-import { doctor_thumb_13, doctor_thumb_14, doctor_thumb_15, doctor_thumb_16, doctor_thumb_17, doctor_thumb_18, doctor_thumb_19, doctor_thumb_21 } from "../../imagepath";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
-
+import { appointmentService, type Appointment } from "../../../../core/services/appointmentService";
+import { useAuth } from "../../../../core/context/AuthContext";
+import SocketService from "../../../../core/services/socketService";
 
 const PatientAppointments = (props: any) => {
+  const { authState } = useAuth();
+  const { isAuthenticated, userType } = authState;
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch appointments on component mount
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      if (!isAuthenticated || userType !== 'patient') {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const response = await appointmentService.getMyAppointments();
+        if (response.success) {
+          setAppointments(response.data);
+        } else {
+          setError('Failed to fetch appointments');
+        }
+      } catch (err) {
+        console.error('Error fetching appointments:', err);
+        setError('Failed to fetch appointments');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAppointments();
+  }, [isAuthenticated, userType]);
+
+  // Socket.IO integration for real-time updates
+  useEffect(() => {
+    if (!isAuthenticated || userType !== 'patient' || !authState.user?.id) {
+      return;
+    }
+
+    const socketService = SocketService.getInstance();
+    
+    // Join patient room
+    socketService.joinPatientRoom(authState.user.id);
+
+    // Subscribe to appointment events
+    const unsubscribeAppointmentCreated = socketService.subscribe('appointmentCreated', (data: { patientId: string; appointment: Appointment }) => {
+      if (data.patientId === authState.user?.id) {
+        console.log('New appointment created:', data.appointment);
+        setAppointments(prev => [data.appointment, ...prev]);
+      }
+    });
+
+    const unsubscribeAppointmentUpdated = socketService.subscribe('appointmentUpdated', (data: { appointmentId: string; appointment: Appointment }) => {
+      console.log('Appointment updated:', data.appointment);
+      setAppointments(prev => 
+        prev.map(apt => 
+          apt._id === data.appointmentId ? data.appointment : apt
+        )
+      );
+    });
+
+    const unsubscribeAppointmentCancelled = socketService.subscribe('appointmentCancelled', (data: { appointmentId: string; appointment: Appointment }) => {
+      console.log('Appointment cancelled:', data.appointment);
+      setAppointments(prev => 
+        prev.map(apt => 
+          apt._id === data.appointmentId ? data.appointment : apt
+        )
+      );
+    });
+
+    // Cleanup on unmount
+    return () => {
+      if (authState.user?.id) {
+        socketService.leavePatientRoom(authState.user.id);
+      }
+      unsubscribeAppointmentCreated();
+      unsubscribeAppointmentUpdated();
+      unsubscribeAppointmentCancelled();
+    };
+  }, [isAuthenticated, userType, authState.user?.id]);
+
+
+  // Helper function to render appointment item
+  const renderAppointmentItem = (appointment: Appointment) => {
+    const doctorImage = appointment.doctor?.imageUrl || 'assets/img/doctor-grid/doc1.png';
+    const appointmentDate = new Date(appointment.date);
+    const formattedDate = appointmentDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+    const formattedTime = appointment.timeSlot;
+
+    return (
+      <div className="appointment-wrap" key={appointment._id}>
+        <ul>
+          <li>
+            <div className="patinet-information">
+              <Link to={`/patient/upcoming-appointment?id=${appointment._id}`}>
+                <ImageWithBasePath
+                  src={doctorImage}
+                  alt="Doctor Image"
+                />
+              </Link>
+              <div className="patient-info">
+                <p>#{appointment.appointmentId}</p>
+                <h6>
+                  <Link to={`/patient/upcoming-appointment?id=${appointment._id}`}>
+                    {appointment.doctorName}
+                  </Link>
+                </h6>
+              </div>
+            </div>
+          </li>
+          <li className="appointment-info">
+            <p>
+              <i className="fa-solid fa-clock" />
+              {formattedDate} {formattedTime}
+            </p>
+            <ul className="d-flex apponitment-types">
+              <li>{appointment.service}</li>
+              <li>{appointment.mode === 'video' ? 'Video Call' : 'Clinic Visit'}</li>
+            </ul>
+          </li>
+          <li className="mail-info-patient">
+            <ul>
+              <li>
+                <i className="fa-solid fa-envelope" />
+                {appointment.patientEmail || appointment.patient.email}
+              </li>
+              <li>
+                <i className="fa-solid fa-phone" />
+                {appointment.patientPhone || appointment.patient.phone}
+              </li>
+            </ul>
+          </li>
+          <li className="appointment-detail-btn">
+            {appointment.mode === 'video' ? (
+              <Link
+                to="#"
+                className="start-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Google Meet functionality can be implemented here
+                  alert('Google Meet integration will be implemented here');
+                }}
+              >
+                Google Meet
+                <i className="fa-brands fa-google me-1" />
+              </Link>
+            ) : (
+              <Link
+                to="#"
+                className="start-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Clinic visit functionality can be implemented here
+                  alert('Clinic visit details will be implemented here');
+                }}
+              >
+                Clinic Visit
+                <i className="fa-solid fa-hospital me-1" />
+              </Link>
+            )}
+          </li>
+        </ul>
+      </div>
+    );
+  };
+
+  // Filter appointments by boolean fields
+  const upcomingAppointments = appointments.filter(apt => !apt.isCompleted && !apt.cancelled);
+  const cancelledAppointments = appointments.filter(apt => apt.cancelled);
+  const completedAppointments = appointments.filter(apt => apt.isCompleted);
+
+  // Render loading state
+  if (loading) {
+    return (
+      <>
+        <Header {...props} />
+        <div className="doctor-content">
+          <div className="container">
+            <div className="row">
+              <div className="col-12 text-center py-5">
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+                <p className="mt-3">Loading appointments...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // Render error state
+  if (error) {
+    return (
+      <>
+        <Header {...props} />
+        <div className="doctor-content">
+          <div className="container">
+            <div className="row">
+              <div className="col-12 text-center py-5">
+                <div className="alert alert-danger" role="alert">
+                  <h4 className="alert-heading">Error!</h4>
+                  <p>{error}</p>
+                  <hr />
+                  <p className="mb-0">
+                    <button 
+                      className="btn btn-primary" 
+                      onClick={() => window.location.reload()}
+                    >
+                      Try Again
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // Render no appointments state
+  if (appointments.length === 0) {
+    return (
+      <>
+        <Header {...props} />
+        <div className="doctor-content">
+          <div className="container">
+            <div className="row">
+              <div className="col-12 text-center py-5">
+                <div className="alert alert-info" role="alert">
+                  <h4 className="alert-heading">No Appointments Found</h4>
+                  <p>You don't have any appointments yet.</p>
+                  <hr />
+                  <p className="mb-0">
+                    <Link to="/booking" className="btn btn-primary">
+                      Book Your First Appointment
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <Header {...props} />
@@ -48,1232 +303,155 @@ const PatientAppointments = (props: any) => {
             <ImageWithBasePath
               src="assets/img/bg/breadcrumb-icon.png"
               alt="img"
-              className="breadcrumb-bg-03"
-            />
-            <ImageWithBasePath
-              src="assets/img/bg/breadcrumb-icon.png"
-              alt="img"
-              className="breadcrumb-bg-04"
+              className="breadcrumb-icon"
             />
           </div>
         </div>
         {/* /Breadcrumb */}
-      </>
 
-
-      <div className="content doctor-content">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-              <StickyBox offsetTop={20} offsetBottom={20}>
-                <DashboardSidebar />
-              </StickyBox>
-            </div>
-
-            <div className="col-lg-8 col-xl-9">
-              <div className="dashboard-header">
-                <h3>Appointments</h3>
-                <ul className="header-list-btns">
-                  <li>
-                    <div className="input-block dash-search-input">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search"
-                      />
-                      <span className="search-icon">
-                        <i className="fa-solid fa-magnifying-glass" />
-                      </span>
-                    </div>
-                  </li>
-                </ul>
+        <div className="content">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-4 col-xl-3">
+                <StickyBox offsetTop={20} offsetBottom={20}>
+                  <DashboardSidebar />
+                </StickyBox>
               </div>
-              <div className="appointment-tab-head">
-                <div className="appointment-tabs">
-                  <ul
-                    className="nav nav-pills inner-tab "
-                    id="pills-tab"
-                    role="tablist"
-                  >
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link active"
-                        id="pills-upcoming-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#pills-upcoming"
-                        type="button"
-                        role="tab"
-                        aria-controls="pills-upcoming"
-                        aria-selected="false"
-                      >
-                        Upcoming<span>21</span>
-                      </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        id="pills-cancel-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#pills-cancel"
-                        type="button"
-                        role="tab"
-                        aria-controls="pills-cancel"
-                        aria-selected="true"
-                      >
-                        Cancelled<span>16</span>
-                      </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        id="pills-complete-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#pills-complete"
-                        type="button"
-                        role="tab"
-                        aria-controls="pills-complete"
-                        aria-selected="true"
-                      >
-                        Completed<span>214</span>
-                      </button>
+
+              <div className="col-lg-8 col-xl-9">
+                <div className="dashboard-header">
+                  <h3>Appointments</h3>
+                  <ul className="header-list-btns">
+                    <li>
+                      <div className="input-block dash-search-input">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Search"
+                        />
+                        <span className="search-icon">
+                          <i className="fa-solid fa-magnifying-glass" />
+                        </span>
+                      </div>
                     </li>
                   </ul>
                 </div>
-              </div>
-              <div className="tab-content appointment-tab-content" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-                <div
-                  className="tab-pane fade show active"
-                  id="pills-upcoming"
-                  role="tabpanel"
-                  aria-labelledby="pills-upcoming-tab"
-                >
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/upcoming-appointment">
-                            <img
-                              src={doctor_thumb_21}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0001</p>
-                            <h6>
-                              <Link to="/patient/upcoming-appointment">
-                                Dr Edalin
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
+                <div className="appointment-tab-head">
+                  <div className="appointment-tabs">
+                    <ul
+                      className="nav nav-pills inner-tab "
+                      id="pills-tab"
+                      role="tablist"
+                    >
+                      <li className="nav-item" role="presentation">
+                        <button
+                          className="nav-link active"
+                          id="pills-upcoming-tab"
+                          data-bs-toggle="pill"
+                          data-bs-target="#pills-upcoming"
+                          type="button"
+                          role="tab"
+                          aria-controls="pills-upcoming"
+                          aria-selected="false"
+                        >
+                          Upcoming<span>{upcomingAppointments.length}</span>
+                        </button>
                       </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          11 Nov 2025 10.45 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Video Call</li>
-                        </ul>
+                      <li className="nav-item" role="presentation">
+                        <button
+                          className="nav-link"
+                          id="pills-cancel-tab"
+                          data-bs-toggle="pill"
+                          data-bs-target="#pills-cancel"
+                          type="button"
+                          role="tab"
+                          aria-controls="pills-cancel"
+                          aria-selected="true"
+                        >
+                          Cancelled<span>{cancelledAppointments.length}</span>
+                        </button>
                       </li>
-                      <li className="mail-info-patient">
-                        <ul>
-                          <li>
-                            <i className="fa-solid fa-envelope" />
-                            edalin@example.com
-                          </li>
-                          <li>
-                            <i className="fa-solid fa-phone" />
-                            +1 504 368 6874
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link to="#" className="start-link">
-                          <i className="fa-solid fa-calendar-check me-1" />
-                          Attend
-                        </Link>
+                      <li className="nav-item" role="presentation">
+                        <button
+                          className="nav-link"
+                          id="pills-complete-tab"
+                          data-bs-toggle="pill"
+                          data-bs-target="#pills-complete"
+                          type="button"
+                          role="tab"
+                          aria-controls="pills-complete"
+                          aria-selected="true"
+                        >
+                          Completed<span>{completedAppointments.length}</span>
+                        </button>
                       </li>
                     </ul>
                   </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/upcoming-appointment">
-                            <img
-                              src={doctor_thumb_13}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0002</p>
-                            <h6>
-                              <Link to="/patient/upcoming-appointment">
-                                Dr.Shanta
-                              </Link>
-                              <span className="badge new-tag">New</span>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          05 Nov 2025 11.50 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Audio Call</li>
-                        </ul>
-                      </li>
-                      <li className="mail-info-patient">
-                        <ul>
-                          <li>
-                            <i className="fa-solid fa-envelope" />
-                            shanta@example.com
-                          </li>
-                          <li>
-                            <i className="fa-solid fa-phone" />
-                            +1 832 891 8403
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link to="#" className="start-link">
-                          <i className="fa-solid fa-calendar-check me-1" />
-                          Attend
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/upcoming-appointment">
-                            <img
-                              src={doctor_thumb_14}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0003</p>
-                            <h6>
-                              <Link to="/patient/upcoming-appointment">
-                                Dr.John
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          27 Oct 2025 09.30 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Video Call</li>
-                        </ul>
-                      </li>
-                      <li className="mail-info-patient">
-                        <ul>
-                          <li>
-                            <i className="fa-solid fa-envelope" />
-                            john@example.com
-                          </li>
-                          <li>
-                            <i className="fa-solid fa-phone" />
-                            +1 749 104 6291
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link to="#" className="start-link">
-                          <i className="fa-solid fa-calendar-check me-1" />
-                          Attend
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/upcoming-appointment">
-                            <img
-                              src={doctor_thumb_15}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0004</p>
-                            <h6>
-                              <Link to="/patient/upcoming-appointment">
-                                Dr.Susan
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          18 Oct 2025 12.20 PM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Direct Visit</li>
-                        </ul>
-                      </li>
-                      <li className="mail-info-patient">
-                        <ul>
-                          <li>
-                            <i className="fa-solid fa-envelope" />
-                            susan@example.com
-                          </li>
-                          <li>
-                            <i className="fa-solid fa-phone" />
-                            +1 584 920 7183
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link to="#" className="start-link">
-                          <i className="fa-solid fa-calendar-check me-1" />
-                          Attend
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/upcoming-appointment">
-                            <img
-                              src={doctor_thumb_16}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0005</p>
-                            <h6>
-                              <Link to="/patient/upcoming-appointment">
-                                Dr.Juliet
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          10 Oct 2025 11.30 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Chat</li>
-                        </ul>
-                      </li>
-                      <li className="mail-info-patient">
-                        <ul>
-                          <li>
-                            <i className="fa-solid fa-envelope" />
-                            juliet@example.com
-                          </li>
-                          <li>
-                            <i className="fa-solid fa-phone" />
-                            +1 059 327 6729
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link to="#" className="start-link">
-                          <i className="fa-solid fa-calendar-check me-1" />
-                          Attend
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/upcoming-appointment">
-                            <img
-                              src={doctor_thumb_17}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0006</p>
-                            <h6>
-                              <Link to="/patient/upcoming-appointment">
-                                Dr.Joseph
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          26 Sep 2025 10.20 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Chat</li>
-                        </ul>
-                      </li>
-                      <li className="mail-info-patient">
-                        <ul>
-                          <li>
-                            <i className="fa-solid fa-envelope" />
-                            joseph@example.com
-                          </li>
-                          <li>
-                            <i className="fa-solid fa-phone" />
-                            +1 278 402 7103
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link to="#" className="start-link">
-                          <i className="fa-solid fa-calendar-check me-1" />
-                          Attend
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/upcoming-appointment">
-                            <img
-                              src={doctor_thumb_18}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0007</p>
-                            <h6>
-                              <Link to="/patient/upcoming-appointment">
-                                Dr.Victoria
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          14 Sep 2025 08.10 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Chat</li>
-                        </ul>
-                      </li>
-                      <li className="mail-info-patient">
-                        <ul>
-                          <li>
-                            <i className="fa-solid fa-envelope" />
-                            victoria@example.com
-                          </li>
-                          <li>
-                            <i className="fa-solid fa-phone" />
-                            +1 638 278 0249
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link to="#" className="start-link">
-                          <i className="fa-solid fa-calendar-check me-1" />
-                          Attend
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/upcoming-appointment">
-                            <img
-                              src={doctor_thumb_19}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0008</p>
-                            <h6>
-                              <Link to="/patient/upcoming-appointment">
-                                Dr.Benjamin
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          03 Sep 2025 06.00 PM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Video Call</li>
-                        </ul>
-                      </li>
-                      <li className="mail-info-patient">
-                        <ul>
-                          <li>
-                            <i className="fa-solid fa-envelope" />
-                            benjamin@example.com
-                          </li>
-                          <li>
-                            <i className="fa-solid fa-phone" />
-                            +1 261 039 1873
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link to="#" className="start-link">
-                          <i className="fa-solid fa-calendar-check me-1" />
-                          Attend
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
                 </div>
-                <div
-                  className="tab-pane fade"
-                  id="pills-cancel"
-                  role="tabpanel"
-                  aria-labelledby="pills-cancel-tab"
-                >
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-cancelled-appointment">
-                            <img
-                              src={doctor_thumb_21}
-                              alt="User Image"
-                            />
+                <div className="tab-content" id="pills-tabContent">
+                  <div
+                    className="tab-pane fade show active"
+                    id="pills-upcoming"
+                    role="tabpanel"
+                    aria-labelledby="pills-upcoming-tab"
+                  >
+                    {/* Dynamic Appointment List */}
+                    {upcomingAppointments.length > 0 ? (
+                      upcomingAppointments.map(appointment => renderAppointmentItem(appointment))
+                    ) : (
+                      <div className="text-center py-5">
+                        <div className="alert alert-info" role="alert">
+                          <h5>No Upcoming Appointments</h5>
+                          <p>You don't have any upcoming appointments.</p>
+                          <Link to="/booking" className="btn btn-primary">
+                            Book an Appointment
                           </Link>
-                          <div className="patient-info">
-                            <p>#Apt00011</p>
-                            <h6>
-                              <Link to="/patient/patient-cancelled-appointment">
-                                Dr Edalin
-                              </Link>
-                            </h6>
-                          </div>
                         </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          11 Nov 2025 10.45 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Video Call</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-cancelled-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
+                      </div>
+                    )}
                   </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-cancelled-appointment">
-                            <img
-                              src={doctor_thumb_13}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0002</p>
-                            <h6>
-                              <Link to="/patient/patient-cancelled-appointment">
-                                Dr.Shanta
-                              </Link>
-                              <span className="badge new-tag">New</span>
-                            </h6>
-                          </div>
+                  <div
+                    className="tab-pane fade"
+                    id="pills-cancel"
+                    role="tabpanel"
+                    aria-labelledby="pills-cancel-tab"
+                  >
+                    {/* Dynamic Cancelled Appointments */}
+                    {cancelledAppointments.length > 0 ? (
+                      cancelledAppointments.map(appointment => renderAppointmentItem(appointment))
+                    ) : (
+                      <div className="text-center py-5">
+                        <div className="alert alert-info" role="alert">
+                          <h5>No Cancelled Appointments</h5>
+                          <p>You don't have any cancelled appointments.</p>
                         </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          05 Nov 2025 11.50 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Audio Call</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-cancelled-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
+                      </div>
+                    )}
                   </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-cancelled-appointment">
-                            <img
-                              src={doctor_thumb_14}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0003</p>
-                            <h6>
-                              <Link to="/patient/patient-cancelled-appointment">
-                                Dr.John
-                              </Link>
-                            </h6>
-                          </div>
+                  <div
+                    className="tab-pane fade"
+                    id="pills-complete"
+                    role="tabpanel"
+                    aria-labelledby="pills-complete-tab"
+                  >
+                    {/* Dynamic Completed Appointments */}
+                    {completedAppointments.length > 0 ? (
+                      completedAppointments.map(appointment => renderAppointmentItem(appointment))
+                    ) : (
+                      <div className="text-center py-5">
+                        <div className="alert alert-info" role="alert">
+                          <h5>No Completed Appointments</h5>
+                          <p>You don't have any completed appointments.</p>
                         </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          27 Oct 2025 09.30 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Video Call</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-cancelled-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
+                      </div>
+                    )}
                   </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-cancelled-appointment">
-                            <img
-                              src={doctor_thumb_15}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0004</p>
-                            <h6>
-                              <Link to="/patient/patient-cancelled-appointment">
-                                Dr.Susan
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          18 Oct 2025 12.20 PM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Direct Visit</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-cancelled-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-cancelled-appointment">
-                            <img
-                              src={doctor_thumb_16}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0005</p>
-                            <h6>
-                              <Link to="/patient/patient-cancelled-appointment">
-                                Dr.Juliet
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          10 Oct 2025 11.30 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Chat</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-cancelled-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-cancelled-appointment">
-                            <img
-                              src={doctor_thumb_17}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0006</p>
-                            <h6>
-                              <Link to="/patient/patient-cancelled-appointment">
-                                Dr.Joseph
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          26 Sep 2025 10.20 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Chat</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-cancelled-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-cancelled-appointment">
-                            <img
-                              src={doctor_thumb_18}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0007</p>
-                            <h6>
-                              <Link to="/patient/patient-cancelled-appointment">
-                                Dr.Victoria
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          14 Sep 2025 08.10 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Chat</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-cancelled-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-cancelled-appointment">
-                            <img
-                              src={doctor_thumb_19}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0008</p>
-                            <h6>
-                              <Link to="/patient/patient-cancelled-appointment">
-                                Dr.Benjamin
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          03 Sep 2025 06.00 PM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Video Call</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-cancelled-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                </div>
-                <div
-                  className="tab-pane fade"
-                  id="pills-complete"
-                  role="tabpanel"
-                  aria-labelledby="pills-complete-tab"
-                >
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-completed-appointment">
-                            <img
-                              src={doctor_thumb_21}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0001</p>
-                            <h6>
-                              <Link to="/patient/patient-completed-appointment">
-                                Dr Edalin
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          11 Nov 2025 10.45 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Video Call</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-completed-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-completed-appointment">
-                            <img
-                              src={doctor_thumb_13}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0002</p>
-                            <h6>
-                              <Link to="/patient/patient-completed-appointment">
-                                Dr.Shanta
-                              </Link>
-                              <span className="badge new-tag">New</span>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          05 Nov 2025 11.50 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Audio Call</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-completed-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-completed-appointment">
-                            <img
-                              src={doctor_thumb_14}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0003</p>
-                            <h6>
-                              <Link to="/patient/patient-completed-appointment">
-                                Dr.John
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          27 Oct 2025 09.30 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Video Call</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-completed-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-completed-appointment">
-                            <img
-                              src={doctor_thumb_15}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0004</p>
-                            <h6>
-                              <Link to="/patient/patient-completed-appointment">
-                                Dr.Susan
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          18 Oct 2025 12.20 PM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Direct Visit</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-completed-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-completed-appointment">
-                            <img
-                              src={doctor_thumb_16}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0005</p>
-                            <h6>
-                              <Link to="/patient/patient-completed-appointment">
-                                Dr.Juliet
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          10 Oct 2025 11.30 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Chat</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-completed-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-completed-appointment">
-                            <img
-                              src={doctor_thumb_17}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0006</p>
-                            <h6>
-                              <Link to="/patient/patient-completed-appointment">
-                                Dr.Joseph
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          26 Sep 2025 10.20 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Chat</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-completed-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-completed-appointment">
-                            <img
-                              src={doctor_thumb_18}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0007</p>
-                            <h6>
-                              <Link to="/patient/patient-completed-appointment">
-                                Dr.Victoria
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          14 Sep 2025 08.10 AM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Chat</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-completed-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
-                  {/* Appointment List */}
-                  <div className="appointment-wrap">
-                    <ul>
-                      <li>
-                        <div className="patinet-information">
-                          <Link to="/patient/patient-completed-appointment">
-                            <img
-                              src={doctor_thumb_19}
-                              alt="User Image"
-                            />
-                          </Link>
-                          <div className="patient-info">
-                            <p>#Apt0008</p>
-                            <h6>
-                              <Link to="/patient/patient-completed-appointment">
-                                Dr.Benjamin
-                              </Link>
-                            </h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="appointment-info">
-                        <p>
-                          <i className="fa-solid fa-clock" />
-                          03 Sep 2025 06.00 PM
-                        </p>
-                        <ul className="d-flex apponitment-types">
-                          <li>General Visit</li>
-                          <li>Video Call</li>
-                        </ul>
-                      </li>
-                      <li className="appointment-detail-btn">
-                        <Link
-                          to="/patient/patient-completed-appointment"
-                          className="start-link"
-                        >
-                          View Details
-                          <i className="fa-regular fa-circle-right ms-1" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* /Appointment List */}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
 
       <Footer {...props} />
     </>

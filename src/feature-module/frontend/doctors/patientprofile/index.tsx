@@ -1640,10 +1640,10 @@ const PatientProfile: React.FC = (props) => {
                       <div className="invoice-info">
                         <h6 className="customer-text">Billing To</h6>
                         <p className="invoice-details invoice-details-two">
-                          Richard Wilson <br />
-                          299 Star Trek Drive
+                          Loading... <br />
+                          Loading...
                           <br />
-                          Florida, 32405, USA
+                          Loading...
                           <br />
                         </p>
                       </div>
@@ -2073,7 +2073,7 @@ const PatientProfile: React.FC = (props) => {
                           <p>Click here to sign</p>
                         </div>
                         <div className="info-name">
-                          <h6>( Dr. Darren Elder )</h6>
+                          <h6>( Loading... )</h6>
                           <p>Signature</p>
                         </div>
                       </div>
@@ -2180,7 +2180,7 @@ const PatientProfile: React.FC = (props) => {
                           <p>Click here to sign</p>
                         </div>
                         <div className="info-name">
-                          <h6>( Dr. Darren Elder )</h6>
+                          <h6>( Loading... )</h6>
                           <p>Signature</p>
                         </div>
                       </div>

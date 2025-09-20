@@ -17,6 +17,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import ApexCharts from "apexcharts";
+import { useAuth } from "../../../../core/context/AuthContext";
 
 // TypeScript interfaces
 interface DashboardProps {
@@ -72,6 +73,7 @@ interface ArrowProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
+  const { authState } = useAuth();
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -1254,7 +1256,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                                             />
                                           </Link>
                                           <Link to="/pages/patient-details">
-                                            Hendrita Clark
+                                            {authState?.user?.name || 'Loading...'}
                                           </Link>
                                         </h2>
                                       </td>

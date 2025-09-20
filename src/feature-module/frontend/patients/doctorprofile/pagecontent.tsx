@@ -1,5 +1,4 @@
 import { IMG01, IMG02 } from "./img";
-import MyComponent from "./mycomponent";
 import { Link } from "react-router-dom";
 import { doctorthumb02 } from "../../imagepath";
 import { useAuth } from "../../../../core/context/AuthContext";
@@ -10,10 +9,10 @@ const Pagecontent = ({ doctor: doctorProp }: Props) => {
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
 
-  // Default doctor data (Dr. Darren Elder)
+  // Default doctor data
   const defaultDoctor = {
     id: 1,
-    name: "Dr. Darren Elder",
+    name: "Loading...",
     specialty: "Dentist",
     department: "BDS, MDS - Oral & Maxillofacial Surgery",
     rating: 4.0,
@@ -72,9 +71,6 @@ const Pagecontent = ({ doctor: doctorProp }: Props) => {
                     {/* <i className="fas fa-map-marker-alt" /> Newyork, USA -{" "}
                   <Link to="#;">Get Directions</Link> */}
 
-                    <div>
-                      <MyComponent />
-                    </div>
                   </div>
                   <div className="clinic-services">
                     {doctor.servicesOffered && doctor.servicesOffered.length > 0 ? (
@@ -133,7 +129,7 @@ const Pagecontent = ({ doctor: doctorProp }: Props) => {
                         src={doctorthumb02}
                         className="call-avatar"
                       />
-                      <h4>Dr. Darren Elder</h4>
+                      <h4>Loading...</h4>
                       <span>Connecting...</span>
                     </div>
                     <div className="call-items">
@@ -174,7 +170,7 @@ const Pagecontent = ({ doctor: doctorProp }: Props) => {
                         src={doctorthumb02}
                         alt="User Image"
                       />
-                      <h4>Dr. Darren Elder</h4>
+                      <h4>Loading...</h4>
                       <span>Calling ...</span>
                     </div>
                     <div className="call-items">

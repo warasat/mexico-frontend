@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Slider from "react-slick";
-import ImageWithBasePath from '../../../../components/imageWithBasePath';
 import { useAuth } from '../../../../core/context/AuthContext';
 import SocketService from '../../../../core/services/socketService';
 import publicDoctorApi, { type PublicDoctor } from '../../../../core/services/publicDoctorApi';
@@ -10,7 +9,6 @@ interface Doctor {
     id: number;
     name: string;
     specialty: string;
-    rating: number;
     image: string;
     location: string;
     available: boolean;
@@ -23,23 +21,41 @@ const SectionDoctor: React.FC = () => {
     const [doctorAvailability, setDoctorAvailability] = useState<{[key: string]: 'available' | 'unavailable'}>({});
     const [doctors, setDoctors] = useState<Doctor[]>([]);
 
-    // Fetch doctors from database
+    // Fetch doctors from database using the same API as booking module
     useEffect(() => {
         (async () => {
             try {
+                // Use the same API service as the booking module to fetch real doctor profiles
+                console.log('Fetching doctors from publicDoctorApi...');
                 const res = await publicDoctorApi.list({ sort: 'rank', limit: 8 });
-                const mapped: Doctor[] = res.results.map((d: PublicDoctor) => ({
-                    id: parseInt(d.id),
+                console.log('API Response:', res);
+                console.log('Number of doctors found:', res.results?.length || 0);
+                
+                const mapped: Doctor[] = res.results.map((d: PublicDoctor, index: number) => ({
+                    id: parseInt(d.id) || Math.random(),
                     name: d.displayName,
                     specialty: d.designation || 'Doctor',
-                    rating: 4.8,
-                    image: d.image || 'assets/img/doctor-grid/doc1.png',
+                    image: d.image || `/assets/img/doctor-grid/doc${(index % 8) + 1}.png`,
                     location: d.location || '',
                     available: d.availability === 'available',
                 }));
+                console.log('Mapped doctors:', mapped);
                 setDoctors(mapped);
-            } catch {
-                setDoctors([]);
+            } catch (error) {
+                console.error('Error fetching doctors:', error);
+                // Fallback: Use sample doctors if API fails
+                const fallbackDoctors: Doctor[] = [
+                    { id: 1, name: 'Dr. Elena Rivera', specialty: 'Dentist', image: '/assets/img/doctor-grid/doc1.png', location: 'Puerto Vallarta', available: true },
+                    { id: 2, name: 'Dr. Jorge Castro', specialty: 'Cardiologist', image: '/assets/img/doctor-grid/doc2.png', location: 'Mexico City', available: true },
+                    { id: 3, name: 'Dr. Fernando Hernández', specialty: 'Dermatologist', image: '/assets/img/doctor-grid/doc3.png', location: 'Playa del Carmen', available: true },
+                    { id: 4, name: 'Dr. Jorge López', specialty: 'Pediatrician', image: '/assets/img/doctor-grid/doc4.png', location: 'Lake Chapala', available: true },
+                    { id: 5, name: 'Dr. Lucía González', specialty: 'Orthopedic Surgeon', image: '/assets/img/doctor-grid/doc5.png', location: 'San Miguel de Allende', available: true },
+                    { id: 6, name: 'Dr. Ana García', specialty: 'Psychologist', image: '/assets/img/doctor-grid/doc6.png', location: 'Guadalajara', available: true },
+                    { id: 7, name: 'Dr. Luis Cruz', specialty: 'Psychiatrist', image: '/assets/img/doctor-grid/doc7.png', location: 'Puerto Vallarta', available: true },
+                    { id: 8, name: 'Dr. Patricia Martínez', specialty: 'Primary Care Physician', image: '/assets/img/doctor-grid/doc8.png', location: 'Mexico City', available: true },
+                ];
+                console.log('Using fallback doctors:', fallbackDoctors);
+                setDoctors(fallbackDoctors);
             }
         })();
     }, []);
@@ -74,6 +90,11 @@ const SectionDoctor: React.FC = () => {
             return realTimeAvailability;
         }
         return doctor.available ? 'available' : 'unavailable';
+    };
+
+    // Helper to truncate specialty text
+    const truncateSpecialty = (specialty: string): string => {
+        return specialty.length > 12 ? specialty.substring(0, 12) + '...' : specialty;
     };
 
     // Helper to get specialty colors
@@ -200,32 +221,32 @@ const SectionDoctor: React.FC = () => {
                     <div className="doctors-slider slick-margins slick-arrow-center aos" data-aos="fade-up">
                         <Slider {...Doctoroptions}>
                             {doctors.map((doctor) => (
-                                <div key={doctor.id} className="card">
-                                    <div className="card-img card-img-hover">
+                                <div key={doctor.id} className="card" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+                                    <div className="card-img card-img-hover" style={{height: '250px', overflow: 'hidden'}}>
                                         <Link to="/patient/doctor-profile">
-                                            <ImageWithBasePath src={doctor.image} alt={doctor.name} />
+                                            <img 
+                                                src={doctor.image}
+                                                alt={doctor.name} 
+                                                style={{
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    objectFit: 'cover',
+                                                    objectPosition: 'center top'
+                                                }}
+                                            />
                                         </Link>
-                                        <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-                                            <span className="badge bg-orange">
-                                                <i className="fa-solid fa-star me-1" />
-                                                {doctor.rating}
-                                            </span>
-                                            <Link to="#" className="fav-icon">
-                                                <i className="fa fa-heart" />
-                                            </Link>
-                                        </div>
                                     </div>
-                                    <div className="card-body p-0">
+                                    <div className="card-body p-0" style={{flex: '1', display: 'flex', flexDirection: 'column'}}>
                                         <div className={`d-flex ${getSpecialtyBarClass(doctor.specialty)} align-items-center justify-content-between p-3`}>
                                             <Link to="#" className={`${getSpecialtyColor(doctor.specialty)} fw-medium fs-14`}>
-                                                {doctor.specialty}
+                                                {truncateSpecialty(doctor.specialty)}
                                             </Link>
                                             <span className={`badge ${getDoctorAvailability(doctor) === 'available' ? 'bg-success-light' : 'bg-danger-light'} d-inline-flex align-items-center`}>
                                                 <i className="fa-solid fa-circle fs-5 me-1" />
                                                 {getDoctorAvailability(doctor) === 'available' ? 'Available' : 'Unavailable'}
                                             </span>
                                         </div>
-                                        <div className="p-3 pt-0">
+                                        <div className="p-3 pt-0" style={{flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
                                             <div className="doctor-info-detail mb-3 pb-3">
                                                 <h3 className="mb-1">
                                                     <Link to="/patient/doctor-profile">{doctor.name}</Link>

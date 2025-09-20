@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import IMG01 from "../../../../assets/img/patients/patient.jpg";
 import IMG02 from "../../../../assets/img/doctors/doctor-thumb-02.jpg";
-
 import { Link } from "react-router-dom";
 
 const PatientSidebar: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading patient data
+    const loadPatientData = async () => {
+      try {
+        // In a real implementation, this would fetch actual patient data
+        // For now, we'll use loading state to prevent showing dummy data
+        setIsLoading(true);
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    };
+
+    loadPatientData();
+  }, []);
+
   return (
     <>
       <div className="card widget-profile pat-widget-profile">
@@ -15,15 +34,30 @@ const PatientSidebar: React.FC = () => {
                 <img src={IMG01} alt="User" />
               </Link>
               <div className="profile-det-info">
-                <h3>Richard Wilson</h3>
+                <h3>
+                  {isLoading ? (
+                    <div className="placeholder-text" style={{height: '20px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '120px'}}></div>
+                  ) : (
+                    'Patient Name'
+                  )}
+                </h3>
 
                 <div className="patient-details">
                   <h5>
-                    <b>Patient ID :</b> PT0016
+                    <b>Patient ID :</b> 
+                    {isLoading ? (
+                      <span className="placeholder-text" style={{height: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '60px', display: 'inline-block', marginLeft: '5px'}}></span>
+                    ) : (
+                      'Loading...'
+                    )}
                   </h5>
                   <h5 className="mb-0">
-                    <i className="fas fa-map-marker-alt"></i> Newyork, United
-                    States
+                    <i className="fas fa-map-marker-alt"></i> 
+                    {isLoading ? (
+                      <span className="placeholder-text" style={{height: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '100px', display: 'inline-block', marginLeft: '5px'}}></span>
+                    ) : (
+                      'Loading...'
+                    )}
                   </h5>
                 </div>
               </div>
@@ -32,13 +66,28 @@ const PatientSidebar: React.FC = () => {
           <div className="patient-info">
             <ul>
               <li>
-                Phone <span>+1 952 001 8563</span>
+                Phone 
+                {isLoading ? (
+                  <span className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '80px', display: 'inline-block', marginLeft: '5px'}}></span>
+                ) : (
+                  <span>Loading...</span>
+                )}
               </li>
               <li>
-                Age <span>38 Years, Male</span>
+                Age 
+                {isLoading ? (
+                  <span className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '60px', display: 'inline-block', marginLeft: '5px'}}></span>
+                ) : (
+                  <span>Loading...</span>
+                )}
               </li>
               <li>
-                Blood Group <span>AB+</span>
+                Blood Group 
+                {isLoading ? (
+                  <span className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '40px', display: 'inline-block', marginLeft: '5px'}}></span>
+                ) : (
+                  <span>Loading...</span>
+                )}
               </li>
             </ul>
           </div>
@@ -60,10 +109,26 @@ const PatientSidebar: React.FC = () => {
                 />
               </div>
               <div className="media-body flex-grow-1">
-                <h5 className="d-block mb-0">Dr. Darren Elder </h5>
-                <span className="d-block text-sm text-muted">Dentist</span>
+                <h5 className="d-block mb-0">
+                  {isLoading ? (
+                    <div className="placeholder-text" style={{height: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '100px'}}></div>
+                  ) : (
+                    'Loading...'
+                  )}
+                </h5>
                 <span className="d-block text-sm text-muted">
-                  14 Nov 2019 5.00 PM
+                  {isLoading ? (
+                    <div className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '60px'}}></div>
+                  ) : (
+                    'Loading...'
+                  )}
+                </span>
+                <span className="d-block text-sm text-muted">
+                  {isLoading ? (
+                    <div className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '80px'}}></div>
+                  ) : (
+                    'Loading...'
+                  )}
                 </span>
               </div>
             </div>
@@ -78,10 +143,26 @@ const PatientSidebar: React.FC = () => {
                 />
               </div>
               <div className="media-body flex-grow-1">
-                <h5 className="d-block mb-0">Dr. Darren Elder </h5>
-                <span className="d-block text-sm text-muted">Dentist</span>
+                <h5 className="d-block mb-0">
+                  {isLoading ? (
+                    <div className="placeholder-text" style={{height: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '100px'}}></div>
+                  ) : (
+                    'Loading...'
+                  )}
+                </h5>
                 <span className="d-block text-sm text-muted">
-                  12 Nov 2019 11.00 AM
+                  {isLoading ? (
+                    <div className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '60px'}}></div>
+                  ) : (
+                    'Loading...'
+                  )}
+                </span>
+                <span className="d-block text-sm text-muted">
+                  {isLoading ? (
+                    <div className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '80px'}}></div>
+                  ) : (
+                    'Loading...'
+                  )}
                 </span>
               </div>
             </div>

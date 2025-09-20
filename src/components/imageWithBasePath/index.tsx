@@ -9,7 +9,8 @@ interface Image {
   alt?: string;
   height?: number;
   width?: number;
-  id?:string;
+  id?: string;
+  style?: React.CSSProperties;
 }
 
 const ImageWithBasePath = (props: Image) => {
@@ -24,6 +25,7 @@ const ImageWithBasePath = (props: Image) => {
       alt={props.alt}
       width={props.width}
       id={props.id}
+      style={props.style}
     />
   );
 };

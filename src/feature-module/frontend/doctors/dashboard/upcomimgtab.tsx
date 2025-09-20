@@ -43,7 +43,7 @@ const UpcomingTab: React.FC = () => {
                           />
                         </Link>
                         <Link to="/doctor/patient-profile">
-                          Richard Wilson <span>#PT0016</span>
+                          Loading... <span>#Loading...</span>
                         </Link>
                       </h2>
                     </td>

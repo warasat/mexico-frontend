@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../../footer";
 import PatientSidebar from "../patienttsidebar";
 import Header from "../../header";
 import { Link } from "react-router-dom";
 
 const AddPescription: React.FC = (props) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading doctor data
+    const loadDoctorData = async () => {
+      try {
+        setIsLoading(true);
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    };
+
+    loadDoctorData();
+  }, []);
   return (
     <div>
       <Header {...props} />
@@ -46,12 +63,26 @@ const AddPescription: React.FC = (props) => {
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="biller-info">
-                        <h4 className="d-block">Dr. Darren Elder</h4>
+                        <h4 className="d-block">
+                          {isLoading ? (
+                            <div className="placeholder-text" style={{height: '20px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '120px'}}></div>
+                          ) : (
+                            'Loading...'
+                          )}
+                        </h4>
                         <span className="d-block text-sm text-muted">
-                          Dentist
+                          {isLoading ? (
+                            <div className="placeholder-text" style={{height: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '80px'}}></div>
+                          ) : (
+                            'Loading...'
+                          )}
                         </span>
                         <span className="d-block text-sm text-muted">
-                          Newyork, United States
+                          {isLoading ? (
+                            <div className="placeholder-text" style={{height: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '120px'}}></div>
+                          ) : (
+                            'Loading...'
+                          )}
                         </span>
                       </div>
                     </div>
@@ -148,7 +179,13 @@ const AddPescription: React.FC = (props) => {
                       <div className="signature-wrap">
                         <div className="signature">Click here to sign</div>
                         <div className="sign-name">
-                          <p className="mb-0">( Dr. Darren Elder )</p>
+                          <p className="mb-0">
+                            {isLoading ? (
+                              <div className="placeholder-text" style={{height: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '100px'}}></div>
+                            ) : (
+                              '( Loading... )'
+                            )}
+                          </p>
                           <span className="text-muted">Signature</span>
                         </div>
                       </div>

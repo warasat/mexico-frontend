@@ -160,22 +160,25 @@ const BookingPage: React.FC = () => {
               <div className="row">
                 {doctors.map((doctor, index) => (
                   <div key={doctor.id} className="col-lg-4 col-md-6 mb-4 d-flex">
-                    <div className="card w-100 d-flex flex-column">
-                      <div className="card-img card-img-hover">
-                        <Link to="/patient/doctor-profile">
-                          <ImageWithBasePath src={doctor.image} alt={doctor.name} />
+                    <div className="card w-100" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+                      <div className="card-img card-img-hover" style={{height: '250px', overflow: 'hidden'}}>
+                        <Link 
+                          to="/patient/doctor-profile"
+                          state={{ selectedDoctor: doctor }}
+                        >
+                          <ImageWithBasePath 
+                            src={doctor.image} 
+                            alt={doctor.name}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              objectPosition: 'center top'
+                            }}
+                          />
                         </Link>
-                        <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-                          <span className="badge bg-orange">
-                            <i className="fa-solid fa-star me-1" />
-                            {doctor.rating}
-                          </span>
-                          <Link to="#" className="fav-icon">
-                            <i className="fa fa-heart" />
-                          </Link>
-                        </div>
                       </div>
-                      <div className="card-body p-0 d-flex flex-column flex-grow-1">
+                      <div className="card-body p-0" style={{flex: '1', display: 'flex', flexDirection: 'column'}}>
                         <div className={`d-flex active-bar ${index % 2 === 0 ? 'active-bar-pink' : ''} align-items-center justify-content-between p-3`}>
                           <Link to="#" className={`${index % 2 === 0 ? 'text-pink' : 'text-indigo'} fw-medium fs-14`}>
                             {doctor.specialty}
@@ -185,13 +188,18 @@ const BookingPage: React.FC = () => {
                             {getDoctorAvailability(doctor) === 'available' ? 'Available' : 'Unavailable'}
                           </span>
                         </div>
-                        <div className="p-3 pt-0 d-flex flex-column flex-grow-1">
-                          <div className="doctor-info-detail mb-3 pb-3 flex-grow-1">
+                        <div className="p-3 pt-0" style={{flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                          <div className="doctor-info-detail mb-3 pb-3">
                             <h3 className="mb-1">
-                              <Link to="/patient/doctor-profile">{doctor.name}</Link>
+                              <Link 
+                                to="/patient/doctor-profile"
+                                state={{ selectedDoctor: doctor }}
+                              >
+                                {doctor.name}
+                              </Link>
                             </h3>
                             <div className="d-flex align-items-center">
-                              <p className="d-flex align-items-center mb-0 fs-14">
+                              <p className="d-flex align-items-center mb-0 fs-14" style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                                 <i className="isax isax-location me-2" />
                                 {doctor.location}
                               </p>
@@ -217,7 +225,7 @@ const BookingPage: React.FC = () => {
                               );
                             })()}
                           </div>
-                          <div className="d-flex align-items-center justify-content-center mt-auto">
+                          <div className="d-flex align-items-center justify-content-center">
                             <button
                               onClick={() => handleBookNow(doctor)}
                               disabled={getDoctorAvailability(doctor) === 'unavailable'}

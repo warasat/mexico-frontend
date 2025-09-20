@@ -68,19 +68,9 @@ const Booking = (props: any) => {
                     <div className="booking-info">
                       <h4>
                         <Link to="/patient/doctor-profile">
-                          Dr. Darren Elder
+                          Loading...
                         </Link>
                       </h4>
-                      <div className="rating">
-                        <i className="fas fa-star filled"></i>
-                        <i className="fas fa-star filled"></i>
-                        <i className="fas fa-star filled"></i>
-                        <i className="fas fa-star filled"></i>
-                        <i className="fas fa-star"></i>
-                        <span className="d-inline-block average-rating ms-1">
-                          35
-                        </span>
-                      </div>
                       <p className="text-muted mb-0">
                         <i className="fas fa-map-marker-alt"></i> Newyork, USA
                       </p>

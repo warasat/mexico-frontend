@@ -1,15 +1,220 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../header";
 import DoctorFooter from "../../common/doctorFooter";
 import DoctorSidebar from "../sidebar";
-import { doctordashboardprofile01, doctordashboardprofile02, doctordashboardprofile04, doctordashboardprofile05, doctordashboardprofile06, doctordashboardprofile07, doctordashboardprofile08, doctordashboardprofile3 } from "../../imagepath";
+import { doctordashboardprofile01 } from "../../imagepath";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { useAuth } from "../../../../core/context/AuthContext";
+import { appointmentService, type Appointment } from "../../../../core/services/appointmentService";
+import SocketService from "../../../../core/services/socketService";
 
 const MyPatient: React.FC = (props) => {
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Fetch appointments on component mount
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      if (!isAuthenticated || userType !== 'doctor') {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await appointmentService.getDoctorAppointments();
+        if (response.success) {
+          setAppointments(response.data);
+        } else {
+          setError('Failed to fetch appointments');
+        }
+      } catch (err) {
+        console.error('Error fetching appointments:', err);
+        setError('Failed to fetch appointments');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAppointments();
+  }, [isAuthenticated, userType]);
+
+  // Socket.IO integration for real-time updates
+  useEffect(() => {
+    if (!isAuthenticated || userType !== 'doctor' || !authState.user?.id) {
+      return;
+    }
+
+    const socketService = SocketService.getInstance();
+
+    // Join doctor room
+    socketService.joinDoctorRoom(authState.user.id);
+
+    // Subscribe to appointment events
+    const unsubscribeAppointmentCreated = socketService.subscribe('appointmentCreated', (data: { doctorId: string; appointment: Appointment }) => {
+      if (data.doctorId === authState.user?.id) {
+        console.log('New appointment created for doctor:', data.appointment);
+        setAppointments(prev => [data.appointment, ...prev]);
+      }
+    });
+
+    const unsubscribeAppointmentUpdated = socketService.subscribe('appointmentUpdated', (data: { appointmentId: string; appointment: Appointment }) => {
+      console.log('Appointment updated:', data.appointment);
+      setAppointments(prev =>
+        prev.map(apt =>
+          apt._id === data.appointmentId ? data.appointment : apt
+        )
+      );
+    });
+
+    // Cleanup on unmount
+    return () => {
+      if (authState.user?.id) {
+        socketService.leaveDoctorRoom(authState.user.id);
+      }
+      unsubscribeAppointmentCreated();
+      unsubscribeAppointmentUpdated();
+    };
+  }, [isAuthenticated, userType, authState.user?.id]);
+
+  // Extract unique patients from appointments
+  const getUniquePatients = () => {
+    if (!appointments || appointments.length === 0) {
+      return [];
+    }
+
+    // Create a map to store unique patients by patient ID
+    const patientMap = new Map();
+    
+    appointments.forEach(appointment => {
+      const patientId = appointment.patient._id;
+      if (!patientMap.has(patientId)) {
+        // Get the most recent appointment for this patient
+        const patientAppointments = appointments.filter(apt => apt.patient._id === patientId);
+        const mostRecentAppointment = patientAppointments.sort((a, b) => 
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+        )[0];
+
+        patientMap.set(patientId, {
+          id: patientId,
+          name: appointment.patientName || appointment.patient.fullName || 'Unknown Patient',
+          email: appointment.patient.email || '',
+          phone: appointment.patient.phone || '',
+          imageUrl: doctordashboardprofile01,
+          appointmentId: mostRecentAppointment.appointmentId,
+          lastAppointmentDate: mostRecentAppointment.date,
+          lastAppointmentTime: mostRecentAppointment.timeSlot,
+          location: mostRecentAppointment.location,
+          status: mostRecentAppointment.status,
+          isCompleted: mostRecentAppointment.isCompleted,
+          cancelled: mostRecentAppointment.cancelled,
+          totalAppointments: patientAppointments.length
+        });
+      }
+    });
+
+    return Array.from(patientMap.values());
+  };
+
+  // Filter patients based on search term
+  const filteredPatients = getUniquePatients().filter(patient =>
+    patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    patient.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    patient.appointmentId.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Helper function to format date
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  // Helper function to render patient card
+  const renderPatientCard = (patient: any) => {
+    const formattedDate = formatDate(patient.lastAppointmentDate);
+    const formattedTime = patient.lastAppointmentTime;
+
+    return (
+      <div className="col-xl-4 col-lg-6 col-md-6 d-flex" key={patient.id}>
+        <div className="appointment-wrap appointment-grid-wrap" style={{
+          border: '1px solid #e9ecef',
+          borderRadius: '12px',
+          boxShadow: '0 4px 6px rgba(0,0,0,0.07)',
+          transition: 'all 0.3s ease',
+          background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)'
+        }}>
+          <ul>
+            <li>
+              <div className="appointment-grid-head">
+                <div className="patinet-information">
+                  <Link to={`/doctor/patient-profile?id=${patient.id}`}>
+                    <img
+                      src={patient.imageUrl}
+                      alt="Patient Image"
+                      style={{
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '50%',
+                        border: '3px solid #fff',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                        objectFit: 'cover'
+                      }}
+                    />
+                  </Link>
+                  <div className="patient-info">
+                    <p>{patient.appointmentId}</p>
+                    <h6>
+                      <Link to={`/doctor/patient-profile?id=${patient.id}`} style={{
+                        color: '#2c3e50',
+                        textDecoration: 'none',
+                        fontWeight: '600',
+                        fontSize: '16px'
+                      }}>
+                        {patient.name}
+                      </Link>
+                    </h6>
+                    <ul>
+                      <li>Email: {patient.email}</li>
+                      <li>Phone: {patient.phone}</li>
+                      <li>Appointments: {patient.totalAppointments}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li className="appointment-info">
+              <p style={{ color: '#6c757d', fontSize: '14px', marginBottom: '8px' }}>
+                <i className="fa-solid fa-clock" style={{ color: '#007bff', marginRight: '8px' }} />
+                {formattedDate} {formattedTime}
+              </p>
+              <p className="mb-0" style={{ color: '#6c757d', fontSize: '14px' }}>
+                <i className="fa-solid fa-location-dot" style={{ color: '#28a745', marginRight: '8px' }} />
+                {patient.location}
+              </p>
+            </li>
+            <li className="appointment-action">
+              <div className="patient-book">
+                <p style={{ color: '#495057', fontSize: '13px', marginBottom: '0' }}>
+                  <i className="isax isax-calendar-1" style={{ color: '#6f42c1', marginRight: '8px' }} />
+                  Last Booking <span style={{ fontWeight: '600', color: '#2c3e50' }}>{formattedDate}</span>
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  };
 
   // Function to get the appropriate home redirect URL based on user type
   const getHomeRedirectUrl = () => {
@@ -93,7 +298,9 @@ const MyPatient: React.FC = (props) => {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Search"
+                        placeholder="Search patients..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                       />
                       <span className="search-icon">
                         <i className="fa-solid fa-magnifying-glass" />
@@ -102,664 +309,32 @@ const MyPatient: React.FC = (props) => {
                   </li>
                 </ul>
               </div>
-              <div className="appointment-tab-head">
-                <div className="appointment-tabs">
-                  <ul
-                    className="nav nav-pills inner-tab "
-                    id="pills-tab"
-                    role="tablist"
-                  >
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link active"
-                        id="pills-upcoming-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#pills-upcoming"
-                        type="button"
-                        role="tab"
-                        aria-controls="pills-upcoming"
-                        aria-selected="false"
-                      >
-                        Active<span>200</span>
-                      </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        id="pills-cancel-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#pills-cancel"
-                        type="button"
-                        role="tab"
-                        aria-controls="pills-cancel"
-                        aria-selected="true"
-                      >
-                        InActive<span>22</span>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="tab-content appointment-tab-content grid-patient">
-                <div
-                  className="tab-pane fade show active"
-                  id="pills-upcoming"
-                  role="tabpanel"
-                  aria-labelledby="pills-upcoming-tab"
-                >
+              <div className="appointment-tab-content grid-patient">
                   <div className="row">
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile01}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0001</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Adrian</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 42</li>
-                                    <li>Male</li>
-                                    <li>AB+</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              11 Nov 2025 10.45 AM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              Alabama, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking <span>27 Feb 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
+                  {loading ? (
+                    <div className="col-12 text-center py-5">
+                      <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                      <p className="mt-3">Loading patients...</p>
+                    </div>
+                  ) : error ? (
+                    <div className="col-12 text-center py-5">
+                      <div className="alert alert-danger" role="alert">
+                        <h6>Error loading patients</h6>
+                        <p>{error}</p>
                       </div>
                     </div>
-                    {/* /Appointment Grid */}
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile02}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0002</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Kelly Stevens</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 37</li>
-                                    <li>Female</li>
-                                    <li>O+</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              05 Nov 2025 11.50 AM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              San Diego, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking<span>20 Mar 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
+                  ) : filteredPatients.length === 0 ? (
+                    <div className="col-12 text-center py-5">
+                      <div className="alert alert-info" role="alert">
+                        <h6>No patients found</h6>
+                        <p>You don't have any patients yet.</p>
                       </div>
                     </div>
-                    {/* /Appointment Grid */}
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile3}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0003</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Samuel James</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 43</li>
-                                    <li>Male</li>
-                                    <li>B+</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              27 Oct 2025 09.30 AM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              Chicago, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking<span>12 Mar 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* /Appointment Grid */}
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile04}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0004</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Catherine Gracey</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 36</li>
-                                    <li>Female</li>
-                                    <li>AB-</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              18 Oct 2025 12.20 PM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              Los Angeles, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking<span>27 Feb 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* /Appointment Grid */}
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile05}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0005</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Robert Miller</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 38</li>
-                                    <li>Male</li>
-                                    <li>A+</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              10 Oct 2025 11.30 AM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              Dallas, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking<span>18 Feb 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* /Appointment Grid */}
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile06}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0006</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Anderea Kearns</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 40</li>
-                                    <li>Female</li>
-                                    <li>B-</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              26 Sep 2025 10.20 AM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              San Francisco, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking<span>11 Feb 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* /Appointment Grid */}
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile07}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0007</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Peter Anderson</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 30</li>
-                                    <li>Male</li>
-                                    <li>A-</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              14 Sep 2025 08.10 AM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              Austin, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking<span>25 Jan 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* /Appointment Grid */}
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile08}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0008</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Emily Musick</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 32</li>
-                                    <li>Female</li>
-                                    <li>O-</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              03 Sep 2025 06.00 PM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              Nashville, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking<span>13 Jan 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* /Appointment Grid */}
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile01}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0009</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Darrell Tan</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 31</li>
-                                    <li>Male</li>
-                                    <li>AB+</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              25 Aug 2025 10.45 AM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              San Antonio, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking<span>03 Jan 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* /Appointment Grid */}
-                    <div className="col-md-12">
-                      <div className="loader-item text-center">
-                        <Link to="#" className="btn btn-load">
-                          Load More
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="tab-pane fade"
-                  id="pills-cancel"
-                  role="tabpanel"
-                  aria-labelledby="pills-cancel-tab"
-                >
-                  <div className="row">
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile06}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0006</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Anderea Kearns</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 40</li>
-                                    <li>Female</li>
-                                    <li>B-</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              26 Sep 2025 10.20 AM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              San Francisco, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking<span>11 Feb 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* /Appointment Grid */}
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile01}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0009</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Darrell Tan</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 31</li>
-                                    <li>Male</li>
-                                    <li>AB+</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              25 Aug 2025 10.45 AM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              San Antonio, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking<span>03 Jan 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* /Appointment Grid */}
-                    {/* Appointment Grid */}
-                    <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
-                      <div className="appointment-wrap appointment-grid-wrap">
-                        <ul>
-                          <li>
-                            <div className="appointment-grid-head">
-                              <div className="patinet-information">
-                                <Link to="/doctor/patient-profile">
-                                  <img
-                                    src={doctordashboardprofile04}
-                                    alt="User Image"
-                                  />
-                                </Link>
-                                <div className="patient-info">
-                                  <p>#Apt0004</p>
-                                  <h6>
-                                    <Link to="/doctor/patient-profile">Catherine Gracey</Link>
-                                  </h6>
-                                  <ul>
-                                    <li>Age : 36</li>
-                                    <li>Female</li>
-                                    <li>AB-</li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="appointment-info">
-                            <p>
-                              <i className="fa-solid fa-clock" />
-                              18 Oct 2025 12.20 PM
-                            </p>
-                            <p className="mb-0">
-                              <i className="fa-solid fa-location-dot" />
-                              Los Angeles, USA
-                            </p>
-                          </li>
-                          <li className="appointment-action">
-                            <div className="patient-book">
-                              <p>
-                                <i className="isax isax-calendar-1" />
-                                Last Booking<span>27 Feb 2025</span>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    {/* /Appointment Grid */}
-                    <div className="col-md-12">
-                      <div className="loader-item text-center">
-                        <Link to="#" className="btn btn-load">
-                          Load More
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
+                  ) : (
+                    filteredPatients.map(renderPatientCard)
+                  )}
                 </div>
               </div>
 

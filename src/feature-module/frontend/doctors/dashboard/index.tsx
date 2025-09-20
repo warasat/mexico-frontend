@@ -2,19 +2,138 @@ import DoctorSidebar from "../sidebar";
 import Header from "../../header";
 import {
   doctordashboardprofile01,
-  doctordashboardprofile02,
-  doctordashboardprofile04,
-  doctordashboardprofile05,
-  doctordashboardprofile3,
 } from "../../imagepath";
 import DoctorFooter from "../../common/doctorFooter";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { useAuth } from "../../../../core/context/AuthContext";
+import { useState, useEffect } from "react";
+import { appointmentService, type Appointment } from "../../../../core/services/appointmentService";
+import SocketService from "../../../../core/services/socketService";
 
 const DoctorDashboard = (props: any) => {
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Calculate unique patient counts from appointments data
+  const getPatientCounts = () => {
+    if (!appointments || appointments.length === 0) {
+      console.log('📊 No appointments found, returning zero counts');
+      return { totalPatients: 0, todayPatients: 0 };
+    }
+
+    // Get unique patient IDs from all appointments
+    const uniquePatientIds = new Set(
+      appointments.map(appointment => appointment.patient._id)
+    );
+    const totalPatients = uniquePatientIds.size;
+
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
+    
+    // Get unique patient IDs from today's appointments
+    const todayAppointments = appointments.filter(appointment => 
+      appointment.date === today
+    );
+    const uniqueTodayPatientIds = new Set(
+      todayAppointments.map(appointment => appointment.patient._id)
+    );
+    const todayPatients = uniqueTodayPatientIds.size;
+
+    console.log('📊 Patient Count Analysis:', {
+      totalAppointments: appointments.length,
+      uniquePatientIds: Array.from(uniquePatientIds),
+      totalPatients,
+      todayAppointments: todayAppointments.length,
+      uniqueTodayPatientIds: Array.from(uniqueTodayPatientIds),
+      todayPatients,
+      today
+    });
+
+    return { totalPatients, todayPatients };
+  };
+
+  const patientCounts = getPatientCounts();
+
+  // Fetch appointments on component mount
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      if (!isAuthenticated || userType !== 'doctor') {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(null); // Clear any previous errors
+        const response = await appointmentService.getDoctorAppointments();
+        if (response.success) {
+          setAppointments(response.data);
+          setError(null); // Ensure error is cleared on success
+        } else {
+          setError('Failed to fetch appointments');
+        }
+      } catch (err) {
+        console.error('Error fetching appointments:', err);
+        setError('Failed to fetch appointments');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAppointments();
+  }, [isAuthenticated, userType]);
+
+  // Socket.IO integration for real-time updates
+  useEffect(() => {
+    if (!isAuthenticated || userType !== 'doctor' || !authState.user?.id) {
+      return;
+    }
+
+    const socketService = SocketService.getInstance();
+
+    // Join doctor room
+    socketService.joinDoctorRoom(authState.user.id);
+
+    // Subscribe to appointment events
+    const unsubscribeAppointmentCreated = socketService.subscribe('appointmentCreated', (data: { doctorId: string; appointment: Appointment }) => {
+      if (data.doctorId === authState.user?.id) {
+        console.log('New appointment created for doctor:', data.appointment);
+        setAppointments(prev => [data.appointment, ...prev]);
+      }
+    });
+
+    const unsubscribeAppointmentUpdated = socketService.subscribe('appointmentUpdated', (data: { appointmentId: string; appointment: Appointment }) => {
+      console.log('Appointment updated:', data.appointment);
+      setAppointments(prev =>
+        prev.map(apt =>
+          apt._id === data.appointmentId ? data.appointment : apt
+        )
+      );
+    });
+
+    const unsubscribeAppointmentCancelled = socketService.subscribe('appointmentCancelled', (data: { appointmentId: string; appointment: Appointment }) => {
+      console.log('Appointment cancelled:', data.appointment);
+      setAppointments(prev =>
+        prev.map(apt =>
+          apt._id === data.appointmentId ? data.appointment : apt
+        )
+      );
+    });
+
+    // Cleanup on unmount
+    return () => {
+      if (authState.user?.id) {
+        socketService.leaveDoctorRoom(authState.user.id);
+      }
+      unsubscribeAppointmentCreated();
+      unsubscribeAppointmentUpdated();
+      unsubscribeAppointmentCancelled();
+    };
+  }, [isAuthenticated, userType, authState.user?.id]);
 
   // Function to get the appropriate home redirect URL based on user type
   const getHomeRedirectUrl = () => {
@@ -26,6 +145,38 @@ const DoctorDashboard = (props: any) => {
       return "/admin/dashboard";
     }
     return "/index"; // Default to landing page for unauthenticated users
+  };
+
+  // Handle appointment status update
+  const handleStatusUpdate = async (appointmentId: string, status: 'pending' | 'confirmed' | 'cancelled' | 'completed') => {
+    try {
+      console.log('🔄 Updating appointment status:', { appointmentId, status });
+      await appointmentService.updateAppointmentStatus(appointmentId, status);
+      console.log('✅ Appointment status updated successfully');
+      
+      // Clear any previous errors since the operation was successful
+      setError(null);
+      
+      // Update local state with both status and boolean fields
+      setAppointments(prev =>
+        prev.map(apt => {
+          if (apt._id === appointmentId) {
+            const updatedAppointment: Appointment = {
+              ...apt,
+              status: status as 'pending' | 'confirmed' | 'cancelled' | 'completed',
+              isCompleted: status === 'completed',
+              cancelled: status === 'cancelled'
+            };
+            console.log('📝 Updated appointment in state:', updatedAppointment);
+            return updatedAppointment;
+          }
+          return apt;
+        })
+      );
+    } catch (error) {
+      console.error('❌ Error updating appointment status:', error);
+      setError('Failed to update appointment status');
+    }
   };
 
   return (
@@ -98,10 +249,10 @@ const DoctorDashboard = (props: any) => {
                     <div className="dashboard-widget-box">
                       <div className="dashboard-content-info">
                         <h6>Total Patient</h6>
-                        <h4>978</h4>
+                        <h4>{loading ? '...' : patientCounts.totalPatients}</h4>
                         <span className="text-success">
                           <i className="fa-solid fa-arrow-up" />
-                          15% From Last Week
+                          {loading ? 'Loading...' : `${patientCounts.totalPatients} Unique Patients`}
                         </span>
                       </div>
                       <div className="dashboard-widget-icon">
@@ -113,10 +264,10 @@ const DoctorDashboard = (props: any) => {
                     <div className="dashboard-widget-box">
                       <div className="dashboard-content-info">
                         <h6>Patients Today</h6>
-                        <h4>80</h4>
+                        <h4>{loading ? '...' : patientCounts.todayPatients}</h4>
                         <span className="text-danger">
                           <i className="fa-solid fa-arrow-up" />
-                          15% From Yesterday
+                          {loading ? 'Loading...' : `${patientCounts.todayPatients} Today's Patients`}
                         </span>
                       </div>
                       <div className="dashboard-widget-icon">
@@ -128,10 +279,10 @@ const DoctorDashboard = (props: any) => {
                     <div className="dashboard-widget-box">
                       <div className="dashboard-content-info">
                         <h6>Appointments Today</h6>
-                        <h4>50</h4>
+                        <h4>{appointments.filter(apt => !apt.isCompleted && !apt.cancelled).length}</h4>
                         <span className="text-success">
                           <i className="fa-solid fa-calendar-days" />
-                          20% From Yesterday
+                          {appointments.filter(apt => !apt.isCompleted && !apt.cancelled).length > 0 ? 'Active Appointments' : 'No Appointments'}
                         </span>
                       </div>
                       <div className="dashboard-widget-icon">
@@ -173,211 +324,106 @@ const DoctorDashboard = (props: any) => {
                       <div className="table-responsive">
                         <table className="table dashboard-table">
                           <tbody>
-                            <tr>
-                              <td>
-                                <div className="patient-info-profile">
-                                  <Link
-                                    to="/doctor/appointments"
-                                    className="table-avatar"
-                                  >
-                                    <img
-                                      src={doctordashboardprofile01}
-                                      alt="Img"
-                                    />
-                                  </Link>
-                                  <div className="patient-name-info">
-                                    <span>#Apt0001</span>
-                                    <h5>
-                                      <Link to="/doctor/appointments">
-                                        Adrian Marshall
-                                      </Link>
-                                    </h5>
+                            {loading ? (
+                              <tr>
+                                <td colSpan={3} className="text-center py-4">
+                                  <div className="spinner-border text-primary" role="status">
+                                    <span className="visually-hidden">Loading...</span>
                                   </div>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="appointment-date-created">
-                                  <h6>11 Nov 2025 10.45 AM</h6>
-                                  <span className="badge table-badge">
-                                    General
-                                  </span>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="apponiment-actions d-flex align-items-center">
-                                  <Link to="#" className="text-success me-2">
-                                    <i className="fa-solid fa-check" />
-                                  </Link>
-                                  <Link to="#" className="text-danger">
-                                    <i className="fa-solid fa-xmark" />
-                                  </Link>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="patient-info-profile">
-                                  <Link
-                                    to="/doctor/appointments"
-                                    className="table-avatar"
-                                  >
-                                    <img
-                                      src={doctordashboardprofile02}
-                                      alt="Img"
-                                    />
-                                  </Link>
-                                  <div className="patient-name-info">
-                                    <span>#Apt0002</span>
-                                    <h5>
-                                      <Link to="/doctor/appointments">
-                                        Kelly Stevens
-                                      </Link>
-                                    </h5>
+                                  <p className="mt-2">Loading appointments...</p>
+                                </td>
+                              </tr>
+                            ) : error ? (
+                              <tr>
+                                <td colSpan={3} className="text-center py-4">
+                                  <div className="alert alert-danger" role="alert">
+                                    <h6>Error loading appointments</h6>
+                                    <p>{error}</p>
                                   </div>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="appointment-date-created">
-                                  <h6>10 Nov 2025 11.00 AM</h6>
-                                  <span className="badge table-badge">
-                                    Clinic Consulting
-                                  </span>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="apponiment-actions d-flex align-items-center">
-                                  <Link to="#" className="text-success me-2">
-                                    <i className="fa-solid fa-check" />
-                                  </Link>
-                                  <Link to="#" className="text-danger">
-                                    <i className="fa-solid fa-xmark" />
-                                  </Link>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="patient-info-profile">
-                                  <Link
-                                    to="/doctor/appointments"
-                                    className="table-avatar"
-                                  >
-                                    <img
-                                      src={doctordashboardprofile3}
-                                      alt="Img"
-                                    />
-                                  </Link>
-                                  <div className="patient-name-info">
-                                    <span>#Apt0003</span>
-                                    <h5>
-                                      <Link to="/doctor/appointments">
-                                        Samuel Anderson
-                                      </Link>
-                                    </h5>
+                                </td>
+                              </tr>
+                            ) : appointments.length === 0 ? (
+                              <tr>
+                                <td colSpan={3} className="text-center py-4">
+                                  <div className="alert alert-info" role="alert">
+                                    <h6>No appointments found</h6>
+                                    <p>You don't have any appointments yet.</p>
                                   </div>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="appointment-date-created">
-                                  <h6>03 Nov 2025 02.00 PM</h6>
-                                  <span className="badge table-badge">
-                                    General
-                                  </span>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="apponiment-actions d-flex align-items-center">
-                                  <Link to="#" className="text-success me-2">
-                                    <i className="fa-solid fa-check" />
-                                  </Link>
-                                  <Link to="#" className="text-danger">
-                                    <i className="fa-solid fa-xmark" />
-                                  </Link>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="patient-info-profile">
-                                  <Link
-                                    to="/doctor/appointments"
-                                    className="table-avatar"
-                                  >
-                                    <img
-                                      src={doctordashboardprofile04}
-                                      alt="Img"
-                                    />
-                                  </Link>
-                                  <div className="patient-name-info">
-                                    <span>#Apt0004</span>
-                                    <h5>
-                                      <Link to="/doctor/appointments">
-                                        Catherine Griffin
-                                      </Link>
-                                    </h5>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="appointment-date-created">
-                                  <h6>01 Nov 2025 04.00 PM</h6>
-                                  <span className="badge table-badge">
-                                    Clinic Consulting
-                                  </span>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="apponiment-actions d-flex align-items-center">
-                                  <Link to="#" className="text-success me-2">
-                                    <i className="fa-solid fa-check" />
-                                  </Link>
-                                  <Link to="#" className="text-danger">
-                                    <i className="fa-solid fa-xmark" />
-                                  </Link>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="patient-info-profile">
-                                  <Link
-                                    to="/doctor/appointments"
-                                    className="table-avatar"
-                                  >
-                                    <img
-                                      src={doctordashboardprofile05}
-                                      alt="Img"
-                                    />
-                                  </Link>
-                                  <div className="patient-name-info">
-                                    <span>#Apt0005</span>
-                                    <h5>
-                                      <Link to="/doctor/appointments">
-                                        Robert Hutchinson
-                                      </Link>
-                                    </h5>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="appointment-date-created">
-                                  <h6>28 Oct 2025 05.30 PM</h6>
-                                  <span className="badge table-badge">
-                                    General
-                                  </span>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="apponiment-actions d-flex align-items-center">
-                                  <Link to="#" className="text-success me-2">
-                                    <i className="fa-solid fa-check" />
-                                  </Link>
-                                  <Link to="#" className="text-danger">
-                                    <i className="fa-solid fa-xmark" />
-                                  </Link>
-                                </div>
-                              </td>
-                            </tr>
+                                </td>
+                              </tr>
+                            ) : (
+                              appointments
+                                .filter(apt => !apt.isCompleted && !apt.cancelled) // Only show pending/confirmed appointments
+                                .slice(0, 5)
+                                .map((appointment) => {
+                                const patientImage = doctordashboardprofile01;
+                                const appointmentDate = new Date(appointment.date);
+                                const formattedDate = appointmentDate.toLocaleDateString('en-US', {
+                                  year: 'numeric',
+                                  month: 'short',
+                                  day: 'numeric'
+                                });
+                                const formattedTime = appointment.timeSlot;
+
+                                return (
+                                  <tr key={appointment._id}>
+                                    <td>
+                                      <div className="patient-info-profile">
+                                        <Link
+                                          to="/doctor/appointments"
+                                          className="table-avatar"
+                                        >
+                                          <img
+                                            src={patientImage}
+                                            alt="Patient"
+                                          />
+                                        </Link>
+                                        <div className="patient-name-info">
+                                          <span>#{appointment.appointmentId}</span>
+                                          <h5>
+                                            <Link to="/doctor/appointments">
+                                              {appointment.patientName || appointment.patient?.fullName || 'Loading...'}
+                                            </Link>
+                                          </h5>
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div className="appointment-date-created">
+                                        <h6>{formattedDate} {formattedTime}</h6>
+                                        <span className="badge table-badge">
+                                          {appointment.service}
+                                        </span>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div className="apponiment-actions d-flex align-items-center">
+                                        <Link 
+                                          to="#" 
+                                          className="text-success me-2"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleStatusUpdate(appointment._id, 'completed');
+                                          }}
+                                        >
+                                          <i className="fa-solid fa-check" />
+                                        </Link>
+                                        <Link 
+                                          to="#" 
+                                          className="text-danger"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleStatusUpdate(appointment._id, 'cancelled');
+                                          }}
+                                        >
+                                          <i className="fa-solid fa-xmark" />
+                                        </Link>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                );
+                              })
+                            )}
                           </tbody>
                         </table>
                       </div>

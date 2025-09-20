@@ -9,6 +9,8 @@ import InsuranceSelector from './components/InsuranceSelector';
 import Header from '../../header';
 import '../../../../assets/css/booking-map.css';
 import doctorProfileApi from '../../../../core/services/doctorProfileApi';
+import { appointmentService, type CreateAppointmentRequest } from '../../../../core/services/appointmentService';
+import { useAuth } from '../../../../core/context/AuthContext';
 
 interface Doctor {
   id: string;
@@ -28,8 +30,12 @@ interface BookingWizardProps {
 }
 
 const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack }) => {
+  const { authState } = useAuth();
+  const { user } = authState;
+  
   // If doctor has pre-selected date, start at step 3
   const [currentStep, setCurrentStep] = useState(selectedDoctor?.selectedDate ? 3 : 1);
+  const [isBooking, setIsBooking] = useState(false);
   
   // Default doctor data if none selected
   const defaultDoctor = {
@@ -83,22 +89,73 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
            symptoms.trim() !== '';
   };
 
-  const HandleNext = () => {
+  const HandleNext = async () => {
     // Validate basic information on step 4 (basic info step)
     if (currentStep === 4 && !validateBasicInfo()) {
       alert('Please fill in all required fields before proceeding.');
       return;
     }
-    setCurrentStep(currentStep + 1);
+
+    // If moving from step 5 to step 6, create the appointment
+    if (currentStep === 5) {
+      if (!user?.id || !doctor.id || !selectedDate || !selectedTime) {
+        alert('Missing required information for booking. Please try again.');
+        return;
+      }
+
+      setIsBooking(true);
+      
+      try {
+        const appointmentData: CreateAppointmentRequest = {
+          doctorId: String(doctor.id),
+          patientId: user.id,
+          date: selectedDate,
+          timeSlot: selectedTime,
+          location: doctor.location,
+          insurance: selectedInsurance || '',
+          service: doctor.specialty || 'General Consultation',
+          mode: selectType === 2 ? 'video' : 'clinic',
+          patientEmail: basicInfo.email,
+          patientPhone: basicInfo.phoneNumber,
+          symptoms: basicInfo.symptoms,
+          notes: `Appointment booked via online booking system`
+        };
+
+        const result = await appointmentService.createAppointment(appointmentData);
+        
+        if (result.success) {
+          // Move to confirmation step
+          setCurrentStep(currentStep + 1);
+        } else {
+          alert('Failed to book appointment. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error booking appointment:', error);
+        alert('Failed to book appointment. Please try again.');
+      } finally {
+        setIsBooking(false);
+      }
+    } else {
+      setCurrentStep(currentStep + 1);
+    }
   };
   // Fetch doctor availability once when entering step 3 or when doctor changes
   useEffect(() => {
     (async () => {
       try {
-        if (!doctor?.id) return;
+        if (!doctor?.id) {
+          console.log('No doctor ID available for fetching availability');
+          return;
+        }
+        console.log('Fetching availability for doctor ID:', doctor.id);
         const res = await doctorProfileApi.getWeeklyAvailability(String(doctor.id));
+        console.log('Availability response:', res);
         setWeeklyAvailability((res as any)?.weeklyAvailability || {});
-      } catch {}
+      } catch (error) {
+        console.error('Error fetching doctor availability:', error);
+        // Set empty availability on error
+        setWeeklyAvailability({});
+      }
     })();
   }, [doctor?.id]);
 
@@ -110,7 +167,9 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
     const m = Number(parts[1]) - 1;
     const d = Number(parts[2]);
     const idx = new Date(y, m, d).getDay(); // local day, 0=Sun..6=Sat
-    return ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][idx];
+    const day = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][idx];
+    console.log('Selected date:', selectedDate, 'Day key:', day, 'Day index:', idx);
+    return day;
   }, [selectedDate]);
 
   
@@ -481,73 +540,85 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                       <h6 className="fs-14 mb-2">Morning</h6>
                                     </div>
                                     <div className="token-slot mt-2 mb-2">
-                                      {(weeklyAvailability as any)?.[dayKey]?.morning?.length ? (
-                                        (weeklyAvailability as any)[dayKey].morning.map((slot: string) => (
-                                          <div key={`m-${slot}`} className="form-check-inline visits me-1">
-                                            <label className="visit-btns">
-                                              <input
-                                                type="radio"
-                                                className="form-check-input"
-                                                name="appointment-time"
-                                                value={slot}
-                                                checked={selectedTime === slot}
-                                                onChange={(e) => setSelectedTime(e.target.value)}
-                                              />
-                                              <span className="visit-rsn">{slot}</span>
-                                            </label>
-                                          </div>
-                                        ))
-                                      ) : (
-                                        <p className="text-muted mb-0">No morning slots</p>
-                                      )}
+                                      {(() => {
+                                        const morningSlots = (weeklyAvailability as any)?.[dayKey]?.morning;
+                                        console.log('Morning slots for', dayKey, ':', morningSlots);
+                                        return morningSlots?.length ? (
+                                          morningSlots.map((slot: string) => (
+                                            <div key={`m-${slot}`} className="form-check-inline visits me-1">
+                                              <label className="visit-btns">
+                                                <input
+                                                  type="radio"
+                                                  className="form-check-input"
+                                                  name="appointment-time"
+                                                  value={slot}
+                                                  checked={selectedTime === slot}
+                                                  onChange={(e) => setSelectedTime(e.target.value)}
+                                                />
+                                                <span className="visit-rsn">{slot}</span>
+                                              </label>
+                                            </div>
+                                          ))
+                                        ) : (
+                                          <p className="text-muted mb-0">No morning slots available</p>
+                                        );
+                                      })()}
                                     </div>
                                     <div className="book-title">
                                       <h6 className="fs-14 mb-2">Afternoon</h6>
                                     </div>
                                     <div className="token-slot mt-2 mb-2">
-                                      {(weeklyAvailability as any)?.[dayKey]?.afternoon?.length ? (
-                                        (weeklyAvailability as any)[dayKey].afternoon.map((slot: string) => (
-                                          <div key={`a-${slot}`} className="form-check-inline visits me-1">
-                                            <label className="visit-btns">
-                                              <input
-                                                type="radio"
-                                                className="form-check-input"
-                                                name="appointment-time"
-                                                value={slot}
-                                                checked={selectedTime === slot}
-                                                onChange={(e) => setSelectedTime(e.target.value)}
-                                              />
-                                              <span className="visit-rsn">{slot}</span>
-                                            </label>
-                                          </div>
-                                        ))
-                                      ) : (
-                                        <p className="text-muted mb-0">No afternoon slots</p>
-                                      )}
+                                      {(() => {
+                                        const afternoonSlots = (weeklyAvailability as any)?.[dayKey]?.afternoon;
+                                        console.log('Afternoon slots for', dayKey, ':', afternoonSlots);
+                                        return afternoonSlots?.length ? (
+                                          afternoonSlots.map((slot: string) => (
+                                            <div key={`a-${slot}`} className="form-check-inline visits me-1">
+                                              <label className="visit-btns">
+                                                <input
+                                                  type="radio"
+                                                  className="form-check-input"
+                                                  name="appointment-time"
+                                                  value={slot}
+                                                  checked={selectedTime === slot}
+                                                  onChange={(e) => setSelectedTime(e.target.value)}
+                                                />
+                                                <span className="visit-rsn">{slot}</span>
+                                              </label>
+                                            </div>
+                                          ))
+                                        ) : (
+                                          <p className="text-muted mb-0">No afternoon slots available</p>
+                                        );
+                                      })()}
                                     </div>
                                     <div className="book-title">
                                       <h6 className="fs-14 mb-2">Evening</h6>
                                     </div>
                                     <div className="token-slot mt-2 mb-2">
-                                      {(weeklyAvailability as any)?.[dayKey]?.evening?.length ? (
-                                        (weeklyAvailability as any)[dayKey].evening.map((slot: string) => (
-                                          <div key={`e-${slot}`} className="form-check-inline visits me-1">
-                                            <label className="visit-btns">
-                                              <input
-                                                type="radio"
-                                                className="form-check-input"
-                                                name="appointment-time"
-                                                value={slot}
-                                                checked={selectedTime === slot}
-                                                onChange={(e) => setSelectedTime(e.target.value)}
-                                              />
-                                              <span className="visit-rsn">{slot}</span>
-                                            </label>
-                                          </div>
-                                        ))
-                                      ) : (
-                                        <p className="text-muted mb-0">No evening slots</p>
-                                      )}
+                                      {(() => {
+                                        const eveningSlots = (weeklyAvailability as any)?.[dayKey]?.evening;
+                                        console.log('Evening slots for', dayKey, ':', eveningSlots);
+                                        return eveningSlots?.length ? (
+                                          eveningSlots.map((slot: string) => (
+                                            <div key={`e-${slot}`} className="form-check-inline visits me-1">
+                                              <label className="visit-btns">
+                                                <input
+                                                  type="radio"
+                                                  className="form-check-input"
+                                                  name="appointment-time"
+                                                  value={slot}
+                                                  checked={selectedTime === slot}
+                                                  onChange={(e) => setSelectedTime(e.target.value)}
+                                                />
+                                                <span className="visit-rsn">{slot}</span>
+                                              </label>
+                                            </div>
+                                          ))
+                                        ) : (
+                                          <p className="text-muted mb-0">No evening slots available</p>
+                                        );
+                                      })()}
                                     </div>
                                   </div>
                                 </div>
@@ -824,8 +895,9 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                             to="#"
                             className="btn btn-md btn-primary-gradient next_btns inline-flex align-items-center rounded-pill"
                             onClick={HandleNext}
+                            style={{ pointerEvents: isBooking ? 'none' : 'auto', opacity: isBooking ? 0.7 : 1 }}
                           >
-                            Confirm Appointment
+                            {isBooking ? 'Booking...' : 'Confirm Appointment'}
                             <i className="isax isax-arrow-right-3 ms-1" />
                           </Link>
                         </div>
@@ -935,24 +1007,6 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                   </div>
                                 </div>
                               </div>
-                              <div className="card">
-                                <div className="card-body d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between">
-                                  <div>
-                                    <h6 className="mb-1">Need Our Assistance</h6>
-                                    <p className="mb-0">
-                                      Call us in case you face any Issue on Booking /
-                                      Cancellation
-                                    </p>
-                                  </div>
-                                  <Link
-                                    to="#"
-                                    className="btn btn-light rounded-pill"
-                                  >
-                                    <i className="isax isax-call5 me-1" />
-                                    Call Us
-                                  </Link>
-                                </div>
-                              </div>
                             </div>
                           </div>
                           <div className="col-lg-4 d-flex">
@@ -966,13 +1020,13 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ selectedDoctor, onBack })
                                 </div>
                                 <div>
                                   <Link
-                                    to="#"
-                                    className="btn w-100 mb-3 btn-md btn-dark prev_btns inline-flex align-items-center rounded-pill"
+                                    to="/patient/patient-appointments"
+                                    className="btn w-100 btn-md btn-success next_btns inline-flex align-items-center rounded-pill mb-2"
                                   >
-                                    Add To Calendar
+                                    View My Appointments
                                   </Link>
                                   <Link
-                                    to="/patient/doctor-grid"
+                                    to="/patient/search-doctor1"
                                     className="btn w-100 btn-md btn-primary-gradient next_btns inline-flex align-items-center rounded-pill"
                                   >
                                     Start New Booking

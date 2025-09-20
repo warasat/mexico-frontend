@@ -12,8 +12,19 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   requiredUserType
 }) => {
   const { authState } = useAuth();
-  const { isAuthenticated, userType } = authState;
+  const { isAuthenticated, userType, isLoading } = authState;
   const location = useLocation();
+
+  // Show loading state while authentication is being restored
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
 
   // If not authenticated, redirect to appropriate login based on the route
   if (!isAuthenticated) {
@@ -33,7 +44,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       case 'patient':
         return <Navigate to="/pages/patient-signup" state={{ from: location }} replace />;
       case 'doctor':
-        return <Navigate to="/pages/doctor-signup" state={{ from: location }} replace />;
+        return <Navigate to="/doctor/doctor-register" state={{ from: location }} replace />;
       case 'admin':
         return <Navigate to="/system-admin/login" state={{ from: location }} replace />;
       default:

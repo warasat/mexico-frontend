@@ -34,7 +34,7 @@ const DoctorCalendar: React.FC<DoctorCalendarProps> = ({ doctorId, doctorName, d
         selectedDate
       } : {
         id: doctorId || '1',
-        name: doctorName || 'Dr. Darren Elder',
+        name: doctorName || 'Loading...',
         specialty: 'Dentist',
         department: 'BDS, MDS - Oral & Maxillofacial Surgery',
         rating: 4.0,

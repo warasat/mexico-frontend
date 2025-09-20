@@ -1471,24 +1471,6 @@ const BookingPopup = () => {
                                   </div>
                                 </div>
                               </div>
-                              <div className="card">
-                                <div className="card-body d-flex align-items-center flex-wrap rpw-gap-2 justify-content-between">
-                                  <div>
-                                    <h6 className="mb-1">Need Our Assistance</h6>
-                                    <p className="mb-0">
-                                      Call us in case you face any Issue on Booking /
-                                      Cancellation
-                                    </p>
-                                  </div>
-                                  <Link
-                                    to="#"
-                                    className="btn btn-light rounded-pill"
-                                  >
-                                    <i className="isax isax-call5 me-1" />
-                                    Call Us
-                                  </Link>
-                                </div>
-                              </div>
                             </div>
                           </div>
                           <div className="col-lg-4 d-flex">

@@ -51,7 +51,7 @@ const EditPrescription: React.FC = (props) => {
                           </h3>
                           <div className="patient-details">
                             <h5>
-                              <b>Patient ID :</b> PT0016
+                              <b>Patient ID :</b> Loading...
                             </h5>
                             <h5 className="mb-0">
                               <i className="fas fa-map-marker-alt"></i> Newyork,

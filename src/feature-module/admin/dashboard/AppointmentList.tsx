@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
@@ -6,17 +6,12 @@ import { itemRender, onShowSizeChange } from "../paginationfunction";
 // import SidebarNav from '../sidebar';
 import {
   doctor_thumb_01,
-  doctor_thumb_02,
-  doctor_thumb_03,
-  doctor_thumb_04,
-  doctor_thumb_05,
   patient1,
-  patient2,
-  patient3,
-  patient4,
-  patient5,
 } from "../imagepath";
 import { Link } from "react-router-dom";
+import { appointmentService, type Appointment } from "../../../core/services/appointmentService";
+import { useAuth } from "../../../core/context/AuthContext";
+import SocketService from "../../../core/services/socketService";
 interface AppointmentData {
   id: number;
   DoctorName: string;
@@ -32,63 +27,106 @@ interface AppointmentData {
 }
 
 const AppointmentList: React.FC = () => {
-  const data: AppointmentData[] = [
-    {
-      id: 1,
-      DoctorName: "Dr. Ruby Perrin",
-      Speciality: "Dental ",
-      PatientName: "Charlene Reed",
-      Earned: "$5000.00 ",
-      Date: "27 Sep 2019",
-      time: "11.00 AM - 11.15 AM",
-      image: doctor_thumb_01,
-      images1: patient1,
-    },
-    {
-      id: 2,
-      DoctorName: "Dr. Darren Elder",
-      Speciality: "Dental ",
-      PatientName: "Travis Trimble",
-      Earned: "$3300.00 ",
-      Date: "1 Nov 2019",
-      time: "11.00 PM - 11.35 PM",
-      image: doctor_thumb_02,
-      images1: patient2,
-    },
-    {
-      id: 3,
-      DoctorName: "Dr. Deborah Angel",
-      Speciality: "Cardiology ",
-      PatientName: "Carl Kelly",
-      Earned: "$4100.00",
-      Date: "3 Nov 2019",
-      time: "12.00 PM - 12.15 PM",
-      image: doctor_thumb_03,
-      images1: patient3,
-    },
-    {
-      id: 4,
-      DoctorName: "Dr. Sofia Brient",
-      Speciality: "Urology ",
-      PatientName: "Michelle Fairfax",
-      Earned: "$4000.00 ",
-      Date: "16 Jun 2019",
-      time: "1.00 PM - 1.20 PM",
-      image: doctor_thumb_04,
-      images1: patient4,
-    },
-    {
-      id: 5,
-      DoctorName: "Dr. Marvin Campbell",
-      Speciality: "Orthopaedics ",
-      PatientName: "Gina Moore",
-      Earned: "$2000.00 ",
-      Date: "22 Aug 2019",
-      time: "1.00 PM - 1.15 PM",
-      image: doctor_thumb_05,
-      images1: patient5,
-    },
-  ];
+  const { authState } = useAuth();
+  const { isAuthenticated, userType } = authState;
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch appointments on component mount
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      if (!isAuthenticated || userType !== 'doctor') {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const response = await appointmentService.getDoctorAppointments();
+        if (response.success) {
+          setAppointments(response.data);
+        } else {
+          setError('Failed to fetch appointments');
+        }
+      } catch (err) {
+        console.error('Error fetching appointments:', err);
+        setError('Failed to fetch appointments');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAppointments();
+  }, [isAuthenticated, userType]);
+
+  // Socket.IO integration for real-time updates
+  useEffect(() => {
+    if (!isAuthenticated || userType !== 'doctor' || !authState.user?.id) {
+      return;
+    }
+
+    const socketService = SocketService.getInstance();
+    
+    // Join doctor room
+    socketService.joinDoctorRoom(authState.user.id);
+
+    // Subscribe to appointment events
+    const unsubscribeAppointmentCreated = socketService.subscribe('appointmentCreated', (data: { doctorId: string; appointment: Appointment }) => {
+      if (data.doctorId === authState.user?.id) {
+        console.log('New appointment created for doctor:', data.appointment);
+        setAppointments(prev => [data.appointment, ...prev]);
+      }
+    });
+
+    const unsubscribeAppointmentUpdated = socketService.subscribe('appointmentUpdated', (data: { appointmentId: string; appointment: Appointment }) => {
+      console.log('Appointment updated:', data.appointment);
+      setAppointments(prev => 
+        prev.map(apt => 
+          apt._id === data.appointmentId ? data.appointment : apt
+        )
+      );
+    });
+
+    const unsubscribeAppointmentCancelled = socketService.subscribe('appointmentCancelled', (data: { appointmentId: string; appointment: Appointment }) => {
+      console.log('Appointment cancelled:', data.appointment);
+      setAppointments(prev => 
+        prev.map(apt => 
+          apt._id === data.appointmentId ? data.appointment : apt
+        )
+      );
+    });
+
+    // Cleanup on unmount
+    return () => {
+      if (authState.user?.id) {
+        socketService.leaveDoctorRoom(authState.user.id);
+      }
+      unsubscribeAppointmentCreated();
+      unsubscribeAppointmentUpdated();
+      unsubscribeAppointmentCancelled();
+    };
+  }, [isAuthenticated, userType, authState.user?.id]);
+
+  // Transform appointments data for the table
+  const transformedData: AppointmentData[] = appointments.map((appointment, index) => ({
+    id: index + 1,
+    DoctorName: appointment.doctorName,
+    Speciality: appointment.service,
+    PatientName: appointment.patientName,
+    Earned: "$100.00", // Default value since it's not in the appointment model
+    Date: new Date(appointment.date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    }),
+    time: appointment.timeSlot,
+    image: appointment.doctor?.imageUrl || doctor_thumb_01,
+    images1: patient1, // Default patient image
+  }));
+
+  // Use only dynamic data - no static fallback
+  const data: AppointmentData[] = transformedData;
   const columns = [
     {
       title: "Doctor Name",
@@ -137,23 +175,166 @@ const AppointmentList: React.FC = () => {
       sorter: (a: AppointmentData, b: AppointmentData) => a.Date.length - b.time.length,
     },
     {
-      title: "Delete",
+      title: "Status",
       render: (record: any) => {
+        const appointment = appointments.find(apt => apt.doctorName === record.DoctorName && apt.patientName === record.PatientName);
+        if (!appointment) return <span className="badge bg-secondary">Unknown</span>;
+        
+        const getStatusBadge = (status: string) => {
+          switch (status) {
+            case 'pending':
+              return <span className="badge bg-warning">Pending</span>;
+            case 'confirmed':
+              return <span className="badge bg-success">Confirmed</span>;
+            case 'cancelled':
+              return <span className="badge bg-danger">Cancelled</span>;
+            case 'completed':
+              return <span className="badge bg-info">Completed</span>;
+            default:
+              return <span className="badge bg-secondary">{status}</span>;
+          }
+        };
+        
+        return getStatusBadge(appointment.status);
+      },
+    },
+    {
+      title: "Actions",
+      render: (record: any) => {
+        const appointment = appointments.find(apt => apt.doctorName === record.DoctorName && apt.patientName === record.PatientName);
+        if (!appointment) return null;
+        
+        const handleStatusUpdate = async (newStatus: string) => {
+          try {
+            await appointmentService.updateAppointmentStatus(appointment._id, newStatus as any);
+            // The socket event will automatically update the UI
+          } catch (error) {
+            console.error('Error updating appointment status:', error);
+            alert('Failed to update appointment status');
+          }
+        };
+        
         return (
-          <button
-            className="btn btn-danger btn-sm"
-            onClick={() => {
-              // Handle delete functionality here
-              console.log("Delete appointment:", record.id);
-            }}
-          >
-            <i className="fas fa-trash"></i>
-          </button>
+          <div className="btn-group" role="group">
+            {appointment.status === 'pending' && (
+              <>
+                <button
+                  className="btn btn-success btn-sm"
+                  onClick={() => handleStatusUpdate('confirmed')}
+                  title="Accept Appointment"
+                >
+                  <i className="fas fa-check"></i> Accept
+                </button>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleStatusUpdate('cancelled')}
+                  title="Reject Appointment"
+                >
+                  <i className="fas fa-times"></i> Reject
+                </button>
+              </>
+            )}
+            {appointment.status === 'confirmed' && (
+              <button
+                className="btn btn-info btn-sm"
+                onClick={() => handleStatusUpdate('completed')}
+                title="Mark as Completed"
+              >
+                <i className="fas fa-check-circle"></i> Complete
+              </button>
+            )}
+            <button
+              className="btn btn-danger btn-sm"
+              onClick={() => handleStatusUpdate('cancelled')}
+              title="Cancel Appointment"
+            >
+              <i className="fas fa-trash"></i>
+            </button>
+          </div>
         );
       },
     },
 
   ];
+  // Render loading state
+  if (loading) {
+    return (
+      <div className="row">
+        <div className="col-md-12">
+          <div className="card card-table">
+            <div className="card-header">
+              <h4 className="card-title">Appointment List</h4>
+            </div>
+            <div className="card-body text-center py-5">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              <p className="mt-3">Loading appointments...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Render error state
+  if (error) {
+    return (
+      <div className="row">
+        <div className="col-md-12">
+          <div className="card card-table">
+            <div className="card-header">
+              <h4 className="card-title">Appointment List</h4>
+            </div>
+            <div className="card-body text-center py-5">
+              <div className="alert alert-danger" role="alert">
+                <h4 className="alert-heading">Error!</h4>
+                <p>{error}</p>
+                <hr />
+                <p className="mb-0">
+                  <button 
+                    className="btn btn-primary" 
+                    onClick={() => window.location.reload()}
+                  >
+                    Try Again
+                  </button>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Render empty state when no appointments
+  if (!loading && data.length === 0) {
+    return (
+      <div className="row">
+        <div className="col-md-12">
+          <div className="card card-table">
+            <div className="card-header">
+              <h4 className="card-title">Appointment List</h4>
+            </div>
+            <div className="card-body text-center py-5">
+              <div className="empty-state">
+                <i className="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                <h5 className="text-muted">No Appointments Yet</h5>
+                <p className="text-muted">You don't have any appointments scheduled. New appointments will appear here in real-time.</p>
+                <div className="mt-3">
+                  <small className="text-muted">
+                    <i className="fas fa-info-circle me-1"></i>
+                    Make sure you're available and patients can book appointments with you.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="row">
@@ -161,7 +342,7 @@ const AppointmentList: React.FC = () => {
           {/* Recent Orders */}
           <div className="card card-table">
             <div className="card-header">
-              <h4 className="card-title">Appointment List</h4>
+              <h4 className="card-title">Appointment List ({data.length})</h4>
             </div>
             <div className="card-body">
               <div className="table-responsive">

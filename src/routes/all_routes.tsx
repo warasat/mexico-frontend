@@ -3,7 +3,6 @@ export const all_routes = {
   login: "/login",    
   loginEmail: "/pages/login-email",  
   loginPhone: "/pages/login-phone",   
-  doctorSignup: "/pages/doctor-signup",   
   patientSignup: "/pages/patient-signup",   
   signupSuccess: "/signup-success",   
   forgotPassword: "/forgot-password",   

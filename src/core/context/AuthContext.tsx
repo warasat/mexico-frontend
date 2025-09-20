@@ -11,6 +11,7 @@ interface AuthState {
     name: string;
     email: string;
   } | null;
+  isLoading: boolean;
 }
 
 interface AuthContextType {
@@ -38,6 +39,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isAuthenticated: false,
     userType: null,
     user: null,
+    isLoading: true,
   });
 
   // Initialize auth state from localStorage on app start
@@ -46,11 +48,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (storedAuth) {
       try {
         const authData = JSON.parse(storedAuth);
-        setAuthState(authData);
+        setAuthState({
+          ...authData,
+          isLoading: false,
+        });
       } catch (error) {
         console.error('Error parsing stored auth data:', error);
         localStorage.removeItem('auth');
+        setAuthState({
+          isAuthenticated: false,
+          userType: null,
+          user: null,
+          isLoading: false,
+        });
       }
+    } else {
+      setAuthState({
+        isAuthenticated: false,
+        userType: null,
+        user: null,
+        isLoading: false,
+      });
     }
   }, []);
 
@@ -59,6 +77,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       isAuthenticated: true,
       userType,
       user,
+      isLoading: false,
     };
     setAuthState(newAuthState);
     localStorage.setItem('auth', JSON.stringify(newAuthState));
@@ -74,6 +93,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       isAuthenticated: false,
       userType: null,
       user: null,
+      isLoading: false,
     };
     setAuthState(newAuthState);
     localStorage.removeItem('auth');

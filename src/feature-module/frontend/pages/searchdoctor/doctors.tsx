@@ -207,17 +207,17 @@ const Doctors = () => {
           <div className="d-md-flex align-items-stretch" style={{height: '100%', minHeight: '300px'}}>
             <div className="card-img card-img-hover" style={{minWidth: '200px', maxWidth: '200px', height: '200px', overflow: 'hidden'}}>
               <Link to="/patient/doctor-profile" state={{ selectedDoctor: doctor }}>
-                    <ImageWithBasePath src={doctor.image} alt="" />
+                    <ImageWithBasePath 
+                      src={doctor.image} 
+                      alt="" 
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center top'
+                      }}
+                    />
               </Link>
-              <div className="grid-overlay-item d-flex align-items-center justify-content-between">
-                <span className="badge bg-orange">
-                  <i className="fa-solid fa-star me-1" />
-                      {doctor.rating}
-                </span>
-                <Link to="javascript:void(0)" className="fav-icon">
-                  <i className="fa fa-heart" />
-                </Link>
-              </div>
             </div>
             <div className="card-body p-0" style={{flex: '1', display: 'flex', flexDirection: 'column'}}>
               <div className="d-flex align-items-center justify-content-between border-bottom p-2" style={{minHeight: '50px'}}>

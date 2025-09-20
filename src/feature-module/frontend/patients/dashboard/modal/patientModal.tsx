@@ -3,8 +3,40 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import "react-datepicker/src/stylesheets/datepicker.scss";
 import { DatePicker } from 'antd';
+import { useAuth } from '../../../../../core/context/AuthContext';
+import { useEffect, useState } from 'react';
+import patientProfileService, { type PatientProfileDto } from '../../../../../core/services/patientProfileService';
 
 const PatientModal = () => {
+  const { authState } = useAuth();
+  const [profile, setProfile] = useState<PatientProfileDto | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await patientProfileService.getMe();
+        setProfile(res.profile || null);
+      } catch {
+        setProfile(null);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+    const onUpdated = async () => {
+      try {
+        setIsUpdating(true);
+        const res = await patientProfileService.getMe();
+        setProfile(res.profile || null);
+      } catch {}
+      finally {
+        setIsUpdating(false);
+      }
+    };
+    window.addEventListener('patientProfileUpdated', onUpdated);
+    return () => window.removeEventListener('patientProfileUpdated', onUpdated);
+  }, []);
 
   const gender = [
     { value: "", label: "Select Gender" },
@@ -195,7 +227,7 @@ const PatientModal = () => {
                         <div className="invoice-info">
                           <h6 className="customer-text">Billing To</h6>
                           <p className="invoice-details invoice-details-two">
-                            Richard Wilson <br />
+                            Loading... <br />
                             299 Star Trek Drive
                             <br />
                             Florida, 32405, USA
@@ -377,21 +409,71 @@ const PatientModal = () => {
                               />
                             </span>
                             <div>
-                              <h6 className="fs-14 fw-medium">Hendrita Kearns</h6>
-                              <p>Patient ID : PT254654</p>
+                              <h6 className="fs-14 fw-medium">
+                                {isLoading ? (
+                                  <div className="placeholder-text" style={{height: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '100px'}}></div>
+                                ) : (
+                                  <span style={{opacity: isUpdating ? 0.7 : 1}}>
+                                    {authState?.user?.name || 'Loading...'}
+                                  </span>
+                                )}
+                              </h6>
+                              <p>
+                                Patient ID : 
+                                {isLoading ? (
+                                  <span className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '60px', display: 'inline-block', marginLeft: '5px'}}></span>
+                                ) : (
+                                  <span style={{opacity: isUpdating ? 0.7 : 1}}>
+                                    {authState?.user?.patientId || 'Loading...'}
+                                  </span>
+                                )}
+                              </p>
                             </div>
                           </div>
                           <div>
                             <h6 className="fs-14 fw-medium">Gender</h6>
-                            <p>Female</p>
+                            <p>
+                              {isLoading ? (
+                                <div className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '50px'}}></div>
+                              ) : (
+                                <span style={{opacity: isUpdating ? 0.7 : 1}}>
+                                  {profile?.gender || 'Loading...'}
+                                </span>
+                              )}
+                            </p>
                           </div>
                           <div>
                             <h6 className="fs-14 fw-medium">Age</h6>
-                            <p>32 years </p>
+                            <p>
+                              {isLoading ? (
+                                <div className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '80px'}}></div>
+                              ) : (
+                                <span style={{opacity: isUpdating ? 0.7 : 1}}>
+                                  {profile?.dateOfBirth ? (() => {
+                                    try {
+                                      const dob = new Date(profile.dateOfBirth);
+                                      const now = new Date();
+                                      let years = now.getFullYear() - dob.getFullYear();
+                                      let months = now.getMonth() - dob.getMonth();
+                                      if (months < 0) { years -= 1; months += 12; }
+                                      return `${years} years ${String(months).padStart(2, '0')} Months`;
+                                    } catch { return 'Loading...'; }
+                                  })() : 'Loading...'}
+                                </span>
+                              )}
+                            </p>
                           </div>
                           <div>
                             <h6 className="fs-14 fw-medium">Blood</h6>
-                            <p>O+</p>
+                            <p>
+                              {isLoading ? (
+                                <div className="placeholder-text" style={{height: '14px', backgroundColor: '#f8f9fa', borderRadius: '4px', width: '40px'}}></div>
+                              ) : (
+                                <span style={{opacity: isUpdating ? 0.7 : 1}}>
+                                  {profile?.bloodGroup || 'Loading...'}
+                                </span>
+                              )}
+                            </p>
                           </div>
                           <div>
                             <h6 className="fs-14 fw-medium">Type</h6>

@@ -18,7 +18,7 @@ class SocketService {
 
   private initializeSocket() {
     try {
-      const socketUrl = import.meta.env.VITE_SOCKET_URL || 'https://doctor-appointment-system-backend-rho.vercel.app';
+      const socketUrl = import.meta.env.VITE_SOCKET_URL;
       this.socket = io(socketUrl, {
         transports: ['websocket'],
         autoConnect: true,
@@ -35,6 +35,22 @@ class SocketService {
       this.socket.on('doctorAvailabilityUpdate', (data: { doctorId: string; availability: 'available' | 'unavailable' }) => {
         console.log('SocketService received doctorAvailabilityUpdate:', data);
         this.notifyListeners('doctorAvailabilityUpdate', data);
+      });
+
+      // Appointment-related events
+      this.socket.on('appointmentCreated', (data: { doctorId: string; patientId: string; appointment: any }) => {
+        console.log('SocketService received appointmentCreated:', data);
+        this.notifyListeners('appointmentCreated', data);
+      });
+
+      this.socket.on('appointmentUpdated', (data: { appointmentId: string; appointment: any }) => {
+        console.log('SocketService received appointmentUpdated:', data);
+        this.notifyListeners('appointmentUpdated', data);
+      });
+
+      this.socket.on('appointmentCancelled', (data: { appointmentId: string; appointment: any }) => {
+        console.log('SocketService received appointmentCancelled:', data);
+        this.notifyListeners('appointmentCancelled', data);
       });
 
       this.socket.on('connected', (data: any) => {
@@ -89,6 +105,38 @@ class SocketService {
 
   public isConnected(): boolean {
     return this.socket?.connected || false;
+  }
+
+  // Join doctor room for real-time updates
+  public joinDoctorRoom(doctorId: string) {
+    if (this.socket) {
+      this.socket.emit('joinDoctorRoom', doctorId);
+      console.log(`Joined doctor room: doctor_${doctorId}`);
+    }
+  }
+
+  // Join patient room for real-time updates
+  public joinPatientRoom(patientId: string) {
+    if (this.socket) {
+      this.socket.emit('joinPatientRoom', patientId);
+      console.log(`Joined patient room: patient_${patientId}`);
+    }
+  }
+
+  // Leave doctor room
+  public leaveDoctorRoom(doctorId: string) {
+    if (this.socket) {
+      this.socket.emit('leaveDoctorRoom', doctorId);
+      console.log(`Left doctor room: doctor_${doctorId}`);
+    }
+  }
+
+  // Leave patient room
+  public leavePatientRoom(patientId: string) {
+    if (this.socket) {
+      this.socket.emit('leavePatientRoom', patientId);
+      console.log(`Left patient room: patient_${patientId}`);
+    }
   }
 }
 
