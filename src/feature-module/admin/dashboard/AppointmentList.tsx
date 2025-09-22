@@ -9,43 +9,44 @@ import {
   patient1,
 } from "../imagepath";
 import { Link } from "react-router-dom";
-import { appointmentService, type Appointment } from "../../../core/services/appointmentService";
-import { useAuth } from "../../../core/context/AuthContext";
-import SocketService from "../../../core/services/socketService";
+import adminService from "../../../core/services/adminService";
 interface AppointmentData {
-  id: number;
+  id: string;
   DoctorName: string;
   Speciality: string;
   PatientName: string;
-  Earned: string;
+  AppointmentTime: string;
   Date: string;
+  Status: string;
+  DoctorProfileImage: string;
+  PatientProfileImage: string;
+  CreatedAt: string;
   time: string;
-
-  image: string;
-  images1: string;
-
 }
 
 const AppointmentList: React.FC = () => {
-  const { authState } = useAuth();
-  const { isAuthenticated, userType } = authState;
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [appointments, setAppointments] = useState<AppointmentData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalAppointments, setTotalAppointments] = useState(0);
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [hasPrevPage, setHasPrevPage] = useState(false);
 
   // Fetch appointments on component mount
   useEffect(() => {
     const fetchAppointments = async () => {
-      if (!isAuthenticated || userType !== 'doctor') {
-        setLoading(false);
-        return;
-      }
-
       try {
         setLoading(true);
-        const response = await appointmentService.getDoctorAppointments();
+        const response = await adminService.getAppointmentsList(currentPage, 10);
         if (response.success) {
           setAppointments(response.data);
+          setCurrentPage(response.pagination.currentPage);
+          setTotalPages(response.pagination.totalPages);
+          setTotalAppointments(response.pagination.totalAppointments);
+          setHasNextPage(response.pagination.hasNextPage);
+          setHasPrevPage(response.pagination.hasPrevPage);
         } else {
           setError('Failed to fetch appointments');
         }
@@ -58,88 +59,44 @@ const AppointmentList: React.FC = () => {
     };
 
     fetchAppointments();
-  }, [isAuthenticated, userType]);
+  }, [currentPage]);
 
-  // Socket.IO integration for real-time updates
-  useEffect(() => {
-    if (!isAuthenticated || userType !== 'doctor' || !authState.user?.id) {
-      return;
+  const handleNextPage = () => {
+    if (hasNextPage) {
+      setCurrentPage(currentPage + 1);
     }
+  };
 
-    const socketService = SocketService.getInstance();
-    
-    // Join doctor room
-    socketService.joinDoctorRoom(authState.user.id);
+  const handlePrevPage = () => {
+    if (hasPrevPage) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
-    // Subscribe to appointment events
-    const unsubscribeAppointmentCreated = socketService.subscribe('appointmentCreated', (data: { doctorId: string; appointment: Appointment }) => {
-      if (data.doctorId === authState.user?.id) {
-        console.log('New appointment created for doctor:', data.appointment);
-        setAppointments(prev => [data.appointment, ...prev]);
-      }
-    });
-
-    const unsubscribeAppointmentUpdated = socketService.subscribe('appointmentUpdated', (data: { appointmentId: string; appointment: Appointment }) => {
-      console.log('Appointment updated:', data.appointment);
-      setAppointments(prev => 
-        prev.map(apt => 
-          apt._id === data.appointmentId ? data.appointment : apt
-        )
-      );
-    });
-
-    const unsubscribeAppointmentCancelled = socketService.subscribe('appointmentCancelled', (data: { appointmentId: string; appointment: Appointment }) => {
-      console.log('Appointment cancelled:', data.appointment);
-      setAppointments(prev => 
-        prev.map(apt => 
-          apt._id === data.appointmentId ? data.appointment : apt
-        )
-      );
-    });
-
-    // Cleanup on unmount
-    return () => {
-      if (authState.user?.id) {
-        socketService.leaveDoctorRoom(authState.user.id);
-      }
-      unsubscribeAppointmentCreated();
-      unsubscribeAppointmentUpdated();
-      unsubscribeAppointmentCancelled();
-    };
-  }, [isAuthenticated, userType, authState.user?.id]);
-
-  // Transform appointments data for the table
-  const transformedData: AppointmentData[] = appointments.map((appointment, index) => ({
-    id: index + 1,
-    DoctorName: appointment.doctorName,
-    Speciality: appointment.service,
-    PatientName: appointment.patientName,
-    Earned: "$100.00", // Default value since it's not in the appointment model
-    Date: new Date(appointment.date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    }),
-    time: appointment.timeSlot,
-    image: appointment.doctor?.imageUrl || doctor_thumb_01,
-    images1: patient1, // Default patient image
-  }));
-
-  // Use only dynamic data - no static fallback
-  const data: AppointmentData[] = transformedData;
+  // Use dynamic data from API
+  const data: AppointmentData[] = appointments;
   const columns = [
     {
       title: "Doctor Name",
       dataIndex: "DoctorName",
       render: (text: string, record: AppointmentData) => (
-        <>
+        <React.Fragment key={record.id}>
           <Link className="avatar mx-2" to="/admin/profile">
-            <img className="rounded-circle" src={record.image} />
+            <img 
+              className="rounded-circle" 
+              src={record.DoctorProfileImage}
+              alt={text}
+              style={{
+                width: '40px',
+                height: '40px',
+                objectFit: 'cover',
+                objectPosition: 'center top',
+                border: '2px solid #e9ecef'
+              }}
+            />
           </Link>
-          <Link to="/admin/profile" className="text-decoration-none">
-            {text}
-          </Link>
-        </>
+          <Link to="/admin/profile">{text}</Link>
+        </React.Fragment>
       ),
       sorter: (a: AppointmentData, b: AppointmentData) => a.DoctorName.length - b.DoctorName.length,
     },
@@ -148,38 +105,45 @@ const AppointmentList: React.FC = () => {
       dataIndex: "Speciality",
       sorter: (a: AppointmentData, b: AppointmentData) => a.Speciality.length - b.Speciality.length,
     },
-
     {
       title: "Patient Name",
       dataIndex: "PatientName",
       render: (text: string, record: AppointmentData) => (
-        <>
+        <React.Fragment key={record.id}>
           <Link className="avatar mx-2" to="/admin/profile">
-            <img className="rounded-circle" src={record.images1} />
+            <img 
+              className="rounded-circle" 
+              src={record.PatientProfileImage}
+              alt={text}
+              style={{
+                width: '40px',
+                height: '40px',
+                objectFit: 'cover',
+                objectPosition: 'center top',
+                border: '2px solid #e9ecef'
+              }}
+            />
           </Link>
           <Link to="/admin/profile">{text}</Link>
-        </>
+        </React.Fragment>
       ),
       sorter: (a: AppointmentData, b: AppointmentData) => a.PatientName.length - b.PatientName.length,
     },
-
     {
       title: "Appointment Time",
       render: (record: AppointmentData) => (
         <>
           <span className="user-name">{record.Date}</span>
           <br />
-          <span className="d-block">{record.time}</span>
+          <span className="d-block">{record.AppointmentTime}</span>
         </>
       ),
-      sorter: (a: AppointmentData, b: AppointmentData) => a.Date.length - b.time.length,
+      sorter: (a: AppointmentData, b: AppointmentData) => a.Date.length - b.AppointmentTime.length,
     },
     {
       title: "Status",
-      render: (record: any) => {
-        const appointment = appointments.find(apt => apt.doctorName === record.DoctorName && apt.patientName === record.PatientName);
-        if (!appointment) return <span className="badge bg-secondary">Unknown</span>;
-        
+      dataIndex: "Status",
+      render: (status: string) => {
         const getStatusBadge = (status: string) => {
           switch (status) {
             case 'pending':
@@ -195,66 +159,9 @@ const AppointmentList: React.FC = () => {
           }
         };
         
-        return getStatusBadge(appointment.status);
+        return getStatusBadge(status);
       },
-    },
-    {
-      title: "Actions",
-      render: (record: any) => {
-        const appointment = appointments.find(apt => apt.doctorName === record.DoctorName && apt.patientName === record.PatientName);
-        if (!appointment) return null;
-        
-        const handleStatusUpdate = async (newStatus: string) => {
-          try {
-            await appointmentService.updateAppointmentStatus(appointment._id, newStatus as any);
-            // The socket event will automatically update the UI
-          } catch (error) {
-            console.error('Error updating appointment status:', error);
-            alert('Failed to update appointment status');
-          }
-        };
-        
-        return (
-          <div className="btn-group" role="group">
-            {appointment.status === 'pending' && (
-              <>
-                <button
-                  className="btn btn-success btn-sm"
-                  onClick={() => handleStatusUpdate('confirmed')}
-                  title="Accept Appointment"
-                >
-                  <i className="fas fa-check"></i> Accept
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleStatusUpdate('cancelled')}
-                  title="Reject Appointment"
-                >
-                  <i className="fas fa-times"></i> Reject
-                </button>
-              </>
-            )}
-            {appointment.status === 'confirmed' && (
-              <button
-                className="btn btn-info btn-sm"
-                onClick={() => handleStatusUpdate('completed')}
-                title="Mark as Completed"
-              >
-                <i className="fas fa-check-circle"></i> Complete
-              </button>
-            )}
-            <button
-              className="btn btn-danger btn-sm"
-              onClick={() => handleStatusUpdate('cancelled')}
-              title="Cancel Appointment"
-            >
-              <i className="fas fa-trash"></i>
-            </button>
-          </div>
-        );
-      },
-    },
-
+    }
   ];
   // Render loading state
   if (loading) {
@@ -342,25 +249,43 @@ const AppointmentList: React.FC = () => {
           {/* Recent Orders */}
           <div className="card card-table">
             <div className="card-header">
-              <h4 className="card-title">Appointment List ({data.length})</h4>
+              <h4 className="card-title">Appointment List ({totalAppointments})</h4>
             </div>
             <div className="card-body">
               <div className="table-responsive">
                 <Table
-                  pagination={{
-                    total: data.length,
-                    showTotal: (total, range) =>
-                      `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                    showSizeChanger: true,
-                    onShowSizeChange: onShowSizeChange,
-                    itemRender: itemRender,
-                  }}
+                  pagination={false}
                   style={{ overflowX: "auto" }}
                   columns={columns}
                   dataSource={data}
                   rowKey={(record) => record.id}
-                  //  onChange={this.handleTableChange}
                 />
+              </div>
+              
+              {/* Custom Pagination Controls */}
+              <div className="d-flex justify-content-between align-items-center mt-3">
+                <div className="text-muted">
+                  Showing {((currentPage - 1) * 10) + 1} to {Math.min(currentPage * 10, totalAppointments)} of {totalAppointments} entries
+                </div>
+                <div className="d-flex gap-2">
+                  <button
+                    className="btn btn-outline-primary btn-sm"
+                    onClick={handlePrevPage}
+                    disabled={!hasPrevPage || loading}
+                  >
+                    Previous
+                  </button>
+                  <span className="btn btn-outline-secondary btn-sm disabled">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <button
+                    className="btn btn-outline-primary btn-sm"
+                    onClick={handleNextPage}
+                    disabled={!hasNextPage || loading}
+                  >
+                    Next
+                  </button>
+                </div>
               </div>
             </div>
           </div>

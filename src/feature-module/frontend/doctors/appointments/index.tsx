@@ -167,8 +167,8 @@ const Appointments = (props: any) => {
                 className="start-link"
                 onClick={(e) => {
                   e.preventDefault();
-                  // Google Meet functionality can be implemented here
-                  alert('Google Meet integration will be implemented here');
+                  // Open Google Meet landing page in new tab
+                  window.open('https://meet.google.com/landing', '_blank');
                 }}
               >
                 Google Meet

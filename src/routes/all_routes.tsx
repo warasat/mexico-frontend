@@ -44,6 +44,5 @@ export const all_routes = {
   adminAppointmentList: "/system-admin/appointment-list",
   adminDoctorList: "/system-admin/doctor-list",
   adminPatientList: "/system-admin/patient-list",
-  adminReviews: "/system-admin/reviews",
   adminLogin: "/system-admin/login",
 }

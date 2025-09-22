@@ -1,123 +1,118 @@
 import { Table } from "antd";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
-import { itemRender, onShowSizeChange } from "../paginationfunction";
+import { itemRender } from "../paginationfunction";
 import SidebarNav from "../sidebar";
 import {
-  doctor_thumb_01,
   doctor_thumb_02,
   doctor_thumb_03,
-  doctor_thumb_04,
-  doctor_thumb_05,
   doctor_thumb_06,
   doctor_thumb_07,
-  doctor_thumb_08,
   doctor_thumb_09,
-  doctor_thumb_10,
 } from "../imagepath";
 import { Link } from "react-router-dom";
 import Header from "../header";
+import { useState, useEffect } from "react";
+import adminService, { type Doctor } from "../../../core/services/adminService";
 
 const AdminDoctors = () => {
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalDoctors, setTotalDoctors] = useState(0);
+  const [pageSize] = useState(10);
 
-  const data = [
-    {
-      id: 1,
-      DoctorName: "Dr. Darren Elder",
-      Speciality: "Dental ",
+  // Fetch doctors data from API
+  const fetchDoctors = async (page: number = 1, limit: number = 10) => {
+    try {
+      setLoading(true);
+      const response = await adminService.getDoctorsList(page, limit);
+      if (response.success) {
+        setDoctors(response.data);
+        setTotalDoctors(response.pagination.totalDoctors);
+        setCurrentPage(response.pagination.currentPage);
+      } else {
+        setError('Failed to fetch doctors');
+      }
+    } catch (err) {
+      console.error('Error fetching doctors:', err);
+      setError('Failed to fetch doctors');
+      // Fallback to static data if API fails
+      setDoctors([
+        {
+          id: "1",
+          DoctorName: "Dr. Darren Elder",
+          Speciality: "Dental",
+          Date: "11 Jun 2019",
+          time: "4.50 AM",
+          image: doctor_thumb_02,
+        },
+        {
+          id: "2",
+          DoctorName: "Dr. Deborah Angel",
+          Speciality: "Cardiology",
+          Date: "4 Jan 2018",
+          time: "9.40 AM",
+          image: doctor_thumb_03,
+        },
+        {
+          id: "3",
+          DoctorName: "Dr. John Gibbs",
+          Speciality: "Dental",
+          Date: "21 Apr 2018",
+          time: "02.59 PM",
+          image: doctor_thumb_09,
+        },
+        {
+          id: "4",
+          DoctorName: "Dr. Katharine Berthold",
+          Speciality: "Orthopaedics",
+          Date: "23 Mar 2019",
+          time: "02.50 PM",
+          image: doctor_thumb_06,
+        },
+        {
+          id: "5",
+          DoctorName: "Dr. Linda Tobin",
+          Speciality: "Neurology",
+          Date: "14 Dec 2018",
+          time: "01.59 AM",
+          image: doctor_thumb_07,
+        },
+      ]);
+      setTotalDoctors(5);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      Date: "11 Jun 2019",
-      time: "4.50 AM",
-      image: doctor_thumb_02,
-      AccountStatus: "checkbox",
-    },
-    {
-      id: 2,
-      DoctorName: "Dr. Deborah Angel",
-      Speciality: "Cardiology ",
+  useEffect(() => {
+    fetchDoctors(currentPage, pageSize);
+  }, [currentPage, pageSize]);
 
-      Date: "4 Jan 2018",
-      time: "9.40 AM",
-      image: doctor_thumb_03,
-      AccountStatus: "checkbox",
-    },
-    {
-      id: 3,
-      DoctorName: "Dr. John Gibbs",
-      Speciality: "Dental ",
+  // Transform API data to match table structure
+  const data = doctors.map(doctor => {
+    // Format the registration date from createdAt
+    const registrationDate = doctor.createdAt ? new Date(doctor.createdAt) : new Date();
+    const formattedDate = registrationDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+    const formattedTime = registrationDate.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
 
-      Date: "21 Apr 2018",
-      time: "02.59 PM",
-      image: doctor_thumb_09,
-      AccountStatus: "checkbox",
-    },
-    {
-      id: 4,
-      DoctorName: "Dr. Katharine Berthold",
-      Speciality: "Orthopaedics ",
-
-      Date: "23 Mar 2019",
-      time: "02.50 PM",
-      image: doctor_thumb_06,
-      AccountStatus: "checkbox",
-    },
-    {
-      id: 5,
-      DoctorName: "Dr. Linda Tobin",
-      Speciality: "Neurology ",
-
-      Date: "14 Dec 2018",
-      time: "01.59 AM",
-      image: doctor_thumb_07,
-      AccountStatus: "checkbox",
-    },
-    {
-      id: 6,
-      DoctorName: "Dr. Marvin Campbell",
-      Speciality: "Orthopaedics ",
-
-      Date: "24 Jan 2019",
-      time: "02.59 AM",
-      image: doctor_thumb_05,
-      AccountStatus: "checkbox",
-    },
-    {
-      id: 7,
-      DoctorName: "Dr. Olga Barlow",
-      Speciality: "Dental ",
-      Date: "15 Feb 2018",
-      time: "03.59 AM",
-      image: doctor_thumb_10,
-      AccountStatus: "checkbox",
-    },
-    {
-      id: 8,
-      DoctorName: "Dr. Paul Richard",
-      Speciality: "Dermatology ",
-      Date: "11 Jan 2019",
-      time: "02.59 AM",
-      image: doctor_thumb_08,
-      AccountStatus: "checkbox",
-    },
-    {
-      id: 9,
-      DoctorName: "Dr. Ruby Perrin",
-      Speciality: "Dental ",
-      Date: "14 Jan 2019",
-      time: "02.59 AM",
-      image: doctor_thumb_01,
-      AccountStatus: "checkbox",
-    },
-    {
-      id: 10,
-      DoctorName: "Dr. Sofia Brient",
-      Speciality: "Urology ",
-      Date: "5 Jul 2019",
-      time: "12.59 AM",
-      image: doctor_thumb_04,
-      AccountStatus: "checkbox",
-    },
-  ];
+    return {
+      ...doctor,
+      Date: formattedDate,
+      time: formattedTime,
+      AccountStatus: "checkbox", // Keep account status as checkbox
+    };
+  });
   const columns = [
     {
       title: "Doctor Name",
@@ -199,21 +194,47 @@ const AdminDoctors = () => {
               <div className="card">
                 <div className="card-body">
                   <div className="table-responsive">
-                    <Table
-                      pagination={{
-                        total: data.length,
-                        showTotal: (total, range) =>
-                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                        showSizeChanger: true,
-                        onShowSizeChange: onShowSizeChange,
-                        itemRender: itemRender,
-                      }}
-                      style={{ overflowX: "auto" }}
-                      columns={columns}
-                      dataSource={data}
-                      rowKey={(record) => record.id}
-                      //  onChange={this.handleTableChange}
-                    />
+                    {loading ? (
+                      <div className="text-center py-5">
+                        <div className="spinner-border text-primary" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                        <p className="mt-3">Loading doctors...</p>
+                      </div>
+                    ) : error ? (
+                      <div className="text-center py-5">
+                        <div className="alert alert-warning" role="alert">
+                          <h5>Unable to load doctors</h5>
+                          <p>{error}</p>
+                          <button 
+                            className="btn btn-primary" 
+                            onClick={() => window.location.reload()}
+                          >
+                            Try Again
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                                <Table
+                                  pagination={{
+                                    current: currentPage,
+                                    pageSize: pageSize,
+                                    total: totalDoctors,
+                                    showTotal: (total, range) =>
+                                      `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                                    showSizeChanger: false,
+                                    onChange: (page) => {
+                                      setCurrentPage(page);
+                                    },
+                                    itemRender: itemRender,
+                                  }}
+                        style={{ overflowX: "auto" }}
+                        columns={columns}
+                        dataSource={data}
+                        rowKey={(record) => record.id}
+                        //  onChange={this.handleTableChange}
+                      />
+                    )}
                   </div>
                 </div>
               </div>

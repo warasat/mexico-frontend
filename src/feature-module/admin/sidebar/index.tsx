@@ -7,8 +7,7 @@ import {
   Home, 
   Layout, 
   UserPlus, 
-  User, 
-  Star
+  User
 } from "react-feather";
 
 const SidebarNav = () => {
@@ -97,11 +96,6 @@ const SidebarNav = () => {
                 >
                   <Link to="/system-admin/patient-list">
                     <User size={16} /> <span>Patients</span>
-                  </Link>
-                </li>
-                <li className={pathname?.includes("reviews") ? "active" : ""}>
-                  <Link to="/system-admin/reviews">
-                    <Star size={16} /> <span>Reviews</span>
                   </Link>
                 </li>
               </ul>

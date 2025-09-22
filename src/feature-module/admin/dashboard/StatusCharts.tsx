@@ -1,13 +1,32 @@
- 
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import adminService, { type MonthlyStat } from "../../../core/services/adminService";
+
 const StatusChart: React.FC = () => {
-  const [chartOptions, _setChartOptions] = useState({
+  const [chartOptions, setChartOptions] = useState({
     chart: {
       type: "line",
       stacked: false,
       height: "100%",
       width: "100%",
+      toolbar: {
+        show: false,
+        tools: {
+          download: false,
+          selection: false,
+          zoom: false,
+          zoomin: false,
+          zoomout: false,
+          pan: false,
+          reset: false
+        }
+      },
+      zoom: {
+        enabled: false
+      },
+      pan: {
+        enabled: false
+      }
     },
     dataLabels: {
       enabled: false,
@@ -15,35 +34,23 @@ const StatusChart: React.FC = () => {
     series: [
       {
         name: "Doctors",
-        data: [
-          { x: "2015", y: 100 },
-          { x: "2016", y: 20 },
-          { x: "2017", y: 90 },
-          { x: "2018", y: 50 },
-          { x: "2019", y: 120 },
-        ],
+        data: [],
       },
       {
         name: "Patients",
-        data: [
-          { x: "2015", y: 30 },
-          { x: "2016", y: 60 },
-          { x: "2017", y: 120 },
-          { x: "2018", y: 80 },
-          { x: "2019", y: 150 },
-        ],
+        data: [],
       },
     ],
     xaxis: {
-      categories: ["2015", "2016", "2017", "2018", "2019"],
+      categories: [],
     },
     colors: ["#1b5a90", "#ff9d00"],
     stroke: {
-      width: 1,
+      width: 2,
       curve: "smooth",
     },
     markers: {
-      size: 3,
+      size: 4,
     },
     grid: {
       show: true,
@@ -51,9 +58,87 @@ const StatusChart: React.FC = () => {
       strokeDashArray: 2,
     },
     tooltip: {
-      theme: "dark",
+      theme: "light",
+    },
+    title: {
+      text: "Doctors vs Patients Growth",
+      align: "left",
+    },
+    legend: {
+      position: "top",
     },
   });
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchChartData = async () => {
+      try {
+        const response = await adminService.getMonthlyStats();
+        if (response.success) {
+          const monthlyData: MonthlyStat[] = response.data;
+          
+          const months = monthlyData.map(item => item.month);
+          const doctorData = monthlyData.map(item => ({ x: item.month, y: item.doctors }));
+          const patientData = monthlyData.map(item => ({ x: item.month, y: item.patients }));
+          
+          setChartOptions(prev => ({
+            ...prev,
+            series: [
+              {
+                name: "Doctors",
+                data: doctorData,
+              },
+              {
+                name: "Patients", 
+                data: patientData,
+              },
+            ],
+            xaxis: {
+              categories: months,
+            },
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching chart data:', error);
+        // Fallback to static data if API fails
+        setChartOptions(prev => ({
+          ...prev,
+          series: [
+            {
+              name: "Doctors",
+              data: [
+                { x: "Jan", y: 15 },
+                { x: "Feb", y: 18 },
+                { x: "Mar", y: 20 },
+                { x: "Apr", y: 19 },
+                { x: "May", y: 21 },
+                { x: "Jun", y: 21 },
+              ],
+            },
+            {
+              name: "Patients",
+              data: [
+                { x: "Jan", y: 5 },
+                { x: "Feb", y: 6 },
+                { x: "Mar", y: 7 },
+                { x: "Apr", y: 8 },
+                { x: "May", y: 9 },
+                { x: "Jun", y: 9 },
+              ],
+            },
+          ],
+          xaxis: {
+            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+          },
+        }));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchChartData();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -83,6 +168,14 @@ const StatusChart: React.FC = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [chartOptions]);
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
+        <div>Loading chart data...</div>
+      </div>
+    );
+  }
 
   return (
     <div>

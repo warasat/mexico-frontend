@@ -11,7 +11,7 @@ const NavLinks: React.FC = () => {
   const Location = useLocation();
   const pathnames = Location.pathname;
   const { authState } = useAuth();
-  const { isAuthenticated, userType } = authState;
+  const { isAuthenticated, userType, isLoading } = authState;
 
   // Reset dropdown states when authentication changes
   useEffect(() => {
@@ -150,8 +150,8 @@ const NavLinks: React.FC = () => {
         </Link>
       </li>
 
-      {/* Login Dropdown - Only show if not authenticated */}
-      {!isAuthenticated && (
+      {/* Login Dropdown - Show if not authenticated and not loading */}
+      {!isLoading && !isAuthenticated && (
         <li className={`has-submenu ${pathnames.includes("login") || pathnames.includes("signup") || pathnames.includes("register") ? "active" : ""}`}>
           <Link
             to="#"

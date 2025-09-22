@@ -153,8 +153,8 @@ const PatientAppointments = (props: any) => {
                 className="start-link"
                 onClick={(e) => {
                   e.preventDefault();
-                  // Google Meet functionality can be implemented here
-                  alert('Google Meet integration will be implemented here');
+                  // Open Google Meet landing page in new tab
+                  window.open('https://meet.google.com/landing', '_blank');
                 }}
               >
                 Google Meet
@@ -180,10 +180,16 @@ const PatientAppointments = (props: any) => {
     );
   };
 
-  // Filter appointments by boolean fields
-  const upcomingAppointments = appointments.filter(apt => !apt.isCompleted && !apt.cancelled);
-  const cancelledAppointments = appointments.filter(apt => apt.cancelled);
-  const completedAppointments = appointments.filter(apt => apt.isCompleted);
+  // Filter appointments by boolean fields and sort by creation date (newest first)
+  const upcomingAppointments = appointments
+    .filter(apt => !apt.isCompleted && !apt.cancelled)
+    .sort((a, b) => new Date(b.createdAt || b.date).getTime() - new Date(a.createdAt || a.date).getTime());
+  const cancelledAppointments = appointments
+    .filter(apt => apt.cancelled)
+    .sort((a, b) => new Date(b.createdAt || b.date).getTime() - new Date(a.createdAt || a.date).getTime());
+  const completedAppointments = appointments
+    .filter(apt => apt.isCompleted)
+    .sort((a, b) => new Date(b.createdAt || b.date).getTime() - new Date(a.createdAt || a.date).getTime());
 
   // Render loading state
   if (loading) {

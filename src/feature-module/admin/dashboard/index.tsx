@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SidebarNav from "../sidebar";
 import Header from "../header";
 import DoctorListDesboard from "./DoctorList";
@@ -6,10 +6,37 @@ import PatientsListDesboard from "./PatientsList";
 import AppointmentList from "./AppointmentList";
 import StatusCharts from "./StatusCharts";
 import { useBackButtonHandler } from "../../../core/hooks/useBackButtonHandler";
+import adminService, { type DashboardStats } from "../../../core/services/adminService";
 
 const AdminDashboard: React.FC = () => {
   // Handle browser back button behavior
   useBackButtonHandler();
+  
+  const [stats, setStats] = useState<DashboardStats>({
+    totalDoctors: 0,
+    totalPatients: 0,
+    totalAppointments: 0
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await adminService.getDashboardStats();
+        
+        if (response.success) {
+          setStats(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching dashboard stats:', error);
+        // Keep default values on error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   return (
     <>
@@ -38,7 +65,7 @@ const AdminDashboard: React.FC = () => {
                         <i className="feather feather-users"></i>
                       </span>
                       <div className="dash-count">
-                        <h3>168</h3>
+                        <h3>{loading ? '...' : stats.totalDoctors}</h3>
                       </div>
                     </div>
                     <div className="dash-widget-info">
@@ -59,7 +86,7 @@ const AdminDashboard: React.FC = () => {
                           <i className="feather feather-credit-card"></i>
                         </span>
                         <div className="dash-count">
-                          <h3>487</h3>
+                          <h3>{loading ? '...' : stats.totalPatients}</h3>
                         </div>
                       </div>
                       <div className="dash-widget-info">
@@ -79,7 +106,7 @@ const AdminDashboard: React.FC = () => {
                           <i className="feather feather-dollar-sign"></i>
                         </span>
                         <div className="dash-count">
-                          <h3>485</h3>
+                          <h3>{loading ? '...' : stats.totalAppointments}</h3>
                         </div>
                       </div>
                       <div className="dash-widget-info">

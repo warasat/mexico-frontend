@@ -31,7 +31,6 @@ import AdminDashboard from "../feature-module/admin/dashboard/index";
 import AdminAppointments from "../feature-module/admin/appointments";
 import AdminDoctors from "../feature-module/admin/doctors";
 import AdminPatients from "../feature-module/admin/patients";
-import AdminReviews from "../feature-module/admin/reviews";
 import AdminLogin from "../feature-module/admin/login";
 
 
@@ -183,11 +182,6 @@ export const adminRoutes = [
   },
   {
     id: "5",
-    path: route.adminReviews,
-    element: <ProtectedRoute requiredUserType="admin"><AdminReviews /></ProtectedRoute>,
-  },
-  {
-    id: "6",
     path: route.adminLogin,
     element: <AdminLogin />,
   },
