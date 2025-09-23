@@ -16,6 +16,7 @@ export interface Appointment {
     fullName: string;
     email: string;
     phone: string;
+    profileImage?: string;
   };
   doctorName: string;
   patientName: string;

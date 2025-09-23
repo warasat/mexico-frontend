@@ -43,6 +43,18 @@ const AdminAppointments = () => {
         setLoading(true);
         const response = await adminService.getAppointmentsList(currentPage, 10);
         if (response.success) {
+          console.log(`[Page ${currentPage}] Appointments fetched successfully:`, response.data);
+          // Log profile image data for debugging
+          response.data.forEach((appointment, index) => {
+            console.log(`[Page ${currentPage}] Appointment ${index + 1}:`, {
+              doctorName: appointment.DoctorName,
+              doctorImage: appointment.DoctorProfileImage,
+              patientName: appointment.PatientName,
+              patientImage: appointment.PatientProfileImage,
+              specialty: appointment.Speciality,
+              debug: appointment._debug
+            });
+          });
           setAppointments(response.data);
           setCurrentPage(response.pagination.currentPage);
           setTotalPages(response.pagination.totalPages);
@@ -81,54 +93,91 @@ const AdminAppointments = () => {
     {
       title: "Doctor Name",
       dataIndex: "DoctorName",
-      render: (text: string, record: AppointmentData) => (
-        <React.Fragment key={record.id}>
-          <Link className="avatar mx-2" to="/admin/profile">
-            <img 
-              className="rounded-circle" 
-              src={record.DoctorProfileImage}
-              alt=""
-              style={{
-                width: '40px',
-                height: '40px',
-                objectFit: 'cover',
-                objectPosition: 'center top',
-                border: '2px solid #e9ecef'
-              }}
-            />
-          </Link>
-          <span className="text-decoration-none">{text}</span>
-        </React.Fragment>
-      ),
+      render: (text: string, record: AppointmentData) => {
+        const doctorImageSrc = record.DoctorProfileImage || '/src/assets/admin/assets/img/profiles/doctor-03.jpg';
+        console.log(`[Page ${currentPage}] Rendering doctor image:`, { 
+          doctorName: text, 
+          imageSrc: doctorImageSrc,
+          hasImage: !!record.DoctorProfileImage,
+          debug: record._debug
+        });
+        
+        return (
+          <React.Fragment key={record.id}>
+            <Link className="avatar mx-2" to="/admin/profile">
+              <img 
+                className="rounded-circle" 
+                src={doctorImageSrc}
+                alt={text || 'Doctor'}
+                onError={(e) => {
+                  console.log(`[Page ${currentPage}] Doctor image failed to load:`, doctorImageSrc);
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/src/assets/admin/assets/img/profiles/doctor-03.jpg';
+                }}
+                onLoad={() => {
+                  console.log(`[Page ${currentPage}] Doctor image loaded successfully:`, doctorImageSrc);
+                }}
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  objectFit: 'cover',
+                  objectPosition: 'center top',
+                  border: '2px solid #e9ecef'
+                }}
+              />
+            </Link>
+            <span className="text-decoration-none">{text || 'Unknown Doctor'}</span>
+          </React.Fragment>
+        );
+      },
       sorter: (a: AppointmentData, b: AppointmentData) => a.DoctorName.length - b.DoctorName.length,
     },
     {
       title: "Speciality",
       dataIndex: "Speciality",
+      render: (value: string) => (value && value.trim().length ? value : 'General Practice'),
       sorter: (a: AppointmentData, b: AppointmentData) => a.Speciality.length - b.Speciality.length,
     },
     {
       title: "Patient Name",
       dataIndex: "PatientName",
-      render: (text: string, record: AppointmentData) => (
-        <React.Fragment key={record.id}>
-          <Link className="avatar mx-2" to="/admin/profile">
-            <img 
-              className="rounded-circle" 
-              src={record.PatientProfileImage}
-              alt=""
-              style={{
-                width: '40px',
-                height: '40px',
-                objectFit: 'cover',
-                objectPosition: 'center top',
-                border: '2px solid #e9ecef'
-              }}
-            />
-          </Link>
-          <span>{text}</span>
-        </React.Fragment>
-      ),
+      render: (text: string, record: AppointmentData) => {
+        const patientImageSrc = record.PatientProfileImage || '/src/assets/admin/assets/img/profiles/avatar-01.jpg';
+        console.log(`[Page ${currentPage}] Rendering patient image:`, { 
+          patientName: text, 
+          imageSrc: patientImageSrc,
+          hasImage: !!record.PatientProfileImage,
+          debug: record._debug
+        });
+        
+        return (
+          <React.Fragment key={record.id}>
+            <Link className="avatar mx-2" to="/admin/profile">
+              <img 
+                className="rounded-circle" 
+                src={patientImageSrc}
+                alt={text || 'Patient'}
+                onError={(e) => {
+                  console.log(`[Page ${currentPage}] Patient image failed to load:`, patientImageSrc);
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/src/assets/admin/assets/img/profiles/avatar-01.jpg';
+                }}
+                onLoad={() => {
+                  console.log(`[Page ${currentPage}] Patient image loaded successfully:`, patientImageSrc);
+                }}
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  objectFit: 'cover',
+                  objectPosition: 'center top',
+                  border: '2px solid #e9ecef'
+                }}
+              />
+            </Link>
+            <span>{text || 'Unknown Patient'}</span>
+          </React.Fragment>
+        );
+      },
       sorter: (a: AppointmentData, b: AppointmentData) => a.PatientName.length - b.PatientName.length,
     },
     {

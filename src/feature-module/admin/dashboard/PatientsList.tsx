@@ -34,6 +34,18 @@ const PatientsListDashboard: React.FC = () => {
     try {
       const response = await adminService.getPatientsList(page, 10);
       if (response.success) {
+        console.log(`[Page ${page}] Patients fetched successfully:`, response.data);
+        // Log patient data for debugging
+        response.data.forEach((patient, index) => {
+          console.log(`[Page ${page}] Patient ${index + 1}:`, {
+            patientName: patient.PatientName,
+            patientImage: patient.profileImage,
+            age: patient.Age,
+            address: patient.Address,
+            debug: patient._debug
+          });
+        });
+        
         // Deduplicate by id on the client as a safeguard
         const uniqueMap = new Map<string, Patient>();
         (response.data || []).forEach((p: any) => {
@@ -41,9 +53,9 @@ const PatientsListDashboard: React.FC = () => {
           if (!uniqueMap.has(id)) {
             uniqueMap.set(id, {
               id,
-              PatientName: p.PatientName || '',
+              PatientName: p.PatientName || 'Unknown Patient',
               Phone: p.Phone || '',
-              profileImage: p.profileImage || '',
+              profileImage: p.profileImage || '/src/assets/admin/assets/img/profiles/avatar-01.jpg',
               LastVisit: p.LastVisit || '',
               LastVisitTime: p.LastVisitTime || '',
               Date: p.Date || '',
@@ -137,25 +149,42 @@ const PatientsListDashboard: React.FC = () => {
     {
       title: "Patient Name",
       dataIndex: "PatientName",
-      render: (text: any, record: any) => (
-        <React.Fragment key={record.id}>
-          <Link className="avatar mx-2" to="/admin/profile">
-            <img 
-              className="rounded-circle" 
-              src={record.profileImage || 'assets/img/doctor-grid/doc1.png'} 
-              alt={text || 'Patient'}
-              style={{
-                width: '40px',
-                height: '40px',
-                objectFit: 'cover',
-                objectPosition: 'center top',
-                border: '2px solid #e9ecef'
-              }}
-            />
-          </Link>
-          <Link to="/admin/profile">{text || 'Unknown'}</Link>
-        </React.Fragment>
-      ),
+      render: (text: any, record: any) => {
+        const patientImageSrc = record.profileImage || '/src/assets/admin/assets/img/profiles/avatar-01.jpg';
+        console.log(`[Page ${currentPage}] Rendering patient image:`, { 
+          patientName: text, 
+          imageSrc: patientImageSrc,
+          hasImage: !!record.profileImage
+        });
+        
+        return (
+          <React.Fragment key={record.id}>
+            <Link className="avatar mx-2" to="/admin/profile">
+              <img 
+                className="rounded-circle" 
+                src={patientImageSrc}
+                alt={text || 'Patient'}
+                onError={(e) => {
+                  console.log(`[Page ${currentPage}] Patient image failed to load:`, patientImageSrc);
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/src/assets/admin/assets/img/profiles/avatar-01.jpg';
+                }}
+                onLoad={() => {
+                  console.log(`[Page ${currentPage}] Patient image loaded successfully:`, patientImageSrc);
+                }}
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  objectFit: 'cover',
+                  objectPosition: 'center top',
+                  border: '2px solid #e9ecef'
+                }}
+              />
+            </Link>
+            <Link to="/admin/profile">{text || 'Unknown Patient'}</Link>
+          </React.Fragment>
+        );
+      },
       sorter: (a: any, b: any) => a.PatientName.length - b.PatientName.length,
     },
     {

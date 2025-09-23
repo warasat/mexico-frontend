@@ -15,6 +15,7 @@ const AdminDoctors = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalDoctors, setTotalDoctors] = useState(0);
   const [pageSize] = useState(10);
+  const [blockingDoctor, setBlockingDoctor] = useState<string | null>(null);
 
   // Fetch doctors data from API
   const fetchDoctors = async (page: number = 1, limit: number = 10) => {
@@ -22,6 +23,20 @@ const AdminDoctors = () => {
       setLoading(true);
       const response = await adminService.getDoctorsList(page, limit);
       if (response.success) {
+        console.log(`[Page ${page}] Doctors fetched successfully:`, response.data);
+        // Log doctor data for debugging
+        response.data.forEach((doctor, index) => {
+          console.log(`[Page ${page}] Doctor ${index + 1}:`, {
+            doctorName: doctor.DoctorName,
+            doctorImage: doctor.image,
+            specialty: doctor.Speciality,
+            doctorId: doctor.id,
+            doctorIdType: typeof doctor.id,
+            isBlocked: doctor.isBlocked,
+            debug: doctor._debug,
+            rawDoctor: doctor
+          });
+        });
         setDoctors(response.data);
         setTotalDoctors(response.pagination.totalDoctors);
         setCurrentPage(response.pagination.currentPage);
@@ -40,6 +55,48 @@ const AdminDoctors = () => {
     fetchDoctors(currentPage, pageSize);
   }, [currentPage, pageSize]);
 
+  // Handle block/unblock doctor
+  const handleBlockUnblock = async (doctorId: string, isBlocked: boolean) => {
+    try {
+      console.log('=== BLOCKING DOCTOR DEBUG ===');
+      console.log('Input parameters:', { doctorId, isBlocked, type: typeof doctorId });
+      console.log('Current doctors state:', doctors);
+      console.log('Doctor being blocked:', doctors.find(d => d.id === doctorId));
+      
+      if (!doctorId || doctorId === 'undefined') {
+        console.error('Invalid doctor ID:', doctorId);
+        console.error('Available doctor IDs:', doctors.map(d => ({ name: d.DoctorName, id: d.id, type: typeof d.id })));
+        alert('Error: Invalid doctor ID. Please refresh the page and try again.');
+        return;
+      }
+      
+      setBlockingDoctor(doctorId);
+      console.log('Calling adminService.blockUnblockDoctor...');
+      const response = await adminService.blockUnblockDoctor(doctorId, isBlocked);
+      console.log('API response:', response);
+      
+      if (response.success) {
+        // Update the doctor in the local state
+        setDoctors(prevDoctors => 
+          prevDoctors.map(doctor => 
+            doctor.id === doctorId 
+              ? { ...doctor, isBlocked: isBlocked }
+              : doctor
+          )
+        );
+        console.log(`Doctor ${doctorId} ${isBlocked ? 'blocked' : 'unblocked'} successfully`);
+      } else {
+        console.error('Failed to update doctor status:', response.message);
+        alert(`Failed to update doctor status: ${response.message}`);
+      }
+    } catch (error) {
+      console.error('Error updating doctor status:', error);
+      alert('Error updating doctor status. Please try again.');
+    } finally {
+      setBlockingDoctor(null);
+    }
+  };
+
   // Transform API data to match table structure
   const data = doctors.map(doctor => {
     // Format the registration date from createdAt
@@ -55,6 +112,14 @@ const AdminDoctors = () => {
       hour12: true
     });
 
+    console.log('Doctor data transformation:', {
+      id: doctor.id,
+      type: typeof doctor.id,
+      doctorName: doctor.DoctorName,
+      isBlocked: doctor.isBlocked,
+      debug: doctor._debug
+    });
+
     return {
       ...doctor,
       Date: formattedDate,
@@ -66,19 +131,62 @@ const AdminDoctors = () => {
     {
       title: "Doctor Name",
       dataIndex: "DoctorName",
-      render: (text: any, record: any) => (
-        <>
-          <Link className="avatar mx-2" to="/admin/profile">
-            <img className="rounded-circle" src={record.image || 'assets/img/doctor-grid/doc1.png'} />
-          </Link>
-          <Link to="/admin/profile">{text}</Link>
-        </>
-      ),
+      render: (text: any, record: any) => {
+        const doctorImageSrc = record.image || '/src/assets/admin/assets/img/profiles/doctor-03.jpg';
+        console.log(`[Page ${currentPage}] Rendering doctor image:`, { 
+          doctorName: text, 
+          imageSrc: doctorImageSrc,
+          hasImage: !!record.image,
+          debug: record._debug
+        });
+        
+        return (
+          <>
+            <Link className="avatar mx-2" to="/admin/profile">
+              <img 
+                className="rounded-circle" 
+                src={doctorImageSrc}
+                alt={text || 'Doctor'}
+                onError={(e) => {
+                  console.log(`[Page ${currentPage}] Doctor image failed to load:`, doctorImageSrc);
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/src/assets/admin/assets/img/profiles/doctor-03.jpg';
+                }}
+                onLoad={() => {
+                  console.log(`[Page ${currentPage}] Doctor image loaded successfully:`, doctorImageSrc);
+                }}
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  objectFit: 'cover',
+                  objectPosition: 'center top',
+                  border: '2px solid #e9ecef'
+                }}
+              />
+            </Link>
+            <Link to="/admin/profile">{text || 'Unknown Doctor'}</Link>
+          </>
+        );
+      },
       sorter: (a: any, b: any) => a.DoctorName.length - b.DoctorName.length,
+    },
+    {
+      title: "Doctor ID",
+      dataIndex: "doctorId",
+      render: (text: any, record: any) => {
+        console.log('Doctor ID render:', { text, record: record.doctorId, debug: record._debug });
+        return (
+          <span className="badge bg-primary-light">
+            {record.doctorId || 'N/A'}
+          </span>
+        );
+      },
+      sorter: (a: any, b: any) => (a.doctorId || '').localeCompare(b.doctorId || ''),
     },
     {
       title: "Speciality",
       dataIndex: "Speciality",
+      render: (value: string) => (value && value.trim().length ? value : 'General Practice'),
       sorter: (a: any, b: any) => a.Speciality.length - b.Speciality.length,
     },
     {
@@ -94,27 +202,39 @@ const AdminDoctors = () => {
     },
 
     {
-      title: "Account Status",
+      title: "Block One",
       dataIndex: "AccountStatus",
       render: (record: any) => {
+        const isBlocked = record.isBlocked || false;
+        const isBlocking = blockingDoctor === record.id;
+
         return (
           <div className="status-toggle">
             <input
               id={`rating${record?.id}`}
               className="check"
               type="checkbox"
-              //  checked={false}
+              checked={isBlocked}
+              onChange={(e) => {
+                const newBlockedStatus = e.target.checked;
+                handleBlockUnblock(record.id, newBlockedStatus);
+              }}
+              disabled={isBlocking}
             />
             <label
               htmlFor={`rating${record?.id}`}
-              className="checktoggle checkbox-bg"
+              className={`checktoggle checkbox-bg ${isBlocked ? 'checked' : ''}`}
+              style={{
+                backgroundColor: isBlocked ? '#28a745' : '#dc3545',
+                opacity: isBlocking ? 0.6 : 1
+              }}
             >
-              checkbox
+              {isBlocking ? '...' : 'checkbox'}
             </label>
           </div>
         );
       },
-      sorter: (a: any, b: any) => a.AccountStatus.length - b.AccountStatus.length,
+      sorter: (a: any, b: any) => (a.isBlocked ? 1 : 0) - (b.isBlocked ? 1 : 0),
     },
   ];
   return (

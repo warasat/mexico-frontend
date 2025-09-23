@@ -37,6 +37,17 @@ const DoctorListDashboard: React.FC = () => {
     try {
       const response = await adminService.getDoctorsList(page, 10);
       if (response.success) {
+        console.log(`[Page ${page}] Doctors fetched successfully:`, response.data);
+        // Log doctor data for debugging
+        response.data.forEach((doctor, index) => {
+          console.log(`[Page ${page}] Doctor ${index + 1}:`, {
+            doctorName: doctor.DoctorName,
+            doctorImage: doctor.image,
+            specialty: doctor.Speciality,
+            debug: doctor._debug
+          });
+        });
+        
         // Deduplicate by id as a safeguard
         const uniqueMap = new Map<string, Doctor>();
         (response.data || []).forEach((d: any) => {
@@ -44,9 +55,9 @@ const DoctorListDashboard: React.FC = () => {
           if (!uniqueMap.has(id)) {
             uniqueMap.set(id, {
               id,
-              DoctorName: d.DoctorName || '',
-              Speciality: d.Speciality || '',
-              image: d.image || '',
+              DoctorName: d.DoctorName || 'Unknown Doctor',
+              Speciality: d.Speciality || 'General Practice',
+              image: d.image || '/src/assets/admin/assets/img/profiles/doctor-03.jpg',
               Date: d.Date || '',
               time: d.time || '',
             });
@@ -133,31 +144,48 @@ const DoctorListDashboard: React.FC = () => {
     {
       title: "Doctor Name",
       dataIndex: "DoctorName",
-      render: (text: any, record: any) => (
-        <React.Fragment key={record.id}>
-          <Link className="avatar mx-2" to="/admin/profile">
-            <img 
-              className="rounded-circle" 
-              src={record.image || 'assets/img/doctor-grid/doc1.png'} 
-              alt={text || 'Doctor'}
-              style={{
-                width: '40px',
-                height: '40px',
-                objectFit: 'cover',
-                objectPosition: 'center top',
-                border: '2px solid #e9ecef'
-              }}
-            />
-          </Link>
-          <Link to="/admin/profile">{text || 'Unknown'}</Link>
-        </React.Fragment>
-      ),
+      render: (text: any, record: any) => {
+        const doctorImageSrc = record.image || '/src/assets/admin/assets/img/profiles/doctor-03.jpg';
+        console.log(`[Page ${currentPage}] Rendering doctor image:`, { 
+          doctorName: text, 
+          imageSrc: doctorImageSrc,
+          hasImage: !!record.image
+        });
+        
+        return (
+          <React.Fragment key={record.id}>
+            <Link className="avatar mx-2" to="/admin/profile">
+              <img 
+                className="rounded-circle" 
+                src={doctorImageSrc}
+                alt={text || 'Doctor'}
+                onError={(e) => {
+                  console.log(`[Page ${currentPage}] Doctor image failed to load:`, doctorImageSrc);
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/src/assets/admin/assets/img/profiles/doctor-03.jpg';
+                }}
+                onLoad={() => {
+                  console.log(`[Page ${currentPage}] Doctor image loaded successfully:`, doctorImageSrc);
+                }}
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  objectFit: 'cover',
+                  objectPosition: 'center top',
+                  border: '2px solid #e9ecef'
+                }}
+              />
+            </Link>
+            <Link to="/admin/profile">{text || 'Unknown Doctor'}</Link>
+          </React.Fragment>
+        );
+      },
       sorter: (a: any, b: any) => a.DoctorName.length - b.DoctorName.length,
     },
     {
       title: "Speciality",
       dataIndex: "Speciality",
-      render: (value: any) => (value && String(value).trim().length ? value : 'N/A'),
+      render: (value: any) => (value && String(value).trim().length ? value : 'General Practice'),
       sorter: (a: any, b: any) => a.Speciality.length - b.Speciality.length,
     },
   ];

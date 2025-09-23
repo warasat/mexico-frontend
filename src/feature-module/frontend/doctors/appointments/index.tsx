@@ -105,7 +105,8 @@ const Appointments = (props: any) => {
 
   // Helper function to render appointment item (doctor's view - shows patient info)
   const renderAppointmentItem = (appointment: Appointment) => {
-    const patientImage = 'assets/img/doctor-grid/doc1.png';
+    // Get patient profile image with fallback
+    const patientImage = appointment.patient?.profileImage || '/src/assets/admin/assets/img/profiles/avatar-01.jpg';
     const appointmentDate = new Date(appointment.date);
     const formattedDate = appointmentDate.toLocaleDateString('en-US', {
       year: 'numeric',
@@ -116,6 +117,13 @@ const Appointments = (props: any) => {
     
     // Get patient name with proper fallback
     const patientName = appointment.patientName || appointment.patient?.fullName || '';
+    
+    console.log('Rendering patient image for appointment:', {
+      appointmentId: appointment.appointmentId,
+      patientName: patientName,
+      patientImage: patientImage,
+      hasProfileImage: !!appointment.patient?.profileImage
+    });
 
     return (
       <div className="appointment-wrap" key={appointment._id}>
@@ -123,9 +131,25 @@ const Appointments = (props: any) => {
           <li>
             <div className="patinet-information">
               <Link to={`/doctor/doctor-upcoming-appointment?id=${appointment._id}`}>
-                <ImageWithBasePath
+                <img
                   src={patientImage}
                   alt="Patient Image"
+                  onError={(e) => {
+                    console.log('Patient image failed to load:', patientImage);
+                    const target = e.target as HTMLImageElement;
+                    target.src = '/src/assets/admin/assets/img/profiles/avatar-01.jpg';
+                  }}
+                  onLoad={() => {
+                    console.log('Patient image loaded successfully:', patientImage);
+                  }}
+                  style={{
+                    width: '60px',
+                    height: '60px',
+                    objectFit: 'cover',
+                    objectPosition: 'center top',
+                    borderRadius: '50%',
+                    border: '2px solid #e9ecef'
+                  }}
                 />
               </Link>
               <div className="patient-info">

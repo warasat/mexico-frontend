@@ -356,7 +356,8 @@ const DoctorDashboard = (props: any) => {
                                 .filter(apt => !apt.isCompleted && !apt.cancelled) // Only show pending/confirmed appointments
                                 .slice(0, 5)
                                 .map((appointment) => {
-                                const patientImage = doctordashboardprofile01;
+                                // Get patient profile image with fallback
+                                const patientImage = appointment.patient?.profileImage || '/src/assets/admin/assets/img/profiles/avatar-01.jpg';
                                 const appointmentDate = new Date(appointment.date);
                                 const formattedDate = appointmentDate.toLocaleDateString('en-US', {
                                   year: 'numeric',
@@ -376,6 +377,22 @@ const DoctorDashboard = (props: any) => {
                                           <img
                                             src={patientImage}
                                             alt="Patient"
+                                            onError={(e) => {
+                                              console.log('Patient image failed to load in dashboard:', patientImage);
+                                              const target = e.target as HTMLImageElement;
+                                              target.src = '/src/assets/admin/assets/img/profiles/avatar-01.jpg';
+                                            }}
+                                            onLoad={() => {
+                                              console.log('Patient image loaded successfully in dashboard:', patientImage);
+                                            }}
+                                            style={{
+                                              width: '40px',
+                                              height: '40px',
+                                              objectFit: 'cover',
+                                              objectPosition: 'center top',
+                                              borderRadius: '50%',
+                                              border: '2px solid #e9ecef'
+                                            }}
                                           />
                                         </Link>
                                         <div className="patient-name-info">
