@@ -269,6 +269,38 @@ const Header: React.FC = () => {
                       <LanguageSwitcher />
                     </li>
 
+                    {/* Fallback Login Button - Always show for non-authenticated users */}
+                    {!isAuthenticated && (
+                      <li className="nav-item dropdown">
+                        <button 
+                          className="btn btn-outline-primary dropdown-toggle" 
+                          type="button" 
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          style={{ 
+                            minWidth: '80px',
+                            fontSize: '14px',
+                            padding: '6px 12px'
+                          }}
+                        >
+                          Login
+                        </button>
+                        <ul className="dropdown-menu">
+                          <li>
+                            <Link className="dropdown-item" to="/pages/patient-signup">
+                              Patient Login
+                            </Link>
+                          </li>
+                          <li>
+                            <Link className="dropdown-item" to="/doctor/doctor-register">
+                              Doctor Login
+                            </Link>
+                          </li>
+                        </ul>
+                      </li>
+                    )}
+
+
                     {/* User dropdown for authenticated users */}
                     {isAuthenticated && (
                       <li className="nav-item dropdown">
