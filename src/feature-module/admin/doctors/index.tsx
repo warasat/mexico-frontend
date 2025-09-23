@@ -3,13 +3,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
 import { itemRender } from "../paginationfunction";
 import SidebarNav from "../sidebar";
-import {
-  doctor_thumb_02,
-  doctor_thumb_03,
-  doctor_thumb_06,
-  doctor_thumb_07,
-  doctor_thumb_09,
-} from "../imagepath";
 import { Link } from "react-router-dom";
 import Header from "../header";
 import { useState, useEffect } from "react";
@@ -38,50 +31,6 @@ const AdminDoctors = () => {
     } catch (err) {
       console.error('Error fetching doctors:', err);
       setError('Failed to fetch doctors');
-      // Fallback to static data if API fails
-      setDoctors([
-        {
-          id: "1",
-          DoctorName: "Dr. Darren Elder",
-          Speciality: "Dental",
-          Date: "11 Jun 2019",
-          time: "4.50 AM",
-          image: doctor_thumb_02,
-        },
-        {
-          id: "2",
-          DoctorName: "Dr. Deborah Angel",
-          Speciality: "Cardiology",
-          Date: "4 Jan 2018",
-          time: "9.40 AM",
-          image: doctor_thumb_03,
-        },
-        {
-          id: "3",
-          DoctorName: "Dr. John Gibbs",
-          Speciality: "Dental",
-          Date: "21 Apr 2018",
-          time: "02.59 PM",
-          image: doctor_thumb_09,
-        },
-        {
-          id: "4",
-          DoctorName: "Dr. Katharine Berthold",
-          Speciality: "Orthopaedics",
-          Date: "23 Mar 2019",
-          time: "02.50 PM",
-          image: doctor_thumb_06,
-        },
-        {
-          id: "5",
-          DoctorName: "Dr. Linda Tobin",
-          Speciality: "Neurology",
-          Date: "14 Dec 2018",
-          time: "01.59 AM",
-          image: doctor_thumb_07,
-        },
-      ]);
-      setTotalDoctors(5);
     } finally {
       setLoading(false);
     }
@@ -120,7 +69,7 @@ const AdminDoctors = () => {
       render: (text: any, record: any) => (
         <>
           <Link className="avatar mx-2" to="/admin/profile">
-            <img className="rounded-circle" src={record.image} />
+            <img className="rounded-circle" src={record.image || 'assets/img/doctor-grid/doc1.png'} />
           </Link>
           <Link to="/admin/profile">{text}</Link>
         </>

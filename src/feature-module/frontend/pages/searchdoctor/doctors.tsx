@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import publicDoctorApi from "../../../../core/services/publicDoctorApi";
 import { useAuth } from "../../../../core/context/AuthContext";
 import SocketService from "../../../../core/services/socketService";
+import doctorProfileApi from "../../../../core/services/doctorProfileApi";
 
 
 type DoctorCard = {
@@ -48,6 +49,7 @@ const Doctors = () => {
   };
 
   const [allDoctors, setAllDoctors] = useState<DoctorCard[]>([]);
+  const [nextSlotByDoctorId, setNextSlotByDoctorId] = useState<Record<string, string | null>>({});
 
   useEffect(() => {
     (async () => {
@@ -70,11 +72,47 @@ const Doctors = () => {
           servicesOffered: (d as any).servicesOffered || [],
         }));
         setAllDoctors(cards);
+
+        // Fetch weekly availability for each doctor and compute next slot
+        const results: Record<string, string | null> = {};
+        await Promise.all(cards.map(async (doc) => {
+          try {
+            const avail = await doctorProfileApi.getWeeklyAvailability(doc.id);
+            const next = computeNextAvailableSlot(avail.weeklyAvailability);
+            results[doc.id] = next;
+          } catch {
+            results[doc.id] = null;
+          }
+        }));
+        setNextSlotByDoctorId(results);
       } catch {
         setAllDoctors([]);
       }
     })();
   }, []);
+
+  function computeNextAvailableSlot(weekly: any): string | null {
+    if (!weekly) return null;
+    const order = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+    const now = new Date();
+    for (let add = 0; add < 14; add++) { // look ahead 2 weeks
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + add);
+      const dayName = order[d.getDay()];
+      const slots = [
+        ...(weekly[dayName]?.morning || []),
+        ...(weekly[dayName]?.afternoon || []),
+        ...(weekly[dayName]?.evening || []),
+      ];
+      const first = slots.find(Boolean);
+      if (first) {
+        const dd = d.toLocaleDateString(undefined, { day: '2-digit' });
+        const mmm = d.toLocaleDateString(undefined, { month: 'short' });
+        const dow = d.toLocaleDateString(undefined, { weekday: 'short' });
+        return `${first} - ${dd} ${mmm}, ${dow}`;
+      }
+    }
+    return null;
+  }
 
   // Listen for doctor availability updates
   useEffect(() => {
@@ -243,7 +281,8 @@ const Doctors = () => {
                           <i className="isax isax-location me-2" />
                               {doctor.location}
                           <Link
-                            to="#"
+                            to={{ pathname: "/patient/doctor-profile", hash: "#doc_locations" }}
+                            state={{ selectedDoctor: doctor, activeTab: 'location' }}
                             className="text-primary text-decoration-underline ms-2"
                           >
                             Get Direction
@@ -294,39 +333,37 @@ const Doctors = () => {
                     <h6 className="mb-0 text-dark">{doctor.available ? 'Next Available' : 'Status'}</h6>
                     <p className="mb-0 text-muted">
                       {doctor.available ? (
-                        <>
-                          Next available at <br />
-                          10:00 AM - 15 Oct, Tue
-                        </>
+                        nextSlotByDoctorId[doctor.id]
+                          ? <>Next available at <br />{nextSlotByDoctorId[doctor.id]}</>
+                          : <>Doctor have no free slot</>
                       ) : (
-                        <>
-                          Currently <br />
-                          Unavailable
-                        </>
+                        <>Currently <br />Unavailable</>
                       )}
                     </p>
                   </div>
-                  {doctor.available ? (
-                    <Link
-                      to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
-                      state={isAuthenticated && userType === 'patient' ? { 
-                        selectedDoctor: doctor
-                      } : undefined}
-                      className="btn btn-md d-inline-flex align-items-center rounded-pill btn-primary-gradient"
-                    >
-                      <i className="isax isax-calendar-1 me-2" />
-                      Book Appointment
-                    </Link>
-                  ) : (
-                    <button
-                      className="btn btn-md d-inline-flex align-items-center rounded-pill btn-secondary"
-                      disabled
-                      title="Doctor is currently unavailable"
-                    >
-                      <i className="isax isax-calendar-1 me-2" />
-                      Unavailable
-                    </button>
-                  )}
+                  <div>
+                    {doctor.available ? (
+                      <Link
+                        to={isAuthenticated && userType === 'patient' ? "/booking" : "/patient/login"}
+                        state={isAuthenticated && userType === 'patient' ? { 
+                          selectedDoctor: doctor
+                        } : undefined}
+                        className="btn btn-md d-inline-flex align-items-center rounded-pill btn-primary-gradient"
+                      >
+                        <i className="isax isax-calendar-1 me-2" />
+                        Book Appointment
+                      </Link>
+                    ) : (
+                      <button
+                        className="btn btn-md d-inline-flex align-items-center rounded-pill btn-secondary"
+                        disabled
+                        title="Doctor is currently unavailable"
+                      >
+                        <i className="isax isax-calendar-1 me-2" />
+                        Unavailable
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

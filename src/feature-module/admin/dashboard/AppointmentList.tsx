@@ -85,7 +85,7 @@ const AppointmentList: React.FC = () => {
             <img 
               className="rounded-circle" 
               src={record.DoctorProfileImage}
-              alt={text}
+              alt=""
               style={{
                 width: '40px',
                 height: '40px',
@@ -95,7 +95,7 @@ const AppointmentList: React.FC = () => {
               }}
             />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          <span>{text}</span>
         </React.Fragment>
       ),
       sorter: (a: AppointmentData, b: AppointmentData) => a.DoctorName.length - b.DoctorName.length,
@@ -103,6 +103,7 @@ const AppointmentList: React.FC = () => {
     {
       title: "Speciality",
       dataIndex: "Speciality",
+      render: (value: string) => (value && value.trim().length ? value : 'N/A'),
       sorter: (a: AppointmentData, b: AppointmentData) => a.Speciality.length - b.Speciality.length,
     },
     {
@@ -114,7 +115,7 @@ const AppointmentList: React.FC = () => {
             <img 
               className="rounded-circle" 
               src={record.PatientProfileImage}
-              alt={text}
+              alt=""
               style={{
                 width: '40px',
                 height: '40px',
@@ -124,7 +125,7 @@ const AppointmentList: React.FC = () => {
               }}
             />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          <span>{text}</span>
         </React.Fragment>
       ),
       sorter: (a: AppointmentData, b: AppointmentData) => a.PatientName.length - b.PatientName.length,

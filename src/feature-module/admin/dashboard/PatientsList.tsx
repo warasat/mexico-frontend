@@ -34,7 +34,24 @@ const PatientsListDashboard: React.FC = () => {
     try {
       const response = await adminService.getPatientsList(page, 10);
       if (response.success) {
-        setPatients(response.data);
+        // Deduplicate by id on the client as a safeguard
+        const uniqueMap = new Map<string, Patient>();
+        (response.data || []).forEach((p: any) => {
+          const id = String(p.id);
+          if (!uniqueMap.has(id)) {
+            uniqueMap.set(id, {
+              id,
+              PatientName: p.PatientName || '',
+              Phone: p.Phone || '',
+              profileImage: p.profileImage || '',
+              LastVisit: p.LastVisit || '',
+              LastVisitTime: p.LastVisitTime || '',
+              Date: p.Date || '',
+              time: p.time || '',
+            });
+          }
+        });
+        setPatients(Array.from(uniqueMap.values()));
         setCurrentPage(response.pagination.currentPage);
         setTotalPages(response.pagination.totalPages);
         setTotalPatients(response.pagination.totalPatients);
@@ -125,8 +142,8 @@ const PatientsListDashboard: React.FC = () => {
           <Link className="avatar mx-2" to="/admin/profile">
             <img 
               className="rounded-circle" 
-              src={record.profileImage} 
-              alt={text}
+              src={record.profileImage || 'assets/img/doctor-grid/doc1.png'} 
+              alt={text || 'Patient'}
               style={{
                 width: '40px',
                 height: '40px',
@@ -136,7 +153,7 @@ const PatientsListDashboard: React.FC = () => {
               }}
             />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          <Link to="/admin/profile">{text || 'Unknown'}</Link>
         </React.Fragment>
       ),
       sorter: (a: any, b: any) => a.PatientName.length - b.PatientName.length,

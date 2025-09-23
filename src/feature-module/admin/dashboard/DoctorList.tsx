@@ -37,7 +37,22 @@ const DoctorListDashboard: React.FC = () => {
     try {
       const response = await adminService.getDoctorsList(page, 10);
       if (response.success) {
-        setDoctors(response.data);
+        // Deduplicate by id as a safeguard
+        const uniqueMap = new Map<string, Doctor>();
+        (response.data || []).forEach((d: any) => {
+          const id = String(d.id);
+          if (!uniqueMap.has(id)) {
+            uniqueMap.set(id, {
+              id,
+              DoctorName: d.DoctorName || '',
+              Speciality: d.Speciality || '',
+              image: d.image || '',
+              Date: d.Date || '',
+              time: d.time || '',
+            });
+          }
+        });
+        setDoctors(Array.from(uniqueMap.values()));
         setCurrentPage(response.pagination.currentPage);
         setTotalPages(response.pagination.totalPages);
         setTotalDoctors(response.pagination.totalDoctors);
@@ -123,8 +138,8 @@ const DoctorListDashboard: React.FC = () => {
           <Link className="avatar mx-2" to="/admin/profile">
             <img 
               className="rounded-circle" 
-              src={record.image} 
-              alt={text}
+              src={record.image || 'assets/img/doctor-grid/doc1.png'} 
+              alt={text || 'Doctor'}
               style={{
                 width: '40px',
                 height: '40px',
@@ -134,7 +149,7 @@ const DoctorListDashboard: React.FC = () => {
               }}
             />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          <Link to="/admin/profile">{text || 'Unknown'}</Link>
         </React.Fragment>
       ),
       sorter: (a: any, b: any) => a.DoctorName.length - b.DoctorName.length,
@@ -142,6 +157,7 @@ const DoctorListDashboard: React.FC = () => {
     {
       title: "Speciality",
       dataIndex: "Speciality",
+      render: (value: any) => (value && String(value).trim().length ? value : 'N/A'),
       sorter: (a: any, b: any) => a.Speciality.length - b.Speciality.length,
     },
   ];

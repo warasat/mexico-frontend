@@ -32,7 +32,7 @@ const Content = ({ doctor: doctorProp }: Props) => {
             <ul className="nav nav-tabs nav-tabs-bottom nav-justified">
               <li className="nav-item">
                 <Link
-                  className="nav-link active"
+                  className={`nav-link ${typeof window !== 'undefined' && window.location.hash !== '#doc_locations' ? 'active' : ''}`}
                   to="#doc_overview"
                   data-bs-toggle="tab">
                   Overview
@@ -40,7 +40,7 @@ const Content = ({ doctor: doctorProp }: Props) => {
               </li>
               <li className="nav-item">
                 <Link
-                  className="nav-link"
+                  className={`nav-link ${typeof window !== 'undefined' && window.location.hash === '#doc_locations' ? 'active' : ''}`}
                   to="#doc_locations"
                   data-bs-toggle="tab">
                   Locations
@@ -55,7 +55,7 @@ const Content = ({ doctor: doctorProp }: Props) => {
             <div
               role="tabpanel"
               id="doc_overview"
-              className="tab-pane fade show active">
+              className={`tab-pane fade ${typeof window !== 'undefined' && window.location.hash !== '#doc_locations' ? 'show active' : ''}`}>
               <div className="row">
                 <div className="col-md-12 col-lg-9">
                   {/* About Details */}
@@ -129,7 +129,7 @@ const Content = ({ doctor: doctorProp }: Props) => {
             </div>
             {/* /Overview Content */}
             {/* Locations Content */}
-            <div role="tabpanel" id="doc_locations" className="tab-pane fade">
+            <div role="tabpanel" id="doc_locations" className={`tab-pane fade ${typeof window !== 'undefined' && window.location.hash === '#doc_locations' ? 'show active' : ''}`}>
               {/* Map Section */}
               <div className="map-section">
                 <div className="row">

@@ -11,6 +11,7 @@ import publicDoctorApi from "../../../../core/services/publicDoctorApi";
 const DoctorProfile  = (props: any) => {
   const location = useLocation();
   const selectedDoctor = (location.state as any)?.selectedDoctor || null;
+  const activeTabFromState: string | null = (location.state as any)?.activeTab || null;
   const doctorIdFromState: string | null = selectedDoctor?.id || null;
   const [doctor, setDoctor] = useState<any | null>(selectedDoctor || null);
   const [reviews, setReviews] = useState<any[]>([]);
@@ -26,6 +27,24 @@ const DoctorProfile  = (props: any) => {
       } catch {}
     })();
   }, [doctorIdFromState]);
+
+  // If navigated with state.activeTab === 'location', switch to the Locations tab after render
+  useEffect(() => {
+    if (activeTabFromState === 'location') {
+      const tabTrigger = document.querySelector('a[href="#doc_locations"]') as HTMLAnchorElement | null;
+      if (tabTrigger) {
+        // Bootstrap tab trigger
+        (tabTrigger as any).click?.();
+        // Also adjust URL hash for consistency
+        if (window.location.hash !== '#doc_locations') {
+          window.location.hash = '#doc_locations';
+        }
+      }
+    } else if (window.location.hash === '#doc_locations') {
+      const tabTrigger = document.querySelector('a[href="#doc_locations"]') as HTMLAnchorElement | null;
+      (tabTrigger as any)?.click?.();
+    }
+  }, [activeTabFromState]);
 
   // Normalize to the UI shape expected by Pagecontent (keep existing visual fields)
   const uiDoctor = useMemo(() => {

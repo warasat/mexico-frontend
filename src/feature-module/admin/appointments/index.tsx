@@ -87,7 +87,7 @@ const AdminAppointments = () => {
             <img 
               className="rounded-circle" 
               src={record.DoctorProfileImage}
-              alt={text}
+              alt=""
               style={{
                 width: '40px',
                 height: '40px',
@@ -97,9 +97,7 @@ const AdminAppointments = () => {
               }}
             />
           </Link>
-          <Link to="/admin/profile" className="text-decoration-none">
-            {text}
-          </Link>
+          <span className="text-decoration-none">{text}</span>
         </React.Fragment>
       ),
       sorter: (a: AppointmentData, b: AppointmentData) => a.DoctorName.length - b.DoctorName.length,
@@ -118,7 +116,7 @@ const AdminAppointments = () => {
             <img 
               className="rounded-circle" 
               src={record.PatientProfileImage}
-              alt={text}
+              alt=""
               style={{
                 width: '40px',
                 height: '40px',
@@ -128,7 +126,7 @@ const AdminAppointments = () => {
               }}
             />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          <span>{text}</span>
         </React.Fragment>
       ),
       sorter: (a: AppointmentData, b: AppointmentData) => a.PatientName.length - b.PatientName.length,
