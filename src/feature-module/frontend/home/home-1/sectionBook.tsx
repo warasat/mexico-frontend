@@ -1,8 +1,10 @@
 import React from 'react'
 import ImageWithBasePath from '../../../../components/imageWithBasePath'
 import { Link } from 'react-router-dom'
+import { useGlobalTranslation } from '../../../../hooks/useGlobalTranslation'
 
 const SectionBook: React.FC = () => {
+    const { t } = useGlobalTranslation();
     return (
         <>
             {/* Bookus Section */}
@@ -41,19 +43,16 @@ const SectionBook: React.FC = () => {
                                 className="section-header sec-header-one mb-2 aos"
                                 data-aos="fade-up"
                             >
-                                <span className="badge badge-primary">Why Book With Us</span>
-                                <h2 className="text-white mb-3">
-                                    We are committed to understanding your{" "}
-                                    <span className="text-primary-gradient">
-                                        unique needs and delivering care.
+                                <span className="badge badge-primary" data-key="home.whyBook.badge">{t("home.whyBook.badge")}</span>
+                                <h2 className="text-white mb-3" data-key="home.whyBook.title">
+                                    {t("home.whyBook.title")}{" "}
+                                    <span className="text-primary-gradient" data-key="home.whyBook.subtitle">
+                                        {t("home.whyBook.subtitle")}
                                     </span>
                                 </h2>
                             </div>
-                            <p className="text-light mb-4">
-                                As a trusted healthAs a trusted healthcare provider in our
-                                community, we are passionate about promoting health and wellness
-                                beyond the clinic. We actively engage in community outreach
-                                programs, health fairs, and educational workshop.
+                            <p className="text-light mb-4" data-key="home.whyBook.description">
+                                {t("home.whyBook.description")}
                             </p>
                             <div className="faq-info aos" data-aos="fade-up">
                                 <div className="accordion" id="faq-details">
@@ -68,7 +67,7 @@ const SectionBook: React.FC = () => {
                                                 aria-expanded="true"
                                                 aria-controls="collapseOne"
                                             >
-                                                01 . Our Vision
+                                                <span data-key="home.whyBook.vision.title">{t("home.whyBook.vision.title")}</span>
                                             </Link>
                                         </h2>
                                         <div
@@ -79,10 +78,8 @@ const SectionBook: React.FC = () => {
                                         >
                                             <div className="accordion-body">
                                                 <div className="accordion-content">
-                                                    <p>
-                                                        We envision a community where everyone has access to
-                                                        high-quality healthcare and the resources they need to
-                                                        lead healthy, fulfilling lives.
+                                                    <p data-key="home.whyBook.vision.description">
+                                                        {t("home.whyBook.vision.description")}
                                                     </p>
                                                 </div>
                                             </div>
@@ -99,7 +96,7 @@ const SectionBook: React.FC = () => {
                                                 data-bs-target="#collapseTwo"
                                                 aria-controls="collapseTwo"
                                             >
-                                                02 . Our Mission
+                                                <span data-key="home.whyBook.mission.title">{t("home.whyBook.mission.title")}</span>
                                             </Link>
                                         </h2>
                                         <div
@@ -110,10 +107,8 @@ const SectionBook: React.FC = () => {
                                         >
                                             <div className="accordion-body">
                                                 <div className="accordion-content">
-                                                    <p>
-                                                        We envision a community where everyone has access to
-                                                        high-quality healthcare and the resources they need to
-                                                        lead healthy, fulfilling lives.
+                                                    <p data-key="home.whyBook.mission.description">
+                                                        {t("home.whyBook.mission.description")}
                                                     </p>
                                                 </div>
                                             </div>
@@ -132,10 +127,9 @@ const SectionBook: React.FC = () => {
                                         <i className="isax isax-search-normal5" />
                                     </div>
                                     <div className="book-info">
-                                        <h6 className="text-white mb-2">Search For Doctors</h6>
-                                        <p className="fs-14 text-light">
-                                            Search for a doctor based on specialization, location, or
-                                            availability for your Treatements
+                                        <h6 className="text-white mb-2" data-key="home.whyBook.steps.search.title">{t("home.whyBook.steps.search.title")}</h6>
+                                        <p className="fs-14 text-light" data-key="home.whyBook.steps.search.description">
+                                            {t("home.whyBook.steps.search.description")}
                                         </p>
                                     </div>
                                     <div className="way-icon">
@@ -149,10 +143,9 @@ const SectionBook: React.FC = () => {
                                         <i className="isax isax-security-user5" />
                                     </div>
                                     <div className="book-info">
-                                        <h6 className="text-white mb-2">Check Doctor Profile</h6>
-                                        <p className="fs-14 text-light">
-                                            Explore detailed doctor profiles on our platform to make
-                                            informed healthcare decisions.
+                                        <h6 className="text-white mb-2" data-key="home.whyBook.steps.profile.title">{t("home.whyBook.steps.profile.title")}</h6>
+                                        <p className="fs-14 text-light" data-key="home.whyBook.steps.profile.description">
+                                            {t("home.whyBook.steps.profile.description")}
                                         </p>
                                     </div>
                                     <div className="way-icon">
@@ -166,10 +159,9 @@ const SectionBook: React.FC = () => {
                                         <i className="isax isax-calendar5" />
                                     </div>
                                     <div className="book-info">
-                                        <h6 className="text-white mb-2">Schedule Appointment</h6>
-                                        <p className="fs-14 text-light">
-                                            After choose your preferred doctor, select a convenient time
-                                            slot, &amp; confirm your appointment.
+                                        <h6 className="text-white mb-2" data-key="home.whyBook.steps.schedule.title">{t("home.whyBook.steps.schedule.title")}</h6>
+                                        <p className="fs-14 text-light" data-key="home.whyBook.steps.schedule.description">
+                                            {t("home.whyBook.steps.schedule.description")}
                                         </p>
                                     </div>
                                     <div className="way-icon">
@@ -183,10 +175,9 @@ const SectionBook: React.FC = () => {
                                         <i className="isax isax-blend5" />
                                     </div>
                                     <div className="book-info">
-                                        <h6 className="text-white mb-2">Get Your Solution</h6>
-                                        <p className="fs-14 text-light">
-                                            Discuss your health concerns with the doctor and receive the
-                                            personalized advice &amp; with solution.
+                                        <h6 className="text-white mb-2" data-key="home.whyBook.steps.solution.title">{t("home.whyBook.steps.solution.title")}</h6>
+                                        <p className="fs-14 text-light" data-key="home.whyBook.steps.solution.description">
+                                            {t("home.whyBook.steps.solution.description")}
                                         </p>
                                     </div>
                                 </div>

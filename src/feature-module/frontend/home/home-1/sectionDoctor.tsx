@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import { useAuth } from '../../../../core/context/AuthContext';
 import SocketService from '../../../../core/services/socketService';
 import publicDoctorApi, { type PublicDoctor } from '../../../../core/services/publicDoctorApi';
+import { useGlobalTranslation } from '../../../../hooks/useGlobalTranslation';
 
 interface Doctor {
     id: number;
@@ -18,6 +19,7 @@ const SectionDoctor: React.FC = () => {
     const { authState } = useAuth();
     const { isAuthenticated, userType } = authState;
     const navigate = useNavigate();
+    const { t } = useGlobalTranslation();
     const [doctorAvailability, setDoctorAvailability] = useState<{[key: string]: 'available' | 'unavailable'}>({});
     const [doctors, setDoctors] = useState<Doctor[]>([]);
 
@@ -215,8 +217,8 @@ const SectionDoctor: React.FC = () => {
                         className="section-header sec-header-one text-center aos"
                         data-aos="fade-up"
                     >
-                        <span className="badge badge-primary">Featured Doctors</span>
-                        <h2>Our Highlighted Doctors</h2>
+                        <span className="badge badge-primary" data-key="home.doctors.badge">{t("home.doctors.badge")}</span>
+                        <h2 data-key="home.doctors.title">{t("home.doctors.title")}</h2>
                     </div>
                     <div className="doctors-slider slick-margins slick-arrow-center aos" data-aos="fade-up">
                         <Slider {...Doctoroptions}>
@@ -243,7 +245,7 @@ const SectionDoctor: React.FC = () => {
                                             </Link>
                                             <span className={`badge ${getDoctorAvailability(doctor) === 'available' ? 'bg-success-light' : 'bg-danger-light'} d-inline-flex align-items-center`}>
                                                 <i className="fa-solid fa-circle fs-5 me-1" />
-                                                {getDoctorAvailability(doctor) === 'available' ? 'Available' : 'Unavailable'}
+                                                {getDoctorAvailability(doctor) === 'available' ? t("common.available") : t("common.unavailable")}
                                             </span>
                                         </div>
                                         <div className="p-3 pt-0" style={{flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
@@ -266,7 +268,7 @@ const SectionDoctor: React.FC = () => {
                                                         getDoctorAvailability(doctor) === 'available' ? 'btn-dark' : 'btn-secondary'
                                                     }`}
                                                 >
-                                                    {getDoctorAvailability(doctor) === 'available' ? 'Book Now' : 'Unavailable'}
+                                                    {getDoctorAvailability(doctor) === 'available' ? t("common.bookNow") : t("common.unavailable")}
                                                 </button>
                                             </div>
                                         </div>

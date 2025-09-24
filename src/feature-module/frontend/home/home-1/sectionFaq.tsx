@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { useGlobalTranslation } from '../../../../hooks/useGlobalTranslation';
 const SectionFaq: React.FC = () => {
+    const { t } = useGlobalTranslation();
     return (
         <div>
             <section className="faq-section-one">
@@ -9,8 +11,8 @@ const SectionFaq: React.FC = () => {
                         className="section-header sec-header-one text-center aos"
                         data-aos="fade-up"
                     >
-                        <span className="badge badge-primary">FAQ’S</span>
-                        <h2>Your Questions are Answered</h2>
+                        <span className="badge badge-primary" data-key="home.faq.badge">{t("home.faq.badge")}</span>
+                        <h2 data-key="home.faq.title">{t("home.faq.title")}</h2>
                     </div>
                     <div className="row">
                         <div className="col-md-10 mx-auto">
@@ -27,7 +29,7 @@ const SectionFaq: React.FC = () => {
                                                 aria-expanded="true"
                                                 aria-controls="collapseOne"
                                             >
-                                                How do I book an appointment with a doctor?
+                                                <span data-key="home.faq.question1">{t("home.faq.question1")}</span>
                                             </Link>
                                         </h2>
                                         <div
@@ -38,10 +40,8 @@ const SectionFaq: React.FC = () => {
                                         >
                                             <div className="accordion-body">
                                                 <div className="accordion-content">
-                                                    <p>
-                                                        Yes, simply visit our website and log in or create an
-                                                        account. Search for a doctor based on specialization,
-                                                        location, or availability &amp; confirm your booking.
+                                                    <p data-key="home.faq.answer1">
+                                                        {t("home.faq.answer1")}
                                                     </p>
                                                 </div>
                                             </div>
@@ -59,7 +59,7 @@ const SectionFaq: React.FC = () => {
                                                 aria-expanded="false"
                                                 aria-controls="collapseTwo"
                                             >
-                                                Can I request a specific doctor when booking my appointment?
+                                                <span data-key="home.faq.question2">{t("home.faq.question2")}</span>
                                             </Link>
                                         </h2>
                                         <div
@@ -70,10 +70,8 @@ const SectionFaq: React.FC = () => {
                                         >
                                             <div className="accordion-body">
                                                 <div className="accordion-content">
-                                                    <p>
-                                                        Yes, you can usually request a specific doctor when
-                                                        booking your appointment, though availability may vary
-                                                        based on their schedule.
+                                                    <p data-key="home.faq.answer2">
+                                                        {t("home.faq.answer2")}
                                                     </p>
                                                 </div>
                                             </div>
@@ -91,8 +89,7 @@ const SectionFaq: React.FC = () => {
                                                 aria-expanded="false"
                                                 aria-controls="collapseThree"
                                             >
-                                                What should I do if I need to cancel or reschedule my
-                                                appointment?
+                                                <span data-key="home.faq.question3">{t("home.faq.question3")}</span>
                                             </Link>
                                         </h2>
                                         <div
@@ -103,10 +100,8 @@ const SectionFaq: React.FC = () => {
                                         >
                                             <div className="accordion-body">
                                                 <div className="accordion-content">
-                                                    <p>
-                                                        If you need to cancel or reschedule your appointment,
-                                                        contact the doctor as soon as possible to inform them and
-                                                        to reschedule for another available time slot.
+                                                    <p data-key="home.faq.answer3">
+                                                        {t("home.faq.answer3")}
                                                     </p>
                                                 </div>
                                             </div>

@@ -3,10 +3,12 @@ import Slider from "react-slick";
 import ImageWithBasePath from '../../../../components/imageWithBasePath';
 import { useNavigate } from 'react-router-dom';
 import publicDoctorApi, { type PublicDoctor } from '../../../../core/services/publicDoctorApi';
+import { useGlobalTranslation } from '../../../../hooks/useGlobalTranslation';
 
 const SectionSpeciality: React.FC = () => {
     const navigate = useNavigate();
     const [allDoctors, setAllDoctors] = useState<PublicDoctor[]>([]);
+    const { t } = useGlobalTranslation();
 
     interface ArrowProps {
         onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -139,8 +141,8 @@ const SectionSpeciality: React.FC = () => {
                         className="section-header sec-header-one text-center aos"
                         data-aos="fade-up"
                     >
-                        <span className="badge badge-primary">Top Specialties</span>
-                        <h2>Highlighting the Care &amp; Support</h2>
+                        <span className="badge badge-primary" data-key="home.specialties.badge">{t("home.specialties.badge")}</span>
+                        <h2 data-key="home.specialties.title">{t("home.specialties.title")}</h2>
                     </div>
                     <div className="spciality-slider slick-margins slick-arrow-center aos" data-aos="fade-up">
                         <Slider {...SpecialitySlider}>
@@ -155,9 +157,9 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Dentist</span>
+                                    <span style={{ cursor: 'pointer' }} data-key="specialties.dentist">{t("specialties.dentist")}</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Dentist")} Doctors</p>
+                                <p className="mb-0" data-key="home.specialties.doctorCount">{t("home.specialties.doctorCount", { count: getDoctorCount("Dentist") })}</p>
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Cardiologist")}>
                                 <div className="spaciality-img">
@@ -170,9 +172,9 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Cardiologist</span>
+                                    <span style={{ cursor: 'pointer' }} data-key="specialties.cardiologist">{t("specialties.cardiologist")}</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Cardiologist")} Doctors</p>
+                                <p className="mb-0" data-key="home.specialties.doctorCount">{t("home.specialties.doctorCount", { count: getDoctorCount("Cardiologist") })}</p>
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Dermatologist")}>
                                 <div className="spaciality-img">
@@ -185,9 +187,9 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Dermatologist</span>
+                                    <span style={{ cursor: 'pointer' }} data-key="specialties.dermatologist">{t("specialties.dermatologist")}</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Dermatologist")} Doctors</p>
+                                <p className="mb-0" data-key="home.specialties.doctorCount">{t("home.specialties.doctorCount", { count: getDoctorCount("Dermatologist") })}</p>
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Pediatrician")}>
                                 <div className="spaciality-img">
@@ -200,9 +202,9 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Pediatrician</span>
+                                    <span style={{ cursor: 'pointer' }} data-key="specialties.pediatrician">{t("specialties.pediatrician")}</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Pediatrician")} Doctors</p>
+                                <p className="mb-0" data-key="home.specialties.doctorCount">{t("home.specialties.doctorCount", { count: getDoctorCount("Pediatrician") })}</p>
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Orthopedic Surgeon")}>
                                 <div className="spaciality-img">
@@ -215,9 +217,9 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Orthopedic Surgeon</span>
+                                    <span style={{ cursor: 'pointer' }} data-key="specialties.orthopedicSurgeon">{t("specialties.orthopedicSurgeon")}</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Orthopedic Surgeon")} Doctors</p>
+                                <p className="mb-0" data-key="home.specialties.doctorCount">{t("home.specialties.doctorCount", { count: getDoctorCount("Orthopedic Surgeon") })}</p>
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Psychologist")}>
                                 <div className="spaciality-img">
@@ -230,9 +232,9 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Psychologist</span>
+                                    <span style={{ cursor: 'pointer' }} data-key="specialties.psychologist">{t("specialties.psychologist")}</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Psychologist")} Doctors</p>
+                                <p className="mb-0" data-key="home.specialties.doctorCount">{t("home.specialties.doctorCount", { count: getDoctorCount("Psychologist") })}</p>
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Psychiatrist")}>
                                 <div className="spaciality-img">
@@ -245,9 +247,9 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Psychiatrist</span>
+                                    <span style={{ cursor: 'pointer' }} data-key="specialties.psychiatrist">{t("specialties.psychiatrist")}</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Psychiatrist")} Doctors</p>
+                                <p className="mb-0" data-key="home.specialties.doctorCount">{t("home.specialties.doctorCount", { count: getDoctorCount("Psychiatrist") })}</p>
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Primary Care Physician")}>
                                 <div className="spaciality-img">
@@ -260,9 +262,9 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Primary Care Physician</span>
+                                    <span style={{ cursor: 'pointer' }} data-key="specialties.primaryCare">{t("specialties.primaryCare")}</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Primary Care Physician")} Doctors</p>
+                                <p className="mb-0" data-key="home.specialties.doctorCount">{t("home.specialties.doctorCount", { count: getDoctorCount("Primary Care Physician") })}</p>
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Chiropractor")}>
                                 <div className="spaciality-img">
@@ -275,9 +277,9 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Chiropractor</span>
+                                    <span style={{ cursor: 'pointer' }} data-key="specialties.chiropractor">{t("specialties.chiropractor")}</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Chiropractor")} Doctors</p>
+                                <p className="mb-0" data-key="home.specialties.doctorCount">{t("home.specialties.doctorCount", { count: getDoctorCount("Chiropractor") })}</p>
                             </div>
                             <div className="spaciality-item" onClick={() => handleSpecialtyClick("Optometrist")}>
                                 <div className="spaciality-img">
@@ -290,9 +292,9 @@ const SectionSpeciality: React.FC = () => {
                                     </span>
                                 </div>
                                 <h6>
-                                    <span style={{ cursor: 'pointer' }}>Optometrist</span>
+                                    <span style={{ cursor: 'pointer' }} data-key="specialties.optometrist">{t("specialties.optometrist")}</span>
                                 </h6>
-                                <p className="mb-0">{getDoctorCount("Optometrist")} Doctors</p>
+                                <p className="mb-0" data-key="home.specialties.doctorCount">{t("home.specialties.doctorCount", { count: getDoctorCount("Optometrist") })}</p>
                             </div>
                         </Slider>
 

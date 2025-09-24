@@ -8,6 +8,7 @@ import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { appointmentService, type Appointment } from "../../../../core/services/appointmentService";
 import { useAuth } from "../../../../core/context/AuthContext";
 import SocketService from "../../../../core/services/socketService";
+import { useGlobalTranslation } from "../../../../hooks/useGlobalTranslation";
 
 const PatientAppointments = (props: any) => {
   const { authState } = useAuth();
@@ -15,6 +16,7 @@ const PatientAppointments = (props: any) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useGlobalTranslation();
 
   // Fetch appointments on component mount
   useEffect(() => {
@@ -131,7 +133,7 @@ const PatientAppointments = (props: any) => {
             </p>
             <ul className="d-flex apponitment-types">
               <li>{appointment.service}</li>
-              <li>{appointment.mode === 'video' ? 'Video Call' : 'Clinic Visit'}</li>
+              <li>{appointment.mode === 'video' ? t("patient.appointments.videoCall") : t("patient.appointments.clinicVisit")}</li>
             </ul>
           </li>
           <li className="mail-info-patient">
@@ -157,7 +159,7 @@ const PatientAppointments = (props: any) => {
                   window.open('https://meet.google.com/landing', '_blank');
                 }}
               >
-                Google Meet
+                {t("patient.appointments.googleMeet")}
                 <i className="fa-brands fa-google me-1" />
               </Link>
             ) : (
@@ -170,7 +172,7 @@ const PatientAppointments = (props: any) => {
                   alert('Clinic visit details will be implemented here');
                 }}
               >
-                Clinic Visit
+                {t("patient.appointments.clinicVisit")}
                 <i className="fa-solid fa-hospital me-1" />
               </Link>
             )}
@@ -203,7 +205,7 @@ const PatientAppointments = (props: any) => {
                 <div className="spinner-border text-primary" role="status">
                   <span className="visually-hidden">Loading...</span>
                 </div>
-                <p className="mt-3">Loading appointments...</p>
+                <p className="mt-3" data-key="patient.appointments.loading">{t("patient.appointments.loading")}</p>
               </div>
             </div>
           </div>
@@ -222,15 +224,16 @@ const PatientAppointments = (props: any) => {
             <div className="row">
               <div className="col-12 text-center py-5">
                 <div className="alert alert-danger" role="alert">
-                  <h4 className="alert-heading">Error!</h4>
+                  <h4 className="alert-heading" data-key="common.error">{t("common.error")}</h4>
                   <p>{error}</p>
                   <hr />
                   <p className="mb-0">
                     <button 
                       className="btn btn-primary" 
                       onClick={() => window.location.reload()}
+                      data-key="common.tryAgain"
                     >
-                      Try Again
+                      {t("common.tryAgain")}
                     </button>
                   </p>
                 </div>
@@ -252,12 +255,12 @@ const PatientAppointments = (props: any) => {
             <div className="row">
               <div className="col-12 text-center py-5">
                 <div className="alert alert-info" role="alert">
-                  <h4 className="alert-heading">No Appointments Found</h4>
-                  <p>You don't have any appointments yet.</p>
+                  <h4 className="alert-heading" data-key="patient.appointments.noAppointments">{t("patient.appointments.noAppointments")}</h4>
+                  <p data-key="patient.appointments.noAppointmentsDesc">{t("patient.appointments.noAppointmentsDesc")}</p>
                   <hr />
                   <p className="mb-0">
-                    <Link to="/booking" className="btn btn-primary">
-                      Book Your First Appointment
+                    <Link to="/booking" className="btn btn-primary" data-key="patient.appointments.bookFirst">
+                      {t("patient.appointments.bookFirst")}
                     </Link>
                   </p>
                 </div>
@@ -285,12 +288,12 @@ const PatientAppointments = (props: any) => {
                         <i className="isax isax-home-15" />
                       </Link>
                     </li>
-                    <li className="breadcrumb-item" aria-current="page">
-                      Patient
+                    <li className="breadcrumb-item" aria-current="page" data-key="navigation.patients">
+                      {t("navigation.patients")}
                     </li>
-                    <li className="breadcrumb-item active">Appointments</li>
+                    <li className="breadcrumb-item active" data-key="patient.appointments.title">{t("patient.appointments.title")}</li>
                   </ol>
-                  <h2 className="breadcrumb-title">Appointments</h2>
+                  <h2 className="breadcrumb-title" data-key="patient.appointments.title">{t("patient.appointments.title")}</h2>
                 </nav>
               </div>
             </div>
@@ -326,14 +329,15 @@ const PatientAppointments = (props: any) => {
 
               <div className="col-lg-8 col-xl-9">
                 <div className="dashboard-header">
-                  <h3>Appointments</h3>
+                  <h3 data-key="patient.appointments.title">{t("patient.appointments.title")}</h3>
                   <ul className="header-list-btns">
                     <li>
                       <div className="input-block dash-search-input">
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Search"
+                          placeholder={t("common.search")}
+                          data-key="common.search"
                         />
                         <span className="search-icon">
                           <i className="fa-solid fa-magnifying-glass" />
@@ -360,7 +364,7 @@ const PatientAppointments = (props: any) => {
                           aria-controls="pills-upcoming"
                           aria-selected="false"
                         >
-                          Upcoming<span>{upcomingAppointments.length}</span>
+                          {t("patient.appointments.upcoming")}<span>{upcomingAppointments.length}</span>
                         </button>
                       </li>
                       <li className="nav-item" role="presentation">
@@ -374,7 +378,7 @@ const PatientAppointments = (props: any) => {
                           aria-controls="pills-cancel"
                           aria-selected="true"
                         >
-                          Cancelled<span>{cancelledAppointments.length}</span>
+                          {t("patient.appointments.cancelled")}<span>{cancelledAppointments.length}</span>
                         </button>
                       </li>
                       <li className="nav-item" role="presentation">
@@ -388,7 +392,7 @@ const PatientAppointments = (props: any) => {
                           aria-controls="pills-complete"
                           aria-selected="true"
                         >
-                          Completed<span>{completedAppointments.length}</span>
+                          {t("patient.appointments.completed")}<span>{completedAppointments.length}</span>
                         </button>
                       </li>
                     </ul>

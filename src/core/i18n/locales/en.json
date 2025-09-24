@@ -27,7 +27,13 @@
     "open": "Open",
     "language": "Language",
     "english": "English",
-    "spanish": "Spanish"
+    "spanish": "Spanish",
+    "available": "Available",
+    "unavailable": "Unavailable",
+            "bookNow": "Book Now",
+            "tryAgain": "Try Again",
+            "saving": "Saving...",
+            "saveChanges": "Save Changes"
   },
   "navigation": {
     "home": "Home",
@@ -224,5 +230,324 @@
     "serverError": "Server error. Please try again later.",
     "appointmentConflict": "This time slot is not available",
     "doctorUnavailable": "Doctor is not available at this time"
+  },
+  "home": {
+    "appointments": "Appointments",
+    "ratings": "Ratings",
+    "hero": {
+      "findDoctor": {
+        "title": "Find Your Doctor",
+        "subtitle": "Book an appointment with the best doctors",
+        "description": "Connect with experienced healthcare professionals and get the care you need."
+      },
+      "qualityHealthcare": {
+        "title": "Quality Healthcare",
+        "subtitle": "Expert medical care at your fingertips",
+        "description": "Access top-rated doctors and specialists for all your healthcare needs."
+      },
+      "support": {
+        "title": "24/7 Support",
+        "subtitle": "Healthcare support whenever you need it",
+        "description": "Get medical assistance and support around the clock from our dedicated team."
+      }
+    },
+    "specialties": {
+      "badge": "Top Specialties",
+      "title": "Highlighting the Care & Support",
+      "doctorCount": "{{count}} Doctors"
+    },
+    "doctors": {
+      "badge": "Featured Doctors",
+      "title": "Our Highlighted Doctors"
+    },
+    "whyBook": {
+      "badge": "Why Book With Us",
+      "title": "We are committed to understanding your",
+      "subtitle": "unique needs and delivering care.",
+      "description": "As a trusted healthcare provider in our community, we are passionate about promoting health and wellness beyond the clinic. We actively engage in community outreach programs, health fairs, and educational workshops.",
+      "vision": {
+        "title": "01 . Our Vision",
+        "description": "We envision a community where everyone has access to high-quality healthcare and the resources they need to lead healthy, fulfilling lives."
+      },
+      "mission": {
+        "title": "02 . Our Mission",
+        "description": "Our mission is to provide exceptional healthcare services that prioritize patient well-being, accessibility, and compassionate care for all members of our community."
+      },
+      "steps": {
+        "search": {
+          "title": "Search For Doctors",
+          "description": "Search for a doctor based on specialization, location, or availability for your treatments"
+        },
+        "profile": {
+          "title": "Check Doctor Profile",
+          "description": "Explore detailed doctor profiles on our platform to make informed healthcare decisions."
+        },
+        "schedule": {
+          "title": "Schedule Appointment",
+          "description": "After choose your preferred doctor, select a convenient time slot, & confirm your appointment."
+        },
+        "solution": {
+          "title": "Get Your Solution",
+          "description": "Discuss your health concerns with the doctor and receive the personalized advice & with solution."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Testimonials",
+      "title": "15k Users Trust Doccure Worldwide",
+      "testimonial1": {
+        "title": "Nice Treatment",
+        "content": "I had a wonderful experience the staff was friendly and attentive, and Dr. Smith took the time to explain everything clearly.",
+        "author": "Deny Hendrawan",
+        "location": "United States"
+      },
+      "testimonial2": {
+        "title": "Good Hospitability",
+        "content": "Genuinely cares about his patients. He helped me understand my condition and worked with me to create a plan.",
+        "author": "Johnson DWayne",
+        "location": "United States"
+      },
+      "testimonial3": {
+        "title": "Nice Treatment",
+        "content": "I had a great experience with Dr. Chen. She was not only professional but also made me feel comfortable discussing.",
+        "author": "Rayan Smith",
+        "location": "United States"
+      }
+    },
+    "faq": {
+      "badge": "FAQ'S",
+      "title": "Your Questions are Answered",
+      "question1": "How do I book an appointment with a doctor?",
+      "answer1": "Yes, simply visit our website and log in or create an account. Search for a doctor based on specialization, location, or availability & confirm your booking.",
+      "question2": "Can I request a specific doctor when booking my appointment?",
+      "answer2": "Yes, you can usually request a specific doctor when booking your appointment, though availability may vary based on their schedule.",
+      "question3": "What should I do if I need to cancel or reschedule my appointment?",
+      "answer3": "If you need to cancel or reschedule your appointment, contact the doctor as soon as possible to inform them and to reschedule for another available time slot."
+    }
+  },
+  "specialties": {
+    "dentist": "Dentist",
+    "cardiologist": "Cardiologist",
+    "dermatologist": "Dermatologist",
+    "pediatrician": "Pediatrician",
+    "orthopedicSurgeon": "Orthopedic Surgeon",
+    "psychologist": "Psychologist",
+    "psychiatrist": "Psychiatrist",
+    "primaryCare": "Primary Care Physician",
+    "chiropractor": "Chiropractor",
+    "optometrist": "Optometrist"
+  },
+  "footer": {
+    "company": {
+      "title": "Company",
+      "about": "About",
+      "features": "Features",
+      "works": "Works",
+      "careers": "Careers",
+      "locations": "Locations"
+    },
+    "treatments": {
+      "title": "Treatments",
+      "dental": "Dental",
+      "cardiac": "Cardiac",
+      "spinal": "Spinal Cord"
+    }
+  },
+  "pages": {
+    "contactUs": {
+      "title": "Contact Us",
+      "getInTouch": "Get in touch",
+      "haveAnyQuestion": "Have Any Question?",
+      "address": "Address",
+      "phoneNumber": "Phone Number",
+      "emailAddress": "Email Address",
+      "name": "Name",
+      "email": "Email",
+      "services": "Services",
+      "message": "Message",
+      "sendMessage": "Send Message"
+    },
+    "aboutUs": {
+      "title": "About Us",
+      "aboutDoccure": "About Doccure",
+      "description": "We are committed to providing exceptional healthcare services and connecting patients with the best medical professionals.",
+      "ourMission": "Our Mission",
+      "missionDescription": "To make quality healthcare accessible to everyone through innovative technology and compassionate care.",
+      "ourVision": "Our Vision",
+      "visionDescription": "To be the leading platform that transforms healthcare delivery and improves patient outcomes worldwide.",
+      "whyChooseUs": "Why Choose Us",
+      "experiencedDoctors": "Experienced Doctors",
+      "experiencedDoctorsDesc": "Our network includes highly qualified and experienced medical professionals.",
+      "easyBooking": "Easy Booking",
+      "easyBookingDesc": "Simple and convenient appointment booking process.",
+      "qualityCare": "Quality Care",
+      "qualityCareDesc": "We ensure the highest standards of medical care and patient satisfaction."
+    }
+  },
+  "patient": {
+    "profile": {
+      "title": "Profile",
+      "personalInfo": "Personal Information",
+      "editProfile": "Edit Profile",
+      "saveChanges": "Save Changes",
+      "cancel": "Cancel",
+      "settings": "Settings",
+      "photo": "Profile Photo",
+      "uploadNew": "Upload New",
+      "information": "Information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "gender": "Gender",
+      "dateOfBirth": "Date of Birth",
+      "phoneNumber": "Phone Number",
+      "emailAddress": "Email Address",
+      "bloodGroup": "Blood Group",
+      "address": "Address",
+      "city": "City",
+      "state": "State",
+      "country": "Country",
+      "pincode": "Pincode"
+    },
+    "booking": {
+      "title": "Book Appointment",
+      "selectDoctor": "Select Doctor",
+      "bookNow": "Book Now",
+      "availableDoctors": "Available Doctors",
+      "chooseDoctor": "Choose Your Doctor"
+    },
+    "appointments": {
+      "title": "My Appointments",
+      "upcoming": "Upcoming",
+      "cancelled": "Cancelled",
+      "completed": "Completed",
+      "history": "Appointment History",
+      "loading": "Loading appointments...",
+      "noAppointments": "No Appointments Found",
+      "noAppointmentsDesc": "You don't have any appointments yet.",
+      "bookFirst": "Book Your First Appointment",
+      "videoCall": "Video Call",
+      "clinicVisit": "Clinic Visit",
+      "googleMeet": "Google Meet"
+    },
+    "search": {
+      "showing": "Showing",
+      "doctors": "Doctors",
+      "forYou": "For You",
+      "selectCondition": "Select Condition",
+      "getDirection": "Get Direction",
+      "bookAppointment": "Book Appointment",
+      "noDoctorsFound": "No doctors found for this specialty",
+      "tryDifferentSpecialty": "Try searching for a different specialty or check back later.",
+      "nextAvailable": "Next Available",
+      "status": "Status",
+      "nextAvailableAt": "Next available at",
+      "doctorNoFreeSlot": "Doctor have no free slot",
+      "currently": "Currently"
+    },
+    "sidebar": {
+      "myAppointments": "My Appointments",
+      "settings": "Settings"
+    }
+  },
+  "doctor": {
+    "dashboard": {
+      "title": "Dashboard"
+    },
+    "sidebar": {
+      "availableNow": "I am Available Now",
+      "notAvailable": "Not Available",
+      "availability": "Availability",
+      "dashboard": "Dashboard",
+      "appointments": "Appointments",
+      "availableTimings": "Available Timings",
+      "myPatients": "My Patients",
+      "profileSettings": "Profile Settings"
+    },
+    "appointments": {
+      "title": "Appointments"
+    },
+    "availableTimings": {
+      "title": "Available Timings"
+    },
+    "myPatients": {
+      "title": "My Patients"
+    },
+    "profileSetting": {
+      "title": "Profile Settings",
+      "profile": "Profile",
+      "profileImage": "Profile Image",
+      "uploadNew": "Upload New",
+      "remove": "Remove",
+      "imageRequirements": "Your Image should Below 4 MB, Accepted format jpg,png,svg",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "displayName": "Display Name",
+      "designation": "Designation",
+      "phoneNumbers": "Phone Numbers",
+      "emailAddress": "Email Address",
+      "address": "Address",
+      "city": "City",
+      "state": "State",
+      "country": "Country",
+      "pincode": "Pincode",
+      "experience": "Experience",
+      "insurance": "Insurance",
+      "addInsurance": "Add Insurance",
+      "specialtyRank": "Specialty Rank",
+      "aboutMe": "About Me",
+      "knownLanguages": "Known Languages",
+      "addTag": "Add a tag",
+      "servicesOffered": "Services Offered",
+      "medicalServices": "Medical Services",
+      "editProfile": "Edit Profile"
+    },
+    "dashboard": {
+      "totalPatient": "Total Patient",
+      "uniquePatients": "Unique Patients",
+      "patientsToday": "Patients Today",
+      "todaysPatients": "Today's Patients",
+      "appointmentsToday": "Appointments Today",
+      "activeAppointments": "Active Appointments",
+      "noAppointments": "No Appointments",
+      "appointment": "Appointment",
+      "last7Days": "Last 7 Days",
+      "today": "Today",
+      "thisMonth": "This Month"
+    },
+    "appointments": {
+      "title": "Appointments",
+      "loading": "Loading appointments...",
+      "upcoming": "Upcoming",
+      "cancelled": "Cancelled",
+      "completed": "Completed",
+      "googleMeet": "Google Meet",
+      "clinicVisit": "Clinic Visit"
+    },
+    "availableTimings": {
+      "title": "Available Timings",
+      "generalAvailability": "General Availability",
+      "selectAvailableSlots": "Select Available Slots",
+      "selectAvailableDays": "Select Available days",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday",
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening"
+    },
+    "myPatients": {
+      "title": "My Patients",
+      "searchPatients": "Search patients...",
+      "loading": "Loading patients...",
+      "error": "Error loading patients",
+      "email": "Email",
+      "phone": "Phone",
+      "appointments": "Appointments",
+      "lastBooking": "Last Booking"
+    }
   }
 }

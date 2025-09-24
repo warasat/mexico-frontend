@@ -4,7 +4,9 @@ import Select from 'react-select'
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { useEffect, useMemo, useState, useRef } from 'react'
 import doctorProfileApi from "../../../../core/services/doctorProfileApi";
+import { useGlobalTranslation } from "../../../../hooks/useGlobalTranslation";
 const DoctorSidebar = () => {
+  const { t } = useGlobalTranslation();
   const pathnames = window.location.pathname;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,9 +16,9 @@ const DoctorSidebar = () => {
   const [availability, setAvailability] = useState<'available' | 'unavailable'>('unavailable')
   const hasInitialLoad = useRef(false)
   const availablity = useMemo(() => ([
-    { value: 'available', label: 'I am Available Now' },
-    { value: 'unavailable', label: 'Not Available' },
-  ]), [])
+    { value: 'available', label: t("doctor.sidebar.availableNow") },
+    { value: 'unavailable', label: t("doctor.sidebar.notAvailable") },
+  ]), [t])
 
   useEffect(() => {
     (async () => {
@@ -130,8 +132,8 @@ const DoctorSidebar = () => {
         </div>
         <div className="doctor-available-head">
           <div className="">
-            <label className="form-label">
-              Availability <span className="text-danger">*</span>
+            <label className="form-label" data-key="doctor.sidebar.availability">
+              {t("doctor.sidebar.availability")} <span className="text-danger">*</span>
             </label>
 
             <Select
@@ -150,7 +152,7 @@ const DoctorSidebar = () => {
 
                 <Link to="/doctor/doctor-dashboard">
                 <i className="isax isax-category-2 me-2"></i>
-                  <span>Dashboard</span>
+                  <span data-key="doctor.sidebar.dashboard">{t("doctor.sidebar.dashboard")}</span>
                 </Link>
               </li>
 
@@ -161,27 +163,27 @@ const DoctorSidebar = () => {
               >
                 <Link to="/doctor/appointments">
                 <i className="isax isax-calendar-1 me-2"></i>
-                  <span>Appointments</span>
+                  <span data-key="doctor.sidebar.appointments">{t("doctor.sidebar.appointments")}</span>
                 </Link>
               </li>
 
               <li className={pathnames.includes('/doctor/available-timings') ? 'active' : ''}>
                 <Link to="/doctor/available-timings">
                 <i className="isax isax-calendar-tick me-2"></i>
-                  <span>Available Timings</span>
+                  <span data-key="doctor.sidebar.availableTimings">{t("doctor.sidebar.availableTimings")}</span>
                 </Link>
               </li>
               <li className={pathnames.includes('/doctor/my-patients') || pathnames.includes('/doctor/patient-profile') ? "active" : ''}>
                 <Link to="/doctor/my-patients">
                 <i className="fa-solid fa-user-injured me-2"></i>
-                  <span>My Patients</span>
+                  <span data-key="doctor.sidebar.myPatients">{t("doctor.sidebar.myPatients")}</span>
                 </Link>
               </li>
 
               <li className={pathnames.includes('/doctor/profile-setting') || pathnames.includes('/doctor/doctor-experience') || pathnames.includes('/doctor/education') || pathnames.includes('/doctor/doctor-awards-settings') || pathnames.includes('/doctor/doctor-insurance-settings') || pathnames.includes('/doctor/doctor-clinics-settings') || pathnames.includes('doctor/doctor-business-settings') ? 'active' : ''}>
                 <Link to="/doctor/profile-setting">
                 <i className="isax isax-setting-2 me-2"></i>
-                  <span>Profile Settings</span>
+                  <span data-key="doctor.sidebar.profileSettings">{t("doctor.sidebar.profileSettings")}</span>
                 </Link>
               </li>
             </ul>

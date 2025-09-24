@@ -11,6 +11,7 @@ import { useEffect, useMemo, useRef, useState, type FC } from "react";
 import type { Dayjs } from "dayjs";
 import patientProfileService, { type PatientProfileDto } from "../../../../../core/services/patientProfileService";
 import dayjs from "dayjs";
+import { useGlobalTranslation } from "../../../../../hooks/useGlobalTranslation";
 
 type Props = Record<string, unknown>;
 const Profile: FC<Props> = (props) => {
@@ -18,6 +19,7 @@ const Profile: FC<Props> = (props) => {
   const [originalProfile, setOriginalProfile] = useState<PatientProfileDto>({});
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const { t } = useGlobalTranslation();
   const editStateKey = 'patientProfile_isEditing';
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const BloodGroup = useMemo(() => ([
@@ -113,12 +115,12 @@ const Profile: FC<Props> = (props) => {
                       <i className="isax isax-home-15" />
                     </Link>
                   </li>
-                  <li className="breadcrumb-item" aria-current="page">
-                    Patient
+                  <li className="breadcrumb-item" aria-current="page" data-key="navigation.patients">
+                    {t("navigation.patients")}
                   </li>
-                  <li className="breadcrumb-item active">Settings</li>
+                  <li className="breadcrumb-item active" data-key="patient.profile.settings">{t("patient.profile.settings")}</li>
                 </ol>
-                <h2 className="breadcrumb-title">Settings</h2>
+                <h2 className="breadcrumb-title" data-key="patient.profile.settings">{t("patient.profile.settings")}</h2>
               </nav>
             </div>
           </div>
@@ -162,8 +164,8 @@ const Profile: FC<Props> = (props) => {
                 <nav className="settings-tab mb-1">
                   <ul className="nav nav-tabs-bottom" role="tablist">
                     <li className="nav-item" role="presentation">
-                      <Link className="nav-link active" to='/patient/profile'>
-                        Profile
+                      <Link className="nav-link active" to='/patient/profile' data-key="patient.profile.title">
+                        {t("patient.profile.title")}
                       </Link>
                     </li>
                   </ul>
@@ -171,11 +173,11 @@ const Profile: FC<Props> = (props) => {
                 <div className="card">
                   <div className="card-body">
                     <div className="border-bottom pb-3 mb-3">
-                      <h5>Profile Settings</h5>
+                      <h5 data-key="patient.profile.settings">{t("patient.profile.settings")}</h5>
                     </div>
                     <div>
                       <div className="setting-card">
-                        <label className="form-label mb-2">Profile Photo</label>
+                        <label className="form-label mb-2" data-key="patient.profile.photo">{t("patient.profile.photo")}</label>
                         <div className="change-avatar img-upload">
                           <div className="profile-img">
                             {profile?.profileImage?.url ? (
@@ -187,7 +189,7 @@ const Profile: FC<Props> = (props) => {
                           <div className="upload-img">
                             <div className="imgs-load d-flex align-items-center">
                               <div className="change-photo">
-                                Upload New
+                                {t("patient.profile.uploadNew")}
                                 <input
                                   ref={fileInputRef}
                                   type="file"
@@ -209,14 +211,14 @@ const Profile: FC<Props> = (props) => {
                         </div>
                       </div>
                       <div className="setting-title">
-                        <h6>Information</h6>
+                        <h6 data-key="patient.profile.information">{t("patient.profile.information")}</h6>
                       </div>
                       <div className="setting-card">
                         <div className="row">
                           <div className="col-lg-4 col-md-6">
                             <div className="mb-3">
                               <label className="form-label">
-                                First Name <span className="text-danger">*</span>
+                                {t("patient.profile.firstName")} <span className="text-danger">*</span>
                               </label>
                               <input type="text" className="form-control" value={profile.firstName || ''} onChange={(e) => handleChange('firstName', e.target.value)} disabled={!isEditing} />
                             </div>
@@ -224,7 +226,7 @@ const Profile: FC<Props> = (props) => {
                           <div className="col-lg-4 col-md-6">
                             <div className="mb-3">
                               <label className="form-label">
-                                Last Name <span className="text-danger">*</span>
+                                {t("patient.profile.lastName")} <span className="text-danger">*</span>
                               </label>
                               <input type="text" className="form-control" value={profile.lastName || ''} onChange={(e) => handleChange('lastName', e.target.value)} disabled={!isEditing} />
                             </div>
@@ -232,7 +234,7 @@ const Profile: FC<Props> = (props) => {
                           <div className="col-lg-4 col-md-6">
                             <div className="mb-3">
                               <label className="form-label">
-                                Gender <span className="text-danger">*</span>
+                                {t("patient.profile.gender")} <span className="text-danger">*</span>
                               </label>
                               <Select className="select" options={GenderOptions} placeholder="Select" isClearable={true} isSearchable={true} value={selectedGender} onChange={(opt: { value?: string } | null) => handleChange('gender', opt?.value || '')} isDisabled={!isEditing} />
                             </div>
@@ -240,7 +242,7 @@ const Profile: FC<Props> = (props) => {
                           <div className="col-lg-4 col-md-6">
                             <div className="mb-3">
                               <label className="form-label">
-                                Date of Birth <span className="text-danger">*</span>
+                                {t("patient.profile.dateOfBirth")} <span className="text-danger">*</span>
                               </label>
                               <div className="form-icon">
                                 <DatePicker className="form-control datetimepicker" placeholder="dd/mm/yyyy" value={profile.dateOfBirth ? (dayjs(profile.dateOfBirth) as unknown as Dayjs) : null} onChange={(d: Dayjs | null) => handleChange('dateOfBirth', d ? d.format('YYYY-MM-DD') : '')} disabled={!isEditing} />
@@ -253,7 +255,7 @@ const Profile: FC<Props> = (props) => {
                           <div className="col-lg-4 col-md-6">
                             <div className="mb-3">
                               <label className="form-label">
-                                Phone Number <span className="text-danger">*</span>
+                                {t("patient.profile.phoneNumber")} <span className="text-danger">*</span>
                               </label>
                               <input type="text" className="form-control" value={profile.phone || ''} onChange={(e) => handleChange('phone', e.target.value)} disabled={!isEditing} />
                             </div>
@@ -261,7 +263,7 @@ const Profile: FC<Props> = (props) => {
                           <div className="col-lg-4 col-md-6">
                             <div className="mb-3">
                               <label className="form-label">
-                                Email Address <span className="text-danger">*</span>
+                                {t("patient.profile.emailAddress")} <span className="text-danger">*</span>
                               </label>
                               <input type="email" className="form-control" value={profile.email || ''} onChange={(e) => handleChange('email', e.target.value)} disabled={!isEditing} />
                             </div>
@@ -269,7 +271,7 @@ const Profile: FC<Props> = (props) => {
                           <div className="col-lg-4 col-md-6">
                             <div className="mb-3">
                               <label className="form-label">
-                                Blood Group <span className="text-danger">*</span>
+                                {t("patient.profile.bloodGroup")} <span className="text-danger">*</span>
                               </label>
                               <Select className="select" options={BloodGroup} placeholder="Select Gender" isClearable={true} isSearchable={true} value={selectedBlood} onChange={(opt: { value?: string } | null) => handleChange('bloodGroup', opt?.value || '')} isDisabled={!isEditing} />
                             </div>
@@ -277,14 +279,14 @@ const Profile: FC<Props> = (props) => {
                         </div>
                       </div>
                       <div className="setting-title">
-                        <h6>Address</h6>
+                        <h6 data-key="patient.profile.address">{t("patient.profile.address")}</h6>
                       </div>
                       <div className="setting-card">
                         <div className="row">
                           <div className="col-lg-12">
                             <div className="mb-3">
                               <label className="form-label">
-                                Address <span className="text-danger">*</span>
+                                {t("patient.profile.address")} <span className="text-danger">*</span>
                               </label>
                               <input type="text" className="form-control" value={profile.addressLine || ''} onChange={(e) => handleChange('addressLine', e.target.value)} disabled={!isEditing} />
                             </div>
@@ -292,7 +294,7 @@ const Profile: FC<Props> = (props) => {
                           <div className="col-md-6">
                             <div className="mb-3">
                               <label className="form-label">
-                                City <span className="text-danger">*</span>
+                                {t("patient.profile.city")} <span className="text-danger">*</span>
                               </label>
                               <input type="text" className="form-control" value={profile.city || ''} onChange={(e) => handleChange('city', e.target.value)} disabled={!isEditing} />
                             </div>
@@ -300,7 +302,7 @@ const Profile: FC<Props> = (props) => {
                           <div className="col-md-6">
                             <div className="mb-3">
                               <label className="form-label">
-                                State <span className="text-danger">*</span>
+                                {t("patient.profile.state")} <span className="text-danger">*</span>
                               </label>
                               <input type="text" className="form-control" value={profile.state || ''} onChange={(e) => handleChange('state', e.target.value)} disabled={!isEditing} />
                             </div>
@@ -308,7 +310,7 @@ const Profile: FC<Props> = (props) => {
                           <div className="col-md-6">
                             <div className="mb-3">
                               <label className="form-label">
-                                Country <span className="text-danger">*</span>
+                                {t("patient.profile.country")} <span className="text-danger">*</span>
                               </label>
                               <input type="text" className="form-control" value={profile.country || ''} onChange={(e) => handleChange('country', e.target.value)} disabled={!isEditing} />
                             </div>
@@ -316,7 +318,7 @@ const Profile: FC<Props> = (props) => {
                           <div className="col-md-6">
                             <div className="mb-3">
                               <label className="form-label">
-                                Pincode <span className="text-danger">*</span>
+                                {t("patient.profile.pincode")} <span className="text-danger">*</span>
                               </label>
                               <input type="text" className="form-control" value={profile.pincode || ''} onChange={(e) => handleChange('pincode', e.target.value)} disabled={!isEditing} />
                             </div>

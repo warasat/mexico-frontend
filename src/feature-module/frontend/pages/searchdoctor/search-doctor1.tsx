@@ -3,12 +3,12 @@ import Doctors from "./doctors";
 import Footer from "../../footer";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { useGlobalTranslation } from "../../../../hooks/useGlobalTranslation";
 import { specialtiesData } from "../../common/data/specialties";
 
 const SearchDoctor = (props: any) => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t } = useGlobalTranslation();
   const [searchParams] = useSearchParams();
   const [selectedInsurance, setSelectedInsurance] = useState<string>('');
   const [selectedLocation, setSelectedLocation] = useState<string>('');
@@ -124,8 +124,8 @@ const SearchDoctor = (props: any) => {
                                 className="form-control"
                                 style={{ paddingLeft: "45px" }}
                               >
-                                <option value="">
-                                  Select Condition
+                                <option value="" data-key="patient.search.selectCondition">
+                                  {t("patient.search.selectCondition")}
                                 </option>
                                 {diseases.map((d) => (
                                   <option key={d} value={d}>
@@ -144,8 +144,8 @@ const SearchDoctor = (props: any) => {
                             className="form-control"
                             style={{ paddingLeft: "45px" }}
                           >
-                            <option value="">
-                              Select Condition
+                            <option value="" data-key="patient.search.selectCondition">
+                              {t("patient.search.selectCondition")}
                             </option>
                           </select>
                         )}

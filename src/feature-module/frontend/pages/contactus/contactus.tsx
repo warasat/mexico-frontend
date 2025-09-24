@@ -4,8 +4,10 @@ import Header from "../../header";
 import Footer from "../../footer";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { all_routes } from "../../../../routes/all_routes";
+import { useGlobalTranslation } from "../../../../hooks/useGlobalTranslation";
 
 const Contactus: React.FC = (props) => {
+  const { t } = useGlobalTranslation();
   return (
     <>
       <Header {...props} />
@@ -23,9 +25,9 @@ const Contactus: React.FC = (props) => {
                   <i className="isax isax-home-15" />
                 </Link>
               </li>
-              <li className="breadcrumb-item active">Contact Us</li>
+              <li className="breadcrumb-item active" data-key="pages.contactUs.title">{t("pages.contactUs.title")}</li>
             </ol>
-            <h2 className="breadcrumb-title">Contact Us</h2>
+            <h2 className="breadcrumb-title" data-key="pages.contactUs.title">{t("pages.contactUs.title")}</h2>
           </nav>
         </div>
       </div>
@@ -60,8 +62,8 @@ const Contactus: React.FC = (props) => {
       <div className="row">
         <div className="col-lg-5 col-md-12">
           <div className="section-inner-header contact-inner-header">
-            <h6>Get in touch</h6>
-            <h2>Have Any Question?</h2>
+            <h6 data-key="pages.contactUs.getInTouch">{t("pages.contactUs.getInTouch")}</h6>
+            <h2 data-key="pages.contactUs.haveAnyQuestion">{t("pages.contactUs.haveAnyQuestion")}</h2>
           </div>
           <div className="card contact-card">
             <div className="card-body">
@@ -69,7 +71,7 @@ const Contactus: React.FC = (props) => {
                 <i className="isax isax-location5" />
               </div>
               <div className="contact-details">
-                <h4>Address</h4>
+                <h4 data-key="pages.contactUs.address">{t("pages.contactUs.address")}</h4>
                 <p>8432 Mante Highway, Aminaport, USA</p>
               </div>
             </div>
@@ -80,7 +82,7 @@ const Contactus: React.FC = (props) => {
                 <i className="isax isax-call5" />
               </div>
               <div className="contact-details">
-                <h4>Phone Number</h4>
+                <h4 data-key="pages.contactUs.phoneNumber">{t("pages.contactUs.phoneNumber")}</h4>
                 <p>+1 315 369 5943</p>
               </div>
             </div>
@@ -91,7 +93,7 @@ const Contactus: React.FC = (props) => {
                 <i className="isax isax-sms5" />
               </div>
               <div className="contact-details">
-                <h4>Email Address</h4>
+                <h4 data-key="pages.contactUs.emailAddress">{t("pages.contactUs.emailAddress")}</h4>
                 <p>doccure@example.com</p>
               </div>
             </div>
@@ -104,31 +106,31 @@ const Contactus: React.FC = (props) => {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="mb-3">
-                      <label className="form-label">Name</label>
+                      <label className="form-label" data-key="pages.contactUs.name">{t("pages.contactUs.name")}</label>
                       <input type="text" className="form-control" />
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="mb-3">
-                      <label className="form-label">Email</label>
+                      <label className="form-label" data-key="pages.contactUs.email">{t("pages.contactUs.email")}</label>
                       <input type="text" className="form-control" />
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="mb-3">
-                      <label className="form-label">Phone Number</label>
+                      <label className="form-label" data-key="pages.contactUs.phoneNumber">{t("pages.contactUs.phoneNumber")}</label>
                       <input type="text" className="form-control" />
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="mb-3">
-                      <label className="form-label">Services</label>
+                      <label className="form-label" data-key="pages.contactUs.services">{t("pages.contactUs.services")}</label>
                       <input type="text" className="form-control" />
                     </div>
                   </div>
                   <div className="col-md-12">
                     <div className="mb-3">
-                      <label className="form-label">Message</label>
+                      <label className="form-label" data-key="pages.contactUs.message">{t("pages.contactUs.message")}</label>
                       <textarea
                         className="form-control"
                         rows={6}
@@ -142,7 +144,7 @@ const Contactus: React.FC = (props) => {
                         type="submit"
                         className="btn btn-primary-gradient"
                       >
-                        Send Message
+                        {t("pages.contactUs.sendMessage")}
                       </button>
                     </div>
                   </div>

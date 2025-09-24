@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { doctordashboardprofile06 } from "../../../imagepath";
 import patientProfileService, { type PatientProfileDto } from "../../../../../core/services/patientProfileService";
 import { useAuth } from "../../../../../core/context/AuthContext";
+import { useGlobalTranslation } from "../../../../../hooks/useGlobalTranslation";
 
 export const DashboardSidebar: React.FC = () => {
+  const { t } = useGlobalTranslation();
   const pathnames = window.location.pathname;
   const [profile, setProfile] = useState<PatientProfileDto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -125,7 +127,7 @@ export const DashboardSidebar: React.FC = () => {
 
                 <Link to="/patient/patient-appointments">
                   <i className="isax isax-calendar-1"></i>
-                  <span>My Appointments</span>
+                  <span data-key="patient.sidebar.myAppointments">{t("patient.sidebar.myAppointments")}</span>
                 </Link>
               </li>
 
@@ -133,7 +135,7 @@ export const DashboardSidebar: React.FC = () => {
 
                 <Link to="/patient/profile">
                   <i className="isax isax-setting-2"></i>
-                  <span>Settings</span>
+                  <span data-key="patient.sidebar.settings">{t("patient.sidebar.settings")}</span>
                 </Link>
               </li>
             </ul>

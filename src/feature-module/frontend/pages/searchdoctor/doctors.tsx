@@ -5,6 +5,7 @@ import publicDoctorApi from "../../../../core/services/publicDoctorApi";
 import { useAuth } from "../../../../core/context/AuthContext";
 import SocketService from "../../../../core/services/socketService";
 import doctorProfileApi from "../../../../core/services/doctorProfileApi";
+import { useGlobalTranslation } from "../../../../hooks/useGlobalTranslation";
 
 
 type DoctorCard = {
@@ -28,6 +29,7 @@ const Doctors = () => {
   const [searchParams] = useSearchParams();
   const [filteredDoctors, setFilteredDoctors] = useState<DoctorCard[]>([]);
   const [specialty, setSpecialty] = useState<string>("");
+  const { t } = useGlobalTranslation();
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
   
@@ -226,11 +228,11 @@ const Doctors = () => {
           <h3>
             {specialty ? (
               <>
-                Showing <span className="text-secondary">{filteredDoctors.length}</span> {specialtyMapping[specialty] || specialty} For You
+                {t("patient.search.showing")} <span className="text-secondary">{filteredDoctors.length}</span> {specialtyMapping[specialty] || specialty} {t("patient.search.forYou")}
               </>
             ) : (
               <>
-                Showing <span className="text-secondary">{filteredDoctors.length}</span> Doctors For You
+                {t("patient.search.showing")} <span className="text-secondary">{filteredDoctors.length}</span> {t("patient.search.doctors")} {t("patient.search.forYou")}
               </>
             )}
           </h3>
@@ -264,7 +266,7 @@ const Doctors = () => {
                 </Link>
                     <span className={`badge ${doctor.available ? 'bg-success-light' : 'bg-danger-light'} d-inline-flex align-items-center`} style={{minWidth: '80px', textAlign: 'center'}}>
                   <i className="fa-solid fa-circle fs-5 me-1" />
-                      {doctor.available ? 'Available' : 'Unavailable'}
+                      {doctor.available ? t("common.available") : t("common.unavailable")}
                 </span>
               </div>
               <div className="p-2" style={{flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
@@ -285,7 +287,7 @@ const Doctors = () => {
                             state={{ selectedDoctor: doctor, activeTab: 'location' }}
                             className="text-primary text-decoration-underline ms-2"
                           >
-                            Get Direction
+                            {t("patient.search.getDirection")}
                           </Link>
                         </p>
                       </div>
@@ -330,14 +332,14 @@ const Doctors = () => {
                 {/* Next Available Time Display with Inline Booking Button */}
                 <div className="d-flex align-items-center justify-content-between flex-wrap row-gap-1 mt-1">
                   <div>
-                    <h6 className="mb-0 text-dark">{doctor.available ? 'Next Available' : 'Status'}</h6>
+                    <h6 className="mb-0 text-dark">{doctor.available ? t("patient.search.nextAvailable") : t("patient.search.status")}</h6>
                     <p className="mb-0 text-muted">
                       {doctor.available ? (
                         nextSlotByDoctorId[doctor.id]
-                          ? <>Next available at <br />{nextSlotByDoctorId[doctor.id]}</>
-                          : <>Doctor have no free slot</>
+                          ? <>{t("patient.search.nextAvailableAt")} <br />{nextSlotByDoctorId[doctor.id]}</>
+                          : <>{t("patient.search.doctorNoFreeSlot")}</>
                       ) : (
-                        <>Currently <br />Unavailable</>
+                        <>{t("patient.search.currently")} <br />{t("common.unavailable")}</>
                       )}
                     </p>
                   </div>
@@ -351,7 +353,7 @@ const Doctors = () => {
                         className="btn btn-md d-inline-flex align-items-center rounded-pill btn-primary-gradient"
                       >
                         <i className="isax isax-calendar-1 me-2" />
-                        Book Appointment
+                        {t("patient.search.bookAppointment")}
                       </Link>
                     ) : (
                       <button
@@ -360,7 +362,7 @@ const Doctors = () => {
                         title="Doctor is currently unavailable"
                       >
                         <i className="isax isax-calendar-1 me-2" />
-                        Unavailable
+                        {t("common.unavailable")}
                       </button>
                     )}
                   </div>
@@ -375,8 +377,8 @@ const Doctors = () => {
       <div className="col-lg-12">
           <div className="card">
             <div className="card-body text-center py-5">
-              <h4 className="text-muted">No doctors found for this specialty</h4>
-              <p className="text-muted">Try searching for a different specialty or check back later.</p>
+              <h4 className="text-muted" data-key="patient.search.noDoctorsFound">{t("patient.search.noDoctorsFound")}</h4>
+              <p className="text-muted" data-key="patient.search.tryDifferentSpecialty">{t("patient.search.tryDifferentSpecialty")}</p>
                       </div>
                     </div>
                   </div>

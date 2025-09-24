@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../header";
 import Footer from "../../footer";
+import { useGlobalTranslation } from "../../../../hooks/useGlobalTranslation";
 import {
   aboutimg1,
   aboutimg2,
@@ -33,6 +34,7 @@ import { useLocation } from "react-router";
 
 const Aboutus = (props: any) => {
   const location = useLocation();
+  const { t } = useGlobalTranslation();
 
   useEffect(() => {
     if (location.pathname === "/aboutus") {
@@ -104,9 +106,9 @@ const Aboutus = (props: any) => {
                           <i className="isax isax-home-15" />
                         </Link>
                       </li>
-                      <li className="breadcrumb-item active">About Us</li>
+                      <li className="breadcrumb-item active" data-key="pages.aboutUs.title">{t("pages.aboutUs.title")}</li>
                     </ol>
-                    <h2 className="breadcrumb-title">About Us</h2>
+                    <h2 className="breadcrumb-title" data-key="pages.aboutUs.title">{t("pages.aboutUs.title")}</h2>
                   </nav>
                 </div>
               </div>

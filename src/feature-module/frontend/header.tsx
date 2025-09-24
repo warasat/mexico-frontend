@@ -6,6 +6,7 @@ import logo from "../../assets/img/logo.png";
 import logosvg from "../../assets/img/logo.svg";
 import { useEffect } from "react";
 import { useAuth } from "../../core/context/AuthContext";
+import { useGlobalTranslation } from "../../hooks/useGlobalTranslation";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -28,6 +29,7 @@ import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { t } = useGlobalTranslation();
   const { authState, logout } = useAuth();
   const { isAuthenticated, userType, user } = authState;
   const navigate = useNavigate();

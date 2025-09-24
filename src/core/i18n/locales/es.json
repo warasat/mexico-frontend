@@ -27,7 +27,13 @@
     "open": "Abrir",
     "language": "Idioma",
     "english": "Inglés",
-    "spanish": "Español"
+    "spanish": "Español",
+    "available": "Disponible",
+    "unavailable": "No Disponible",
+            "bookNow": "Reservar Ahora",
+            "tryAgain": "Intentar de Nuevo",
+            "saving": "Guardando...",
+            "saveChanges": "Guardar Cambios"
   },
   "navigation": {
     "home": "Inicio",
@@ -224,5 +230,324 @@
     "serverError": "Error del servidor. Por favor intente más tarde.",
     "appointmentConflict": "Este horario no está disponible",
     "doctorUnavailable": "El doctor no está disponible en este horario"
+  },
+  "home": {
+    "appointments": "Citas",
+    "ratings": "Calificaciones",
+    "hero": {
+      "findDoctor": {
+        "title": "Encuentra tu Doctor",
+        "subtitle": "Reserva una cita con los mejores doctores",
+        "description": "Conéctate con profesionales de la salud experimentados y obtén la atención que necesitas."
+      },
+      "qualityHealthcare": {
+        "title": "Atención Médica de Calidad",
+        "subtitle": "Atención médica experta al alcance de tus manos",
+        "description": "Accede a doctores y especialistas mejor calificados para todas tus necesidades de salud."
+      },
+      "support": {
+        "title": "Soporte 24/7",
+        "subtitle": "Soporte de salud cuando lo necesites",
+        "description": "Obtén asistencia médica y soporte las 24 horas del día de nuestro equipo dedicado."
+      }
+    },
+    "specialties": {
+      "badge": "Principales Especialidades",
+      "title": "Destacando el Cuidado y Apoyo",
+      "doctorCount": "{{count}} Doctores"
+    },
+    "doctors": {
+      "badge": "Doctores Destacados",
+      "title": "Nuestros Doctores Destacados"
+    },
+    "whyBook": {
+      "badge": "Por Qué Reservar Con Nosotros",
+      "title": "Estamos comprometidos a entender tus",
+      "subtitle": "necesidades únicas y brindar atención.",
+      "description": "Como proveedor de atención médica de confianza en nuestra comunidad, nos apasiona promover la salud y el bienestar más allá de la clínica. Participamos activamente en programas de extensión comunitaria, ferias de salud y talleres educativos.",
+      "vision": {
+        "title": "01 . Nuestra Visión",
+        "description": "Visualizamos una comunidad donde todos tengan acceso a atención médica de alta calidad y los recursos que necesitan para llevar vidas saludables y satisfactorias."
+      },
+      "mission": {
+        "title": "02 . Nuestra Misión",
+        "description": "Nuestra misión es proporcionar servicios de atención médica excepcionales que prioricen el bienestar del paciente, la accesibilidad y la atención compasiva para todos los miembros de nuestra comunidad."
+      },
+      "steps": {
+        "search": {
+          "title": "Buscar Doctores",
+          "description": "Busca un doctor basado en especialización, ubicación o disponibilidad para tus tratamientos"
+        },
+        "profile": {
+          "title": "Revisar Perfil del Doctor",
+          "description": "Explora perfiles detallados de doctores en nuestra plataforma para tomar decisiones informadas sobre tu salud."
+        },
+        "schedule": {
+          "title": "Programar Cita",
+          "description": "Después de elegir tu doctor preferido, selecciona un horario conveniente y confirma tu cita."
+        },
+        "solution": {
+          "title": "Obtén tu Solución",
+          "description": "Discute tus preocupaciones de salud con el doctor y recibe consejos personalizados y soluciones."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Testimonios",
+      "title": "15k Usuarios Confían en Doccure Mundialmente",
+      "testimonial1": {
+        "title": "Buen Tratamiento",
+        "content": "Tuve una experiencia maravillosa, el personal fue amigable y atento, y el Dr. Smith se tomó el tiempo para explicar todo claramente.",
+        "author": "Deny Hendrawan",
+        "location": "Estados Unidos"
+      },
+      "testimonial2": {
+        "title": "Buena Hospitalidad",
+        "content": "Realmente se preocupa por sus pacientes. Me ayudó a entender mi condición y trabajó conmigo para crear un plan.",
+        "author": "Johnson DWayne",
+        "location": "Estados Unidos"
+      },
+      "testimonial3": {
+        "title": "Buen Tratamiento",
+        "content": "Tuve una gran experiencia con la Dra. Chen. No solo fue profesional sino que también me hizo sentir cómodo al discutir.",
+        "author": "Rayan Smith",
+        "location": "Estados Unidos"
+      }
+    },
+    "faq": {
+      "badge": "PREGUNTAS FRECUENTES",
+      "title": "Tus Preguntas son Respondidas",
+      "question1": "¿Cómo reservo una cita con un doctor?",
+      "answer1": "Sí, simplemente visita nuestro sitio web e inicia sesión o crea una cuenta. Busca un doctor basado en especialización, ubicación o disponibilidad y confirma tu reserva.",
+      "question2": "¿Puedo solicitar un doctor específico al reservar mi cita?",
+      "answer2": "Sí, generalmente puedes solicitar un doctor específico al reservar tu cita, aunque la disponibilidad puede variar según su horario.",
+      "question3": "¿Qué debo hacer si necesito cancelar o reprogramar mi cita?",
+      "answer3": "Si necesitas cancelar o reprogramar tu cita, contacta al doctor lo antes posible para informarle y reprogramar para otro horario disponible."
+    }
+  },
+  "specialties": {
+    "dentist": "Dentista",
+    "cardiologist": "Cardiólogo",
+    "dermatologist": "Dermatólogo",
+    "pediatrician": "Pediatra",
+    "orthopedicSurgeon": "Cirujano Ortopédico",
+    "psychologist": "Psicólogo",
+    "psychiatrist": "Psiquiatra",
+    "primaryCare": "Médico de Atención Primaria",
+    "chiropractor": "Quiropráctico",
+    "optometrist": "Optometrista"
+  },
+  "footer": {
+    "company": {
+      "title": "Empresa",
+      "about": "Acerca de",
+      "features": "Características",
+      "works": "Trabajos",
+      "careers": "Carreras",
+      "locations": "Ubicaciones"
+    },
+    "treatments": {
+      "title": "Tratamientos",
+      "dental": "Dental",
+      "cardiac": "Cardíaco",
+      "spinal": "Médula Espinal"
+    }
+  },
+  "pages": {
+    "contactUs": {
+      "title": "Contáctanos",
+      "getInTouch": "Ponte en contacto",
+      "haveAnyQuestion": "¿Tienes alguna pregunta?",
+      "address": "Dirección",
+      "phoneNumber": "Número de Teléfono",
+      "emailAddress": "Dirección de Correo",
+      "name": "Nombre",
+      "email": "Correo",
+      "services": "Servicios",
+      "message": "Mensaje",
+      "sendMessage": "Enviar Mensaje"
+    },
+    "aboutUs": {
+      "title": "Acerca de Nosotros",
+      "aboutDoccure": "Acerca de Doccure",
+      "description": "Estamos comprometidos a proporcionar servicios de atención médica excepcionales y conectar a los pacientes con los mejores profesionales médicos.",
+      "ourMission": "Nuestra Misión",
+      "missionDescription": "Hacer que la atención médica de calidad sea accesible para todos a través de tecnología innovadora y atención compasiva.",
+      "ourVision": "Nuestra Visión",
+      "visionDescription": "Ser la plataforma líder que transforma la prestación de atención médica y mejora los resultados de los pacientes en todo el mundo.",
+      "whyChooseUs": "Por Qué Elegirnos",
+      "experiencedDoctors": "Doctores Experimentados",
+      "experiencedDoctorsDesc": "Nuestra red incluye profesionales médicos altamente calificados y experimentados.",
+      "easyBooking": "Reserva Fácil",
+      "easyBookingDesc": "Proceso de reserva de citas simple y conveniente.",
+      "qualityCare": "Atención de Calidad",
+      "qualityCareDesc": "Garantizamos los más altos estándares de atención médica y satisfacción del paciente."
+    }
+  },
+  "patient": {
+    "profile": {
+      "title": "Perfil",
+      "personalInfo": "Información Personal",
+      "editProfile": "Editar Perfil",
+      "saveChanges": "Guardar Cambios",
+      "cancel": "Cancelar",
+      "settings": "Configuración",
+      "photo": "Foto de Perfil",
+      "uploadNew": "Subir Nueva",
+      "information": "Información",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "gender": "Género",
+      "dateOfBirth": "Fecha de Nacimiento",
+      "phoneNumber": "Número de Teléfono",
+      "emailAddress": "Dirección de Correo",
+      "bloodGroup": "Grupo Sanguíneo",
+      "address": "Dirección",
+      "city": "Ciudad",
+      "state": "Estado",
+      "country": "País",
+      "pincode": "Código Postal"
+    },
+    "booking": {
+      "title": "Reservar Cita",
+      "selectDoctor": "Seleccionar Doctor",
+      "bookNow": "Reservar Ahora",
+      "availableDoctors": "Doctores Disponibles",
+      "chooseDoctor": "Elige tu Doctor"
+    },
+    "appointments": {
+      "title": "Mis Citas",
+      "upcoming": "Próximas",
+      "cancelled": "Canceladas",
+      "completed": "Completadas",
+      "history": "Historial de Citas",
+      "loading": "Cargando citas...",
+      "noAppointments": "No se Encontraron Citas",
+      "noAppointmentsDesc": "Aún no tienes citas.",
+      "bookFirst": "Reserva tu Primera Cita",
+      "videoCall": "Llamada de Video",
+      "clinicVisit": "Visita a Clínica",
+      "googleMeet": "Google Meet"
+    },
+    "search": {
+      "showing": "Mostrando",
+      "doctors": "Doctores",
+      "forYou": "Para Ti",
+      "selectCondition": "Seleccionar Condición",
+      "getDirection": "Obtener Dirección",
+      "bookAppointment": "Reservar Cita",
+      "noDoctorsFound": "No se encontraron doctores para esta especialidad",
+      "tryDifferentSpecialty": "Intenta buscar una especialidad diferente o regresa más tarde.",
+      "nextAvailable": "Próximo Disponible",
+      "status": "Estado",
+      "nextAvailableAt": "Próximo disponible en",
+      "doctorNoFreeSlot": "Doctor no tiene horario libre",
+      "currently": "Actualmente"
+    },
+    "sidebar": {
+      "myAppointments": "Mis Citas",
+      "settings": "Configuración"
+    }
+  },
+  "doctor": {
+    "dashboard": {
+      "title": "Panel de Control"
+    },
+    "sidebar": {
+      "availableNow": "Estoy Disponible Ahora",
+      "notAvailable": "No Disponible",
+      "availability": "Disponibilidad",
+      "dashboard": "Panel de Control",
+      "appointments": "Citas",
+      "availableTimings": "Horarios Disponibles",
+      "myPatients": "Mis Pacientes",
+      "profileSettings": "Configuración de Perfil"
+    },
+    "appointments": {
+      "title": "Citas"
+    },
+    "availableTimings": {
+      "title": "Horarios Disponibles"
+    },
+    "myPatients": {
+      "title": "Mis Pacientes"
+    },
+    "profileSetting": {
+      "title": "Configuración de Perfil",
+      "profile": "Perfil",
+      "profileImage": "Imagen de Perfil",
+      "uploadNew": "Subir Nueva",
+      "remove": "Eliminar",
+      "imageRequirements": "Tu imagen debe ser menor a 4 MB, formatos aceptados jpg,png,svg",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "displayName": "Nombre de Mostrar",
+      "designation": "Designación",
+      "phoneNumbers": "Números de Teléfono",
+      "emailAddress": "Dirección de Correo",
+      "address": "Dirección",
+      "city": "Ciudad",
+      "state": "Estado",
+      "country": "País",
+      "pincode": "Código Postal",
+      "experience": "Experiencia",
+      "insurance": "Seguro",
+      "addInsurance": "Agregar Seguro",
+      "specialtyRank": "Rango de Especialidad",
+      "aboutMe": "Acerca de Mí",
+      "knownLanguages": "Idiomas Conocidos",
+      "addTag": "Agregar etiqueta",
+      "servicesOffered": "Servicios Ofrecidos",
+      "medicalServices": "Servicios Médicos",
+      "editProfile": "Editar Perfil"
+    },
+    "dashboard": {
+      "totalPatient": "Total de Pacientes",
+      "uniquePatients": "Pacientes Únicos",
+      "patientsToday": "Pacientes Hoy",
+      "todaysPatients": "Pacientes de Hoy",
+      "appointmentsToday": "Citas Hoy",
+      "activeAppointments": "Citas Activas",
+      "noAppointments": "Sin Citas",
+      "appointment": "Cita",
+      "last7Days": "Últimos 7 Días",
+      "today": "Hoy",
+      "thisMonth": "Este Mes"
+    },
+    "appointments": {
+      "title": "Citas",
+      "loading": "Cargando citas...",
+      "upcoming": "Próximas",
+      "cancelled": "Canceladas",
+      "completed": "Completadas",
+      "googleMeet": "Google Meet",
+      "clinicVisit": "Visita a Clínica"
+    },
+    "availableTimings": {
+      "title": "Horarios Disponibles",
+      "generalAvailability": "Disponibilidad General",
+      "selectAvailableSlots": "Seleccionar Horarios Disponibles",
+      "selectAvailableDays": "Seleccionar Días Disponibles",
+      "monday": "Lunes",
+      "tuesday": "Martes",
+      "wednesday": "Miércoles",
+      "thursday": "Jueves",
+      "friday": "Viernes",
+      "saturday": "Sábado",
+      "sunday": "Domingo",
+      "morning": "Mañana",
+      "afternoon": "Tarde",
+      "evening": "Noche"
+    },
+    "myPatients": {
+      "title": "Mis Pacientes",
+      "searchPatients": "Buscar pacientes...",
+      "loading": "Cargando pacientes...",
+      "error": "Error al cargar pacientes",
+      "email": "Correo",
+      "phone": "Teléfono",
+      "appointments": "Citas",
+      "lastBooking": "Última Reserva"
+    }
   }
 }

@@ -1,15 +1,17 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useGlobalTranslation } from '../hooks/useGlobalTranslation';
+import { switchLanguage } from '../utils/translationUtils';
 
 interface LanguageSwitcherProps {
   className?: string;
 }
 
 const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className = '' }) => {
-  const { i18n } = useTranslation();
+  const { i18n } = useGlobalTranslation();
 
   const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
+    // Use the enhanced language switcher that updates all translations
+    switchLanguage(lng);
   };
 
   return (

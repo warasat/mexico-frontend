@@ -8,9 +8,11 @@ import InsuranceTagInputs from "../../common/common-tagInput/insuranceTagInputs"
 import DoctorSidebar from "../sidebar/index.js";
 import { useAuth } from "../../../../core/context/AuthContext";
 import doctorProfileApi from "../../../../core/services/doctorProfileApi";
+import { useGlobalTranslation } from "../../../../hooks/useGlobalTranslation";
 
 interface ProfileSettingProps { [key: string]: unknown }
 const ProfileSetting = (props: ProfileSettingProps) => {
+  const { t } = useGlobalTranslation();
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
 
@@ -256,9 +258,9 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                     <li className="breadcrumb-item" aria-current="page">
                       Doctor
                     </li>
-                    <li className="breadcrumb-item active">Doctor Profile</li>
+                    <li className="breadcrumb-item active" data-key="doctor.profileSetting.title">{t("doctor.profileSetting.title")}</li>
                   </ol>
-                  <h2 className="breadcrumb-title">Doctor Profile</h2>
+                  <h2 className="breadcrumb-title" data-key="doctor.profileSetting.title">{t("doctor.profileSetting.title")}</h2>
                 </nav>
               </div>
             </div>
@@ -302,12 +304,12 @@ const ProfileSetting = (props: ProfileSettingProps) => {
         <div className="col-lg-8 col-xl-9">
           {/* Profile Settings */}
           <div className="dashboard-header">
-            <h3>Profile Settings</h3>
+            <h3 data-key="doctor.profileSetting.title">{t("doctor.profileSetting.title")}</h3>
           </div>
           {/* Settings List */}
           {/* /Settings List */}
           <div className="setting-title">
-            <h5>Profile</h5>
+            <h5 data-key="doctor.profileSetting.profile">{t("doctor.profileSetting.profile")}</h5>
           </div>
           <form>
             <div className="setting-card">
@@ -316,18 +318,18 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                   <i className="fa-solid fa-file-image" />
                 </div>
                 <div className="upload-img">
-                  <h5>Profile Image</h5>
+                  <h5 data-key="doctor.profileSetting.profileImage">{t("doctor.profileSetting.profileImage")}</h5>
                   <div className="imgs-load d-flex align-items-center">
                     <div className="change-photo">
-                      Upload New
+                      {t("doctor.profileSetting.uploadNew")}
                       <input type="file" className="upload" accept="image/jpeg,image/jpg,image/png,image/svg+xml" onChange={onImageChange} disabled={disabledAll} />
                     </div>
                     <Link to="#" className="upload-remove">
-                      Remove
+                      {t("doctor.profileSetting.remove")}
                     </Link>
                   </div>
                   <p className="form-text">
-                    Your Image should Below 4 MB, Accepted format jpg,png,svg
+                    {t("doctor.profileSetting.imageRequirements")}
                   </p>
                 </div>
               </div>
@@ -337,7 +339,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      First Name <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.firstName")} <span className="text-danger">*</span>
                     </label>
                     <input type="text" className="form-control" value={firstName} onChange={(e) => setFirstName(e.target.value)} disabled={disabledAll} />
                   </div>
@@ -345,7 +347,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Last Name <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.lastName")} <span className="text-danger">*</span>
                     </label>
                     <input type="text" className="form-control" value={lastName} onChange={(e) => setLastName(e.target.value)} disabled={disabledAll} />
                   </div>
@@ -353,7 +355,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Display Name <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.displayName")} <span className="text-danger">*</span>
                     </label>
                     <input type="text" className="form-control" value={displayName} onChange={(e) => setDisplayName(e.target.value)} disabled={disabledAll} />
                   </div>
@@ -361,7 +363,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Designation <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.designation")} <span className="text-danger">*</span>
                     </label>
                     <input type="text" className="form-control" value={designation} onChange={(e) => setDesignation(e.target.value)} disabled={disabledAll} />
                   </div>
@@ -369,7 +371,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Phone Numbers <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.phoneNumbers")} <span className="text-danger">*</span>
                     </label>
                     <input type="text" className="form-control" placeholder="Comma separated" value={phoneNumbers} onChange={(e) => setPhoneNumbers(e.target.value)} disabled={disabledAll} />
                   </div>
@@ -377,7 +379,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Email Address <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.emailAddress")} <span className="text-danger">*</span>
                     </label>
                     <input type="text" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} disabled={disabledAll} />
                   </div>
@@ -385,7 +387,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-12">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Address <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.address")} <span className="text-danger">*</span>
                     </label>
                     <input 
                       type="text" 
@@ -400,7 +402,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      City <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.city")} <span className="text-danger">*</span>
                     </label>
                     <input 
                       type="text" 
@@ -415,7 +417,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      State <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.state")} <span className="text-danger">*</span>
                     </label>
                     <input 
                       type="text" 
@@ -430,7 +432,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Country <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.country")} <span className="text-danger">*</span>
                     </label>
                     <input 
                       type="text" 
@@ -445,7 +447,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Pincode <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.pincode")} <span className="text-danger">*</span>
                     </label>
                     <input 
                       type="text" 
@@ -460,7 +462,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Experience <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.experience")} <span className="text-danger">*</span>
                     </label>
                     <input 
                       type="text" 
@@ -475,7 +477,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-12">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Insurance <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.insurance")} <span className="text-danger">*</span>
                     </label>
                     <div className="input-block input-block-new mb-0">
                       <InsuranceTagInputs
@@ -484,7 +486,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                         insuranceOptions={insuranceProviders}
                       />
                       <Link to="#" className="input-text save-btn">
-                        Save
+                        {t("common.save")}
                       </Link>
                     </div>
                   </div>
@@ -492,7 +494,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-4 col-md-6">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Specialty Rank
+                      {t("doctor.profileSetting.specialtyRank")}
                     </label>
                     <input 
                       type="number" 
@@ -508,7 +510,7 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-12">
                   <div className="form-wrap">
                     <label className="form-label">
-                      About Me <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.aboutMe")} <span className="text-danger">*</span>
                     </label>
                     <textarea 
                       className="form-control" 
@@ -523,14 +525,14 @@ const ProfileSetting = (props: ProfileSettingProps) => {
                 <div className="col-lg-12">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Known Languages <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.knownLanguages")} <span className="text-danger">*</span>
                     </label>
                     <div className="input-block input-block-new mb-0">
                         <CommonTagInputs
                             initialTags={tags}
                             onTagsChange={handleTagsChange }/>
                         <Link to="#" className="input-text save-btn">
-                          Save
+                          {t("common.save")}
                         </Link>
                     </div>
                   </div>
@@ -542,19 +544,19 @@ const ProfileSetting = (props: ProfileSettingProps) => {
 
             {/* Services Section */}
             <div className="setting-card">
-              <h4 className="card-title">Services Offered</h4>
+              <h4 className="card-title" data-key="doctor.profileSetting.servicesOffered">{t("doctor.profileSetting.servicesOffered")}</h4>
               <div className="row">
                 <div className="col-lg-12">
                   <div className="form-wrap">
                     <label className="form-label">
-                      Medical Services <span className="text-danger">*</span>
+                      {t("doctor.profileSetting.medicalServices")} <span className="text-danger">*</span>
                     </label>
                     <div className="input-block input-block-new mb-0">
                         <CommonTagInputs
                             initialTags={servicesOffered}
                             onTagsChange={setServicesOffered}/>
                         <Link to="#" className="input-text save-btn">
-                          Save
+                          {t("common.save")}
                         </Link>
                     </div>
                   </div>
@@ -565,10 +567,10 @@ const ProfileSetting = (props: ProfileSettingProps) => {
 
             <div className="modal-btn text-end">
               <Link to="#" className="btn btn-gray">
-                Cancel
+                {t("common.cancel")}
               </Link>
               <button type="button" className="btn btn-primary prime-btn" onClick={onPrimaryButtonClick} disabled={isSaving}>
-                {isEditMode ? (isSaving ? 'Saving...' : 'Save Changes') : 'Edit Profile'}
+                {isEditMode ? (isSaving ? t("common.saving") : t("common.saveChanges")) : t("doctor.profileSetting.editProfile")}
               </button>
             </div>
           </form>

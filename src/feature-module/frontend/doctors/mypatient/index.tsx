@@ -8,8 +8,10 @@ import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { useAuth } from "../../../../core/context/AuthContext";
 import { appointmentService, type Appointment } from "../../../../core/services/appointmentService";
 import SocketService from "../../../../core/services/socketService";
+import { useGlobalTranslation } from "../../../../hooks/useGlobalTranslation";
 
 const MyPatient: React.FC = (props) => {
+  const { t } = useGlobalTranslation();
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -184,9 +186,9 @@ const MyPatient: React.FC = (props) => {
                       </Link>
                     </h6>
                     <ul>
-                      <li>Email: {patient.email}</li>
-                      <li>Phone: {patient.phone}</li>
-                      <li>Appointments: {patient.totalAppointments}</li>
+                      <li>{t("doctor.myPatients.email")}: {patient.email}</li>
+                      <li>{t("doctor.myPatients.phone")}: {patient.phone}</li>
+                      <li>{t("doctor.myPatients.appointments")}: {patient.totalAppointments}</li>
                     </ul>
                   </div>
                 </div>
@@ -206,7 +208,7 @@ const MyPatient: React.FC = (props) => {
               <div className="patient-book">
                 <p style={{ color: '#495057', fontSize: '13px', marginBottom: '0' }}>
                   <i className="isax isax-calendar-1" style={{ color: '#6f42c1', marginRight: '8px' }} />
-                  Last Booking <span style={{ fontWeight: '600', color: '#2c3e50' }}>{formattedDate}</span>
+                  {t("doctor.myPatients.lastBooking")} <span style={{ fontWeight: '600', color: '#2c3e50' }}>{formattedDate}</span>
                 </p>
               </div>
             </li>
@@ -247,9 +249,9 @@ const MyPatient: React.FC = (props) => {
                     <li className="breadcrumb-item" aria-current="page">
                       Doctor
                     </li>
-                    <li className="breadcrumb-item active">My Patients</li>
+                    <li className="breadcrumb-item active" data-key="doctor.myPatients.title">{t("doctor.myPatients.title")}</li>
                   </ol>
-                  <h2 className="breadcrumb-title">My Patients</h2>
+                  <h2 className="breadcrumb-title" data-key="doctor.myPatients.title">{t("doctor.myPatients.title")}</h2>
                 </nav>
               </div>
             </div>
@@ -291,14 +293,15 @@ const MyPatient: React.FC = (props) => {
             </div>
             <div className="col-lg-8 col-xl-9">
               <div className="dashboard-header">
-                <h3>My Patients</h3>
+                <h3 data-key="doctor.myPatients.title">{t("doctor.myPatients.title")}</h3>
                 <ul className="header-list-btns">
                   <li>
                     <div className="input-block dash-search-input">
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Search patients..."
+                        placeholder={t("doctor.myPatients.searchPatients")}
+                        data-key="doctor.myPatients.searchPatients"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                       />
@@ -316,12 +319,12 @@ const MyPatient: React.FC = (props) => {
                       <div className="spinner-border text-primary" role="status">
                         <span className="visually-hidden">Loading...</span>
                       </div>
-                      <p className="mt-3">Loading patients...</p>
+                      <p className="mt-3" data-key="doctor.myPatients.loading">{t("doctor.myPatients.loading")}</p>
                     </div>
                   ) : error ? (
                     <div className="col-12 text-center py-5">
                       <div className="alert alert-danger" role="alert">
-                        <h6>Error loading patients</h6>
+                        <h6 data-key="doctor.myPatients.error">{t("doctor.myPatients.error")}</h6>
                         <p>{error}</p>
                       </div>
                     </div>

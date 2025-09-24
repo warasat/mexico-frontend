@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ImageWithBasePath from '../../../../components/imageWithBasePath';
-import { useTranslation } from 'react-i18next';
+import { useGlobalTranslation } from '../../../../hooks/useGlobalTranslation';
 import Slider from "react-slick";
 import { specialtiesData } from '../../common/data/specialties';
 import { useNavigate } from 'react-router-dom';
@@ -82,7 +82,7 @@ const HomeBanner: React.FC = () => {
     const [selectedLocation, setSelectedLocation] = useState<string>('');
     const [selectedSpeciality, setSelectedSpeciality] = useState<string>('');
     const [selectedDisease, setSelectedDisease] = useState<string>('');
-    const { t } = useTranslation();
+    const { t } = useGlobalTranslation();
 
     // Hero banner slider configuration
     const HeroSlider = {
@@ -101,21 +101,21 @@ const HomeBanner: React.FC = () => {
     // Hero banner slides data
     const heroSlides = [
         {
-            title: "Find Your Doctor",
-            subtitle: "Book an appointment with the best doctors",
-            description: "Connect with experienced healthcare professionals and get the care you need.",
+            title: t("home.hero.findDoctor.title"),
+            subtitle: t("home.hero.findDoctor.subtitle"),
+            description: t("home.hero.findDoctor.description"),
             bgImage: "assets/img/bg/banner-bg-02.png"
         },
         {
-            title: "Quality Healthcare",
-            subtitle: "Expert medical care at your fingertips",
-            description: "Access top-rated doctors and specialists for all your healthcare needs.",
+            title: t("home.hero.qualityHealthcare.title"),
+            subtitle: t("home.hero.qualityHealthcare.subtitle"),
+            description: t("home.hero.qualityHealthcare.description"),
             bgImage: "assets/img/bg/banner-bg-03.png"
         },
         {
-            title: "24/7 Support",
-            subtitle: "Healthcare support whenever you need it",
-            description: "Get medical assistance and support around the clock from our dedicated team.",
+            title: t("home.hero.support.title"),
+            subtitle: t("home.hero.support.subtitle"),
+            description: t("home.hero.support.description"),
             bgImage: "assets/img/bg/banner-bg-04.png"
         }
     ];

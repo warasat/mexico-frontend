@@ -10,6 +10,10 @@ import { AuthProvider } from './core/context/AuthContext'
 
 // Initialize i18n
 import './core/i18n'
+import { initializeTranslations } from './utils/translationUtils'
+
+// Initialize translations when the app starts
+initializeTranslations();
 
 
 import "bootstrap/dist/css/bootstrap.min.css";

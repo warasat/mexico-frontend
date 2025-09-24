@@ -10,8 +10,10 @@ import { useAuth } from "../../../../core/context/AuthContext";
 import { useState, useEffect } from "react";
 import { appointmentService, type Appointment } from "../../../../core/services/appointmentService";
 import SocketService from "../../../../core/services/socketService";
+import { useGlobalTranslation } from "../../../../hooks/useGlobalTranslation";
 
 const DoctorDashboard = (props: any) => {
+  const { t } = useGlobalTranslation();
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -195,12 +197,12 @@ const DoctorDashboard = (props: any) => {
                         <i className="isax isax-home-15" />
                       </Link>
                     </li>
-                    <li className="breadcrumb-item" aria-current="page">
-                      Doctor
+                    <li className="breadcrumb-item" aria-current="page" data-key="navigation.doctors">
+                      {t("navigation.doctors")}
                     </li>
-                    <li className="breadcrumb-item active">Dashboard</li>
+                    <li className="breadcrumb-item active" data-key="doctor.dashboard.title">{t("doctor.dashboard.title")}</li>
                   </ol>
-                  <h2 className="breadcrumb-title">Dashboard</h2>
+                  <h2 className="breadcrumb-title" data-key="doctor.dashboard.title">{t("doctor.dashboard.title")}</h2>
                 </nav>
               </div>
             </div>
@@ -248,11 +250,11 @@ const DoctorDashboard = (props: any) => {
                   <div className="dashboard-box-col w-100">
                     <div className="dashboard-widget-box">
                       <div className="dashboard-content-info">
-                        <h6>Total Patient</h6>
+                        <h6 data-key="doctor.dashboard.totalPatient">{t("doctor.dashboard.totalPatient")}</h6>
                         <h4>{loading ? '...' : patientCounts.totalPatients}</h4>
                         <span className="text-success">
                           <i className="fa-solid fa-arrow-up" />
-                          {loading ? 'Loading...' : `${patientCounts.totalPatients} Unique Patients`}
+                          {loading ? t("common.loading") : `${patientCounts.totalPatients} ${t("doctor.dashboard.uniquePatients")}`}
                         </span>
                       </div>
                       <div className="dashboard-widget-icon">
@@ -263,11 +265,11 @@ const DoctorDashboard = (props: any) => {
                     </div>
                     <div className="dashboard-widget-box">
                       <div className="dashboard-content-info">
-                        <h6>Patients Today</h6>
+                        <h6 data-key="doctor.dashboard.patientsToday">{t("doctor.dashboard.patientsToday")}</h6>
                         <h4>{loading ? '...' : patientCounts.todayPatients}</h4>
                         <span className="text-danger">
                           <i className="fa-solid fa-arrow-up" />
-                          {loading ? 'Loading...' : `${patientCounts.todayPatients} Today's Patients`}
+                          {loading ? t("common.loading") : `${patientCounts.todayPatients} ${t("doctor.dashboard.todaysPatients")}`}
                         </span>
                       </div>
                       <div className="dashboard-widget-icon">
@@ -278,11 +280,11 @@ const DoctorDashboard = (props: any) => {
                     </div>
                     <div className="dashboard-widget-box">
                       <div className="dashboard-content-info">
-                        <h6>Appointments Today</h6>
+                        <h6 data-key="doctor.dashboard.appointmentsToday">{t("doctor.dashboard.appointmentsToday")}</h6>
                         <h4>{appointments.filter(apt => !apt.isCompleted && !apt.cancelled).length}</h4>
                         <span className="text-success">
                           <i className="fa-solid fa-calendar-days" />
-                          {appointments.filter(apt => !apt.isCompleted && !apt.cancelled).length > 0 ? 'Active Appointments' : 'No Appointments'}
+                          {appointments.filter(apt => !apt.isCompleted && !apt.cancelled).length > 0 ? t("doctor.dashboard.activeAppointments") : t("doctor.dashboard.noAppointments")}
                         </span>
                       </div>
                       <div className="dashboard-widget-icon">
@@ -297,7 +299,7 @@ const DoctorDashboard = (props: any) => {
                   <div className="dashboard-card w-100">
                     <div className="dashboard-card-head">
                       <div className="header-title">
-                        <h5>Appointment</h5>
+                        <h5 data-key="doctor.dashboard.appointment">{t("doctor.dashboard.appointment")}</h5>
                       </div>
                       <div className="dropdown header-dropdown">
                         <Link
@@ -305,17 +307,17 @@ const DoctorDashboard = (props: any) => {
                           data-bs-toggle="dropdown"
                           to="#"
                         >
-                          Last 7 Days
+                          {t("doctor.dashboard.last7Days")}
                         </Link>
                         <div className="dropdown-menu dropdown-menu-end">
                           <Link to="#" className="dropdown-item">
-                            Today
+                            {t("doctor.dashboard.today")}
                           </Link>
                           <Link to="#" className="dropdown-item">
-                            This Month
+                            {t("doctor.dashboard.thisMonth")}
                           </Link>
                           <Link to="#" className="dropdown-item">
-                            Last 7 Days
+                            {t("doctor.dashboard.last7Days")}
                           </Link>
                         </div>
                       </div>

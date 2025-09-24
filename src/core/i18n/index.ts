@@ -33,4 +33,14 @@ i18n
     }
   });
 
+i18n.on('languageChanged', (lng) => {
+  window.dispatchEvent(new CustomEvent('i18nLanguageChanged', {
+    detail: { language: lng }
+  }));
+
+  import('../../utils/translationUtils').then(({ translatePage }) => {
+    translatePage();
+  });
+});
+
 export default i18n;

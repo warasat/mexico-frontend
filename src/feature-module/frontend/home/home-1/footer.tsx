@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import ImageWithBasePath from '../../../../components/imageWithBasePath';
+import { useGlobalTranslation } from '../../../../hooks/useGlobalTranslation';
 const Footer: React.FC = () => {
+  const { t } = useGlobalTranslation();
   return (
     <div>
       <>
@@ -14,38 +16,38 @@ const Footer: React.FC = () => {
                   <div className="row">
                     <div className="col-lg-3 col-md-3">
                       <div className="footer-widget footer-menu">
-                        <h6 className="footer-title">Company</h6>
+                        <h6 className="footer-title" data-key="footer.company.title">{t("footer.company.title")}</h6>
                         <ul>
                           <li>
-                            <Link to="/pages/about-us">About</Link>
+                            <Link to="/pages/about-us" data-key="footer.company.about">{t("footer.company.about")}</Link>
                           </li>
                           <li>
-                            <Link to="/patient/search-doctor1">Features</Link>
+                            <Link to="/patient/search-doctor1" data-key="footer.company.features">{t("footer.company.features")}</Link>
                           </li>
                           <li>
-                            <Link to="#">Works</Link>
+                            <Link to="#" data-key="footer.company.works">{t("footer.company.works")}</Link>
                           </li>
                           <li>
-                            <Link to="#">Careers</Link>
+                            <Link to="#" data-key="footer.company.careers">{t("footer.company.careers")}</Link>
                           </li>
                           <li>
-                            <Link to="#">Locations</Link>
+                            <Link to="#" data-key="footer.company.locations">{t("footer.company.locations")}</Link>
                           </li>
                         </ul>
                       </div>
                     </div>
                     <div className="col-lg-3 col-md-3">
                       <div className="footer-widget footer-menu">
-                        <h6 className="footer-title">Treatments</h6>
+                        <h6 className="footer-title" data-key="footer.treatments.title">{t("footer.treatments.title")}</h6>
                         <ul>
                           <li>
-                            <Link to="/patient/search-doctor1">Dental</Link>
+                            <Link to="/patient/search-doctor1" data-key="footer.treatments.dental">{t("footer.treatments.dental")}</Link>
                           </li>
                           <li>
-                            <Link to="/patient/search-doctor1">Cardiac</Link>
+                            <Link to="/patient/search-doctor1" data-key="footer.treatments.cardiac">{t("footer.treatments.cardiac")}</Link>
                           </li>
                           <li>
-                            <Link to="/patient/search-doctor1">Spinal Cord</Link>
+                            <Link to="/patient/search-doctor1" data-key="footer.treatments.spinal">{t("footer.treatments.spinal")}</Link>
                           </li>
                           <li>
                             <Link to="/patient/search-doctor1">Hair Growth</Link>

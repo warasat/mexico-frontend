@@ -8,9 +8,11 @@ import CommonDatePicker from "../../common/common-datePicker/commonDatePicker";
 import { useAuth } from "../../../../core/context/AuthContext";
 import { useEffect, useRef, useState } from "react";
 import doctorProfileApi from "../../../../core/services/doctorProfileApi";
+import { useGlobalTranslation } from "../../../../hooks/useGlobalTranslation";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const AvailableTimings = (props: any) => {
+  const { t } = useGlobalTranslation();
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
   
@@ -226,7 +228,7 @@ const AvailableTimings = (props: any) => {
               </div>
               <div className="col-lg-8 col-xl-9">
                 <div className="dashboard-header">
-                  <h3>Available Timings</h3>
+                  <h3 data-key="doctor.availableTimings.title">{t("doctor.availableTimings.title")}</h3>
                 </div>
                 <div className="appointment-tabs">
                   <ul className="nav available-nav">
@@ -237,7 +239,7 @@ const AvailableTimings = (props: any) => {
                         data-bs-toggle="tab"
                         data-bs-target="#general-availability"
                       >
-                        General Availability
+                        {t("doctor.availableTimings.generalAvailability")}
                       </Link>
                     </li>
                   </ul>
@@ -248,20 +250,20 @@ const AvailableTimings = (props: any) => {
                     <div className="card custom-card">
                       <div className="card-body">
                         <div className="card-header">
-                          <h3>Select Available Slots</h3>
+                          <h3 data-key="doctor.availableTimings.selectAvailableSlots">{t("doctor.availableTimings.selectAvailableSlots")}</h3>
                         </div>
                         <div className="text-end mb-3">
                           {isEditing ? (
                             <>
-                              <button className="btn btn-gray me-2" onClick={onCancel} disabled={saving}>Cancel</button>
-                              <button className="btn btn-primary prime-btn" onClick={onSave} disabled={saving}>{saving ? 'Saving...' : 'Save Changes'}</button>
+                              <button className="btn btn-gray me-2" onClick={onCancel} disabled={saving}>{t("common.cancel")}</button>
+                              <button className="btn btn-primary prime-btn" onClick={onSave} disabled={saving}>{saving ? t("common.saving") : t("common.saveChanges")}</button>
                             </>
                           ) : (
-                            <button className="btn btn-primary prime-btn" onClick={() => setIsEditing(true)} disabled={loading}>Edit</button>
+                            <button className="btn btn-primary prime-btn" onClick={() => setIsEditing(true)} disabled={loading}>{t("common.edit")}</button>
                           )}
                         </div>
                         <div className="available-tab">
-                          <label className="form-label">Select Available days</label>
+                          <label className="form-label" data-key="doctor.availableTimings.selectAvailableDays">{t("doctor.availableTimings.selectAvailableDays")}</label>
                           <ul className="nav">
                             <li>
                               <Link
@@ -270,37 +272,37 @@ const AvailableTimings = (props: any) => {
                                 data-bs-toggle="tab"
                                 data-bs-target="#monday"
                               >
-                                Monday
+                                {t("doctor.availableTimings.monday")}
                               </Link>
                             </li>
                             <li>
                               <Link to="#" data-bs-toggle="tab" data-bs-target="#tuesday">
-                                Tuesday
+                                {t("doctor.availableTimings.tuesday")}
                               </Link>
                             </li>
                             <li>
                               <Link to="#" data-bs-toggle="tab" data-bs-target="#wednesday">
-                                Wednesday
+                                {t("doctor.availableTimings.wednesday")}
                               </Link>
                             </li>
                             <li>
                               <Link to="#" data-bs-toggle="tab" data-bs-target="#thursday">
-                                Thursday
+                                {t("doctor.availableTimings.thursday")}
                               </Link>
                             </li>
                             <li>
                               <Link to="#" data-bs-toggle="tab" data-bs-target="#friday">
-                                Friday
+                                {t("doctor.availableTimings.friday")}
                               </Link>
                             </li>
                             <li>
                               <Link to="#" data-bs-toggle="tab" data-bs-target="#saturday">
-                                Saturday
+                                {t("doctor.availableTimings.saturday")}
                               </Link>
                             </li>
                             <li>
                               <Link to="#" data-bs-toggle="tab" data-bs-target="#sunday">
-                                Sunday
+                                {t("doctor.availableTimings.sunday")}
                               </Link>
                             </li>
                           </ul>
@@ -312,7 +314,7 @@ const AvailableTimings = (props: any) => {
                               {/* Morning Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Morning</h4>
+                                  <h4 data-key="doctor.availableTimings.morning">{t("doctor.availableTimings.morning")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -393,7 +395,7 @@ const AvailableTimings = (props: any) => {
                               {/* Afternoon Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Afternoon</h4>
+                                  <h4 data-key="doctor.availableTimings.afternoon">{t("doctor.availableTimings.afternoon")}</h4>
                                   <div className="time-slot-list">
                                 <ul>
                                   <li>
@@ -474,7 +476,7 @@ const AvailableTimings = (props: any) => {
                               {/* Evening Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Evening</h4>
+                                  <h4 data-key="doctor.availableTimings.evening">{t("doctor.availableTimings.evening")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -560,7 +562,7 @@ const AvailableTimings = (props: any) => {
                               {/* Morning Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Morning</h4>
+                                  <h4 data-key="doctor.availableTimings.morning">{t("doctor.availableTimings.morning")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -641,7 +643,7 @@ const AvailableTimings = (props: any) => {
                               {/* Afternoon Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Afternoon</h4>
+                                  <h4 data-key="doctor.availableTimings.afternoon">{t("doctor.availableTimings.afternoon")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -722,7 +724,7 @@ const AvailableTimings = (props: any) => {
                               {/* Evening Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Evening</h4>
+                                  <h4 data-key="doctor.availableTimings.evening">{t("doctor.availableTimings.evening")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -808,7 +810,7 @@ const AvailableTimings = (props: any) => {
                               {/* Morning Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Morning</h4>
+                                  <h4 data-key="doctor.availableTimings.morning">{t("doctor.availableTimings.morning")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -889,7 +891,7 @@ const AvailableTimings = (props: any) => {
                               {/* Afternoon Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Afternoon</h4>
+                                  <h4 data-key="doctor.availableTimings.afternoon">{t("doctor.availableTimings.afternoon")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -970,7 +972,7 @@ const AvailableTimings = (props: any) => {
                               {/* Evening Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Evening</h4>
+                                  <h4 data-key="doctor.availableTimings.evening">{t("doctor.availableTimings.evening")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1056,7 +1058,7 @@ const AvailableTimings = (props: any) => {
                               {/* Morning Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Morning</h4>
+                                  <h4 data-key="doctor.availableTimings.morning">{t("doctor.availableTimings.morning")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1137,7 +1139,7 @@ const AvailableTimings = (props: any) => {
                               {/* Afternoon Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Afternoon</h4>
+                                  <h4 data-key="doctor.availableTimings.afternoon">{t("doctor.availableTimings.afternoon")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1218,7 +1220,7 @@ const AvailableTimings = (props: any) => {
                               {/* Evening Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Evening</h4>
+                                  <h4 data-key="doctor.availableTimings.evening">{t("doctor.availableTimings.evening")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1304,7 +1306,7 @@ const AvailableTimings = (props: any) => {
                               {/* Morning Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Morning</h4>
+                                  <h4 data-key="doctor.availableTimings.morning">{t("doctor.availableTimings.morning")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1385,7 +1387,7 @@ const AvailableTimings = (props: any) => {
                               {/* Afternoon Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Afternoon</h4>
+                                  <h4 data-key="doctor.availableTimings.afternoon">{t("doctor.availableTimings.afternoon")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1466,7 +1468,7 @@ const AvailableTimings = (props: any) => {
                               {/* Evening Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Evening</h4>
+                                  <h4 data-key="doctor.availableTimings.evening">{t("doctor.availableTimings.evening")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1552,7 +1554,7 @@ const AvailableTimings = (props: any) => {
                               {/* Morning Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Morning</h4>
+                                  <h4 data-key="doctor.availableTimings.morning">{t("doctor.availableTimings.morning")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1633,7 +1635,7 @@ const AvailableTimings = (props: any) => {
                               {/* Afternoon Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Afternoon</h4>
+                                  <h4 data-key="doctor.availableTimings.afternoon">{t("doctor.availableTimings.afternoon")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1714,7 +1716,7 @@ const AvailableTimings = (props: any) => {
                               {/* Evening Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Evening</h4>
+                                  <h4 data-key="doctor.availableTimings.evening">{t("doctor.availableTimings.evening")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1800,7 +1802,7 @@ const AvailableTimings = (props: any) => {
                               {/* Morning Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Morning</h4>
+                                  <h4 data-key="doctor.availableTimings.morning">{t("doctor.availableTimings.morning")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1881,7 +1883,7 @@ const AvailableTimings = (props: any) => {
                               {/* Afternoon Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Afternoon</h4>
+                                  <h4 data-key="doctor.availableTimings.afternoon">{t("doctor.availableTimings.afternoon")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>
@@ -1962,7 +1964,7 @@ const AvailableTimings = (props: any) => {
                               {/* Evening Section */}
                               <div className="col-lg-4 col-md-4">
                                 <div className="time-slot time-slot-blk">
-                                  <h4>Evening</h4>
+                                  <h4 data-key="doctor.availableTimings.evening">{t("doctor.availableTimings.evening")}</h4>
                                   <div className="time-slot-list">
                                     <ul>
                                       <li>

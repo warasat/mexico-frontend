@@ -7,8 +7,10 @@ import ImageWithBasePath from "../../../../components/imageWithBasePath";
 import { useAuth } from "../../../../core/context/AuthContext";
 import { appointmentService, type Appointment } from "../../../../core/services/appointmentService";
 import SocketService from "../../../../core/services/socketService";
+import { useGlobalTranslation } from "../../../../hooks/useGlobalTranslation";
 
 const Appointments = (props: any) => {
+  const { t } = useGlobalTranslation();
   const { authState } = useAuth();
   const { isAuthenticated, userType } = authState;
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -195,7 +197,7 @@ const Appointments = (props: any) => {
                   window.open('https://meet.google.com/landing', '_blank');
                 }}
               >
-                Google Meet
+                {t("doctor.appointments.googleMeet")}
                 <i className="fa-brands fa-google me-1" />
               </Link>
             ) : (
@@ -208,7 +210,7 @@ const Appointments = (props: any) => {
                   alert('Clinic visit details will be implemented here');
                 }}
               >
-                Clinic Visit
+                {t("doctor.appointments.clinicVisit")}
                 <i className="fa-solid fa-hospital me-1" />
               </Link>
             )}
@@ -235,7 +237,7 @@ const Appointments = (props: any) => {
                 <div className="spinner-border text-primary" role="status">
                   <span className="visually-hidden">Loading...</span>
                 </div>
-                <p className="mt-3">Loading appointments...</p>
+                <p className="mt-3" data-key="doctor.appointments.loading">{t("doctor.appointments.loading")}</p>
               </div>
             </div>
           </div>
@@ -295,7 +297,7 @@ const Appointments = (props: any) => {
                     </li>
                     <li className="breadcrumb-item active">Appointments</li>
                   </ol>
-                  <h2 className="breadcrumb-title">Appointments</h2>
+                  <h2 className="breadcrumb-title" data-key="doctor.appointments.title">{t("doctor.appointments.title")}</h2>
                 </nav>
               </div>
             </div>
@@ -337,14 +339,15 @@ const Appointments = (props: any) => {
             </div>
             <div className="col-lg-8 col-xl-9">
               <div className="dashboard-header">
-                <h3>Appointments</h3>
+                <h3 data-key="doctor.appointments.title">{t("doctor.appointments.title")}</h3>
                 <ul className="header-list-btns">
                   <li>
                     <div className="input-block dash-search-input">
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Search"
+                        placeholder={t("common.search")}
+                        data-key="common.search"
                       />
                       <span className="search-icon">
                         <i className="fa-solid fa-magnifying-glass" />
@@ -371,7 +374,7 @@ const Appointments = (props: any) => {
                         aria-controls="pills-upcoming"
                         aria-selected="false"
                       >
-                        Upcoming<span>{upcomingAppointments.length}</span>
+                        {t("doctor.appointments.upcoming")}<span>{upcomingAppointments.length}</span>
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -385,7 +388,7 @@ const Appointments = (props: any) => {
                         aria-controls="pills-cancel"
                         aria-selected="true"
                       >
-                        Cancelled<span>{cancelledAppointments.length}</span>
+                        {t("doctor.appointments.cancelled")}<span>{cancelledAppointments.length}</span>
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -399,7 +402,7 @@ const Appointments = (props: any) => {
                         aria-controls="pills-complete"
                         aria-selected="true"
                       >
-                        Completed<span>{completedAppointments.length}</span>
+                        {t("doctor.appointments.completed")}<span>{completedAppointments.length}</span>
                       </button>
                     </li>
                   </ul>

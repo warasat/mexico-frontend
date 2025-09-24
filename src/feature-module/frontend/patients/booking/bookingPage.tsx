@@ -6,6 +6,7 @@ import BookingWizard from './bookingWizard'
 import { useAuth } from '../../../../core/context/AuthContext'
 import publicDoctorApi, { type PublicDoctor } from '../../../../core/services/publicDoctorApi'
 import SocketService from '../../../../core/services/socketService'
+import { useGlobalTranslation } from '../../../../hooks/useGlobalTranslation'
 
 interface Doctor {
   id: string
@@ -28,6 +29,7 @@ const BookingPage: React.FC = () => {
   const { authState } = useAuth()
   const { isAuthenticated, userType } = authState
   const navigate = useNavigate()
+  const { t } = useGlobalTranslation()
   const location = useLocation()
 
   // Check if a doctor was passed from navigation state
@@ -137,9 +139,9 @@ const BookingPage: React.FC = () => {
                           <i className="isax isax-home-15" />
                         </Link>
                       </li>
-                      <li className="breadcrumb-item active">Book Appointment</li>
+                      <li className="breadcrumb-item active" data-key="patient.booking.title">{t("patient.booking.title")}</li>
                     </ol>
-                    <h2 className="breadcrumb-title">Book Appointment</h2>
+                    <h2 className="breadcrumb-title" data-key="patient.booking.title">{t("patient.booking.title")}</h2>
                   </nav>
                 </div>
               </div>
@@ -153,8 +155,8 @@ const BookingPage: React.FC = () => {
                 className="section-header sec-header-one text-center aos"
                 data-aos="fade-up"
               >
-                <span className="badge badge-primary">Available Doctors</span>
-                <h2>Choose Your Doctor</h2>
+                <span className="badge badge-primary" data-key="patient.booking.availableDoctors">{t("patient.booking.availableDoctors")}</span>
+                <h2 data-key="patient.booking.chooseDoctor">{t("patient.booking.chooseDoctor")}</h2>
               </div>
               
               <div className="row">
@@ -185,7 +187,7 @@ const BookingPage: React.FC = () => {
                           </Link>
                           <span className={`badge ${getDoctorAvailability(doctor) === 'available' ? 'bg-success-light' : 'bg-danger-light'} d-inline-flex align-items-center`}>
                             <i className="fa-solid fa-circle fs-5 me-1" />
-                            {getDoctorAvailability(doctor) === 'available' ? 'Available' : 'Unavailable'}
+                            {getDoctorAvailability(doctor) === 'available' ? t("common.available") : t("common.unavailable")}
                           </span>
                         </div>
                         <div className="p-3 pt-0" style={{flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
@@ -233,7 +235,7 @@ const BookingPage: React.FC = () => {
                                 getDoctorAvailability(doctor) === 'available' ? 'btn-dark' : 'btn-secondary'
                               }`}
                             >
-                              {getDoctorAvailability(doctor) === 'available' ? 'Book Now' : 'Unavailable'}
+                              {getDoctorAvailability(doctor) === 'available' ? t("common.bookNow") : t("common.unavailable")}
                             </button>
                           </div>
                         </div>

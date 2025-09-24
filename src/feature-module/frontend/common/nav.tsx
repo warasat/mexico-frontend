@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../../core/context/AuthContext";
+import { useGlobalTranslation } from "../../../hooks/useGlobalTranslation";
 
 const NavLinks: React.FC = () => {
   const [isSideDoctor, setSideDoctor] = useState("");
   const [isSidePatient, setSidePatient] = useState("");
   const [isSideLogin, setSideLogin] = useState("");
+  const { t } = useGlobalTranslation();
   
   const Location = useLocation();
   const pathnames = Location.pathname;
@@ -110,28 +112,28 @@ const NavLinks: React.FC = () => {
           onClick={() => toggleSidebarPatient(isSidePatient === "patients" ? "" : "patients")}
           onMouseEnter={() => toggleSidebarPatient("patients")}
         >
-          Patients <i className="fas fa-chevron-down" />
+          {t("navigation.patients")} <i className="fas fa-chevron-down" />
         </Link>
         {isSidePatient === "patients" && (
           <ul className="submenu d-block">
             <li className={pathnames.includes("profile") ? "active" : ""}>
               <Link to="/patient/profile" onClick={() => onhandleCloseMenu()}>
-                Profile Management
+                {t("patient.profile.title")}
               </Link>
             </li>
                 <li className={pathnames.includes("search-doctor") ? "active" : ""}>
                   <Link to="/patient/search-doctor1" onClick={() => onhandleCloseMenu()}>
-                    Search Doctors
+                    {t("navigation.doctors")}
                   </Link>
                 </li>
             <li className={pathnames.includes("booking") ? "active" : ""}>
               <Link to="/booking" onClick={() => onhandleCloseMenu()}>
-                Book Appointments
+                {t("patient.booking.title")}
               </Link>
             </li>
             <li className={pathnames.includes("appointments") ? "active" : ""}>
               <Link to="/patient/patient-appointments" onClick={() => onhandleCloseMenu()}>
-                Appointment History
+                {t("patient.appointments.history")}
               </Link>
             </li>
           </ul>
@@ -142,14 +144,14 @@ const NavLinks: React.FC = () => {
       {/* About */}
       <li className={pathnames.includes("aboutus") ? "active" : ""}>
         <Link to="/aboutus" onClick={() => onhandleCloseMenu()}>
-          About
+          {t("navigation.about")}
         </Link>
       </li>
 
       {/* Contact */}
       <li className={pathnames.includes("contactus") ? "active" : ""}>
         <Link to="/contactus" onClick={() => onhandleCloseMenu()}>
-          Contact
+          {t("navigation.contact")}
         </Link>
       </li>
 
