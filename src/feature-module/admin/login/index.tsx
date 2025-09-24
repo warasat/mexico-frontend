@@ -13,37 +13,32 @@ const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Demo credentials
-  const demoCredentials = {
-    email: 'admin@example.com',
-    password: 'admin123',
-    name: 'Admin User',
-    id: 'admin-001'
-  };
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Check against demo credentials
-    if (email === demoCredentials.email && password === demoCredentials.password) {
-      login('admin', {
-        id: demoCredentials.id,
-        name: demoCredentials.name,
-        email: demoCredentials.email
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'}/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim().toLowerCase(), password: password.trim() })
       });
-      
-      // Redirect to admin dashboard or the page they were trying to access
-      const from = location.state?.from?.pathname || '/system-admin';
+      const data = await res.json();
+      if (!res.ok || !data?.success || !data?.token) {
+        throw new Error(data?.message || 'Invalid email or password');
+      }
+
+      // Persist token and set auth state as admin
+      localStorage.setItem('token', data.token);
+      login('admin', { id: 'admin', name: 'Administrator', email });
+
+      const from = (location.state as any)?.from?.pathname || '/system-admin';
       navigate(from, { replace: true });
-    } else {
-      setError('Invalid credentials. Please use the demo credentials provided.');
+    } catch (err: any) {
+      setError(err?.message || 'Login failed');
     }
-    
+
     setIsLoading(false);
   };
 
@@ -95,12 +90,6 @@ const AdminLogin: React.FC = () => {
                       {isLoading ? 'Logging in...' : 'Login'}
                     </button>
                   </form>
-                  
-                  <div className="mt-4">
-                    <h6>Demo Credentials:</h6>
-                    <p><strong>Email:</strong> {demoCredentials.email}</p>
-                    <p><strong>Password:</strong> {demoCredentials.password}</p>
-                  </div>
                 </div>
               </div>
             </div>

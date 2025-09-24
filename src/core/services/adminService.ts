@@ -1,4 +1,11 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+
+function getAuthHeaders() {
+  const token = localStorage.getItem('token');
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  return headers;
+}
 
 export interface DashboardStats {
   totalDoctors: number;
@@ -92,9 +99,7 @@ class AdminService {
     try {
       const response = await fetch(`${API_BASE_URL}/admin/dashboard/stats`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
       });
 
       if (!response.ok) {
@@ -113,9 +118,7 @@ class AdminService {
     try {
       const response = await fetch(`${API_BASE_URL}/admin/dashboard/monthly-stats`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
       });
 
       if (!response.ok) {
@@ -134,9 +137,7 @@ class AdminService {
     try {
       const response = await fetch(`${API_BASE_URL}/admin/dashboard/doctors?page=${page}&limit=${limit}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
       });
 
       if (!response.ok) {
@@ -155,9 +156,7 @@ class AdminService {
     try {
       const response = await fetch(`${API_BASE_URL}/admin/dashboard/patients?page=${page}&limit=${limit}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
       });
 
       if (!response.ok) {
@@ -176,9 +175,7 @@ class AdminService {
     try {
       const response = await fetch(`${API_BASE_URL}/admin/dashboard/appointments?page=${page}&limit=${limit}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
       });
 
       if (!response.ok) {
