@@ -6,6 +6,7 @@ import LanguageSwitcher from '../../../components/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 
 const AdminLogin: React.FC = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
