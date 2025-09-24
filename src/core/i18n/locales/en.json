@@ -337,6 +337,25 @@
     "chiropractor": "Chiropractor",
     "optometrist": "Optometrist"
   },
+  "admin": {
+    "login": {
+      "title": "Admin Login",
+      "email": "Email",
+      "password": "Password",
+      "loggingIn": "Logging in...",
+      "demoCredentials": "Demo Credentials"
+    }
+  },
+  "patient": {
+    "auth": {
+      "title": "Patient"
+    }
+  },
+  "doctor": {
+    "auth": {
+      "title": "Doctor"
+    }
+  },
   "footer": {
     "company": {
       "title": "Company",

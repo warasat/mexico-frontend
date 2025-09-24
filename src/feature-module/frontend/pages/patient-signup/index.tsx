@@ -6,6 +6,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../../../assets/css/patient-signup-tabs.css";
 import { useAuth } from "../../../../core/context/AuthContext";
 import patientAuthService from "../../../../core/services/patientAuthService";
+import LanguageSwitcher from "../../../../components/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 const PatientSignup: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
@@ -28,6 +30,7 @@ const PatientSignup: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
 
 
   const TogglePasswordVisibility = () => {
@@ -114,10 +117,11 @@ const PatientSignup: React.FC = () => {
                  <div className="account-content">
                    <div className="row justify-content-center">
                      <div className="col-md-12">
-                                             <div className="login-header">
+                                             <div className="login-header d-flex justify-content-between align-items-center">
                          <h3>
-                           Patient {activeTab === 'login' ? 'Login' : 'Register'}
+                           {t('patient.auth.title')} {activeTab === 'login' ? t('common.login') : t('common.register')}
                          </h3>
+                         <LanguageSwitcher />
                        </div>
                       
                       {/* Tab Navigation */}
@@ -128,7 +132,7 @@ const PatientSignup: React.FC = () => {
                               className={`nav-link ${activeTab === 'login' ? 'active' : ''}`}
                               onClick={() => setActiveTab('login')}
                             >
-                              Login
+                              {t('common.login')}
                             </button>
                           </li>
                           <li className="nav-item">
@@ -136,7 +140,7 @@ const PatientSignup: React.FC = () => {
                               className={`nav-link ${activeTab === 'register' ? 'active' : ''}`}
                               onClick={() => setActiveTab('register')}
                             >
-                              Register
+                              {t('common.register')}
                             </button>
                           </li>
                         </ul>

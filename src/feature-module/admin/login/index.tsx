@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../core/context/AuthContext';
+import LanguageSwitcher from '../../../components/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -49,8 +51,9 @@ const AdminLogin: React.FC = () => {
           <div className="row">
             <div className="col-md-6 offset-md-3">
               <div className="card">
-                <div className="card-header">
-                  <h4 className="card-title">Admin Login</h4>
+                <div className="card-header d-flex justify-content-between align-items-center">
+                  <h4 className="card-title">{t('admin.login.title')}</h4>
+                  <LanguageSwitcher />
                 </div>
                 <div className="card-body">
                   {error && (
@@ -61,7 +64,7 @@ const AdminLogin: React.FC = () => {
                   
                   <form onSubmit={handleLogin}>
                     <div className="form-group">
-                      <label>Email</label>
+                      <label>{t('admin.login.email')}</label>
                       <input
                         type="email"
                         className="form-control"
@@ -72,7 +75,7 @@ const AdminLogin: React.FC = () => {
                     </div>
                     
                     <div className="form-group">
-                      <label>Password</label>
+                      <label>{t('admin.login.password')}</label>
                       <input
                         type="password"
                         className="form-control"
@@ -87,7 +90,7 @@ const AdminLogin: React.FC = () => {
                       className="btn btn-primary btn-block"
                       disabled={isLoading}
                     >
-                      {isLoading ? 'Logging in...' : 'Login'}
+                      {isLoading ? t('admin.login.loggingIn') : t('common.login')}
                     </button>
                   </form>
                 </div>
