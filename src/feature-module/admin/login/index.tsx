@@ -15,7 +15,7 @@ const AdminLogin: React.FC = () => {
 
   // Demo credentials
   const demoCredentials = {
-    email: 'admin@example.com',
+    email: import.meta.env.VITE_ADMIN_EMAIL,
     password: 'admin123',
     name: 'Admin User',
     id: 'admin-001'

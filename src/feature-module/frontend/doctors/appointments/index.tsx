@@ -194,7 +194,7 @@ const Appointments = (props: any) => {
                 onClick={(e) => {
                   e.preventDefault();
                   // Open Google Meet landing page in new tab
-                  window.open('https://meet.google.com/landing', '_blank');
+                  window.open(import.meta.env.VITE_GOOGLE_MEET_URL, '_blank');
                 }}
               >
                 {t("doctor.appointments.googleMeet")}
