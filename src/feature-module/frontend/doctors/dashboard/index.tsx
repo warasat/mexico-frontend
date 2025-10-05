@@ -200,9 +200,9 @@ const DoctorDashboard = (props: any) => {
                     <li className="breadcrumb-item" aria-current="page" data-key="navigation.doctors">
                       {t("navigation.doctors")}
                     </li>
-                    <li className="breadcrumb-item active" data-key="doctor.dashboard.title">{t("doctor.dashboard.title")}</li>
+                    <li className="breadcrumb-item active" data-key="doctor.dashboard.title">Doctor Dashboard</li>
                   </ol>
-                  <h2 className="breadcrumb-title" data-key="doctor.dashboard.title">{t("doctor.dashboard.title")}</h2>
+                  <h2 className="breadcrumb-title" data-key="doctor.dashboard.title">Doctor Dashboard</h2>
                 </nav>
               </div>
             </div>

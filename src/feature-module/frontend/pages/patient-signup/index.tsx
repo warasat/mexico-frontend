@@ -119,7 +119,7 @@ const PatientSignup: React.FC = () => {
                      <div className="col-md-12">
                                              <div className="login-header d-flex justify-content-between align-items-center">
                          <h3>
-                           {t('patient.auth.title')} {activeTab === 'login' ? t('common.login') : t('common.register')}
+                           Patient Login
                          </h3>
                          <LanguageSwitcher />
                        </div>

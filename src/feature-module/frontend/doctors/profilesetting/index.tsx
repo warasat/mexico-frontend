@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../../header";
 import DoctorFooter from "../../common/doctorFooter/index.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath/index.js";
 import CommonTagInputs from "../../common/common-tagInput/commonTagInputs.js";
 import InsuranceTagInputs from "../../common/common-tagInput/insuranceTagInputs";
@@ -14,6 +14,7 @@ interface ProfileSettingProps { [key: string]: unknown }
 const ProfileSetting = (props: ProfileSettingProps) => {
   const { t } = useGlobalTranslation();
   const { authState } = useAuth();
+  const navigate = useNavigate();
   const { isAuthenticated, userType } = authState;
 
   // Function to get the appropriate home redirect URL based on user type
@@ -193,6 +194,8 @@ const ProfileSetting = (props: ProfileSettingProps) => {
       setIsEditMode(false);
       // Notify other components (e.g., sidebar) to refresh
       window.dispatchEvent(new CustomEvent('doctorProfileUpdated'));
+      // Redirect to available timings page
+      navigate('/doctor/available-timings');
     } catch {
       // no-op
     } finally {

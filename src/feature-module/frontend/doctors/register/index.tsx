@@ -117,7 +117,7 @@ const DoctorRegister = (props: any) => {
                                            <div className="col-md-12">
                        <div className="login-header d-flex justify-content-between align-items-center">
                          <h3>
-                           {t('doctor.auth.title')} {activeTab === 'login' ? t('common.login') : t('common.register')}
+                           Doctor Login
                          </h3>
                          <LanguageSwitcher />
                        </div>

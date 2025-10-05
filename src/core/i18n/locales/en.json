@@ -85,25 +85,89 @@
     "cancelledAppointments": "Cancelled Appointments"
   },
   "doctor": {
-    "dashboard": "Doctor Dashboard",
-    "appointments": "Appointments",
-    "patients": "Patients",
-    "schedule": "Schedule",
-    "availability": "Availability",
-    "profile": "Doctor Profile",
-    "specialties": "Specialties",
-    "experience": "Experience",
-    "education": "Education",
-    "awards": "Awards",
-    "insurance": "Insurance",
-    "clinics": "Clinics",
-    "businessSettings": "Business Settings",
-    "socialMedia": "Social Media",
-    "payment": "Payment",
-    "reviews": "Reviews",
-    "videoConsultation": "Video Consultation",
-    "patientHistory": "Patient History",
-    "patientNotes": "Patient Notes"
+    "auth": {
+      "title": "Doctor Login"
+    },
+    "dashboard": {
+      "title": "Dashboard"
+    },
+    "sidebar": {
+      "availableNow": "I am Available Now",
+      "notAvailable": "Not Available",
+      "availability": "Availability",
+      "dashboard": "Dashboard",
+      "appointments": "Appointments",
+      "availableTimings": "Available Timings",
+      "myPatients": "My Patients",
+      "profileSettings": "Profile Settings"
+    },
+    "appointments": {
+      "title": "Appointments"
+    },
+    "availableTimings": {
+      "title": "Available Timings"
+    },
+    "myPatients": {
+      "title": "My Patients"
+    },
+    "profileSetting": {
+      "title": "Profile Settings",
+      "profile": "Profile",
+      "profileImage": "Profile Image",
+      "uploadNew": "Upload New",
+      "remove": "Remove",
+      "imageRequirements": "Your Image should Below 4 MB, Accepted format jpg,png,svg",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "designation": "Designation",
+      "department": "Department",
+      "address": "Address",
+      "city": "City",
+      "state": "State",
+      "country": "Country",
+      "pincode": "Pincode",
+      "aboutMe": "About Me",
+      "medicalServices": "Medical Services",
+      "editProfile": "Edit Profile"
+    },
+    "dashboard": {
+      "totalPatient": "Total Patient",
+      "todayAppointment": "Today's Appointment",
+      "upcomingAppointment": "Upcoming Appointment",
+      "totalEarning": "Total Earning",
+      "today": "Today",
+      "thisMonth": "This Month"
+    },
+    "appointments": {
+      "title": "Appointments",
+      "upcoming": "Upcoming",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "googleMeet": "Google Meet",
+      "clinicVisit": "Clinic Visit"
+    },
+    "availableTimings": {
+      "title": "Available Timings",
+      "addNew": "Add New",
+      "day": "Day",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening"
+    },
+    "myPatients": {
+      "title": "My Patients",
+      "searchPatients": "Search patients...",
+      "loading": "Loading patients...",
+      "error": "Error loading patients",
+      "email": "Email",
+      "phone": "Phone",
+      "appointments": "Appointments",
+      "lastBooking": "Last Booking"
+    }
   },
   "admin": {
     "dashboard": "Admin Dashboard",
@@ -349,11 +413,6 @@
   "patient": {
     "auth": {
       "title": "Patient"
-    }
-  },
-  "doctor": {
-    "auth": {
-      "title": "Doctor"
     }
   },
   "footer": {

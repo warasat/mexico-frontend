@@ -351,11 +351,6 @@
       "title": "Paciente"
     }
   },
-  "doctor": {
-    "auth": {
-      "title": "Doctor"
-    }
-  },
   "footer": {
     "company": {
       "title": "Empresa",
