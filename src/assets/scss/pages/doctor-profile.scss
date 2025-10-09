@@ -1466,3 +1466,230 @@
 		}
 	}
 }
+
+// Review System Styles
+.review-widget {
+	.review-summary {
+		.rating-overview {
+			.rating-number {
+				.rating {
+					font-size: variables.$font-size-32;
+					font-weight: variables.$font-weight-bold;
+					color: variables.$primary;
+					margin-right: 15px;
+				}
+				.rating-stars {
+					margin-bottom: 10px;
+					i {
+						color: variables.$warning;
+						margin-right: 2px;
+						&.filled {
+							color: variables.$warning;
+						}
+					}
+				}
+				.rating-text {
+					color: variables.$gray-600;
+					font-size: variables.$font-size-14;
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+	
+	.write-review {
+		border: 1px solid variables.$gray-transparent;
+		border-radius: 10px;
+		padding: 20px;
+		background-color: variables.$light-transparent;
+		
+		h5 {
+			color: variables.$gray-900;
+			font-weight: variables.$font-weight-semibold;
+			margin-bottom: 20px;
+		}
+		
+		.form-group {
+			margin-bottom: 20px;
+			
+			label {
+				font-weight: variables.$font-weight-medium;
+				color: variables.$gray-900;
+				margin-bottom: 8px;
+				display: block;
+			}
+			
+			.rating-input {
+				display: flex;
+				gap: 5px;
+				
+				.star-btn {
+					background: none;
+					border: none;
+					padding: 0;
+					cursor: pointer;
+					transition: all 0.2s ease;
+					
+					i {
+						font-size: variables.$font-size-24;
+						color: variables.$gray-400;
+						transition: all 0.2s ease;
+					}
+					
+					&.active i,
+					&:hover i {
+						color: variables.$warning;
+					}
+				}
+			}
+			
+			.form-control {
+				border: 1px solid variables.$gray-transparent;
+				border-radius: 8px;
+				padding: 12px 15px;
+				font-size: variables.$font-size-14;
+				transition: border-color 0.2s ease;
+				
+				&:focus {
+					border-color: variables.$primary;
+					box-shadow: 0 0 0 0.2rem rgba(14, 130, 253, 0.25);
+					outline: none;
+				}
+			}
+		}
+		
+		.btn-primary {
+			background: variables.$primary-gradient;
+			border: none;
+			padding: 12px 30px;
+			border-radius: 8px;
+			font-weight: variables.$font-weight-medium;
+			transition: all 0.2s ease;
+			
+			&:hover {
+				background: variables.$dark;
+				transform: translateY(-1px);
+			}
+			
+			&:disabled {
+				opacity: 0.6;
+				cursor: not-allowed;
+				transform: none;
+			}
+		}
+	}
+	
+	.reviews-list {
+		h5 {
+			color: variables.$gray-900;
+			font-weight: variables.$font-weight-semibold;
+			margin-bottom: 20px;
+		}
+		
+		.review-items {
+			.review-item {
+				border: 1px solid variables.$gray-transparent;
+				border-radius: 10px;
+				padding: 20px;
+				margin-bottom: 20px;
+				background-color: variables.$white;
+				transition: box-shadow 0.2s ease;
+				
+				&:hover {
+					box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+				}
+				
+				&:last-child {
+					margin-bottom: 0;
+				}
+				
+				.review-header {
+					display: flex;
+					justify-content: space-between;
+					align-items: flex-start;
+					margin-bottom: 15px;
+					
+					.reviewer-info {
+						.reviewer-name {
+							color: variables.$gray-900;
+							font-weight: variables.$font-weight-semibold;
+							margin-bottom: 5px;
+							font-size: variables.$font-size-16;
+						}
+						
+						.review-rating {
+							i {
+								color: variables.$warning;
+								margin-right: 2px;
+								font-size: variables.$font-size-14;
+								
+								&.filled {
+									color: variables.$warning;
+								}
+							}
+						}
+					}
+					
+					.review-date {
+						color: variables.$gray-600;
+						font-size: variables.$font-size-13;
+					}
+				}
+				
+				.review-content {
+					p {
+						color: variables.$gray-700;
+						line-height: 1.6;
+						margin-bottom: 0;
+						font-size: variables.$font-size-14;
+					}
+				}
+			}
+		}
+		
+		.no-reviews {
+			text-align: center;
+			padding: 40px 20px;
+			color: variables.$gray-600;
+			
+			p {
+				font-size: variables.$font-size-16;
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+// Responsive adjustments for reviews
+@include mixins.respond-below(md) {
+	.review-widget {
+		.write-review {
+			padding: 15px;
+			
+			.form-group {
+				.rating-input {
+					.star-btn i {
+						font-size: variables.$font-size-20;
+					}
+				}
+			}
+		}
+		
+		.reviews-list {
+			.review-items {
+				.review-item {
+					padding: 15px;
+					
+					.review-header {
+						flex-direction: column;
+						align-items: flex-start;
+						
+						.review-date {
+							margin-top: 10px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

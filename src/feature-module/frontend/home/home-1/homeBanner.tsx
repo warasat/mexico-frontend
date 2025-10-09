@@ -134,43 +134,6 @@ const HomeBanner: React.FC = () => {
                   <div className="row align-items-center">
                     <div className="col-lg-7">
                       <div className="banner-content aos" data-aos="fade-up">
-                        <div className="rating-appointment d-inline-flex align-items-center gap-2">
-                          <div className="avatar-list-stacked avatar-group-lg">
-                            <span className="avatar avatar-rounded">
-                              <ImageWithBasePath
-                                className="border border-white"
-                                src="assets/img/doctors/doctor-thumb-22.jpg"
-                                alt="img"
-                              />
-                            </span>
-                            <span className="avatar avatar-rounded">
-                              <ImageWithBasePath
-                                className="border border-white"
-                                src="assets/img/doctors/doctor-thumb-23.jpg"
-                                alt="img"
-                              />
-                            </span>
-                            <span className="avatar avatar-rounded">
-                              <ImageWithBasePath
-                                src="assets/img/doctors/doctor-thumb-24.jpg"
-                                alt="img"
-                              />
-                            </span>
-                          </div>
-                          <div className="me-2">
-                            <h6 className="mb-1">{t("home.appointments")}</h6>
-                            <div className="d-flex align-items-center">
-                              <div className="d-flex align-items-center">
-                                <i className="fa-solid fa-star text-orange me-1" />
-                                <i className="fa-solid fa-star text-orange me-1" />
-                                <i className="fa-solid fa-star text-orange me-1" />
-                                <i className="fa-solid fa-star text-orange me-1" />
-                                <i className="fa-solid fa-star text-orange me-1" />
-                              </div>
-                              <p>{t("home.ratings")}</p>
-                            </div>
-                          </div>
-                        </div>
                         <h1 className="display-5">
                           {slide.title}{" "}
                           <span className="banner-icon">

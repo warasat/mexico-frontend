@@ -65,8 +65,8 @@ const PatientSignup: React.FC = () => {
           email: response.patient.email 
         }, response.token);
         
-        const from = (location.state as { from?: { pathname?: string } } | undefined)?.from?.pathname || '/patient/profile';
-        navigate(from, { replace: true });
+        // Always redirect to patient profile after login
+        navigate('/patient/profile', { replace: true });
       }
     } catch (error: any) {
       setError(error.message || 'Login failed. Please try again.');

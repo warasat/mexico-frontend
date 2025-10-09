@@ -131,7 +131,7 @@ const SectionDoctor: React.FC = () => {
     };
 
     // Function to handle Book Now button click
-    const handleBookNow = (e: React.MouseEvent) => {
+    const handleBookNow = (e: React.MouseEvent, doctor: Doctor) => {
         e.preventDefault();
         
         if (!isAuthenticated || userType !== 'patient') {
@@ -143,8 +143,19 @@ const SectionDoctor: React.FC = () => {
                 }
             });
         } else {
-            // User is authenticated as patient, proceed to booking
-            navigate('/booking');
+            // User is authenticated as patient, proceed to booking with specific doctor data
+            navigate('/booking', {
+                state: {
+                    selectedDoctor: {
+                        id: doctor.id.toString(),
+                        name: doctor.name,
+                        specialty: doctor.specialty,
+                        image: doctor.image,
+                        location: doctor.location,
+                        available: doctor.available
+                    }
+                }
+            });
         }
     };
 
@@ -262,7 +273,7 @@ const SectionDoctor: React.FC = () => {
                                             </div>
                                             <div className="d-flex align-items-center justify-content-center">
                                                 <button
-                                                    onClick={handleBookNow}
+                                                    onClick={(e) => handleBookNow(e, doctor)}
                                                     disabled={getDoctorAvailability(doctor) === 'unavailable'}
                                                     className={`btn btn-md d-inline-flex align-items-center rounded-pill text-truncate ${
                                                         getDoctorAvailability(doctor) === 'available' ? 'btn-dark' : 'btn-secondary'

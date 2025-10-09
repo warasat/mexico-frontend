@@ -125,7 +125,7 @@ const DoctorProfile  = (props: any) => {
       <div className="content">
         <div className="container">
           <Pagecontent doctor={uiDoctor} />
-          <Content doctor={doctor} />
+          <Content doctor={uiDoctor} />
         </div>
       </div>
       <Footer {...props} />

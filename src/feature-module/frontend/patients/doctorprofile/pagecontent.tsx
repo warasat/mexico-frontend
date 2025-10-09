@@ -49,19 +49,6 @@ const Pagecontent = ({ doctor: doctorProp }: Props) => {
                     <img src={IMG02} className="img-fluid" alt="Speciality" />
                     {doctor.specialty}
                   </p>
-                  <div className="rating">
-                    {[...Array(5)].map((_, i) => (
-                      <i
-                        key={i}
-                        className={`fas fa-star ${
-                          i < Math.floor(doctor.rating) ? "filled" : ""
-                        }`}
-                      />
-                    ))}
-                    <span className="d-inline-block average-rating ms-1">
-                      ({doctor.totalReviews})
-                    </span>
-                  </div>
                   <div className="clinic-details">
                     <p className="doc-location">
                       <i className="fas fa-map-marker-alt"></i>{" "}
