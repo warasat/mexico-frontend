@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
-import { itemRender, onShowSizeChange } from "../paginationfunction";
+// import { itemRender, onShowSizeChange } from "../paginationfunction";
 import SidebarNav from "../sidebar";
-import {
-  doctor_thumb_01,
-  patient1,
-} from "../imagepath";
+// import {
+//   doctor_thumb_01,
+//   patient1,
+// } from "../imagepath";
 import { Link } from "react-router-dom";
 import Header from "../header";
 import adminService from "../../../core/services/adminService";

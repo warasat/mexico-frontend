@@ -1,8 +1,8 @@
 import DoctorSidebar from "../sidebar";
 import Header from "../../header";
-import {
-  doctordashboardprofile01,
-} from "../../imagepath";
+// import {
+//   doctordashboardprofile01,
+// } from "../../imagepath";
 import DoctorFooter from "../../common/doctorFooter";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../../../components/imageWithBasePath";

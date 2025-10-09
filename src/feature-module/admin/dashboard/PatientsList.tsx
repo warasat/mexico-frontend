@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
-import { patient1, patient2, patient3, patient4, patient5 } from "../imagepath";
+// import { patient1, patient2, patient3, patient4, patient5 } from "../imagepath";
 // import SidebarNav from '../sidebar';
-import { itemRender, onShowSizeChange } from "../paginationfunction";
+// import { itemRender, onShowSizeChange } from "../paginationfunction";
 import { Link } from "react-router-dom";
 import adminService from "../../../core/services/adminService";
 

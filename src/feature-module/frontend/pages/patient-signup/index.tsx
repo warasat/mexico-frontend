@@ -29,7 +29,7 @@ const PatientSignup: React.FC = () => {
   
   const { login } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const { t } = useTranslation();
 
 

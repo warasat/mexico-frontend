@@ -29,7 +29,7 @@ import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { t } = useGlobalTranslation();
+  // const { t } = useGlobalTranslation();
   const { authState, logout } = useAuth();
   const { isAuthenticated, userType, user } = authState;
   const navigate = useNavigate();

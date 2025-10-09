@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
-import { itemRender, onShowSizeChange } from "../paginationfunction";
+// import { itemRender, onShowSizeChange } from "../paginationfunction";
 import {
   doctor_thumb_01,
   doctor_thumb_02,
