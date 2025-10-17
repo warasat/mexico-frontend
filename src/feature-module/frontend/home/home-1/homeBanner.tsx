@@ -72,6 +72,30 @@ const insuranceProviders = [
   "Blue Cross of Maryland"
 ];
 
+// Dummy data for the new dropdown
+const appointmentTypes = [
+  "In-Person Visit",
+  "Video Consultation",
+  "Phone Consultation",
+  "Home Visit",
+  "Emergency Visit",
+  "Follow-up Visit",
+  "Annual Checkup",
+  "Specialist Consultation",
+  "Second Opinion",
+  "Preventive Care",
+  "Diagnostic Test",
+  "Therapy Session",
+  "Mental Health Consultation",
+  "Pediatric Visit",
+  "Geriatric Care",
+  "Women's Health",
+  "Men's Health",
+  "Sports Medicine",
+  "Physical Therapy",
+  "Nutrition Counseling"
+];
+
 
 
 const HomeBanner: React.FC = () => {
@@ -82,6 +106,7 @@ const HomeBanner: React.FC = () => {
     const [selectedLocation, setSelectedLocation] = useState<string>('');
     const [selectedSpeciality, setSelectedSpeciality] = useState<string>('');
     const [selectedDisease, setSelectedDisease] = useState<string>('');
+    const [selectedAppointmentType, setSelectedAppointmentType] = useState<string>('');
     const { t } = useGlobalTranslation();
 
     // Hero banner slider configuration
@@ -298,6 +323,28 @@ const HomeBanner: React.FC = () => {
                                         (insurance, idx) => (
                                           <option key={idx} value={insurance}>
                                             {insurance}
+                                          </option>
+                                        )
+                                      )}
+                                    </select>
+                                  </div>
+                                </div>
+                                <div className="search-input search-map-line">
+                                  <i className="isax isax-calendar-1 bficon" />
+                                  <div className=" mb-0">
+                                    <select
+                                      value={selectedAppointmentType}
+                                      onChange={(e) =>
+                                        setSelectedAppointmentType(e.target.value)
+                                      }
+                                      className="form-control"
+                                      style={{ paddingLeft: "45px" }}
+                                    >
+                                      <option value="">Appointment Type</option>
+                                      {appointmentTypes.map(
+                                        (type, idx) => (
+                                          <option key={idx} value={type}>
+                                            {type}
                                           </option>
                                         )
                                       )}
