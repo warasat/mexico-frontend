@@ -15,6 +15,7 @@ import BookingPage from "../feature-module/frontend/patients/booking/bookingPage
 import PatientAppointments from "../feature-module/frontend/patients/appointments";
 import Profile from "../feature-module/frontend/patients/dashboard/profile";
 import PatientSignup from "../feature-module/frontend/pages/patient-signup";
+import ForgotPassword from "../feature-module/frontend/pages/forgot-password";
 // Removed separate PatientLogin; route redirects to signup
 
 // Doctor Module
@@ -112,6 +113,12 @@ export const publicRoutes = [
     element: <Navigate to={route.patientSignup} replace />,
     route: Route,
     meta_title: "Patient Login",
+  },
+  {
+    path: route.forgotPassword,
+    element: <ForgotPassword />,
+    route: Route,
+    meta_title: "Forgot Password",
   },
 
   // Doctor Module Routes (Protected)
